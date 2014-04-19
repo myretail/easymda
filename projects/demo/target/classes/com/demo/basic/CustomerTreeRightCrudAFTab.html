@@ -1,0 +1,108 @@
+					
+<script type="text/javascript" >
+</script>
+		<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="CustomerAFTab" jsId="CustomerAFTab"  >
+		<div dojoType="dijit.layout.ContentPane" title="Customer"  id="CustomerCrud" jsId="CustomerCrud" selected="true" >
+		<div id="queryDivCustomer" style="margin-right: 0px;  height: 80px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="customerName" >customerName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryCustomercustomerName"  jsId="queryCustomercustomerName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="custEnum" >custEnum:</td>
+						<td align="left"  colspan="3" >
+												<input  id="queryCustomercustEnum" jsId="queryCustomercustEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoCustomer.custEnumStore" />
+												</td>  
+				
+    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+		 
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonCustomer();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	    </div>		
+	       	<div align="right">
+			<button dojoType="dijit.form.Button" onclick="addRowCustomer();" iconClass="addIcon" i18n="add"  >add</button>
+					<button dojoType="dijit.form.Button" onclick="removeSelectedRowsCustomer();" iconClass="delIcon" i18n="delete" >delete</button>
+					<button dojoType="dijit.form.Button"  onclick="call_funUpdCustomer();" i18n="save" iconClass="saveIcon">save</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivCustomer');" iconClass="openQueryIcon"  i18n="openQuery" >query</button>
+				
+			</div>    
+	         <div id="gridCustomer"  dojoType="dojox.Grid" autoWidth="false"  jsId="gridCustomer"	model="modelCustomer"  structure="layoutSingleRowCustomer" singleClickEdit="true" ></div>
+			 	<div align="right">
+			 <span id="rowCountCustomer"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPageCustomer();"  id="but6Customer" disabled='true' jsId="but6Customer" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPageCustomer();" id="but7Customer" disabled='true' jsId="but7Customer" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangeCustomer(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangeCustomer(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangeCustomer(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangeCustomer(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpageCustomer();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyleCustomer(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyleCustomer(this.label);"></div>
+						</div></div>
+    </div>  </div> 
+		
+		
+				<div dojoType="dijit.layout.ContentPane" title="prodCust2prods"  id="prodCust2prods" jsId="prodCust2prods" >
+				<div align="right">
+					<span id="rowCountprodCust2prods"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPageprodCust2prods();"  id="but6prodCust2prods" disabled='true' jsId="but6prodCust2prods" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPageprodCust2prods();" id="but7prodCust2prods" disabled='true' jsId="but7prodCust2prods" iconClass="downPageIcon" >pagedown</button>
+																																																																																																																				<button dojoType="dijit.form.Button" onclick="addRowprodCust2prods();" iconClass="addIcon" >add</button>
+					<button dojoType="dijit.form.Button" onclick="removeprodCust2prods();" iconClass="delIcon" >delete</button>
+					<button dojoType="dijit.form.Button" id="but3prodCust2prods" jsId="but3prodCust2prods" onclick="call_funUpdprodCust2prods();"  iconClass="saveIcon">save</button>
+									</div>
+				<div id="gridprodCust2prods"  ></div>
+			</div>
+					<div dojoType="dijit.layout.ContentPane" title="contacts2customer"  id="contacts2customer" jsId="contacts2customer" >
+				<div align="right">
+					<span id="rowCountcontacts2customer"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPagecontacts2customer();"  id="but6contacts2customer" disabled='true' jsId="but6contacts2customer" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPagecontacts2customer();" id="but7contacts2customer" disabled='true' jsId="but7contacts2customer" iconClass="downPageIcon" >pagedown</button>
+																																																<button dojoType="dijit.form.Button" onclick="addRowcontacts2customer();" iconClass="addIcon" >add</button>
+					<button dojoType="dijit.form.Button" onclick="removecontacts2customer();" iconClass="delIcon" >delete</button>
+					<button dojoType="dijit.form.Button" id="but3contacts2customer" jsId="but3contacts2customer" onclick="call_funUpdcontacts2customer();"  iconClass="saveIcon">save</button>
+									</div>
+				<div id="gridcontacts2customer"  ></div>
+			</div>
+					<div dojoType="dijit.layout.ContentPane" title="customer2orderds"  id="customer2orderds" jsId="customer2orderds" >
+				<div align="right">
+					<span id="rowCountcustomer2orderds"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPagecustomer2orderds();"  id="but6customer2orderds" disabled='true' jsId="but6customer2orderds" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPagecustomer2orderds();" id="but7customer2orderds" disabled='true' jsId="but7customer2orderds" iconClass="downPageIcon" >pagedown</button>
+																																																																																																																																																																																																																																																																													<button dojoType="dijit.form.Button" onclick="addRowcustomer2orderds();" iconClass="addIcon" >add</button>
+					<button dojoType="dijit.form.Button" onclick="removecustomer2orderds();" iconClass="delIcon" >delete</button>
+					<button dojoType="dijit.form.Button" id="but3customer2orderds" jsId="but3customer2orderds" onclick="call_funUpdcustomer2orderds();"  iconClass="saveIcon">save</button>
+									</div>
+				<div id="gridcustomer2orderds"  ></div>
+			</div>
+			</div>
+

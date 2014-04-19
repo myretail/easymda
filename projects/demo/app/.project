@@ -1,0 +1,12 @@
+<projectDescription>
+  <name>demo-app</name>
+  <comment>The demo Project. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects>
+    <project>demo-common</project>
+    <project>demo-core</project>
+    <project>demo-web</project>
+    <project>demo-webservice</project>
+  </projects>
+  <buildSpec/>
+  <natures/>
+</projectDescription>

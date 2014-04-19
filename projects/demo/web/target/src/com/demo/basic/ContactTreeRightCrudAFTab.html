@@ -1,0 +1,73 @@
+			
+<script type="text/javascript" >
+</script>
+		<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="ContactAFTab" jsId="ContactAFTab"  >
+		<div dojoType="dijit.layout.ContentPane" title="Contact"  id="ContactCrud" jsId="ContactCrud" selected="true" >
+		<div id="queryDivContact" style="margin-right: 0px;  height: 80px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="codeContact" >codeContact:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryContactcodeContact"  jsId="queryContactcodeContact"   dojoType="dijit.form.TextBox"  />
+													</td>
+				
+						<td align="right"  i18n="customer"  ></td>
+					<td align="left" colspan="3" ><!-- --><input  id="queryContactcustomer"  jsId="queryContactcustomer" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoContact.customerStore"  /></td>  
+				    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+		 
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonContact();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	    </div>		
+	       	<div align="right">
+			<button dojoType="dijit.form.Button" onclick="addRowContact();" iconClass="addIcon" i18n="add"  >add</button>
+					<button dojoType="dijit.form.Button" onclick="removeSelectedRowsContact();" iconClass="delIcon" i18n="delete" >delete</button>
+					<button dojoType="dijit.form.Button"  onclick="call_funUpdContact();" i18n="save" iconClass="saveIcon">save</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivContact');" iconClass="openQueryIcon"  i18n="openQuery" >query</button>
+				
+			</div>    
+	         <div id="gridContact"  dojoType="dojox.Grid" autoWidth="false"  jsId="gridContact"	model="modelContact"  structure="layoutSingleRowContact" singleClickEdit="true" ></div>
+			 	<div align="right">
+			 <span id="rowCountContact"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPageContact();"  id="but6Contact" disabled='true' jsId="but6Contact" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPageContact();" id="but7Contact" disabled='true' jsId="but7Contact" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangeContact(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangeContact(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangeContact(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangeContact(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpageContact();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyleContact(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyleContact(this.label);"></div>
+						</div></div>
+    </div>  </div> 
+		
+		
+			</div>
+

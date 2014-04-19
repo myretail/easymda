@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/application_1_4.xsd" version="1.4">
+  <description>The demo Project.</description>
+  <display-name>demo-app</display-name>
+  <module>
+    <java>demo-common-1.0-SNAPSHOT.jar</java>
+  </module>
+  <module>
+    <ejb>demo-core-1.0-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>demo-web-1.0-SNAPSHOT.war</web-uri>
+      <context-root>/demo</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>demo-webservice-1.0-SNAPSHOT.war</web-uri>
+      <context-root>/demo-ws</context-root>
+    </web>
+  </module>
+</application>

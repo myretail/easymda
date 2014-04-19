@@ -1,0 +1,228 @@
+
+<script type="text/javascript" >
+//orga2orgaPeoplesSelectPane.html
+dojo.require("projectDojo.Orga");
+var dojoOrga= new  projectDojo.Orga();
+dojoOrga.initOrga();
+var urlpaneorga2orgaPeoples= getUrl()+ "services/OrgaManageService";
+var deletedatapaneorga2orgaPeoples =  new Array();
+var querydatapaneorga2orgaPeoples =  new Array();
+var pagenumberpaneorga2orgaPeoples=1;
+var totalCountpaneorga2orgaPeoples=0;
+var pagesizepaneorga2orgaPeoples=10;
+var orderBypaneorga2orgaPeoples='0';
+var queryvopaneorga2orgaPeoples=new Object();
+var oddstyle='';
+var modelpaneorga2orgaPeoples = new dojox.grid.data.Table(null, querydatapaneorga2orgaPeoples);
+
+
+var noPaneorga2orgaPeoples;
+var selectPaneorga2orgaPeoplesIDs;
+var oldFloatPaneorga2orgaPeoples;
+var selectPaneorga2orgaPeoplesInRow;
+var ifMultPaneorga2orgaPeoples=0;	
+	  
+var getChoisepaneorga2orgaPeoples = function(inRowIndex) {
+			if(selectPaneorga2orgaPeoplesIDs==querydatapaneorga2orgaPeoples[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selectorga2orgaPeoples" id="'+querydatapaneorga2orgaPeoples[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selectorga2orgaPeoples" id="'+querydatapaneorga2orgaPeoples[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpaneorga2orgaPeoples=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepaneorga2orgaPeoples},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.orgaName, field: 2,width: 10}
+						  						  				,   {name: i18nStr.orgaCode, field: 3,width: 10}
+						  						  				,   {name: i18nStr.sno, field: 4,width: 10}
+						  						  				,   {name: i18nStr.remark, field: 5,width: 10}
+						  						  				 ,  {name: i18nStr.parentId,field:6, width: 8}
+						  				
+					]]}];	 
+					
+function getVOpaneorga2orgaPeoples(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('OrgaVO',queryvo) ;
+      pu.add('pageNumber',pagenumberpaneorga2orgaPeoples) ;
+	    pu.add('pageSize',pagesizepaneorga2orgaPeoples) ;
+	    pu.add('orderBy',orderBypaneorga2orgaPeoples) ;
+      SOAPClient.invoke(urlpaneorga2orgaPeoples,"getOrga", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapaneorga2orgaPeoples=new Array();
+		   querydatapaneorga2orgaPeoples=dojoOrga.OrgaVOtoArray_fun(ul,false);
+           totalCountpaneorga2orgaPeoples=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapaneorga2orgaPeoples.splice(querydatapaneorga2orgaPeoples.length-1,1);
+      modelpaneorga2orgaPeoples.setData(querydatapaneorga2orgaPeoples);
+      var totalpage=Math.ceil(new Number(totalCountpaneorga2orgaPeoples)/pagesizepaneorga2orgaPeoples);
+	  
+	if(totalpage>1){
+		if(pagenumberpaneorga2orgaPeoples==1){
+			dijit.byId("but6paneorga2orgaPeoples").setDisabled(true);
+			dijit.byId("but7paneorga2orgaPeoples").setDisabled(false);
+		}else if(pagenumberpaneorga2orgaPeoples==totalpage){
+			dijit.byId("but6paneorga2orgaPeoples").setDisabled(false);
+			dijit.byId("but7paneorga2orgaPeoples").setDisabled(true);
+		}else{
+			dijit.byId("but6paneorga2orgaPeoples").setDisabled(false);
+			dijit.byId("but7paneorga2orgaPeoples").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6paneorga2orgaPeoples").setDisabled(true);
+		dijit.byId("but7paneorga2orgaPeoples").setDisabled(true);
+	
+	}
+	if(pagesizepaneorga2orgaPeoples==0){
+		totalpage=1;
+		dijit.byId("but6paneorga2orgaPeoples").setDisabled(true);
+		dijit.byId("but7paneorga2orgaPeoples").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpaneorga2orgaPeoples=1;
+	
+	 document.getElementById("rowCountpaneorga2orgaPeoples").innerHTML=i18nStr.di+" "+pagenumberpaneorga2orgaPeoples+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpaneorga2orgaPeoples+" "+i18nStr.rowSize; 	
+}
+
+ var selectorga2orgaPeoplesFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selectorga2orgaPeoples");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMultPaneorga2orgaPeoples==0){
+              rep=querydatapaneorga2orgaPeoples[i];
+            }else{
+              rep[rep.length]=querydatapaneorga2orgaPeoples[i];
+            }
+          }
+      }
+	   return rep;
+    //selectorga2orgaPeoplesFun(rep);
+	//oldFloatorga2orgaPeoples.hide();
+}  					
+
+
+//------------init 
+ getVOpaneorga2orgaPeoples(queryvopaneorga2orgaPeoples);
+      if(gridpaneorga2orgaPeoples==undefined){
+	  			 gridpaneorga2orgaPeoples= new dojox.Grid({
+					title: "ff",
+					id: "gridpaneorga2orgaPeoples",
+					jsId: "gridpaneorga2orgaPeoples",
+					structure: layoutpaneorga2orgaPeoples,
+					rowCount:querydatapaneorga2orgaPeoples.length-1,
+					model:modelpaneorga2orgaPeoples
+				}, dojo.byId("gridpaneorga2orgaPeoples"));
+				
+			}else{ 
+			//gridpaneorga2orgaPeoples.model.setData(querydatapaneorga2orgaPeoples); 
+			} 
+//-------------	
+
+var allpagepaneorga2orgaPeoples=function(){
+	pagesizepaneorga2orgaPeoples=0;
+	getVOpaneorga2orgaPeoples(queryvopaneorga2orgaPeoples);
+}
+var  pagesizeChangepaneorga2orgaPeoples=function(mylabel){
+	pagesizepaneorga2orgaPeoples=mylabel;
+	getVOpaneorga2orgaPeoples(queryvopaneorga2orgaPeoples);
+}           
+var upPagepaneorga2orgaPeoples= function(){
+	pagenumberpaneorga2orgaPeoples--;
+	getVOpaneorga2orgaPeoples(queryvopaneorga2orgaPeoples);
+}
+var downPagepaneorga2orgaPeoples=function(){
+	pagenumberpaneorga2orgaPeoples++;
+	getVOpaneorga2orgaPeoples(queryvopaneorga2orgaPeoples);
+}
+ 
+
+   
+function querybuttonpaneorga2orgaPeoples(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvoorga2orgaPeoples.id=0 ;
+              queryvopaneorga2orgaPeoples=new Object();
+								  if(querypaneorga2orgaPeoplesorgaName.getDisplayedValue()!="")queryvopaneorga2orgaPeoples.orgaName=querypaneorga2orgaPeoplesorgaName.getDisplayedValue();//
+											  if(querypaneorga2orgaPeoplesorgaCode.getDisplayedValue()!="")queryvopaneorga2orgaPeoples.orgaCode=querypaneorga2orgaPeoplesorgaCode.getDisplayedValue();//
+											  if(querypaneorga2orgaPeoplessno.getDisplayedValue()!="")queryvopaneorga2orgaPeoples.sno=querypaneorga2orgaPeoplessno.getDisplayedValue();//
+											  if(querypaneorga2orgaPeoplesremark.getDisplayedValue()!="")queryvopaneorga2orgaPeoples.remark=querypaneorga2orgaPeoplesremark.getDisplayedValue();//
+											  n=queryNumber_fun("paneorga2orgaPeoplesparentId");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorga2orgaPeoples.parentId=n;}  
+							
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpaneorga2orgaPeoples(queryvopaneorga2orgaPeoples);
+             }      
+       }
+																						   
+</script>
+<div id="queryDivpaneorga2orgaPeoples" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="orgaName" >orgaName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypaneorga2orgaPeoplesorgaName"  jsId="querypaneorga2orgaPeoplesorgaName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="orgaCode" >orgaCode:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="querypaneorga2orgaPeoplesorgaCode"  jsId="querypaneorga2orgaPeoplesorgaCode"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="sno" >sno:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="querypaneorga2orgaPeoplessno"  jsId="querypaneorga2orgaPeoplessno"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="remark" >remark:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypaneorga2orgaPeoplesremark"  jsId="querypaneorga2orgaPeoplesremark"   dojoType="dijit.form.TextBox"  />
+													</td>
+																		<td align="right"  i18n="parentId" >parentId:</td>
+							<td align="left" colspan="3" >
+								<span id="querypaneorga2orgaPeoplesparentIdImg0"  ><input type="text" class="editerNumber" jsId="querypaneorga2orgaPeoplesparentId"  id="querypaneorga2orgaPeoplesparentId"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypaneorga2orgaPeoplesparentIdImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypaneorga2orgaPeoplesparentId1"  id="querypaneorga2orgaPeoplesparentId1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorga2orgaPeoplesparentIdImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorga2orgaPeoplesparentIdImgdown" >></span>
+								<span id="querypaneorga2orgaPeoplesparentIdImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypaneorga2orgaPeoplesparentId2"  id="querypaneorga2orgaPeoplesparentId2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorga2orgaPeoplesparentIdImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+							
+
+    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpaneorga2orgaPeoples();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	</div>	
+	       	
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpaneorga2orgaPeoples"  dojoType="dojox.Grid" autoWidth="false"  jsId="paneorga2orgaPeoples"	model="modelpaneorga2orgaPeoples"  structure="layoutpaneorga2orgaPeoples"  ></div>
+      </div>          
+	  
+

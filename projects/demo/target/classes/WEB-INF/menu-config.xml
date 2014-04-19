@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<MenuConfig>
+
+    <Displayers>
+        <Displayer name="listMenu" type="net.sf.navigator.displayer.ListMenuDisplayer"/>
+    </Displayers>
+
+    <Menus>
+        <Menu name="$applicationUseCase.titleKey" title="$applicationUseCase.titleKey" tooltip="$applicationUseCase.onlineHelpKey">
+        </Menu>
+    </Menus>
+
+</MenuConfig>

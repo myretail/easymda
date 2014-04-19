@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <!-- ========================= Start of SERVICE DEFINITIONS ========================= -->
+
+    <!-- ContactManageService -->
+    <bean id="contactManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.basic.ContactManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.basic.ContactManageService</value></property>
+    </bean>
+
+    <!-- CustomerManageService -->
+    <bean id="customerManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.basic.CustomerManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.basic.CustomerManageService</value></property>
+    </bean>
+
+    <!-- ProdManageService -->
+    <bean id="prodManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.basic.ProdManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.basic.ProdManageService</value></property>
+    </bean>
+
+    <!-- BasicManageService -->
+    <bean id="basicManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.basic.BasicManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.basic.BasicManageService</value></property>
+    </bean>
+
+    <!-- OrderdManageService -->
+    <bean id="orderdManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.OrderdManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.OrderdManageService</value></property>
+    </bean>
+
+    <!-- OrderRowdManageService -->
+    <bean id="orderRowdManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.OrderRowdManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.OrderRowdManageService</value></property>
+    </bean>
+
+    <!-- OrderRowTaskManageService -->
+    <bean id="orderRowTaskManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.OrderRowTaskManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.OrderRowTaskManageService</value></property>
+    </bean>
+
+    <!-- carManageService -->
+    <bean id="carManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.carManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.carManageService</value></property>
+    </bean>
+
+    <!-- TaskFormManageService -->
+    <bean id="taskFormManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.TaskFormManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.TaskFormManageService</value></property>
+    </bean>
+
+    <!-- TaskManageService -->
+    <bean id="taskManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.TaskManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.TaskManageService</value></property>
+    </bean>
+
+    <!-- PaymentManageService -->
+    <bean id="paymentManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.order.PaymentManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.order.PaymentManageService</value></property>
+    </bean>
+
+    <!-- OrgaManageService -->
+    <bean id="orgaManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.orga.OrgaManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.orga.OrgaManageService</value></property>
+    </bean>
+
+    <!-- PeoplesManageService -->
+    <bean id="peoplesManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.orga.PeoplesManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.orga.PeoplesManageService</value></property>
+    </bean>
+
+    <!-- OrgaPeoplesManageService -->
+    <bean id="orgaPeoplesManageService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName"><value>demo-1.0-SNAPSHOT/ejb/com.demo.service.orga.OrgaPeoplesManageService</value></property>
+        <property name="businessInterface"><value>com.demo.service.orga.OrgaPeoplesManageService</value></property>
+    </bean>
+
+    <!-- ========================= End of SERVICE DEFINITIONS ========================= -->
+
+</beans>

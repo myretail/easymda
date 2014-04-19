@@ -1,0 +1,237 @@
+
+<script type="text/javascript" >
+//taskForm2tasksSelectPane.html
+dojo.require("projectDojo.TaskForm");
+var dojoTaskForm= new  projectDojo.TaskForm();
+dojoTaskForm.initTaskForm();
+var urlpanetaskForm2tasks= getUrl()+ "services/TaskFormManageService";
+var deletedatapanetaskForm2tasks =  new Array();
+var querydatapanetaskForm2tasks =  new Array();
+var pagenumberpanetaskForm2tasks=1;
+var totalCountpanetaskForm2tasks=0;
+var pagesizepanetaskForm2tasks=10;
+var orderBypanetaskForm2tasks='0';
+var queryvopanetaskForm2tasks=new Object();
+var oddstyle='';
+var modelpanetaskForm2tasks = new dojox.grid.data.Table(null, querydatapanetaskForm2tasks);
+
+
+var noPanetaskForm2tasks;
+var selectPanetaskForm2tasksIDs;
+var oldFloatPanetaskForm2tasks;
+var selectPanetaskForm2tasksInRow;
+var ifMultPanetaskForm2tasks=0;	
+	  
+var getChoisepanetaskForm2tasks = function(inRowIndex) {
+			if(selectPanetaskForm2tasksIDs==querydatapanetaskForm2tasks[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selecttaskForm2tasks" id="'+querydatapanetaskForm2tasks[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selecttaskForm2tasks" id="'+querydatapanetaskForm2tasks[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpanetaskForm2tasks=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepanetaskForm2tasks},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.setDate,field:2, width: 8}
+						  						  				,   {name: i18nStr.formState, field: 3,width: 10}
+						  						  				,   {name: i18nStr.remark, field: 4,width: 10}
+						  				
+//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])??if(!true)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.tasks,field: 5,get:function(inRowIndex){ var str='';if(querydatapanetaskForm2tasks[inRowIndex]!=undefined && querydatapanetaskForm2tasks[inRowIndex][5]!=undefined&& querydatapanetaskForm2tasks[inRowIndex][5][2]!=undefined){str=querydatapanetaskForm2tasks[inRowIndex][5][2];} return str;} ,width: 10 }
+			//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.car,field: 6,get:function(inRowIndex){ var str='';if(querydatapanetaskForm2tasks[inRowIndex]!=undefined && querydatapanetaskForm2tasks[inRowIndex][6]!=undefined&& querydatapanetaskForm2tasks[inRowIndex][6][2]!=undefined){str=querydatapanetaskForm2tasks[inRowIndex][6][2];} return str;} ,width: 10 }
+								]]}];	 
+					
+function getVOpanetaskForm2tasks(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('TaskFormVO',queryvo) ;
+      pu.add('pageNumber',pagenumberpanetaskForm2tasks) ;
+	    pu.add('pageSize',pagesizepanetaskForm2tasks) ;
+	    pu.add('orderBy',orderBypanetaskForm2tasks) ;
+      SOAPClient.invoke(urlpanetaskForm2tasks,"getTaskForm", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapanetaskForm2tasks=new Array();
+		   querydatapanetaskForm2tasks=dojoTaskForm.TaskFormVOtoArray_fun(ul,false);
+           totalCountpanetaskForm2tasks=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapanetaskForm2tasks.splice(querydatapanetaskForm2tasks.length-1,1);
+      modelpanetaskForm2tasks.setData(querydatapanetaskForm2tasks);
+      var totalpage=Math.ceil(new Number(totalCountpanetaskForm2tasks)/pagesizepanetaskForm2tasks);
+	  
+	if(totalpage>1){
+		if(pagenumberpanetaskForm2tasks==1){
+			dijit.byId("but6panetaskForm2tasks").setDisabled(true);
+			dijit.byId("but7panetaskForm2tasks").setDisabled(false);
+		}else if(pagenumberpanetaskForm2tasks==totalpage){
+			dijit.byId("but6panetaskForm2tasks").setDisabled(false);
+			dijit.byId("but7panetaskForm2tasks").setDisabled(true);
+		}else{
+			dijit.byId("but6panetaskForm2tasks").setDisabled(false);
+			dijit.byId("but7panetaskForm2tasks").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6panetaskForm2tasks").setDisabled(true);
+		dijit.byId("but7panetaskForm2tasks").setDisabled(true);
+	
+	}
+	if(pagesizepanetaskForm2tasks==0){
+		totalpage=1;
+		dijit.byId("but6panetaskForm2tasks").setDisabled(true);
+		dijit.byId("but7panetaskForm2tasks").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpanetaskForm2tasks=1;
+	
+	 document.getElementById("rowCountpanetaskForm2tasks").innerHTML=i18nStr.di+" "+pagenumberpanetaskForm2tasks+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpanetaskForm2tasks+" "+i18nStr.rowSize; 	
+}
+
+ var selecttaskForm2tasksFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selecttaskForm2tasks");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMultPanetaskForm2tasks==0){
+              rep=querydatapanetaskForm2tasks[i];
+            }else{
+              rep[rep.length]=querydatapanetaskForm2tasks[i];
+            }
+          }
+      }
+	   return rep;
+    //selecttaskForm2tasksFun(rep);
+	//oldFloattaskForm2tasks.hide();
+}  					
+
+
+//------------init 
+ getVOpanetaskForm2tasks(queryvopanetaskForm2tasks);
+      if(gridpanetaskForm2tasks==undefined){
+	  			 gridpanetaskForm2tasks= new dojox.Grid({
+					title: "ff",
+					id: "gridpanetaskForm2tasks",
+					jsId: "gridpanetaskForm2tasks",
+					structure: layoutpanetaskForm2tasks,
+					rowCount:querydatapanetaskForm2tasks.length-1,
+					model:modelpanetaskForm2tasks
+				}, dojo.byId("gridpanetaskForm2tasks"));
+				
+			}else{ 
+			//gridpanetaskForm2tasks.model.setData(querydatapanetaskForm2tasks); 
+			} 
+//-------------	
+
+var allpagepanetaskForm2tasks=function(){
+	pagesizepanetaskForm2tasks=0;
+	getVOpanetaskForm2tasks(queryvopanetaskForm2tasks);
+}
+var  pagesizeChangepanetaskForm2tasks=function(mylabel){
+	pagesizepanetaskForm2tasks=mylabel;
+	getVOpanetaskForm2tasks(queryvopanetaskForm2tasks);
+}           
+var upPagepanetaskForm2tasks= function(){
+	pagenumberpanetaskForm2tasks--;
+	getVOpanetaskForm2tasks(queryvopanetaskForm2tasks);
+}
+var downPagepanetaskForm2tasks=function(){
+	pagenumberpanetaskForm2tasks++;
+	getVOpanetaskForm2tasks(queryvopanetaskForm2tasks);
+}
+ 
+
+   
+function querybuttonpanetaskForm2tasks(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvotaskForm2tasks.id=0 ;
+              queryvopanetaskForm2tasks=new Object();
+								  d=queryDate_fun("panetaskForm2taskssetDate");
+					  if(d==null){validstate=1;}else if(d.upSign!="%"){queryvopanetaskForm2tasks.setDate=d;}
+											  if(querypanetaskForm2tasksformState.getDisplayedValue()!="")queryvopanetaskForm2tasks.formState=querypanetaskForm2tasksformState.getDisplayedValue();//
+											  if(querypanetaskForm2tasksremark.getDisplayedValue()!="")queryvopanetaskForm2tasks.remark=querypanetaskForm2tasksremark.getDisplayedValue();//
+							
+	if(querypanetaskForm2taskstasks.getDisplayedValue()!=""){
+				var panetaskForm2taskstasksQuery= new Object();
+				//tasksQuery.taskForm2tasksName=querytasks.getDisplayedValue();
+				panetaskForm2taskstasksQuery.id=querypanetaskForm2taskstasks.getValue();
+				queryvopanetaskForm2tasks.tasks=panetaskForm2taskstasksQuery;
+			  }
+	if(querypanetaskForm2taskscar.getDisplayedValue()!=""){
+				var panetaskForm2taskscarQuery= new Object();
+				//carQuery.taskForm2tasksName=querycar.getDisplayedValue();
+				panetaskForm2taskscarQuery.id=querypanetaskForm2taskscar.getValue();
+				queryvopanetaskForm2tasks.car=panetaskForm2taskscarQuery;
+			  }
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpanetaskForm2tasks(queryvopanetaskForm2tasks);
+             }      
+       }
+																   
+</script>
+<div id="queryDivpanetaskForm2tasks" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="setDate"  >setDate:</td> 
+						<td align="left"  colspan="3"><span id="querypanetaskForm2taskssetDateImg0"  ><input class="editerDate"   jsId="querypanetaskForm2taskssetDate" id="querypanetaskForm2taskssetDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypanetaskForm2taskssetDateTime" id="querypanetaskForm2taskssetDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypanetaskForm2taskssetDateImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1panetaskForm2taskssetDate" id="query1panetaskForm2taskssetDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1panetaskForm2taskssetDateTime" id="query1panetaskForm2taskssetDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypanetaskForm2taskssetDateImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypanetaskForm2taskssetDateImgdown" >></span>
+							<span id="querypanetaskForm2taskssetDateImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2panetaskForm2taskssetDate" id="query2panetaskForm2taskssetDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2panetaskForm2taskssetDateTime" id="query2panetaskForm2taskssetDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypanetaskForm2taskssetDateImg" style="vertical-align:middle;margin-top:0px;">
+						</td>
+													<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="formState" >formState:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="querypanetaskForm2tasksformState"  jsId="querypanetaskForm2tasksformState"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					                <tr>
+							<td align="right" i18n="remark" >remark:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypanetaskForm2tasksremark"  jsId="querypanetaskForm2tasksremark"   dojoType="dijit.form.TextBox"  />
+													</td>
+				
+
+						<td align="right"  i18n="tasks"  ></td>
+					<td align="left" colspan="3" ><input  id="querypanetaskForm2taskstasks"  jsId="querypanetaskForm2taskstasks" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoTaskForm.tasksStore"  /></td>  
+										<td align="right"  i18n="car"  ></td>
+					<td align="left" ><input  id="querypanetaskForm2taskscar"  jsId="querypanetaskForm2taskscar" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoTaskForm.carStore"  /></td>
+					</tr>
+				
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpanetaskForm2tasks();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	</div>	
+	       	
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpanetaskForm2tasks"  dojoType="dojox.Grid" autoWidth="false"  jsId="panetaskForm2tasks"	model="modelpanetaskForm2tasks"  structure="layoutpanetaskForm2tasks"  ></div>
+      </div>          
+	  
+

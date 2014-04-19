@@ -1,0 +1,287 @@
+
+<script type="text/javascript" >
+//orgaPeoples2peopleSelectPane.html
+dojo.require("projectDojo.Peoples");
+var dojoPeoples= new  projectDojo.Peoples();
+dojoPeoples.initPeoples();
+var urlpaneorgaPeoples2people= getUrl()+ "services/PeoplesManageService";
+var deletedatapaneorgaPeoples2people =  new Array();
+var querydatapaneorgaPeoples2people =  new Array();
+var pagenumberpaneorgaPeoples2people=1;
+var totalCountpaneorgaPeoples2people=0;
+var pagesizepaneorgaPeoples2people=10;
+var orderBypaneorgaPeoples2people='0';
+var queryvopaneorgaPeoples2people=new Object();
+var oddstyle='';
+var modelpaneorgaPeoples2people = new dojox.grid.data.Table(null, querydatapaneorgaPeoples2people);
+
+
+var noPaneorgaPeoples2people;
+var selectPaneorgaPeoples2peopleIDs;
+var oldFloatPaneorgaPeoples2people;
+var selectPaneorgaPeoples2peopleInRow;
+var ifMultPaneorgaPeoples2people=0;	
+	  
+var getChoisepaneorgaPeoples2people = function(inRowIndex) {
+			if(selectPaneorgaPeoples2peopleIDs==querydatapaneorgaPeoples2people[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selectorgaPeoples2people" id="'+querydatapaneorgaPeoples2people[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selectorgaPeoples2people" id="'+querydatapaneorgaPeoples2people[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpaneorgaPeoples2people=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepaneorgaPeoples2people},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.peopleName, field: 2,width: 10}
+						  						  				,   {name: i18nStr.peoplePassword, field: 3,width: 10}
+						  						  				,   {name: i18nStr.peopleStatus, field: 4,width: 10}
+						  						  				,   {name: i18nStr.birthDay,field:5, width: 8}
+						  						  				,   {name: i18nStr.sex, field: 6,width: 10}
+						  						  				,   {name: i18nStr.birthPlace, field: 7,width: 10}
+						  						  				,   {name: i18nStr.address, field: 8,width: 10}
+						  						  				,   {name: i18nStr.tel, field: 9,width: 10}
+						  						  				,   {name: i18nStr.engageMode, field: 10,width: 10}
+						  						  				,   {name: i18nStr.engageDate,field:11, width: 8}
+						  						  				,   {name: i18nStr.gradeEnum, field: 12,width: 10}
+						  						  				,   {name: i18nStr.remark, field: 13,width: 10}
+						  				
+					]]}];	 
+					
+function getVOpaneorgaPeoples2people(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('PeoplesVO',queryvo) ;
+      pu.add('pageNumber',pagenumberpaneorgaPeoples2people) ;
+	    pu.add('pageSize',pagesizepaneorgaPeoples2people) ;
+	    pu.add('orderBy',orderBypaneorgaPeoples2people) ;
+      SOAPClient.invoke(urlpaneorgaPeoples2people,"getPeoples", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapaneorgaPeoples2people=new Array();
+		   querydatapaneorgaPeoples2people=dojoPeoples.PeoplesVOtoArray_fun(ul,false);
+           totalCountpaneorgaPeoples2people=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapaneorgaPeoples2people.splice(querydatapaneorgaPeoples2people.length-1,1);
+      modelpaneorgaPeoples2people.setData(querydatapaneorgaPeoples2people);
+      var totalpage=Math.ceil(new Number(totalCountpaneorgaPeoples2people)/pagesizepaneorgaPeoples2people);
+	  
+	if(totalpage>1){
+		if(pagenumberpaneorgaPeoples2people==1){
+			dijit.byId("but6paneorgaPeoples2people").setDisabled(true);
+			dijit.byId("but7paneorgaPeoples2people").setDisabled(false);
+		}else if(pagenumberpaneorgaPeoples2people==totalpage){
+			dijit.byId("but6paneorgaPeoples2people").setDisabled(false);
+			dijit.byId("but7paneorgaPeoples2people").setDisabled(true);
+		}else{
+			dijit.byId("but6paneorgaPeoples2people").setDisabled(false);
+			dijit.byId("but7paneorgaPeoples2people").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6paneorgaPeoples2people").setDisabled(true);
+		dijit.byId("but7paneorgaPeoples2people").setDisabled(true);
+	
+	}
+	if(pagesizepaneorgaPeoples2people==0){
+		totalpage=1;
+		dijit.byId("but6paneorgaPeoples2people").setDisabled(true);
+		dijit.byId("but7paneorgaPeoples2people").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpaneorgaPeoples2people=1;
+	
+	 document.getElementById("rowCountpaneorgaPeoples2people").innerHTML=i18nStr.di+" "+pagenumberpaneorgaPeoples2people+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpaneorgaPeoples2people+" "+i18nStr.rowSize; 	
+}
+
+ var selectorgaPeoples2peopleFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selectorgaPeoples2people");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMultPaneorgaPeoples2people==0){
+              rep=querydatapaneorgaPeoples2people[i];
+            }else{
+              rep[rep.length]=querydatapaneorgaPeoples2people[i];
+            }
+          }
+      }
+	   return rep;
+    //selectorgaPeoples2peopleFun(rep);
+	//oldFloatorgaPeoples2people.hide();
+}  					
+
+
+//------------init 
+ getVOpaneorgaPeoples2people(queryvopaneorgaPeoples2people);
+      if(gridpaneorgaPeoples2people==undefined){
+	  			 gridpaneorgaPeoples2people= new dojox.Grid({
+					title: "ff",
+					id: "gridpaneorgaPeoples2people",
+					jsId: "gridpaneorgaPeoples2people",
+					structure: layoutpaneorgaPeoples2people,
+					rowCount:querydatapaneorgaPeoples2people.length-1,
+					model:modelpaneorgaPeoples2people
+				}, dojo.byId("gridpaneorgaPeoples2people"));
+				
+			}else{ 
+			//gridpaneorgaPeoples2people.model.setData(querydatapaneorgaPeoples2people); 
+			} 
+//-------------	
+
+var allpagepaneorgaPeoples2people=function(){
+	pagesizepaneorgaPeoples2people=0;
+	getVOpaneorgaPeoples2people(queryvopaneorgaPeoples2people);
+}
+var  pagesizeChangepaneorgaPeoples2people=function(mylabel){
+	pagesizepaneorgaPeoples2people=mylabel;
+	getVOpaneorgaPeoples2people(queryvopaneorgaPeoples2people);
+}           
+var upPagepaneorgaPeoples2people= function(){
+	pagenumberpaneorgaPeoples2people--;
+	getVOpaneorgaPeoples2people(queryvopaneorgaPeoples2people);
+}
+var downPagepaneorgaPeoples2people=function(){
+	pagenumberpaneorgaPeoples2people++;
+	getVOpaneorgaPeoples2people(queryvopaneorgaPeoples2people);
+}
+ 
+
+   
+function querybuttonpaneorgaPeoples2people(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvoorgaPeoples2people.id=0 ;
+              queryvopaneorgaPeoples2people=new Object();
+								  if(querypaneorgaPeoples2peoplepeopleName.getDisplayedValue()!="")queryvopaneorgaPeoples2people.peopleName=querypaneorgaPeoples2peoplepeopleName.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peoplepeoplePassword.getDisplayedValue()!="")queryvopaneorgaPeoples2people.peoplePassword=querypaneorgaPeoples2peoplepeoplePassword.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peoplepeopleStatus.getDisplayedValue()!="")queryvopaneorgaPeoples2people.peopleStatus=querypaneorgaPeoples2peoplepeopleStatus.getDisplayedValue();//
+											  d=queryDate_fun("paneorgaPeoples2peoplebirthDay");
+					  if(d==null){validstate=1;}else if(d.upSign!="%"){queryvopaneorgaPeoples2people.birthDay=d;}
+											  if(querypaneorgaPeoples2peoplesex.getDisplayedValue()!="")queryvopaneorgaPeoples2people.sex=querypaneorgaPeoples2peoplesex.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peoplebirthPlace.getDisplayedValue()!="")queryvopaneorgaPeoples2people.birthPlace=querypaneorgaPeoples2peoplebirthPlace.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peopleaddress.getDisplayedValue()!="")queryvopaneorgaPeoples2people.address=querypaneorgaPeoples2peopleaddress.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peopletel.getDisplayedValue()!="")queryvopaneorgaPeoples2people.tel=querypaneorgaPeoples2peopletel.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peopleengageMode.getDisplayedValue()!="")queryvopaneorgaPeoples2people.engageMode=querypaneorgaPeoples2peopleengageMode.getDisplayedValue();//
+											  d=queryDate_fun("paneorgaPeoples2peopleengageDate");
+					  if(d==null){validstate=1;}else if(d.upSign!="%"){queryvopaneorgaPeoples2people.engageDate=d;}
+											  if(querypaneorgaPeoples2peoplegradeEnum.getDisplayedValue()!="")queryvopaneorgaPeoples2people.gradeEnum=querypaneorgaPeoples2peoplegradeEnum.getDisplayedValue();//
+											  if(querypaneorgaPeoples2peopleremark.getDisplayedValue()!="")queryvopaneorgaPeoples2people.remark=querypaneorgaPeoples2peopleremark.getDisplayedValue();//
+							
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpaneorgaPeoples2people(queryvopaneorgaPeoples2people);
+             }      
+       }
+																																																						   
+</script>
+<div id="queryDivpaneorgaPeoples2people" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="peopleName" >peopleName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypaneorgaPeoples2peoplepeopleName"  jsId="querypaneorgaPeoples2peoplepeopleName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="peoplePassword" >peoplePassword:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="querypaneorgaPeoples2peoplepeoplePassword"  jsId="querypaneorgaPeoples2peoplepeoplePassword"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="peopleStatus" >peopleStatus:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="querypaneorgaPeoples2peoplepeopleStatus"  jsId="querypaneorgaPeoples2peoplepeopleStatus"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="birthDay"  >birthDay:</td> 
+						<td align="left"  colspan="3"><span id="querypaneorgaPeoples2peoplebirthDayImg0"  ><input class="editerDate"   jsId="querypaneorgaPeoples2peoplebirthDay" id="querypaneorgaPeoples2peoplebirthDay"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypaneorgaPeoples2peoplebirthDayTime" id="querypaneorgaPeoples2peoplebirthDayTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypaneorgaPeoples2peoplebirthDayImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1paneorgaPeoples2peoplebirthDay" id="query1paneorgaPeoples2peoplebirthDay"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1paneorgaPeoples2peoplebirthDayTime" id="query1paneorgaPeoples2peoplebirthDayTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorgaPeoples2peoplebirthDayImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorgaPeoples2peoplebirthDayImgdown" >></span>
+							<span id="querypaneorgaPeoples2peoplebirthDayImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2paneorgaPeoples2peoplebirthDay" id="query2paneorgaPeoples2peoplebirthDay"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2paneorgaPeoples2peoplebirthDayTime" id="query2paneorgaPeoples2peoplebirthDayTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypaneorgaPeoples2peoplebirthDayImg" style="vertical-align:middle;margin-top:0px;">
+						</td>
+													<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="sex" >sex:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="querypaneorgaPeoples2peoplesex"  jsId="querypaneorgaPeoples2peoplesex"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					                <tr>
+							<td align="right" i18n="birthPlace" >birthPlace:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypaneorgaPeoples2peoplebirthPlace"  jsId="querypaneorgaPeoples2peoplebirthPlace"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="address" >address:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="querypaneorgaPeoples2peopleaddress"  jsId="querypaneorgaPeoples2peopleaddress"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="tel" >tel:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="querypaneorgaPeoples2peopletel"  jsId="querypaneorgaPeoples2peopletel"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="engageMode" >engageMode:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypaneorgaPeoples2peopleengageMode"  jsId="querypaneorgaPeoples2peopleengageMode"   dojoType="dijit.form.TextBox"  />
+													</td>
+																<td align="right"  i18n="engageDate" >engageDate:</td>
+						<td align="left"   colspan="5"><span id="querypaneorgaPeoples2peopleengageDateImg0"  ><input class="editerDate"   jsId="querypaneorgaPeoples2peopleengageDate" id="querypaneorgaPeoples2peopleengageDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypaneorgaPeoples2peopleengageDateTime" id="querypaneorgaPeoples2peopleengageDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypaneorgaPeoples2peopleengageDateImg1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1paneorgaPeoples2peopleengageDate" id="query1paneorgaPeoples2peopleengageDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1paneorgaPeoples2peopleengageDateTime" id="query1paneorgaPeoples2peopleengageDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorgaPeoples2peopleengageDateImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorgaPeoples2peopleengageDateImgdown" >></span>
+							<span id="querypaneorgaPeoples2peopleengageDateImg2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2paneorgaPeoples2peopleengageDate" id="query2paneorgaPeoples2peopleengageDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2paneorgaPeoples2peopleengageDateTime" id="query2paneorgaPeoples2peopleengageDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypaneorgaPeoples2peopleengageDateImg" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+			                <tr>
+							<td align="right" i18n="gradeEnum" >gradeEnum:</td>
+						<td align="left"  >
+						
+														<input  id="querypaneorgaPeoples2peoplegradeEnum"  jsId="querypaneorgaPeoples2peoplegradeEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoPeoples.gradeEnumStore" />
+													</td>
+														<td align="right"  i18n="remark" >remark:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="querypaneorgaPeoples2peopleremark"  jsId="querypaneorgaPeoples2peopleremark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+				
+
+    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpaneorgaPeoples2people();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	</div>	
+	       	
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpaneorgaPeoples2people"  dojoType="dojox.Grid" autoWidth="false"  jsId="paneorgaPeoples2people"	model="modelpaneorgaPeoples2people"  structure="layoutpaneorgaPeoples2people"  ></div>
+      </div>          
+	  
+

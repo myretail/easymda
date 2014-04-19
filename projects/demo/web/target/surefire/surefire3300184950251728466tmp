@@ -1,0 +1,6 @@
+#surefire
+#Sat Jul 30 16:39:35 CST 2011
+user.dir=/Users/changwei/easymda/projects/demo/web
+deploy=true
+localRepository=/Users/changwei/.m2/repository
+basedir=/Users/changwei/easymda/projects/demo/web

@@ -1,0 +1,187 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.demo</groupId>
+        <artifactId>demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>demo-app</artifactId>
+    <packaging>ear</packaging>
+    <name>demo Application</name>
+    <dependencies>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>demo-common</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>demo-core</artifactId>
+            <version>${pom.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>demo-web</artifactId>
+            <version>${pom.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>demo-webservice</artifactId>
+            <version>${pom.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+		<dependency>
+            <groupId>com.tonicsystems</groupId>
+            <artifactId>jarjar</artifactId>
+            <version>0.6</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>${application.id}-${pom.version}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/config</directory>
+                <targetPath>../</targetPath>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/application</directory>
+                <targetPath>../${application.id}-${pom.version}</targetPath>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <includes>**/*.xml</includes>
+                    <excludes>**/jboss-app.xml</excludes>
+                    <version>1.4</version>
+                    <modules>
+                        <jarModule>
+                            <groupId>${pom.groupId}</groupId>
+                            <artifactId>demo-common</artifactId>
+                            <includeInApplicationXml>true</includeInApplicationXml>
+                        </jarModule>
+                        <ejbModule>
+                            <groupId>${pom.groupId}</groupId>
+                            <artifactId>demo-core</artifactId>
+                        </ejbModule>
+                        <webModule>
+                            <groupId>${pom.groupId}</groupId>
+                            <artifactId>demo-web</artifactId>
+                            <contextRoot>/${application.id}</contextRoot>
+                        </webModule>
+                    
+					<webModule>
+                            <groupId>${pom.groupId}</groupId>
+                            <artifactId>demo-webservice</artifactId>
+                            <contextRoot>/${application.id}-ws</contextRoot>
+					</webModule>
+					</modules>
+                </configuration>
+            </plugin>
+			 <!-- remove the 'javax.xml.namespace.QName' class from any jar that bundles it,
+                 it causes classloading issues with containers that alreadly have it -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>remove problem classes</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                            <configuration>
+                                <tasks>
+                                    <property name="dependencyClasspath" refid="maven.runtime.classpath"/>
+                                    <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" classpath="${dependencyClasspath}"/>
+                                    <copy file="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}/axis2-1.2.jar"
+                                        tofile="${pom.basedir}/target/jarjar/axis2-1.2.jar"/>
+                                    <jarjar jarfile="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}/axis2-1.2.jar">
+                                        <zipfileset src="${pom.basedir}/target/jarjar/axis2-1.2.jar"/>
+                                        <zap pattern="javax.xml.namespace.QName"/>
+                                    </jarjar>
+                                    <copy file="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}/stax-api-1.0.1.jar"
+                                        tofile="${pom.basedir}/target/jarjar/stax-api-1.0.1.jar"/>
+                                    <jarjar jarfile="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}/stax-api-1.0.1.jar">
+                                        <zipfileset src="${pom.basedir}/target/jarjar/stax-api-1.0.1.jar"/>
+                                        <zap pattern="javax.xml.namespace.QName"/>
+                                    </jarjar>
+                                    <copy file="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}/woden-1.0-incubating-M7a.jar"
+                                        tofile="${pom.basedir}/target/jarjar/woden-1.0-incubating-M7a.jar"/>
+                                    <jarjar jarfile="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}/woden-1.0-incubating-M7a.jar">
+                                        <zipfileset src="${pom.basedir}/target/jarjar/woden-1.0-incubating-M7a.jar"/>
+                                        <zap pattern="javax.xml.namespace.QName"/>
+                                    </jarjar>
+                                    <zip destfile="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}.ear"
+                                         basedir="${pom.basedir}/target/${pom.parent.artifactId}-${pom.version}" update="true" />
+                                </tasks>
+                            </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.andromda.maven.plugins</groupId>
+                <artifactId>andromdapp-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <deployLocation>${jboss.home}/server/default/deploy</deployLocation>
+                    <!-- include the generated data source file -->
+                    <includes>
+                        <include>*ds.xml</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <!-- This profile here will allow you to specify -Ddeploy=link in order deploy an exploded ear using symbolic links,
+             this allows you to easily edit things like jsp, xhtml, etc and just build the web module without having
+             to deploy the ear -->
+        <profile>
+            <id>link</id>
+            <activation>
+                <property>
+                    <name>deploy</name>
+                    <value>link</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.andromda.maven.plugins</groupId>
+                        <artifactId>andromdapp-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>link</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <deployLocation>${jboss.home}/server/default/deploy</deployLocation>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

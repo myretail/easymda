@@ -1,0 +1,186 @@
+
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCondpaymentForPayment(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+
+              n=queryNumber_fun("PaymentOrderRowdproductNum");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.productNum=n;haveCon=true;}  
+
+              n=queryNumber_fun("PaymentOrderRowdunitNum");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.unitNum=n;haveCon=true;}  
+
+              n=queryNumber_fun("PaymentOrderRowdgoodsSuttle");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.goodsSuttle=n;haveCon=true;}  
+
+              n=queryNumber_fun("PaymentOrderRowdgoodsWeight");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.goodsWeight=n;haveCon=true;}  
+
+              n=queryNumber_fun("PaymentOrderRowdgoodsVolume");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.goodsVolume=n;haveCon=true;}  
+
+	          if(queryPaymentOrderRowdlabel.getDisplayedValue()!=""){
+			  queryObject.label=queryPaymentOrderRowdlabel.getDisplayedValue();//
+			  haveCon=true;}
+
+              n=queryNumber_fun("PaymentOrderRowdcarriage");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.carriage=n;haveCon=true;}  
+
+	          if(queryPaymentOrderRowdespecial.getDisplayedValue()!=""){
+			  queryObject.especial=queryPaymentOrderRowdespecial.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryPaymentOrderRowdgoodsState.getDisplayedValue()!=""){
+			  queryObject.goodsState=queryPaymentOrderRowdgoodsState.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryPaymentOrderRowdremark.getDisplayedValue()!=""){
+			  queryObject.remark=queryPaymentOrderRowdremark.getDisplayedValue();//
+			  haveCon=true;}
+			
+	if(queryPaymentOrderRowdorder.getDisplayedValue()!=""){
+				var orderQuery= new Object();
+				//orderQuery.OrderRowdName=queryorder.getDisplayedValue();
+				orderQuery.id=queryPaymentOrderRowdorder.getValue();
+				queryObject.order=orderQuery;
+				haveCon=true;
+			  }
+	if(queryPaymentOrderRowdproduct.getDisplayedValue()!=""){
+				var productQuery= new Object();
+				//productQuery.OrderRowdName=queryproduct.getDisplayedValue();
+				productQuery.id=queryPaymentOrderRowdproduct.getValue();
+				queryObject.product=productQuery;
+				haveCon=true;
+			  }
+	return haveCon;
+}
+	</script>
+	
+																																																																																		<div id="querypaymentForPaymentDiv" style="margin-right: 0px;  height: 125px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="queryOrderRowdproductNum" >productNum:</td>
+			<td align="left"  >
+							<span id="queryPaymentOrderRowdproductNumImg0"  ><input type="text" class="editerNumber"   jsId="queryPaymentOrderRowdproductNum"  id="queryPaymentOrderRowdproductNum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryPaymentOrderRowdproductNumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryPaymentOrderRowdproductNum1"  id="queryPaymentOrderRowdproductNum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdproductNumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdproductNumImgdown" >></span>
+							<span id="queryPaymentOrderRowdproductNumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryPaymentOrderRowdproductNum2"  id="queryPaymentOrderRowdproductNum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryPaymentOrderRowdproductNumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="queryOrderRowdunitNum" >unitNum:</td>
+							<td align="left" colspan="3" >
+								<span id="queryPaymentOrderRowdunitNumImg0"  ><input type="text" class="editerNumber" jsId="queryPaymentOrderRowdunitNum"  id="queryPaymentOrderRowdunitNum"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryPaymentOrderRowdunitNumImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryPaymentOrderRowdunitNum1"  id="queryPaymentOrderRowdunitNum1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdunitNumImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdunitNumImgdown" >></span>
+								<span id="queryPaymentOrderRowdunitNumImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryPaymentOrderRowdunitNum2"  id="queryPaymentOrderRowdunitNum2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryPaymentOrderRowdunitNumImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																		<td align="right"  i18n="queryOrderRowdgoodsSuttle" >goodsSuttle:</td>
+						<td align="left"  >
+							<span id="queryPaymentOrderRowdgoodsSuttleImg0"  ><input type="text" class="editerNumber" jsId="queryPaymentOrderRowdgoodsSuttle"  id="queryPaymentOrderRowdgoodsSuttle"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryPaymentOrderRowdgoodsSuttleImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryPaymentOrderRowdgoodsSuttle1"  id="queryPaymentOrderRowdgoodsSuttle1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdgoodsSuttleImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdgoodsSuttleImgdown" >></span>
+							<span id="queryPaymentOrderRowdgoodsSuttleImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryPaymentOrderRowdgoodsSuttle2"  id="queryPaymentOrderRowdgoodsSuttle2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryPaymentOrderRowdgoodsSuttleImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+								  </tr>
+			                <tr>
+				<td align="right" i18n="queryOrderRowdgoodsWeight" >goodsWeight:</td>
+			<td align="left"  >
+							<span id="queryPaymentOrderRowdgoodsWeightImg0"  ><input type="text" class="editerNumber"   jsId="queryPaymentOrderRowdgoodsWeight"  id="queryPaymentOrderRowdgoodsWeight"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryPaymentOrderRowdgoodsWeightImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryPaymentOrderRowdgoodsWeight1"  id="queryPaymentOrderRowdgoodsWeight1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdgoodsWeightImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdgoodsWeightImgdown" >></span>
+							<span id="queryPaymentOrderRowdgoodsWeightImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryPaymentOrderRowdgoodsWeight2"  id="queryPaymentOrderRowdgoodsWeight2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryPaymentOrderRowdgoodsWeightImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="queryOrderRowdgoodsVolume" >goodsVolume:</td>
+							<td align="left" colspan="3" >
+								<span id="queryPaymentOrderRowdgoodsVolumeImg0"  ><input type="text" class="editerNumber" jsId="queryPaymentOrderRowdgoodsVolume"  id="queryPaymentOrderRowdgoodsVolume"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryPaymentOrderRowdgoodsVolumeImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryPaymentOrderRowdgoodsVolume1"  id="queryPaymentOrderRowdgoodsVolume1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdgoodsVolumeImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdgoodsVolumeImgdown" >></span>
+								<span id="queryPaymentOrderRowdgoodsVolumeImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryPaymentOrderRowdgoodsVolume2"  id="queryPaymentOrderRowdgoodsVolume2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryPaymentOrderRowdgoodsVolumeImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="queryOrderRowdlabel" >label:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryPaymentOrderRowdlabel"  jsId="queryPaymentOrderRowdlabel"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+				<td align="right" i18n="queryOrderRowdcarriage" >carriage:</td>
+			<td align="left"  >
+							<span id="queryPaymentOrderRowdcarriageImg0"  ><input type="text" class="editerNumber"   jsId="queryPaymentOrderRowdcarriage"  id="queryPaymentOrderRowdcarriage"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryPaymentOrderRowdcarriageImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryPaymentOrderRowdcarriage1"  id="queryPaymentOrderRowdcarriage1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdcarriageImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryPaymentOrderRowdcarriageImgdown" >></span>
+							<span id="queryPaymentOrderRowdcarriageImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryPaymentOrderRowdcarriage2"  id="queryPaymentOrderRowdcarriage2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryPaymentOrderRowdcarriageImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+												<td align="right"  i18n="queryOrderRowdespecial" >especial:</td>
+						<td align="left" colspan="3" >
+														<input type="text" class="editerInput"  id="queryPaymentOrderRowdespecial"  jsId="queryPaymentOrderRowdespecial"   dojoType="dijit.form.TextBox"  />
+													</td>  
+															<td align="right"  i18n="queryOrderRowdgoodsState" >goodsState:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryPaymentOrderRowdgoodsState"  jsId="queryPaymentOrderRowdgoodsState"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryOrderRowdremark" >remark:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryPaymentOrderRowdremark"  jsId="queryPaymentOrderRowdremark"   dojoType="dijit.form.TextBox"  />
+													</td>
+				
+
+
+								<td align="right"  i18n="queryOrderRowdorder"  ></td>
+					<td align="left" ><!--colspan="3" --><input  id="queryPaymentOrderRowdorder"  jsId="queryPaymentOrderRowdorder" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoPayment.orderStore"  /></td>  
+														<td align="right"  i18n="queryOrderRowdproduct"  ></td>
+					<td align="left" ><input  id="queryPaymentOrderRowdproduct"  jsId="queryPaymentOrderRowdproduct" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoPayment.productStore"  /></td>
+					</tr>
+						
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+

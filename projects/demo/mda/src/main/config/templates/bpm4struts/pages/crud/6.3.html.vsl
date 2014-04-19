@@ -1,0 +1,40 @@
+ #set($needFile=0)
+ #foreach($member in $manageable.AssociationEnds)
+	#if(!${member.many})
+		#set($needFile = 1)
+	#end
+ #end
+#if($needFile!=0)
+#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+#set($filePath="${stringUtils.replace($di,'.','/')}/${manageable.name}RightCrudAFTab.html")
+<script type="text/javascript" >
+</script>
+		<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="${manageable.name}AFTab" jsId="${manageable.name}AFTab"  >
+#foreach($member in $manageable.AssociationEnds)
+	#if(!${member.many})      
+			<div dojoType="dijit.layout.ContentPane" title="${member.association.name}"  id="${member.association.name}" jsId="${member.association.name}" >
+				<div align="right">
+					<span id="rowCount${member.association.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPage${member.association.name}();"  id="but6${member.association.name}" disabled='true' jsId="but6${member.association.name}" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPage${member.association.name}();" id="but7${member.association.name}" disabled='true' jsId="but7${member.association.name}" iconClass="downPageIcon" >pagedown</button>
+					#set ($ifcon= 0)
+					#set ($ortherClass= ${member.otherEnd.type})
+					#foreach($member in $ortherClass.manageableAttributes)
+						#if ($member.name != ${ortherClass.manageableIdentifier.name})
+							#set ($ifcon= 1)
+						#end
+					#end		
+					#if($ifcon == 0)
+					<button dojoType="dijit.form.myButton" onclick="save${member.association.name}();"  iconClass="saveIcon" ></button>
+					#else
+					<button dojoType="dijit.form.Button" onclick="addRow${member.association.name}();" iconClass="addIcon" >add</button>
+					<button dojoType="dijit.form.Button" onclick="remove${member.association.name}();" iconClass="delIcon" >delete</button>
+					<button dojoType="dijit.form.Button" id="but3${member.association.name}" jsId="but3${member.association.name}" onclick="call_funUpd${member.association.name}();"  iconClass="saveIcon">save</button>
+					#end
+				</div>
+				<div id="grid${member.association.name}"  ></div>
+			</div>
+	#end
+#end     
+		</div>
+#end

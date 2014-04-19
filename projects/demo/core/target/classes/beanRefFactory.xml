@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans
+    PUBLIC "-//SPRING//DTD BEAN//EN"
+           "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="beanRefFactory"
+         class="org.springframework.context.support.ClassPathXmlApplicationContext">
+        <constructor-arg>
+           <list>
+                <value>applicationContext.xml</value>
+                <value>applicationContext-dataSource.xml</value>
+                <value>applicationContext-manageable.xml</value>
+                <!-- beanRefFactory merge-point -->
+           </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="beanRefFactoryEjb"
+         class="org.springframework.context.support.ClassPathXmlApplicationContext">
+        <constructor-arg>
+           <list>
+                <value>applicationContext-localEjb.xml</value>
+                <!-- beanRefFactoryEjb merge-point -->
+           </list>
+        </constructor-arg>
+    </bean>
+    <!-- beanRefFactoryEjbXml merge-point -->
+
+</beans>

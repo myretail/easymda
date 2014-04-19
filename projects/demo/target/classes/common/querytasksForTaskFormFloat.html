@@ -1,0 +1,96 @@
+
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCondtasksForTaskForm(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+
+              n=queryNumber_fun("TaskFormTasknum");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.num=n;haveCon=true;}  
+
+              n=queryNumber_fun("TaskFormTaskvolumne");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.volumne=n;haveCon=true;}  
+
+	          if(queryTaskFormTaskremark.getDisplayedValue()!=""){
+			  queryObject.remark=queryTaskFormTaskremark.getDisplayedValue();//
+			  haveCon=true;}
+			
+	if(queryTaskFormTasktaskForm.getDisplayedValue()!=""){
+				var taskFormQuery= new Object();
+				//taskFormQuery.TaskName=querytaskForm.getDisplayedValue();
+				taskFormQuery.id=queryTaskFormTasktaskForm.getValue();
+				queryObject.taskForm=taskFormQuery;
+				haveCon=true;
+			  }
+	return haveCon;
+}
+	</script>
+	
+																										<div id="querytasksForTaskFormDiv" style="margin-right: 0px;  height: 75px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="queryTasknum" >num:</td>
+			<td align="left"  >
+							<span id="queryTaskFormTasknumImg0"  ><input type="text" class="editerNumber"   jsId="queryTaskFormTasknum"  id="queryTaskFormTasknum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryTaskFormTasknumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryTaskFormTasknum1"  id="queryTaskFormTasknum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryTaskFormTasknumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryTaskFormTasknumImgdown" >></span>
+							<span id="queryTaskFormTasknumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryTaskFormTasknum2"  id="queryTaskFormTasknum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryTaskFormTasknumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="queryTaskvolumne" >volumne:</td>
+							<td align="left" colspan="3" >
+								<span id="queryTaskFormTaskvolumneImg0"  ><input type="text" class="editerNumber" jsId="queryTaskFormTaskvolumne"  id="queryTaskFormTaskvolumne"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryTaskFormTaskvolumneImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryTaskFormTaskvolumne1"  id="queryTaskFormTaskvolumne1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryTaskFormTaskvolumneImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryTaskFormTaskvolumneImgdown" >></span>
+								<span id="queryTaskFormTaskvolumneImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryTaskFormTaskvolumne2"  id="queryTaskFormTaskvolumne2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryTaskFormTaskvolumneImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="queryTaskremark" >remark:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryTaskFormTaskremark"  jsId="queryTaskFormTaskremark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			
+
+
+								<tr><td align="right"  i18n="queryTasktaskForm"  ></td>
+					<td align="left" ><input  id="queryTaskFormTasktaskForm"  jsId="queryTaskFormTasktaskForm" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoTaskForm.taskFormStore"  /></td>  
+						    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+

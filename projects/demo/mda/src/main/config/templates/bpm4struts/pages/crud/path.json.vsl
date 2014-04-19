@@ -1,0 +1,98 @@
+{ identifier: 'name',
+  label: 'name',
+  items: [
+   #set ($comma = " ")
+  { id: 'root', name:'root', children: [
+	#foreach ($manageable in $manageables)
+			${comma}{_reference:'${manageable.name}'}
+			#set ($comma = " ,")
+	#end		
+		]},
+		 #set ($enumManag = '') 
+#foreach ($manageable in $manageables)
+#if(${manageable.name}!='Enumeration')
+#set ($comma = " ")
+	#set($dai = ${stringUtils.lastIndexOf(${manageable.packageName}, 'entity.')} + 7)
+	#set($dap = ${stringUtils.substring(${manageable.packageName}, $dai)})
+    #set($filePath=${stringUtils.replace($dap,'.','/')})
+     { name:'crud${manageable.name}_1', type:'${filePath}/1${manageable.name}.jsp'},
+     { name:'crud${manageable.name}_2', type:'${filePath}/9${manageable.name}.jsp'},
+	 
+ #set ($inumCrud = 2) 	 
+ #foreach($member in $manageable.manageableAssociationEnds)
+	#set($dais = ${stringUtils.lastIndexOf(${member.type.packageName}, 'entity.')} + 7)
+	#set($daps = ${stringUtils.substring(${member.type.packageName}, $dais)})
+    #set($filePathS=${stringUtils.replace($daps,'.','/')})
+	#set ($inumCrud = $inumCrud+1) 
+	 { name:'crud${manageable.name}_$inumCrud', type:'${filePathS}/4${member.type.name}.jsp'},
+	  #set ($inumCrud = $inumCrud+1) 
+	 { name:'crud${manageable.name}_$inumCrud', type:'${filePathS}/6${member.type.name}.jsp'},
+	  #set ($inumCrud = $inumCrud+1) 
+	 { name:'crud${manageable.name}_$inumCrud', type:'${filePathS}/7${member.type.name}.jsp'},
+	 
+ #end
+	#set ($inumCrud = $inumCrud+1) 	
+	 { name:'crud${manageable.name}_$inumCrud', type:'${filePath}/31${manageable.name}.jsp'},
+	 #set ($inumCrud = $inumCrud+1) 	
+	 { name:'crud${manageable.name}_$inumCrud', type:''},
+	 #set ($inumCrud = $inumCrud+1) 	
+	 { name:'crud${manageable.name}_$inumCrud', type:''},
+	 #set ($inumCrudf = $inumCrud+1) 	
+	 #set ($inumCrude = $inumCrud+40) 	
+	  #set ($inumCrud = $inumCrude) 	
+	 #foreach ( $i in [$inumCrudf..$inumCrude] )
+		   {name:'crud${manageable.name}_$i',type:''},
+		 #end
+	 { name:'query${manageable.name}_1', type:'${filePath}/2${manageable.name}.jsp'},//¿‡À∆1.vslµƒ≤È—Ø
+	 { name:'query${manageable.name}_2', type:'${filePath}/3${manageable.name}.jsp'},
+	 { name:'query${manageable.name}_3', type:'${filePath}/5${manageable.name}.jsp'},
+	 { name:'query${manageable.name}_4', type:'${filePath}/8${manageable.name}.jsp'},
+	  #set ($inum = 4) 	 
+ #foreach($member in $manageable.manageableAssociationEnds)	 
+	#set($dais = ${stringUtils.lastIndexOf(${member.type.packageName}, 'entity.')} + 7)
+	#set($daps = ${stringUtils.substring(${member.type.packageName}, $dais)})
+    #set($filePathS=${stringUtils.replace($daps,'.','/')})
+	#set ($inum = $inum+1) 
+	  { name:'query${manageable.name}_$inum', type:'${filePathS}/3${member.type.name}.jsp'},
+	  #set ($inum = $inum+1) 
+	 { name:'query${manageable.name}_$inum', type:'${filePathS}/5${member.type.name}.jsp'},
+	 #set ($inum = $inum+1) 
+	 { name:'query${manageable.name}_$inum', type:'${filePathS}/8${member.type.name}.jsp'},
+	 
+ #end
+  #set ($inumCrudf = $inum+1) 	
+	 #set ($inumCrude = $inum+40) 	
+	  #set ($inum= $inumCrude) 
+	 #foreach ( $i in [$inumCrudf..$inumCrude] )
+		   {name:'query${manageable.name}_$i',type:''},
+		 #end
+	 #set ($inumd = $inum+1) 
+    { name:'query${manageable.name}_$inumd', type:''},
+	 { name:'${manageable.name}',  type:'table',
+	 
+         children:[
+		 #foreach ( $i in [1..$inumCrud] )
+		   {_reference:'crud${manageable.name}_$i'},
+		 #end
+		  #foreach ( $i in [1..$inum] )
+		   {_reference:'query${manageable.name}_$i'},
+		 #end
+		  #set ($inum = $inum+1) 
+		 {_reference:'query${manageable.name}_$inum'}
+		 ] },
+#else
+		  #set ($enumManag = $manageable) 
+		  
+#end	 
+#end	 
+	{ name:'crud${enumManag.name}_1', type:'basicdemo/1${enumManag.name}.jsp'},
+     { name:'crud${enumManag.name}_2', type:'basicdemo/9${enumManag.name}.jsp'},
+	 { name:'query${enumManag.name}_1', type:'basicdemo/2${enumManag.name}.jsp'},
+{ name:'${enumManag.name}',  type:'table',
+	 
+         children:[
+		 {_reference:'crud${enumManag.name}_1'},
+		 {_reference:'crud${enumManag.name}_2'},
+		 {_reference:'query${enumManag.name}_1'}
+		 ] }
+]}

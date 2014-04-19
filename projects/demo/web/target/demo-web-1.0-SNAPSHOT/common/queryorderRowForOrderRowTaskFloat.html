@@ -1,0 +1,186 @@
+
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCondorderRowForOrderRowTask(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+
+              n=queryNumber_fun("OrderRowTaskOrderRowdproductNum");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.productNum=n;haveCon=true;}  
+
+              n=queryNumber_fun("OrderRowTaskOrderRowdunitNum");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.unitNum=n;haveCon=true;}  
+
+              n=queryNumber_fun("OrderRowTaskOrderRowdgoodsSuttle");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.goodsSuttle=n;haveCon=true;}  
+
+              n=queryNumber_fun("OrderRowTaskOrderRowdgoodsWeight");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.goodsWeight=n;haveCon=true;}  
+
+              n=queryNumber_fun("OrderRowTaskOrderRowdgoodsVolume");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.goodsVolume=n;haveCon=true;}  
+
+	          if(queryOrderRowTaskOrderRowdlabel.getDisplayedValue()!=""){
+			  queryObject.label=queryOrderRowTaskOrderRowdlabel.getDisplayedValue();//
+			  haveCon=true;}
+
+              n=queryNumber_fun("OrderRowTaskOrderRowdcarriage");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.carriage=n;haveCon=true;}  
+
+	          if(queryOrderRowTaskOrderRowdespecial.getDisplayedValue()!=""){
+			  queryObject.especial=queryOrderRowTaskOrderRowdespecial.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowTaskOrderRowdgoodsState.getDisplayedValue()!=""){
+			  queryObject.goodsState=queryOrderRowTaskOrderRowdgoodsState.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowTaskOrderRowdremark.getDisplayedValue()!=""){
+			  queryObject.remark=queryOrderRowTaskOrderRowdremark.getDisplayedValue();//
+			  haveCon=true;}
+			
+	if(queryOrderRowTaskOrderRowdorder.getDisplayedValue()!=""){
+				var orderQuery= new Object();
+				//orderQuery.OrderRowdName=queryorder.getDisplayedValue();
+				orderQuery.id=queryOrderRowTaskOrderRowdorder.getValue();
+				queryObject.order=orderQuery;
+				haveCon=true;
+			  }
+	if(queryOrderRowTaskOrderRowdproduct.getDisplayedValue()!=""){
+				var productQuery= new Object();
+				//productQuery.OrderRowdName=queryproduct.getDisplayedValue();
+				productQuery.id=queryOrderRowTaskOrderRowdproduct.getValue();
+				queryObject.product=productQuery;
+				haveCon=true;
+			  }
+	return haveCon;
+}
+	</script>
+	
+																																																																																		<div id="queryorderRowForOrderRowTaskDiv" style="margin-right: 0px;  height: 125px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="queryOrderRowdproductNum" >productNum:</td>
+			<td align="left"  >
+							<span id="queryOrderRowTaskOrderRowdproductNumImg0"  ><input type="text" class="editerNumber"   jsId="queryOrderRowTaskOrderRowdproductNum"  id="queryOrderRowTaskOrderRowdproductNum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryOrderRowTaskOrderRowdproductNumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryOrderRowTaskOrderRowdproductNum1"  id="queryOrderRowTaskOrderRowdproductNum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdproductNumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdproductNumImgdown" >></span>
+							<span id="queryOrderRowTaskOrderRowdproductNumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryOrderRowTaskOrderRowdproductNum2"  id="queryOrderRowTaskOrderRowdproductNum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrderRowTaskOrderRowdproductNumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="queryOrderRowdunitNum" >unitNum:</td>
+							<td align="left" colspan="3" >
+								<span id="queryOrderRowTaskOrderRowdunitNumImg0"  ><input type="text" class="editerNumber" jsId="queryOrderRowTaskOrderRowdunitNum"  id="queryOrderRowTaskOrderRowdunitNum"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryOrderRowTaskOrderRowdunitNumImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryOrderRowTaskOrderRowdunitNum1"  id="queryOrderRowTaskOrderRowdunitNum1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdunitNumImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdunitNumImgdown" >></span>
+								<span id="queryOrderRowTaskOrderRowdunitNumImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryOrderRowTaskOrderRowdunitNum2"  id="queryOrderRowTaskOrderRowdunitNum2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrderRowTaskOrderRowdunitNumImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																		<td align="right"  i18n="queryOrderRowdgoodsSuttle" >goodsSuttle:</td>
+						<td align="left"  >
+							<span id="queryOrderRowTaskOrderRowdgoodsSuttleImg0"  ><input type="text" class="editerNumber" jsId="queryOrderRowTaskOrderRowdgoodsSuttle"  id="queryOrderRowTaskOrderRowdgoodsSuttle"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryOrderRowTaskOrderRowdgoodsSuttleImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryOrderRowTaskOrderRowdgoodsSuttle1"  id="queryOrderRowTaskOrderRowdgoodsSuttle1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdgoodsSuttleImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdgoodsSuttleImgdown" >></span>
+							<span id="queryOrderRowTaskOrderRowdgoodsSuttleImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryOrderRowTaskOrderRowdgoodsSuttle2"  id="queryOrderRowTaskOrderRowdgoodsSuttle2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrderRowTaskOrderRowdgoodsSuttleImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+								  </tr>
+			                <tr>
+				<td align="right" i18n="queryOrderRowdgoodsWeight" >goodsWeight:</td>
+			<td align="left"  >
+							<span id="queryOrderRowTaskOrderRowdgoodsWeightImg0"  ><input type="text" class="editerNumber"   jsId="queryOrderRowTaskOrderRowdgoodsWeight"  id="queryOrderRowTaskOrderRowdgoodsWeight"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryOrderRowTaskOrderRowdgoodsWeightImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryOrderRowTaskOrderRowdgoodsWeight1"  id="queryOrderRowTaskOrderRowdgoodsWeight1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdgoodsWeightImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdgoodsWeightImgdown" >></span>
+							<span id="queryOrderRowTaskOrderRowdgoodsWeightImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryOrderRowTaskOrderRowdgoodsWeight2"  id="queryOrderRowTaskOrderRowdgoodsWeight2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrderRowTaskOrderRowdgoodsWeightImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="queryOrderRowdgoodsVolume" >goodsVolume:</td>
+							<td align="left" colspan="3" >
+								<span id="queryOrderRowTaskOrderRowdgoodsVolumeImg0"  ><input type="text" class="editerNumber" jsId="queryOrderRowTaskOrderRowdgoodsVolume"  id="queryOrderRowTaskOrderRowdgoodsVolume"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryOrderRowTaskOrderRowdgoodsVolumeImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryOrderRowTaskOrderRowdgoodsVolume1"  id="queryOrderRowTaskOrderRowdgoodsVolume1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdgoodsVolumeImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdgoodsVolumeImgdown" >></span>
+								<span id="queryOrderRowTaskOrderRowdgoodsVolumeImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryOrderRowTaskOrderRowdgoodsVolume2"  id="queryOrderRowTaskOrderRowdgoodsVolume2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrderRowTaskOrderRowdgoodsVolumeImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="queryOrderRowdlabel" >label:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryOrderRowTaskOrderRowdlabel"  jsId="queryOrderRowTaskOrderRowdlabel"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+				<td align="right" i18n="queryOrderRowdcarriage" >carriage:</td>
+			<td align="left"  >
+							<span id="queryOrderRowTaskOrderRowdcarriageImg0"  ><input type="text" class="editerNumber"   jsId="queryOrderRowTaskOrderRowdcarriage"  id="queryOrderRowTaskOrderRowdcarriage"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryOrderRowTaskOrderRowdcarriageImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryOrderRowTaskOrderRowdcarriage1"  id="queryOrderRowTaskOrderRowdcarriage1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdcarriageImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowTaskOrderRowdcarriageImgdown" >></span>
+							<span id="queryOrderRowTaskOrderRowdcarriageImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryOrderRowTaskOrderRowdcarriage2"  id="queryOrderRowTaskOrderRowdcarriage2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrderRowTaskOrderRowdcarriageImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+												<td align="right"  i18n="queryOrderRowdespecial" >especial:</td>
+						<td align="left" colspan="3" >
+														<input type="text" class="editerInput"  id="queryOrderRowTaskOrderRowdespecial"  jsId="queryOrderRowTaskOrderRowdespecial"   dojoType="dijit.form.TextBox"  />
+													</td>  
+															<td align="right"  i18n="queryOrderRowdgoodsState" >goodsState:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryOrderRowTaskOrderRowdgoodsState"  jsId="queryOrderRowTaskOrderRowdgoodsState"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryOrderRowdremark" >remark:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryOrderRowTaskOrderRowdremark"  jsId="queryOrderRowTaskOrderRowdremark"   dojoType="dijit.form.TextBox"  />
+													</td>
+				
+
+
+								<td align="right"  i18n="queryOrderRowdorder"  ></td>
+					<td align="left" ><!--colspan="3" --><input  id="queryOrderRowTaskOrderRowdorder"  jsId="queryOrderRowTaskOrderRowdorder" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoOrderRowTask.orderStore"  /></td>  
+														<td align="right"  i18n="queryOrderRowdproduct"  ></td>
+					<td align="left" ><input  id="queryOrderRowTaskOrderRowdproduct"  jsId="queryOrderRowTaskOrderRowdproduct" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoOrderRowTask.productStore"  /></td>
+					</tr>
+						
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+

@@ -1,0 +1,315 @@
+
+<script type="text/javascript" >
+//orderRow2orderRowTasksSelectPane.html
+dojo.require("projectDojo.OrderRowd");
+var dojoOrderRowd= new  projectDojo.OrderRowd();
+dojoOrderRowd.initOrderRowd();
+var urlpaneorderRow2orderRowTasks= getUrl()+ "services/OrderRowdManageService";
+var deletedatapaneorderRow2orderRowTasks =  new Array();
+var querydatapaneorderRow2orderRowTasks =  new Array();
+var pagenumberpaneorderRow2orderRowTasks=1;
+var totalCountpaneorderRow2orderRowTasks=0;
+var pagesizepaneorderRow2orderRowTasks=10;
+var orderBypaneorderRow2orderRowTasks='0';
+var queryvopaneorderRow2orderRowTasks=new Object();
+var oddstyle='';
+var modelpaneorderRow2orderRowTasks = new dojox.grid.data.Table(null, querydatapaneorderRow2orderRowTasks);
+
+
+var noPaneorderRow2orderRowTasks;
+var selectPaneorderRow2orderRowTasksIDs;
+var oldFloatPaneorderRow2orderRowTasks;
+var selectPaneorderRow2orderRowTasksInRow;
+var ifMultPaneorderRow2orderRowTasks=0;	
+	  
+var getChoisepaneorderRow2orderRowTasks = function(inRowIndex) {
+			if(selectPaneorderRow2orderRowTasksIDs==querydatapaneorderRow2orderRowTasks[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selectorderRow2orderRowTasks" id="'+querydatapaneorderRow2orderRowTasks[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selectorderRow2orderRowTasks" id="'+querydatapaneorderRow2orderRowTasks[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpaneorderRow2orderRowTasks=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepaneorderRow2orderRowTasks},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.productNum,field:2, width: 8}
+						  						  				 ,  {name: i18nStr.unitNum,field:3, width: 8}
+						  						  				 ,  {name: i18nStr.goodsSuttle,field:4, width: 8}
+						  						  				 ,  {name: i18nStr.goodsWeight,field:5, width: 8}
+						  						  				 ,  {name: i18nStr.goodsVolume,field:6, width: 8}
+						  						  				,   {name: i18nStr.label, field: 7,width: 10}
+						  						  				 ,  {name: i18nStr.carriage,field:8, width: 8}
+						  						  				,   {name: i18nStr.especial, field: 9,width: 10}
+						  						  				,   {name: i18nStr.goodsState, field: 10,width: 10}
+						  						  				,   {name: i18nStr.remark, field: 11,width: 10}
+						  				
+//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.order,field: 12,get:function(inRowIndex){ var str='';if(querydatapaneorderRow2orderRowTasks[inRowIndex]!=undefined && querydatapaneorderRow2orderRowTasks[inRowIndex][12]!=undefined&& querydatapaneorderRow2orderRowTasks[inRowIndex][12][2]!=undefined){str=querydatapaneorderRow2orderRowTasks[inRowIndex][12][2];} return str;} ,width: 10 }
+			//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';if(querydatapaneorderRow2orderRowTasks[inRowIndex]!=undefined && querydatapaneorderRow2orderRowTasks[inRowIndex][13]!=undefined&& querydatapaneorderRow2orderRowTasks[inRowIndex][13][2]!=undefined){str=querydatapaneorderRow2orderRowTasks[inRowIndex][13][2];} return str;} ,width: 10 }
+								]]}];	 
+					
+function getVOpaneorderRow2orderRowTasks(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('OrderRowdVO',queryvo) ;
+      pu.add('pageNumber',pagenumberpaneorderRow2orderRowTasks) ;
+	    pu.add('pageSize',pagesizepaneorderRow2orderRowTasks) ;
+	    pu.add('orderBy',orderBypaneorderRow2orderRowTasks) ;
+      SOAPClient.invoke(urlpaneorderRow2orderRowTasks,"getOrderRowd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapaneorderRow2orderRowTasks=new Array();
+		   querydatapaneorderRow2orderRowTasks=dojoOrderRowd.OrderRowdVOtoArray_fun(ul,false);
+           totalCountpaneorderRow2orderRowTasks=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapaneorderRow2orderRowTasks.splice(querydatapaneorderRow2orderRowTasks.length-1,1);
+      modelpaneorderRow2orderRowTasks.setData(querydatapaneorderRow2orderRowTasks);
+      var totalpage=Math.ceil(new Number(totalCountpaneorderRow2orderRowTasks)/pagesizepaneorderRow2orderRowTasks);
+	  
+	if(totalpage>1){
+		if(pagenumberpaneorderRow2orderRowTasks==1){
+			dijit.byId("but6paneorderRow2orderRowTasks").setDisabled(true);
+			dijit.byId("but7paneorderRow2orderRowTasks").setDisabled(false);
+		}else if(pagenumberpaneorderRow2orderRowTasks==totalpage){
+			dijit.byId("but6paneorderRow2orderRowTasks").setDisabled(false);
+			dijit.byId("but7paneorderRow2orderRowTasks").setDisabled(true);
+		}else{
+			dijit.byId("but6paneorderRow2orderRowTasks").setDisabled(false);
+			dijit.byId("but7paneorderRow2orderRowTasks").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6paneorderRow2orderRowTasks").setDisabled(true);
+		dijit.byId("but7paneorderRow2orderRowTasks").setDisabled(true);
+	
+	}
+	if(pagesizepaneorderRow2orderRowTasks==0){
+		totalpage=1;
+		dijit.byId("but6paneorderRow2orderRowTasks").setDisabled(true);
+		dijit.byId("but7paneorderRow2orderRowTasks").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpaneorderRow2orderRowTasks=1;
+	
+	 document.getElementById("rowCountpaneorderRow2orderRowTasks").innerHTML=i18nStr.di+" "+pagenumberpaneorderRow2orderRowTasks+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpaneorderRow2orderRowTasks+" "+i18nStr.rowSize; 	
+}
+
+ var selectorderRow2orderRowTasksFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selectorderRow2orderRowTasks");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMultPaneorderRow2orderRowTasks==0){
+              rep=querydatapaneorderRow2orderRowTasks[i];
+            }else{
+              rep[rep.length]=querydatapaneorderRow2orderRowTasks[i];
+            }
+          }
+      }
+	   return rep;
+    //selectorderRow2orderRowTasksFun(rep);
+	//oldFloatorderRow2orderRowTasks.hide();
+}  					
+
+
+//------------init 
+ getVOpaneorderRow2orderRowTasks(queryvopaneorderRow2orderRowTasks);
+      if(gridpaneorderRow2orderRowTasks==undefined){
+	  			 gridpaneorderRow2orderRowTasks= new dojox.Grid({
+					title: "ff",
+					id: "gridpaneorderRow2orderRowTasks",
+					jsId: "gridpaneorderRow2orderRowTasks",
+					structure: layoutpaneorderRow2orderRowTasks,
+					rowCount:querydatapaneorderRow2orderRowTasks.length-1,
+					model:modelpaneorderRow2orderRowTasks
+				}, dojo.byId("gridpaneorderRow2orderRowTasks"));
+				
+			}else{ 
+			//gridpaneorderRow2orderRowTasks.model.setData(querydatapaneorderRow2orderRowTasks); 
+			} 
+//-------------	
+
+var allpagepaneorderRow2orderRowTasks=function(){
+	pagesizepaneorderRow2orderRowTasks=0;
+	getVOpaneorderRow2orderRowTasks(queryvopaneorderRow2orderRowTasks);
+}
+var  pagesizeChangepaneorderRow2orderRowTasks=function(mylabel){
+	pagesizepaneorderRow2orderRowTasks=mylabel;
+	getVOpaneorderRow2orderRowTasks(queryvopaneorderRow2orderRowTasks);
+}           
+var upPagepaneorderRow2orderRowTasks= function(){
+	pagenumberpaneorderRow2orderRowTasks--;
+	getVOpaneorderRow2orderRowTasks(queryvopaneorderRow2orderRowTasks);
+}
+var downPagepaneorderRow2orderRowTasks=function(){
+	pagenumberpaneorderRow2orderRowTasks++;
+	getVOpaneorderRow2orderRowTasks(queryvopaneorderRow2orderRowTasks);
+}
+ 
+
+   
+function querybuttonpaneorderRow2orderRowTasks(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvoorderRow2orderRowTasks.id=0 ;
+              queryvopaneorderRow2orderRowTasks=new Object();
+								  n=queryNumber_fun("paneorderRow2orderRowTasksproductNum");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRow2orderRowTasks.productNum=n;}  
+											  n=queryNumber_fun("paneorderRow2orderRowTasksunitNum");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRow2orderRowTasks.unitNum=n;}  
+											  n=queryNumber_fun("paneorderRow2orderRowTasksgoodsSuttle");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRow2orderRowTasks.goodsSuttle=n;}  
+											  n=queryNumber_fun("paneorderRow2orderRowTasksgoodsWeight");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRow2orderRowTasks.goodsWeight=n;}  
+											  n=queryNumber_fun("paneorderRow2orderRowTasksgoodsVolume");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRow2orderRowTasks.goodsVolume=n;}  
+											  if(querypaneorderRow2orderRowTaskslabel.getDisplayedValue()!="")queryvopaneorderRow2orderRowTasks.label=querypaneorderRow2orderRowTaskslabel.getDisplayedValue();//
+											  n=queryNumber_fun("paneorderRow2orderRowTaskscarriage");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRow2orderRowTasks.carriage=n;}  
+											  if(querypaneorderRow2orderRowTasksespecial.getDisplayedValue()!="")queryvopaneorderRow2orderRowTasks.especial=querypaneorderRow2orderRowTasksespecial.getDisplayedValue();//
+											  if(querypaneorderRow2orderRowTasksgoodsState.getDisplayedValue()!="")queryvopaneorderRow2orderRowTasks.goodsState=querypaneorderRow2orderRowTasksgoodsState.getDisplayedValue();//
+											  if(querypaneorderRow2orderRowTasksremark.getDisplayedValue()!="")queryvopaneorderRow2orderRowTasks.remark=querypaneorderRow2orderRowTasksremark.getDisplayedValue();//
+							
+	if(querypaneorderRow2orderRowTasksorder.getDisplayedValue()!=""){
+				var paneorderRow2orderRowTasksorderQuery= new Object();
+				//orderQuery.orderRow2orderRowTasksName=queryorder.getDisplayedValue();
+				paneorderRow2orderRowTasksorderQuery.id=querypaneorderRow2orderRowTasksorder.getValue();
+				queryvopaneorderRow2orderRowTasks.order=paneorderRow2orderRowTasksorderQuery;
+			  }
+	if(querypaneorderRow2orderRowTasksproduct.getDisplayedValue()!=""){
+				var paneorderRow2orderRowTasksproductQuery= new Object();
+				//productQuery.orderRow2orderRowTasksName=queryproduct.getDisplayedValue();
+				paneorderRow2orderRowTasksproductQuery.id=querypaneorderRow2orderRowTasksproduct.getValue();
+				queryvopaneorderRow2orderRowTasks.product=paneorderRow2orderRowTasksproductQuery;
+			  }
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpaneorderRow2orderRowTasks(queryvopaneorderRow2orderRowTasks);
+             }      
+       }
+																																										   
+</script>
+<div id="queryDivpaneorderRow2orderRowTasks" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="productNum" >productNum:</td>
+			<td align="left"  >
+							<span id="querypaneorderRow2orderRowTasksproductNumImg0"  ><input type="text" class="editerNumber"   jsId="querypaneorderRow2orderRowTasksproductNum"  id="querypaneorderRow2orderRowTasksproductNum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypaneorderRow2orderRowTasksproductNumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsid="querypaneorderRow2orderRowTasksproductNum1"  id="querypaneorderRow2orderRowTasksproductNum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksproductNumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksproductNumImgdown" >></span>
+							<span id="querypaneorderRow2orderRowTasksproductNumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsid="querypaneorderRow2orderRowTasksproductNum2"  id="querypaneorderRow2orderRowTasksproductNum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRow2orderRowTasksproductNumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="unitNum" >unitNum:</td>
+							<td align="left" colspan="3" >
+								<span id="querypaneorderRow2orderRowTasksunitNumImg0"  ><input type="text" class="editerNumber" jsId="querypaneorderRow2orderRowTasksunitNum"  id="querypaneorderRow2orderRowTasksunitNum"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypaneorderRow2orderRowTasksunitNumImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypaneorderRow2orderRowTasksunitNum1"  id="querypaneorderRow2orderRowTasksunitNum1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksunitNumImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksunitNumImgdown" >></span>
+								<span id="querypaneorderRow2orderRowTasksunitNumImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypaneorderRow2orderRowTasksunitNum2"  id="querypaneorderRow2orderRowTasksunitNum2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRow2orderRowTasksunitNumImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																		<td align="right"  i18n="goodsSuttle" >goodsSuttle:</td>
+						<td align="left"  >
+							<span id="querypaneorderRow2orderRowTasksgoodsSuttleImg0"  ><input type="text" class="editerNumber" jsId="querypaneorderRow2orderRowTasksgoodsSuttle"  id="querypaneorderRow2orderRowTasksgoodsSuttle"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypaneorderRow2orderRowTasksgoodsSuttleImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypaneorderRow2orderRowTasksgoodsSuttle1"  id="querypaneorderRow2orderRowTasksgoodsSuttle1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksgoodsSuttleImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksgoodsSuttleImgdown" >></span>
+							<span id="querypaneorderRow2orderRowTasksgoodsSuttleImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypaneorderRow2orderRowTasksgoodsSuttle2"  id="querypaneorderRow2orderRowTasksgoodsSuttle2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRow2orderRowTasksgoodsSuttleImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+								  </tr>
+			                <tr>
+				<td align="right" i18n="goodsWeight" >goodsWeight:</td>
+			<td align="left"  >
+							<span id="querypaneorderRow2orderRowTasksgoodsWeightImg0"  ><input type="text" class="editerNumber"   jsId="querypaneorderRow2orderRowTasksgoodsWeight"  id="querypaneorderRow2orderRowTasksgoodsWeight"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypaneorderRow2orderRowTasksgoodsWeightImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsid="querypaneorderRow2orderRowTasksgoodsWeight1"  id="querypaneorderRow2orderRowTasksgoodsWeight1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksgoodsWeightImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksgoodsWeightImgdown" >></span>
+							<span id="querypaneorderRow2orderRowTasksgoodsWeightImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsid="querypaneorderRow2orderRowTasksgoodsWeight2"  id="querypaneorderRow2orderRowTasksgoodsWeight2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRow2orderRowTasksgoodsWeightImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="goodsVolume" >goodsVolume:</td>
+							<td align="left" colspan="3" >
+								<span id="querypaneorderRow2orderRowTasksgoodsVolumeImg0"  ><input type="text" class="editerNumber" jsId="querypaneorderRow2orderRowTasksgoodsVolume"  id="querypaneorderRow2orderRowTasksgoodsVolume"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypaneorderRow2orderRowTasksgoodsVolumeImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypaneorderRow2orderRowTasksgoodsVolume1"  id="querypaneorderRow2orderRowTasksgoodsVolume1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksgoodsVolumeImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTasksgoodsVolumeImgdown" >></span>
+								<span id="querypaneorderRow2orderRowTasksgoodsVolumeImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypaneorderRow2orderRowTasksgoodsVolume2"  id="querypaneorderRow2orderRowTasksgoodsVolume2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRow2orderRowTasksgoodsVolumeImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="label" >label:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="querypaneorderRow2orderRowTaskslabel"  jsId="querypaneorderRow2orderRowTaskslabel"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+				<td align="right" i18n="carriage" >carriage:</td>
+			<td align="left"  >
+							<span id="querypaneorderRow2orderRowTaskscarriageImg0"  ><input type="text" class="editerNumber"   jsId="querypaneorderRow2orderRowTaskscarriage"  id="querypaneorderRow2orderRowTaskscarriage"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypaneorderRow2orderRowTaskscarriageImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsid="querypaneorderRow2orderRowTaskscarriage1"  id="querypaneorderRow2orderRowTaskscarriage1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTaskscarriageImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRow2orderRowTaskscarriageImgdown" >></span>
+							<span id="querypaneorderRow2orderRowTaskscarriageImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsid="querypaneorderRow2orderRowTaskscarriage2"  id="querypaneorderRow2orderRowTaskscarriage2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRow2orderRowTaskscarriageImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+												<td align="right"  i18n="especial" >especial:</td>
+						<td align="left" colspan="3" >
+														<input type="text" class="editerInput"  id="querypaneorderRow2orderRowTasksespecial"  jsId="querypaneorderRow2orderRowTasksespecial"   dojoType="dijit.form.TextBox"  />
+													</td>  
+															<td align="right"  i18n="goodsState" >goodsState:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="querypaneorderRow2orderRowTasksgoodsState"  jsId="querypaneorderRow2orderRowTasksgoodsState"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="remark" >remark:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="querypaneorderRow2orderRowTasksremark"  jsId="querypaneorderRow2orderRowTasksremark"   dojoType="dijit.form.TextBox"  />
+													</td>
+				
+
+						<td align="right"  i18n="order"  ></td>
+					<td align="left" colspan="3" ><input  id="querypaneorderRow2orderRowTasksorder"  jsId="querypaneorderRow2orderRowTasksorder" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoOrderRowd.orderStore"  /></td>  
+										<td align="right"  i18n="product"  ></td>
+					<td align="left" ><input  id="querypaneorderRow2orderRowTasksproduct"  jsId="querypaneorderRow2orderRowTasksproduct" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoOrderRowd.productStore"  /></td>
+					</tr>
+				
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpaneorderRow2orderRowTasks();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	</div>	
+	       	
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpaneorderRow2orderRowTasks"  dojoType="dojox.Grid" autoWidth="false"  jsId="paneorderRow2orderRowTasks"	model="modelpaneorderRow2orderRowTasks"  structure="layoutpaneorderRow2orderRowTasks"  ></div>
+      </div>          
+	  
+

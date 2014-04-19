@@ -1,0 +1,101 @@
+
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCondorgaForOrgaPeoples(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+
+	          if(queryOrgaPeoplesOrgaorgaName.getDisplayedValue()!=""){
+			  queryObject.orgaName=queryOrgaPeoplesOrgaorgaName.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrgaPeoplesOrgaorgaCode.getDisplayedValue()!=""){
+			  queryObject.orgaCode=queryOrgaPeoplesOrgaorgaCode.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrgaPeoplesOrgasno.getDisplayedValue()!=""){
+			  queryObject.sno=queryOrgaPeoplesOrgasno.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrgaPeoplesOrgaremark.getDisplayedValue()!=""){
+			  queryObject.remark=queryOrgaPeoplesOrgaremark.getDisplayedValue();//
+			  haveCon=true;}
+
+              n=queryNumber_fun("OrgaPeoplesOrgaparentId");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.parentId=n;haveCon=true;}  
+			
+	return haveCon;
+}
+	</script>
+	
+																																										<div id="queryorgaForOrgaPeoplesDiv" style="margin-right: 0px;  height: 75px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="queryOrgaorgaName" >orgaName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryOrgaPeoplesOrgaorgaName"  jsId="queryOrgaPeoplesOrgaorgaName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="queryOrgaorgaCode" >orgaCode:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryOrgaPeoplesOrgaorgaCode"  jsId="queryOrgaPeoplesOrgaorgaCode"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="queryOrgasno" >sno:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryOrgaPeoplesOrgasno"  jsId="queryOrgaPeoplesOrgasno"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryOrgaremark" >remark:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryOrgaPeoplesOrgaremark"  jsId="queryOrgaPeoplesOrgaremark"   dojoType="dijit.form.TextBox"  />
+													</td>
+																		<td align="right"  i18n="queryOrgaparentId" >parentId:</td>
+							<td align="left" colspan="3" >
+								<span id="queryOrgaPeoplesOrgaparentIdImg0"  ><input type="text" class="editerNumber" jsId="queryOrgaPeoplesOrgaparentId"  id="queryOrgaPeoplesOrgaparentId"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryOrgaPeoplesOrgaparentIdImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryOrgaPeoplesOrgaparentId1"  id="queryOrgaPeoplesOrgaparentId1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrgaPeoplesOrgaparentIdImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrgaPeoplesOrgaparentIdImgdown" >></span>
+								<span id="queryOrgaPeoplesOrgaparentIdImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryOrgaPeoplesOrgaparentId2"  id="queryOrgaPeoplesOrgaparentId2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryOrgaPeoplesOrgaparentIdImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+							
+
+
+    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+

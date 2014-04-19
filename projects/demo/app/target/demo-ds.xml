@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- JBoss Server DataSource -->
+<datasources>
+    <local-tx-datasource>
+        <jndi-name>jdbc/demo</jndi-name>
+        <connection-url>jdbc:hsqldb:hsql://127.0.0.1:1701</connection-url>
+        <driver-class>org.hsqldb.jdbcDriver</driver-class>
+        <user-name>sa</user-name>
+        <password></password>
+        <!-- <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql> -->
+        <!-- Checks for error codes and messages for fatal errors
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.DummyExceptionSorter</exception-sorter-class-name>
+        -->
+    </local-tx-datasource>
+</datasources>

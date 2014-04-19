@@ -1,0 +1,230 @@
+
+<script type="text/javascript" >
+//orderRowTasks2taskSelectPane.html
+dojo.require("projectDojo.Task");
+var dojoTask= new  projectDojo.Task();
+dojoTask.initTask();
+var urlpaneorderRowTasks2task= getUrl()+ "services/TaskManageService";
+var deletedatapaneorderRowTasks2task =  new Array();
+var querydatapaneorderRowTasks2task =  new Array();
+var pagenumberpaneorderRowTasks2task=1;
+var totalCountpaneorderRowTasks2task=0;
+var pagesizepaneorderRowTasks2task=10;
+var orderBypaneorderRowTasks2task='0';
+var queryvopaneorderRowTasks2task=new Object();
+var oddstyle='';
+var modelpaneorderRowTasks2task = new dojox.grid.data.Table(null, querydatapaneorderRowTasks2task);
+
+
+var noPaneorderRowTasks2task;
+var selectPaneorderRowTasks2taskIDs;
+var oldFloatPaneorderRowTasks2task;
+var selectPaneorderRowTasks2taskInRow;
+var ifMultPaneorderRowTasks2task=0;	
+	  
+var getChoisepaneorderRowTasks2task = function(inRowIndex) {
+			if(selectPaneorderRowTasks2taskIDs==querydatapaneorderRowTasks2task[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selectorderRowTasks2task" id="'+querydatapaneorderRowTasks2task[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selectorderRowTasks2task" id="'+querydatapaneorderRowTasks2task[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpaneorderRowTasks2task=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepaneorderRowTasks2task},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.num,field:2, width: 8}
+						  						  				 ,  {name: i18nStr.volumne,field:3, width: 8}
+						  						  				,   {name: i18nStr.remark, field: 4,width: 10}
+						  				
+//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.taskForm,field: 5,get:function(inRowIndex){ var str='';if(querydatapaneorderRowTasks2task[inRowIndex]!=undefined && querydatapaneorderRowTasks2task[inRowIndex][5]!=undefined&& querydatapaneorderRowTasks2task[inRowIndex][5][2]!=undefined){str=querydatapaneorderRowTasks2task[inRowIndex][5][2];} return str;} ,width: 10 }
+								]]}];	 
+					
+function getVOpaneorderRowTasks2task(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('TaskVO',queryvo) ;
+      pu.add('pageNumber',pagenumberpaneorderRowTasks2task) ;
+	    pu.add('pageSize',pagesizepaneorderRowTasks2task) ;
+	    pu.add('orderBy',orderBypaneorderRowTasks2task) ;
+      SOAPClient.invoke(urlpaneorderRowTasks2task,"getTask", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapaneorderRowTasks2task=new Array();
+		   querydatapaneorderRowTasks2task=dojoTask.TaskVOtoArray_fun(ul,false);
+           totalCountpaneorderRowTasks2task=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapaneorderRowTasks2task.splice(querydatapaneorderRowTasks2task.length-1,1);
+      modelpaneorderRowTasks2task.setData(querydatapaneorderRowTasks2task);
+      var totalpage=Math.ceil(new Number(totalCountpaneorderRowTasks2task)/pagesizepaneorderRowTasks2task);
+	  
+	if(totalpage>1){
+		if(pagenumberpaneorderRowTasks2task==1){
+			dijit.byId("but6paneorderRowTasks2task").setDisabled(true);
+			dijit.byId("but7paneorderRowTasks2task").setDisabled(false);
+		}else if(pagenumberpaneorderRowTasks2task==totalpage){
+			dijit.byId("but6paneorderRowTasks2task").setDisabled(false);
+			dijit.byId("but7paneorderRowTasks2task").setDisabled(true);
+		}else{
+			dijit.byId("but6paneorderRowTasks2task").setDisabled(false);
+			dijit.byId("but7paneorderRowTasks2task").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6paneorderRowTasks2task").setDisabled(true);
+		dijit.byId("but7paneorderRowTasks2task").setDisabled(true);
+	
+	}
+	if(pagesizepaneorderRowTasks2task==0){
+		totalpage=1;
+		dijit.byId("but6paneorderRowTasks2task").setDisabled(true);
+		dijit.byId("but7paneorderRowTasks2task").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpaneorderRowTasks2task=1;
+	
+	 document.getElementById("rowCountpaneorderRowTasks2task").innerHTML=i18nStr.di+" "+pagenumberpaneorderRowTasks2task+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpaneorderRowTasks2task+" "+i18nStr.rowSize; 	
+}
+
+ var selectorderRowTasks2taskFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selectorderRowTasks2task");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMultPaneorderRowTasks2task==0){
+              rep=querydatapaneorderRowTasks2task[i];
+            }else{
+              rep[rep.length]=querydatapaneorderRowTasks2task[i];
+            }
+          }
+      }
+	   return rep;
+    //selectorderRowTasks2taskFun(rep);
+	//oldFloatorderRowTasks2task.hide();
+}  					
+
+
+//------------init 
+ getVOpaneorderRowTasks2task(queryvopaneorderRowTasks2task);
+      if(gridpaneorderRowTasks2task==undefined){
+	  			 gridpaneorderRowTasks2task= new dojox.Grid({
+					title: "ff",
+					id: "gridpaneorderRowTasks2task",
+					jsId: "gridpaneorderRowTasks2task",
+					structure: layoutpaneorderRowTasks2task,
+					rowCount:querydatapaneorderRowTasks2task.length-1,
+					model:modelpaneorderRowTasks2task
+				}, dojo.byId("gridpaneorderRowTasks2task"));
+				
+			}else{ 
+			//gridpaneorderRowTasks2task.model.setData(querydatapaneorderRowTasks2task); 
+			} 
+//-------------	
+
+var allpagepaneorderRowTasks2task=function(){
+	pagesizepaneorderRowTasks2task=0;
+	getVOpaneorderRowTasks2task(queryvopaneorderRowTasks2task);
+}
+var  pagesizeChangepaneorderRowTasks2task=function(mylabel){
+	pagesizepaneorderRowTasks2task=mylabel;
+	getVOpaneorderRowTasks2task(queryvopaneorderRowTasks2task);
+}           
+var upPagepaneorderRowTasks2task= function(){
+	pagenumberpaneorderRowTasks2task--;
+	getVOpaneorderRowTasks2task(queryvopaneorderRowTasks2task);
+}
+var downPagepaneorderRowTasks2task=function(){
+	pagenumberpaneorderRowTasks2task++;
+	getVOpaneorderRowTasks2task(queryvopaneorderRowTasks2task);
+}
+ 
+
+   
+function querybuttonpaneorderRowTasks2task(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvoorderRowTasks2task.id=0 ;
+              queryvopaneorderRowTasks2task=new Object();
+								  n=queryNumber_fun("paneorderRowTasks2tasknum");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRowTasks2task.num=n;}  
+											  n=queryNumber_fun("paneorderRowTasks2taskvolumne");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopaneorderRowTasks2task.volumne=n;}  
+											  if(querypaneorderRowTasks2taskremark.getDisplayedValue()!="")queryvopaneorderRowTasks2task.remark=querypaneorderRowTasks2taskremark.getDisplayedValue();//
+							
+	if(querypaneorderRowTasks2tasktaskForm.getDisplayedValue()!=""){
+				var paneorderRowTasks2tasktaskFormQuery= new Object();
+				//taskFormQuery.orderRowTasks2taskName=querytaskForm.getDisplayedValue();
+				paneorderRowTasks2tasktaskFormQuery.id=querypaneorderRowTasks2tasktaskForm.getValue();
+				queryvopaneorderRowTasks2task.taskForm=paneorderRowTasks2tasktaskFormQuery;
+			  }
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpaneorderRowTasks2task(queryvopaneorderRowTasks2task);
+             }      
+       }
+														   
+</script>
+<div id="queryDivpaneorderRowTasks2task" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="num" >num:</td>
+			<td align="left"  >
+							<span id="querypaneorderRowTasks2tasknumImg0"  ><input type="text" class="editerNumber"   jsId="querypaneorderRowTasks2tasknum"  id="querypaneorderRowTasks2tasknum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypaneorderRowTasks2tasknumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsid="querypaneorderRowTasks2tasknum1"  id="querypaneorderRowTasks2tasknum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRowTasks2tasknumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRowTasks2tasknumImgdown" >></span>
+							<span id="querypaneorderRowTasks2tasknumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsid="querypaneorderRowTasks2tasknum2"  id="querypaneorderRowTasks2tasknum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRowTasks2tasknumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="volumne" >volumne:</td>
+							<td align="left" colspan="3" >
+								<span id="querypaneorderRowTasks2taskvolumneImg0"  ><input type="text" class="editerNumber" jsId="querypaneorderRowTasks2taskvolumne"  id="querypaneorderRowTasks2taskvolumne"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypaneorderRowTasks2taskvolumneImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypaneorderRowTasks2taskvolumne1"  id="querypaneorderRowTasks2taskvolumne1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypaneorderRowTasks2taskvolumneImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypaneorderRowTasks2taskvolumneImgdown" >></span>
+								<span id="querypaneorderRowTasks2taskvolumneImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypaneorderRowTasks2taskvolumne2"  id="querypaneorderRowTasks2taskvolumne2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypaneorderRowTasks2taskvolumneImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="remark" >remark:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="querypaneorderRowTasks2taskremark"  jsId="querypaneorderRowTasks2taskremark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			
+
+						<tr><td align="right"  i18n="taskForm"  ></td>
+					<td align="left" ><input  id="querypaneorderRowTasks2tasktaskForm"  jsId="querypaneorderRowTasks2tasktaskForm" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoTask.taskFormStore"  /></td>  
+				    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpaneorderRowTasks2task();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	</div>	
+	       	
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpaneorderRowTasks2task"  dojoType="dojox.Grid" autoWidth="false"  jsId="paneorderRowTasks2task"	model="modelpaneorderRowTasks2task"  structure="layoutpaneorderRowTasks2task"  ></div>
+      </div>          
+	  
+

@@ -1,0 +1,85 @@
+ //--------referencingManageables-----
+	 #foreach ($member in ${manageable.referencingManageables})
+		#foreach($memberMain in ${member.type})
+			{memberMain.name}=${memberMain.name}
+			memberMain.hidden=${memberMain.hidden}
+			memberMain.many=${memberMain.many}
+		#end
+	#end
+//--------manageableMembers-----b---
+	 #foreach ($member in $manageable.manageableMembers)
+		{member.name}=${member.name}
+		member.hidden=${member.hidden}
+		member.many=${member.many}
+		
+	 #end
+	 //--------------manageableAssociationEnds----otherEnd----------------------
+#foreach($member in $manageable.manageableAssociationEnds)
+		{member.otherEnd.name} =  ${member.otherEnd.name}
+		{member.otherEnd.type} =  ${member.otherEnd.type}
+		{member.otherEnd} =  ${member.otherEnd}
+		{member.name} =  ${member.name}
+		{member.type} =  ${member.type}
+		{member.association} =  ${member.association}
+		{member.association.otherEnd} =  ${member.association.otherEnd}
+		//--
+#end
+	 //--------------manageableAssociation----otherEnd----------------------
+#foreach($member in $manageable.manageableAssociation)
+		{menber.otherEnd.name} =  ${menber.otherEnd.name}
+		{menber.otherEnd.type} =  ${menber.otherEnd.type}
+		{menber.otherEnd} =  ${menber.otherEnd}
+#end
+//--------referencingManageables-----
+	 #foreach ($member in ${manageable.referencingManageables})
+		{member.name}=${member.name}
+		member.hidden=${member.hidden}
+		member.many=${member.many}
+		member.type=${member.type}
+	#end
+//begin-----AssociationEnds-------
+     #foreach($member in $manageable.AssociationEnds)
+			{memberMain.name}=${member.name}
+			{memberMain}=${member}
+			{memberMain.otherEnd.type} =  ${memberMain.otherEnd.type}
+			{memberMain.otherEnd.name} =  ${memberMain.otherEnd.name}
+			{memberMain.otherEnd.type.name} =  ${memberMain.otherEnd.type.name}
+			memberMain.type=${memberMain.type}
+			memberMain.type.name=${memberMain.type.name}
+			memberMain.many=${memberMain.many}
+			{member.association}=${memberMain.association}
+			{member.association.otherEnd}=${memberMain.association.otherEnd}
+			{member.association.connection}=${memberMain.association.connection}
+			{member.association.connections}=${memberMain.association.connections}
+			
+	#end
+//begin-----manageableAssociationEnds-----loop--
+size=$manageable.manageableAssociationEnds.size
+size()=$manageable.manageableAssociationEnds.size()
+
+　#macro( lop $mem  )
+　　#foreach( $member in $mem.manageableAssociationEnds)
+		 ${member.type.name}.js
+	　　 #foreach( $member2 in ${member.type.manageableAssociationEnds})
+		    ${member2.type.name}.js
+	　　 #end
+　　#end
+　#end
+
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

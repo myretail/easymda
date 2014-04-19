@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+    <!-- uncomment if you want to add your own project specific facelet tags
+         (and of course make sure "/WEB-INF/custom.taglib.xml" is the actual path
+          to your facelet tag descriptor)
+    <context-param>
+        <param-name>facelets.LIBRARIES</param-name>
+        <param-value>
+            /WEB-INF/custom.taglib.xml;
+        </param-value>
+    </context-param>
+    -->
+
+    <!-- uncomment the following if you're using the open-session-in-view pattern
+         note: that you'll need to update the filter-class value if you've changed
+         the defaults for the package and/or filter name
+    <filter>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <filter-class>org.andromda.spring.presentation.AndroMDAOpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    -->
+    <filter>
+        <filter-name>ResponseOverrideFilter</filter-name>
+        <filter-class>org.displaytag.filter.ResponseOverrideFilter</filter-class>
+    </filter>
+
+    <!-- uncomment the following if you're using the open-session-in-view pattern
+    <filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
+    <filter-mapping>
+        <filter-name>ResponseOverrideFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResponseOverrideFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    
+
+    
+    <servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>org.andromda.presentation.bpm4struts.ActionServlet</servlet-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>3</param-value>
+        </init-param>
+        <init-param>
+            <param-name>detail</param-name>
+            <param-value>3</param-value>
+        </init-param>
+        <init-param>
+            <param-name>validate</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- precompilation merge-point -->
+    
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    
+    <!-- session-config merge-point -->
+    
+    
+
+    <welcome-file-list>
+        
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    
+    
+    <error-page>
+        <error-code>400</error-code>
+        <location><![CDATA[/error-page.jsp?code=400]]></location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location><![CDATA[/error-page.jsp?code=403]]></location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location><![CDATA[/error-page.jsp?code=404&resource=true]]></location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location><![CDATA[/error-page.jsp?code=500&exception=true]]></location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location><![CDATA[/error-page.jsp?code=exception&exception=true]]></location>
+    </error-page>
+
+    <!-- taglib merge-point -->
+    <!-- resource-ref merge-point -->
+
+    
+</web-app>

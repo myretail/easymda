@@ -1,0 +1,265 @@
+
+<script type="text/javascript" >
+var urlIncTask = getUrl()+ "services/TaskManageService";
+var deletedataIncTask =  new Array();
+var querydataIncTask =  new Array();
+var pagenumberIncTask=1;
+var totalCountIncTask=0;
+var pagesizeIncTask=10;
+var orderByIncTask='0';
+var queryvoIncTask=new Object();
+var oddstyle='';
+var modelIncTask = new dojox.grid.data.Table(null, querydataIncTask);
+
+
+	  
+
+
+/*								
+//have set function's manageableAssociationEnds
+	var pIncTasktaskForm = new SOAPClientParameters2();
+	var itemsIncTasktaskForm = new Array();  
+		pIncTasktaskForm.add('TaskFormVO',new  Object()) ;
+		pIncTasktaskForm.add('pageNumber',0) ;
+		pIncTasktaskForm.add('pageSize',0) ;
+	    pIncTasktaskForm.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"TaskFormManageService","getTaskForm", pIncTasktaskForm, false,  function GetEnu_callBack(ul, soapResponse){      
+				var tempData=dojoTaskSelect.TaskFormVOtoArray_fun(ul,false);
+				for(var i = 0; i < tempData.length-1; i++){		
+				  itemsIncTasktaskForm.push({name: tempData[i][2], value:tempData[i][1]});
+				}                
+	});       
+	if(itemsIncTasktaskForm.length==0)itemsIncTasktaskForm.push({name:'' , value:''});
+	var IncTasktaskFormStore = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: itemsIncTasktaskForm }});
+
+	function IncTasktaskFormSet(id,value){
+        
+        }
+*/
+	  
+	  
+var getChoiseIncTask = function(inRowIndex) {
+			if(dojoTaskSelect.selectTaskIDs==querydataIncTask[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selectTask" id="'+querydataIncTask[inRowIndex][1]+'" checked="true" type="radio"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selectTask" id="'+querydataIncTask[inRowIndex][1]+'"  type="radio"/>'
+              }
+			    }	  
+
+var layoutIncTask=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoiseIncTask},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.num,field:2, width: 8}
+						  						  				 ,  {name: i18nStr.volumne,field:3, width: 8}
+						  						  				,   {name: i18nStr.remark, field: 4,width: 10}
+						  				
+//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.taskForm,field: 5,get:function(inRowIndex){ var str='';if(querydataIncTask[inRowIndex]!=undefined && querydataIncTask[inRowIndex][5]!=undefined&& querydataIncTask[inRowIndex][5][2]!=undefined){str=querydataIncTask[inRowIndex][5][2];} return str;} ,width: 10 }
+								]]}];	 
+					
+function getVOIncTask(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('TaskVO',queryvo) ;
+      pu.add('pageNumber',pagenumberIncTask) ;
+	    pu.add('pageSize',pagesizeIncTask) ;
+	    pu.add('orderBy',orderByIncTask) ;
+      SOAPClient.invoke(urlIncTask,"getTask", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydataIncTask=new Array();
+		   querydataIncTask=dojoTaskSelect.TaskVOtoArray_fun(ul,false);
+           totalCountIncTask=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydataIncTask.splice(querydataIncTask.length-1,1);
+      modelIncTask.setData(querydataIncTask);
+      var totalpage=Math.ceil(new Number(totalCountIncTask)/pagesizeIncTask);
+	  
+	if(totalpage>1){
+		if(pagenumberIncTask==1){
+			dijit.byId("but6IncTask").setDisabled(true);
+			dijit.byId("but7IncTask").setDisabled(false);
+		}else if(pagenumberIncTask==totalpage){
+			dijit.byId("but6IncTask").setDisabled(false);
+			dijit.byId("but7IncTask").setDisabled(true);
+		}else{
+			dijit.byId("but6IncTask").setDisabled(false);
+			dijit.byId("but7IncTask").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6IncTask").setDisabled(true);
+		dijit.byId("but7IncTask").setDisabled(true);
+	
+	}
+	if(pagesizeIncTask==0){
+		totalpage=1;
+		dijit.byId("but6IncTask").setDisabled(true);
+		dijit.byId("but7IncTask").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberIncTask=1;
+	
+	 document.getElementById("rowCountIncTask").innerHTML=i18nStr.di+" "+pagenumberIncTask+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountIncTask+" "+i18nStr.rowSize; 	
+}
+
+ var selectTaskFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selectTask");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(dojoTaskSelect.ifMultTask==0){
+              rep=querydataIncTask[i];
+            }else{
+              rep[rep.length]=querydataIncTask[i];
+            }
+          }
+      }
+    selectTaskFun(rep);
+	dojoTaskSelect.oldFloatTask.hide();
+}  					
+
+
+//------------init 
+ getVOIncTask(queryvoIncTask);
+      if(gridIncTaske==undefined){
+	  			 gridIncTask = new dojox.Grid({
+					title: "ff",
+					id: "gridIncTask",
+					jsId: "gridIncTask",
+					structure: layoutIncTask,
+					rowCount:querydataIncTask.length-1,
+					model:modelIncTask
+				}, dojo.byId("gridIncTask"));
+				
+			}else{ gridIncTask.model.setData(querydataIncTask); } 
+//-------------	
+
+var allpageIncTask =function(){
+	pagesizeIncTask=0;
+	getVOIncTask(queryvoIncTask);
+}
+var  pagesizeChangeIncTask=function(mylabel){
+	pagesizeIncTask=mylabel;
+	getVOIncTask(queryvoIncTask);
+}           
+var upPageIncTask= function(){
+	pagenumberIncTask--;
+	getVOIncTask(queryvoIncTask);
+}
+var downPageIncTask =function(){
+	pagenumberIncTask++;
+	getVOIncTask(queryvoIncTask);
+}
+ 
+
+   
+function querybuttonIncTask(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvoTask.id=0 ;
+              queryvoIncTask=new Object();
+								  n=queryNumber_fun("IncTasknum");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvoIncTask.num=n;}  
+											  n=queryNumber_fun("IncTaskvolumne");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvoIncTask.volumne=n;}  
+											  if(queryIncTaskremark.getDisplayedValue()!="")queryvoIncTask.remark=queryIncTaskremark.getDisplayedValue();//
+							
+	if(queryIncTasktaskForm.getDisplayedValue()!=""){
+				var IncTasktaskFormQuery= new Object();
+				//taskFormQuery.TaskName=querytaskForm.getDisplayedValue();
+				IncTasktaskFormQuery.id=queryIncTasktaskForm.getValue();
+				queryvoIncTask.taskForm=IncTasktaskFormQuery;
+			  }
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOIncTask(queryvoIncTask);
+             }      
+       }
+													//totleinum=4
+ //rowinum=1
+
+</script>
+
+<div id="queryDivIncTask" style="margin-right: 0px;  height: 100px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="IncTasknum" >num:</td>
+			<td align="left"  >
+							<span id="queryIncTasknumImg0"  ><input type="text" class="editerNumber"   jsId="queryIncTasknum"  id="queryIncTasknum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryIncTasknumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryIncTasknum1"  id="queryIncTasknum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryIncTasknumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryIncTasknumImgdown" >></span>
+							<span id="queryIncTasknumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryIncTasknum2"  id="queryIncTasknum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryIncTasknumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="IncTaskvolumne" >volumne:</td>
+							<td align="left" colspan="3" >
+								<span id="queryIncTaskvolumneImg0"  ><input type="text" class="editerNumber" jsId="queryIncTaskvolumne"  id="queryIncTaskvolumne"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryIncTaskvolumneImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryIncTaskvolumne1"  id="queryIncTaskvolumne1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryIncTaskvolumneImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryIncTaskvolumneImgdown" >></span>
+								<span id="queryIncTaskvolumneImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryIncTaskvolumne2"  id="queryIncTaskvolumne2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryIncTaskvolumneImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="IncTaskremark" >remark:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryIncTaskremark"  jsId="queryIncTaskremark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			
+
+
+								<tr><td align="right"  i18n="IncTasktaskForm"  ></td>
+					<td align="left" ><input  id="queryIncTasktaskForm"  jsId="queryIncTasktaskForm" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoTaskSelect.TaskStore"  /></td>  
+						    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center">
+           <td > <button dojoType="dijit.form.Button" onclick="querybuttonIncTask();" iconClass="queryIcon"  i18nt="query" >query</button></td>
+           <td colspan="5"></td><td colspan="2"></td></tr>
+         </table>
+	     </div>
+	       	<div align="right">
+				<button dojoType="dijit.form.Button" id="selectIncTask" jsId="selectIncTask" onclick="selectTaskFunClick();" i18nt="selectFloatButton" iconClass="selectIcon">ok</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivIncTask');" iconClass="openQueryIcon"  i18nt="openQuery" >query</button>
+				<span id="rowCountIncTask"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPageIncTask();"  id="but6IncTask" disabled='true' jsId="but6IncTask" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPageIncTask();" id="but7IncTask" disabled='true' jsId="but7IncTask" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangeIncTask(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangeIncTask(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangeIncTask(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangeIncTask(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpageIncTask();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<!--div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyleIncTask(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyleIncTask(this.label);"></div>
+						</div></div-->
+			</div>    
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridIncTask"  dojoType="dojox.Grid" autoWidth="false"  jsId="IncTask"	model="modelIncTask"  structure="layoutIncTask"  ></div>
+      </div>      

@@ -1,0 +1,307 @@
+<template
+        path="templates/bpm4struts/pages/crud/10.2.js.vsl"
+        outputPattern="$filePath${manageable.name}SubCrud.js"
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/10.1.jsp.vsl"
+        outputPattern="$filePath/10{1}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/11.2.js.vsl"
+        outputPattern="$filePath${manageable.name}SubQuery.js"
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/11.1.jsp.vsl"
+        outputPattern="$filePath/11{1}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+
+	<template
+        path="templates/bpm4struts/pages/crud/14.2.js.vsl"
+        outputPattern="$filePath${manageable.name}SubQueryTab.js"
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/14.1.jsp.vsl"
+        outputPattern="$filePath 14{1}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/14.4.html.vsl"
+        outputPattern="$filePath${manageable.name}2AFTab.html"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	<template
+        path="templates/bpm4struts/pages/crud/14.5.js.vsl"
+        outputPattern="$filePath/${associationname}AFSubTab.js"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+
+	<template
+        path="templates/bpm4struts/pages/crud/20.1.jsp.vsl"
+        outputPattern="$filePath/20${manageable.name}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	<template
+        path="templates/bpm4struts/pages/crud/20.2.js.vsl"
+        outputPattern="$filePath ${manageable.name}SubCrudForSubGrid.js"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/QueryAssCriteria.java.vsl"
+        outputPattern="$filePath QueryAssCriteria.java"  
+        outlet="pages"
+        overwrite="true"
+		outputToSingleFile="true"
+        outputOnEmptyElements="false"
+		>
+        <modelElements variable="manageables">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/ServiceImpl.vsl"
+        outputPattern="$filePath{1}Impl.java"
+        outlet="pages"
+        overwrite="false">
+        <modelElements variable="service">
+            <modelElement>
+                <type name="org.andromda.metafacades.uml.Service"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<template
+        path="templates/bpm4struts/pages/crud/10.2.js.vsl"
+        outputPattern="$filePath${manageable.name}SubCrud.js"
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/10.1.jsp.vsl"
+        outputPattern="$filePath/10{1}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/11.2.js.vsl"
+        outputPattern="$filePath${manageable.name}SubQuery.js"
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/11.1.jsp.vsl"
+        outputPattern="$filePath/11{1}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+
+	<template
+        path="templates/bpm4struts/pages/crud/14.2.js.vsl"
+        outputPattern="$filePath${manageable.name}SubQueryTab.js"
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/14.1.jsp.vsl"
+        outputPattern="$filePath 14{1}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/14.4.html.vsl"
+        outputPattern="$filePath${manageable.name}2AFTab.html"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	<template
+        path="templates/bpm4struts/pages/crud/14.5.js.vsl"
+        outputPattern="$filePath/${associationname}AFSubTab.js"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+
+	<template
+        path="templates/bpm4struts/pages/crud/20.1.jsp.vsl"
+        outputPattern="$filePath/20${manageable.name}.jsp"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	<template
+        path="templates/bpm4struts/pages/crud/20.2.js.vsl"
+        outputPattern="$filePath ${manageable.name}SubCrudForSubGrid.js"  
+        outlet="pages"
+        overwrite="true">
+        <modelElements variable="manageable">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/QueryAssCriteria.java.vsl"
+        outputPattern="$filePath QueryAssCriteria.java"  
+        outlet="pages"
+        overwrite="true"
+		outputToSingleFile="true"
+        outputOnEmptyElements="false"
+		>
+        <modelElements variable="manageables">
+            <modelElement>
+                <type name="org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntity"/>
+            </modelElement>
+        </modelElements>
+    </template>
+	
+	<template
+        path="templates/bpm4struts/pages/crud/ServiceImpl.vsl"
+        outputPattern="$filePath{1}Impl.java"
+        outlet="pages"
+        overwrite="false">
+        <modelElements variable="service">
+            <modelElement>
+                <type name="org.andromda.metafacades.uml.Service"/>
+            </modelElement>
+        </modelElements>
+    </template>

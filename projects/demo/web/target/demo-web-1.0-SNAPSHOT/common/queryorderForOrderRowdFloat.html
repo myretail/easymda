@@ -1,0 +1,215 @@
+
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCondorderForOrderRowd(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+
+	          if(queryOrderRowdOrderdcustomerOrderNo.getDisplayedValue()!=""){
+			  queryObject.customerOrderNo=queryOrderRowdOrderdcustomerOrderNo.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdcontractNo.getDisplayedValue()!=""){
+			  queryObject.contractNo=queryOrderRowdOrderdcontractNo.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdconveyanceEnum.getDisplayedValue()!=""){
+			  queryObject.conveyanceEnum=queryOrderRowdOrderdconveyanceEnum.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdcarryTypeEnum.getDisplayedValue()!=""){
+			  queryObject.carryTypeEnum=queryOrderRowdOrderdcarryTypeEnum.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdshipperRemark.getDisplayedValue()!=""){
+			  queryObject.shipperRemark=queryOrderRowdOrderdshipperRemark.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdcarrierRemark.getDisplayedValue()!=""){
+			  queryObject.carrierRemark=queryOrderRowdOrderdcarrierRemark.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdlevelEnum.getDisplayedValue()!=""){
+			  queryObject.levelEnum=queryOrderRowdOrderdlevelEnum.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdcustomerTypeEnum.getDisplayedValue()!=""){
+			  queryObject.customerTypeEnum=queryOrderRowdOrderdcustomerTypeEnum.getDisplayedValue();//
+			  haveCon=true;}
+
+              d=queryDate_fun("OrderRowdOrderdreferTime");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryObject.referTime=d;haveCon=true;}
+
+	          if(queryOrderRowdOrderdlinkMan.getDisplayedValue()!=""){
+			  queryObject.linkMan=queryOrderRowdOrderdlinkMan.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryOrderRowdOrderdtel.getDisplayedValue()!=""){
+			  queryObject.tel=queryOrderRowdOrderdtel.getDisplayedValue();//
+			  haveCon=true;}
+
+              d=queryDate_fun("OrderRowdOrderdbookTime");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryObject.bookTime=d;haveCon=true;}
+
+              d=queryDate_fun("OrderRowdOrderdcompleteTime");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryObject.completeTime=d;haveCon=true;}
+
+	          if(queryOrderRowdOrderdremark.getDisplayedValue()!=""){
+			  queryObject.remark=queryOrderRowdOrderdremark.getDisplayedValue();//
+			  haveCon=true;}
+			
+	if(queryOrderRowdOrderdorderRow.getDisplayedValue()!=""){
+				var orderRowQuery= new Object();
+				//orderRowQuery.OrderdName=queryorderRow.getDisplayedValue();
+				orderRowQuery.id=queryOrderRowdOrderdorderRow.getValue();
+				queryObject.orderRow=orderRowQuery;
+				haveCon=true;
+			  }
+	if(queryOrderRowdOrderdcustomer.getDisplayedValue()!=""){
+				var customerQuery= new Object();
+				//customerQuery.OrderdName=querycustomer.getDisplayedValue();
+				customerQuery.id=queryOrderRowdOrderdcustomer.getValue();
+				queryObject.customer=customerQuery;
+				haveCon=true;
+			  }
+	return haveCon;
+}
+	</script>
+	
+																																																																																																																														<div id="queryorderForOrderRowdDiv" style="margin-right: 0px;  height: 200px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="queryOrderdcustomerOrderNo" >customerOrderNo:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryOrderRowdOrderdcustomerOrderNo"  jsId="queryOrderRowdOrderdcustomerOrderNo"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="queryOrderdcontractNo" >contractNo:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryOrderRowdOrderdcontractNo"  jsId="queryOrderRowdOrderdcontractNo"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="queryOrderdconveyanceEnum" >conveyanceEnum:</td>
+						<td align="left"  >
+													<input  id="queryOrderRowdOrderdconveyanceEnum" jsId="queryOrderRowdOrderdconveyanceEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoOrderRowd.conveyanceEnumStore" />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryOrderdcarryTypeEnum" >carryTypeEnum:</td>
+						<td align="left"  >
+						
+														<input  id="queryOrderRowdOrderdcarryTypeEnum"  jsId="queryOrderRowdOrderdcarryTypeEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoOrderRowd.carryTypeEnumStore" />
+													</td>
+														<td align="right"  i18n="queryOrderdshipperRemark" >shipperRemark:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryOrderRowdOrderdshipperRemark"  jsId="queryOrderRowdOrderdshipperRemark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="queryOrderdcarrierRemark" >carrierRemark:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryOrderRowdOrderdcarrierRemark"  jsId="queryOrderRowdOrderdcarrierRemark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryOrderdlevelEnum" >levelEnum:</td>
+						<td align="left"  >
+						
+														<input  id="queryOrderRowdOrderdlevelEnum"  jsId="queryOrderRowdOrderdlevelEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoOrderRowd.levelEnumStore" />
+													</td>
+														<td align="right"  i18n="queryOrderdcustomerTypeEnum" >customerTypeEnum:</td>
+						<td align="left"  colspan="3" >
+												<input  id="queryOrderRowdOrderdcustomerTypeEnum" jsId="queryOrderRowdOrderdcustomerTypeEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoOrderRowd.customerTypeEnumStore" />
+												</td>  
+											<td align="right"  > </td>
+						<td align="right"  ></td>
+					</tr><tr >
+						<td align="right"  i18n="queryOrderdreferTime" >referTime:</td>
+						<td align="left"  colspan="3"><span id="queryOrderRowdOrderdreferTimeImg0"  ><input class="editerDate"   jsId="queryOrderRowdOrderdreferTime" id="queryOrderRowdOrderdreferTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryOrderRowdOrderdreferTimeTime" id="queryOrderRowdOrderdreferTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryOrderRowdOrderdreferTimeImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1OrderRowdOrderdreferTime" id="query1OrderRowdOrderdreferTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1OrderRowdOrderdreferTimeTime" id="query1OrderRowdOrderdreferTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowdOrderdreferTimeImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowdOrderdreferTimeImgdown" >></span>
+							<span id="queryOrderRowdOrderdreferTimeImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2OrderRowdOrderdreferTime" id="query2OrderRowdOrderdreferTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2OrderRowdOrderdreferTimeTime" id="query2OrderRowdOrderdreferTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryOrderRowdOrderdreferTimeImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+															<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="queryOrderdlinkMan" >linkMan:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="queryOrderRowdOrderdlinkMan"  jsId="queryOrderRowdOrderdlinkMan"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					                <tr>
+							<td align="right" i18n="queryOrderdtel" >tel:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryOrderRowdOrderdtel"  jsId="queryOrderRowdOrderdtel"   dojoType="dijit.form.TextBox"  />
+													</td>
+																<td align="right"  i18n="queryOrderdbookTime" >bookTime:</td>
+						<td align="left"   colspan="5"><span id="queryOrderRowdOrderdbookTimeImg0"  ><input class="editerDate"   jsId="queryOrderRowdOrderdbookTime" id="queryOrderRowdOrderdbookTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryOrderRowdOrderdbookTimeTime" id="queryOrderRowdOrderdbookTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryOrderRowdOrderdbookTimeImg1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1OrderRowdOrderdbookTime" id="query1OrderRowdOrderdbookTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1OrderRowdOrderdbookTimeTime" id="query1OrderRowdOrderdbookTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowdOrderdbookTimeImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowdOrderdbookTimeImgdown" >></span>
+							<span id="queryOrderRowdOrderdbookTimeImg2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2OrderRowdOrderdbookTime" id="query2OrderRowdOrderdbookTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2OrderRowdOrderdbookTimeTime" id="query2OrderRowdOrderdbookTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryOrderRowdOrderdbookTimeImg" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+			                <tr>
+							<td align="right" i18n="queryOrderdcompleteTime"  >completeTime:</td> 
+						<td align="left"  colspan="3"><span id="queryOrderRowdOrderdcompleteTimeImg0"  ><input class="editerDate"   jsId="queryOrderRowdOrderdcompleteTime" id="queryOrderRowdOrderdcompleteTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryOrderRowdOrderdcompleteTimeTime" id="queryOrderRowdOrderdcompleteTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryOrderRowdOrderdcompleteTimeImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1OrderRowdOrderdcompleteTime" id="query1OrderRowdOrderdcompleteTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1OrderRowdOrderdcompleteTimeTime" id="query1OrderRowdOrderdcompleteTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryOrderRowdOrderdcompleteTimeImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryOrderRowdOrderdcompleteTimeImgdown" >></span>
+							<span id="queryOrderRowdOrderdcompleteTimeImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2OrderRowdOrderdcompleteTime" id="query2OrderRowdOrderdcompleteTime"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2OrderRowdOrderdcompleteTimeTime" id="query2OrderRowdOrderdcompleteTimeTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryOrderRowdOrderdcompleteTimeImg" style="vertical-align:middle;margin-top:0px;">
+						</td>
+													<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="queryOrderdremark" >remark:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="queryOrderRowdOrderdremark"  jsId="queryOrderRowdOrderdremark"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					
+
+
+												<tr><td align="right"  i18n="queryOrderdcustomer"  ></td>
+					<td align="left" ><input  id="queryOrderRowdOrderdcustomer"  jsId="queryOrderRowdOrderdcustomer" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoOrderRowd.customerStore"  /></td>  
+						    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+

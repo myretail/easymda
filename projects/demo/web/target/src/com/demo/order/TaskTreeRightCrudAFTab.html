@@ -1,0 +1,101 @@
+							
+<script type="text/javascript" >
+</script>
+		<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="TaskAFTab" jsId="TaskAFTab"  >
+		<div dojoType="dijit.layout.ContentPane" title="Task"  id="TaskCrud" jsId="TaskCrud" selected="true" >
+		<div id="queryDivTask" style="margin-right: 0px;  height: 100px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+				<td align="right" i18n="num" >num:</td>
+			<td align="left"  >
+							<span id="queryTasknumImg0"  ><input type="text" class="editerNumber"   jsId="queryTasknum"  id="queryTasknum"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryTasknumImg1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="queryTasknum1"  id="queryTasknum1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryTasknumImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryTasknumImgdown" >></span>
+							<span id="queryTasknumImg2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="queryTasknum2"  id="queryTasknum2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryTasknumImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+														<td align="right" i18n="volumne" >volumne:</td>
+							<td align="left" colspan="3" >
+								<span id="queryTaskvolumneImg0"  ><input type="text" class="editerNumber" jsId="queryTaskvolumne"  id="queryTaskvolumne"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="queryTaskvolumneImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryTaskvolumne1"  id="queryTaskvolumne1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryTaskvolumneImgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryTaskvolumneImgdown" >></span>
+								<span id="queryTaskvolumneImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryTaskvolumne2"  id="queryTaskvolumne2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="queryTaskvolumneImg" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+																				<td align="right"  i18n="remark" >remark:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryTaskremark"  jsId="queryTaskremark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			
+						<tr><td align="right"  i18n="taskForm"  ></td>
+					<td align="left" ><input  id="queryTasktaskForm"  jsId="queryTasktaskForm" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoTask.taskFormStore"  /></td>  
+				    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+		 
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonTask();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	    </div>		
+	       	<div align="right">
+			<button dojoType="dijit.form.Button" onclick="addRowTask();" iconClass="addIcon" i18n="add"  >add</button>
+					<button dojoType="dijit.form.Button" onclick="removeSelectedRowsTask();" iconClass="delIcon" i18n="delete" >delete</button>
+					<button dojoType="dijit.form.Button"  onclick="call_funUpdTask();" i18n="save" iconClass="saveIcon">save</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivTask');" iconClass="openQueryIcon"  i18n="openQuery" >query</button>
+				
+			</div>    
+	         <div id="gridTask"  dojoType="dojox.Grid" autoWidth="false"  jsId="gridTask"	model="modelTask"  structure="layoutSingleRowTask" singleClickEdit="true" ></div>
+			 	<div align="right">
+			 <span id="rowCountTask"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPageTask();"  id="but6Task" disabled='true' jsId="but6Task" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPageTask();" id="but7Task" disabled='true' jsId="but7Task" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangeTask(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangeTask(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangeTask(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangeTask(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpageTask();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyleTask(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyleTask(this.label);"></div>
+						</div></div>
+    </div>  </div> 
+		
+		
+				<div dojoType="dijit.layout.ContentPane" title="orderRowTasks2task"  id="orderRowTasks2task" jsId="orderRowTasks2task" >
+				<div align="right">
+					<span id="rowCountorderRowTasks2task"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPageorderRowTasks2task();"  id="but6orderRowTasks2task" disabled='true' jsId="but6orderRowTasks2task" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPageorderRowTasks2task();" id="but7orderRowTasks2task" disabled='true' jsId="but7orderRowTasks2task" iconClass="downPageIcon" >pagedown</button>
+																															<button dojoType="dijit.form.myButton" onclick="saveorderRowTasks2task();"  iconClass="saveIcon" ></button>
+									</div>
+				<div id="gridorderRowTasks2task"  ></div>
+			</div>
+				</div>
+

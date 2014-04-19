@@ -1,0 +1,310 @@
+
+<script type="text/javascript" >
+var urlIncProd = getUrl()+ "services/ProdManageService";
+var deletedataIncProd =  new Array();
+var querydataIncProd =  new Array();
+var pagenumberIncProd=1;
+var totalCountIncProd=0;
+var pagesizeIncProd=10;
+var orderByIncProd='0';
+var queryvoIncProd=new Object();
+var oddstyle='';
+var modelIncProd = new dojox.grid.data.Table(null, querydataIncProd);
+
+
+	  
+
+
+/*												
+//have set function's manageableAssociationEnds
+	var pIncProdprodCust = new SOAPClientParameters2();
+	var itemsIncProdprodCust = new Array();  
+		pIncProdprodCust.add('CustomerVO',new  Object()) ;
+		pIncProdprodCust.add('pageNumber',0) ;
+		pIncProdprodCust.add('pageSize',0) ;
+	    pIncProdprodCust.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"CustomerManageService","getCustomer", pIncProdprodCust, false,  function GetEnu_callBack(ul, soapResponse){      
+				var tempData=dojoProdSelect.CustomerVOtoArray_fun(ul,false);
+				for(var i = 0; i < tempData.length-1; i++){		
+				  itemsIncProdprodCust.push({name: tempData[i][2], value:tempData[i][1]});
+				}                
+	});       
+	if(itemsIncProdprodCust.length==0)itemsIncProdprodCust.push({name:'' , value:''});
+	var IncProdprodCustStore = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: itemsIncProdprodCust }});
+
+	function IncProdprodCustSet(id,value){
+        
+        }
+	var pIncProdprincipal = new SOAPClientParameters2();
+	var itemsIncProdprincipal = new Array();  
+		pIncProdprincipal.add('PeoplesVO',new  Object()) ;
+		pIncProdprincipal.add('pageNumber',0) ;
+		pIncProdprincipal.add('pageSize',0) ;
+	    pIncProdprincipal.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"PeoplesManageService","getPeoples", pIncProdprincipal, false,  function GetEnu_callBack(ul, soapResponse){      
+				var tempData=dojoProdSelect.PeoplesVOtoArray_fun(ul,false);
+				for(var i = 0; i < tempData.length-1; i++){		
+				  itemsIncProdprincipal.push({name: tempData[i][2], value:tempData[i][1]});
+				}                
+	});       
+	if(itemsIncProdprincipal.length==0)itemsIncProdprincipal.push({name:'' , value:''});
+	var IncProdprincipalStore = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: itemsIncProdprincipal }});
+
+	function IncProdprincipalSet(id,value){
+        
+        }
+*/
+	  
+	  
+var getChoiseIncProd = function(inRowIndex) {
+			if(dojoProdSelect.selectProdIDs==querydataIncProd[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="selectProd" id="'+querydataIncProd[inRowIndex][1]+'" checked="true" type="radio"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="selectProd" id="'+querydataIncProd[inRowIndex][1]+'"  type="radio"/>'
+              }
+			    }	  
+
+var layoutIncProd=[{
+	//?¨´??field???????????????????¨°????js????toArray¡Á??????¡§??????querydate????????
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoiseIncProd},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+				  				  {name: i18nStr.prodName, field: 2,width: 10}
+						  						  				,   {name: i18nStr.code, field: 3,width: 10}
+						  						  				 ,  {name: i18nStr.price,field:4, width: 8}
+						  						  				,   {name: i18nStr.datef,field:5, width: 8}
+						  						  				,   {name: i18nStr.prodType, field: 6,width: 10}
+						  				
+//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';if(querydataIncProd[inRowIndex]!=undefined && querydataIncProd[inRowIndex][7]!=undefined&& querydataIncProd[inRowIndex][7][2]!=undefined){str=querydataIncProd[inRowIndex][7][2];} return str;} ,width: 10 }
+			//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])??if(!false)  ??¡Á?????????Float???????¡ã????????
+			,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';if(querydataIncProd[inRowIndex]!=undefined && querydataIncProd[inRowIndex][8]!=undefined&& querydataIncProd[inRowIndex][8][2]!=undefined){str=querydataIncProd[inRowIndex][8][2];} return str;} ,width: 10 }
+								]]}];	 
+					
+function getVOIncProd(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('ProdVO',queryvo) ;
+      pu.add('pageNumber',pagenumberIncProd) ;
+	    pu.add('pageSize',pagesizeIncProd) ;
+	    pu.add('orderBy',orderByIncProd) ;
+      SOAPClient.invoke(urlIncProd,"getProd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydataIncProd=new Array();
+		   querydataIncProd=dojoProdSelect.ProdVOtoArray_fun(ul,false);
+           totalCountIncProd=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydataIncProd.splice(querydataIncProd.length-1,1);
+      modelIncProd.setData(querydataIncProd);
+      var totalpage=Math.ceil(new Number(totalCountIncProd)/pagesizeIncProd);
+	  
+	if(totalpage>1){
+		if(pagenumberIncProd==1){
+			dijit.byId("but6IncProd").setDisabled(true);
+			dijit.byId("but7IncProd").setDisabled(false);
+		}else if(pagenumberIncProd==totalpage){
+			dijit.byId("but6IncProd").setDisabled(false);
+			dijit.byId("but7IncProd").setDisabled(true);
+		}else{
+			dijit.byId("but6IncProd").setDisabled(false);
+			dijit.byId("but7IncProd").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6IncProd").setDisabled(true);
+		dijit.byId("but7IncProd").setDisabled(true);
+	
+	}
+	if(pagesizeIncProd==0){
+		totalpage=1;
+		dijit.byId("but6IncProd").setDisabled(true);
+		dijit.byId("but7IncProd").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberIncProd=1;
+	
+	 document.getElementById("rowCountIncProd").innerHTML=i18nStr.di+" "+pagenumberIncProd+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountIncProd+" "+i18nStr.rowSize; 	
+}
+
+ var selectProdFunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("selectProd");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(dojoProdSelect.ifMultProd==0){
+              rep=querydataIncProd[i];
+            }else{
+              rep[rep.length]=querydataIncProd[i];
+            }
+          }
+      }
+    selectProdFun(rep);
+	dojoProdSelect.oldFloatProd.hide();
+}  					
+
+
+//------------init 
+ getVOIncProd(queryvoIncProd);
+      if(gridIncProde==undefined){
+	  			 gridIncProd = new dojox.Grid({
+					title: "ff",
+					id: "gridIncProd",
+					jsId: "gridIncProd",
+					structure: layoutIncProd,
+					rowCount:querydataIncProd.length-1,
+					model:modelIncProd
+				}, dojo.byId("gridIncProd"));
+				
+			}else{ gridIncProd.model.setData(querydataIncProd); } 
+//-------------	
+
+var allpageIncProd =function(){
+	pagesizeIncProd=0;
+	getVOIncProd(queryvoIncProd);
+}
+var  pagesizeChangeIncProd=function(mylabel){
+	pagesizeIncProd=mylabel;
+	getVOIncProd(queryvoIncProd);
+}           
+var upPageIncProd= function(){
+	pagenumberIncProd--;
+	getVOIncProd(queryvoIncProd);
+}
+var downPageIncProd =function(){
+	pagenumberIncProd++;
+	getVOIncProd(queryvoIncProd);
+}
+ 
+
+   
+function querybuttonIncProd(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvoProd.id=0 ;
+              queryvoIncProd=new Object();
+								  if(queryIncProdprodName.getDisplayedValue()!="")queryvoIncProd.prodName=queryIncProdprodName.getDisplayedValue();//
+											  if(queryIncProdcode.getDisplayedValue()!="")queryvoIncProd.code=queryIncProdcode.getDisplayedValue();//
+											  n=queryNumber_fun("IncProdprice");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvoIncProd.price=n;}  
+											  d=queryDate_fun("IncProddatef");
+					  if(d==null){validstate=1;}else if(d.upSign!="%"){queryvoIncProd.datef=d;}
+											  if(queryIncProdprodType.getDisplayedValue()!="")queryvoIncProd.prodType=queryIncProdprodType.getDisplayedValue();//
+							
+	if(queryIncProdprodCust.getDisplayedValue()!=""){
+				var IncProdprodCustQuery= new Object();
+				//prodCustQuery.ProdName=queryprodCust.getDisplayedValue();
+				IncProdprodCustQuery.id=queryIncProdprodCust.getValue();
+				queryvoIncProd.prodCust=IncProdprodCustQuery;
+			  }
+	if(queryIncProdprincipal.getDisplayedValue()!=""){
+				var IncProdprincipalQuery= new Object();
+				//principalQuery.ProdName=queryprincipal.getDisplayedValue();
+				IncProdprincipalQuery.id=queryIncProdprincipal.getValue();
+				queryvoIncProd.principal=IncProdprincipalQuery;
+			  }
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOIncProd(queryvoIncProd);
+             }      
+       }
+																							//totleinum=8
+ //rowinum=2
+
+</script>
+
+<div id="queryDivIncProd" style="margin-right: 0px;  height: 120px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="IncProdprodName" >prodName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryIncProdprodName"  jsId="queryIncProdprodName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="IncProdcode" >code:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryIncProdcode"  jsId="queryIncProdcode"   dojoType="dijit.form.TextBox"  />
+												</td>  
+											<td align="right"  i18n="IncProdprice" >price:</td>
+						<td align="left"  >
+							<span id="queryIncProdpriceImg0"  ><input type="text" class="editerNumber" jsId="queryIncProdprice"  id="queryIncProdprice"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryIncProdpriceImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryIncProdprice1"  id="queryIncProdprice1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryIncProdpriceImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryIncProdpriceImgdown" >></span>
+							<span id="queryIncProdpriceImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryIncProdprice2"  id="queryIncProdprice2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryIncProdpriceImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+								  </tr>
+			                <tr>
+							<td align="right" i18n="IncProddatef"  >datef:</td> 
+						<td align="left"  colspan="3"><span id="queryIncProddatefImg0"  ><input class="editerDate"   jsId="queryIncProddatef" id="queryIncProddatef"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryIncProddatefTime" id="queryIncProddatefTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryIncProddatefImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1IncProddatef" id="query1IncProddatef"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1IncProddatefTime" id="query1IncProddatefTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryIncProddatefImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryIncProddatefImgdown" >></span>
+							<span id="queryIncProddatefImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2IncProddatef" id="query2IncProddatef"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2IncProddatefTime" id="query2IncProddatefTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryIncProddatefImg" style="vertical-align:middle;margin-top:0px;">
+						</td>
+													<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="IncProdprodType" >prodType:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="queryIncProdprodType"  jsId="queryIncProdprodType"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					
+
+
+								<tr><td align="right"  i18n="IncProdprodCust"  ></td>
+					<td align="left" ><input  id="queryIncProdprodCust"  jsId="queryIncProdprodCust" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoProdSelect.ProdStore"  /></td>  
+														<td align="right"  i18n="IncProdprincipal"  ></td>
+					<td align="left" ><!--colspan="3" --><input  id="queryIncProdprincipal"  jsId="queryIncProdprincipal" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoProdSelect.ProdStore"  /></td>  
+						    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center">
+           <td > <button dojoType="dijit.form.Button" onclick="querybuttonIncProd();" iconClass="queryIcon"  i18nt="query" >query</button></td>
+           <td colspan="5"></td><td colspan="2"></td></tr>
+         </table>
+	     </div>
+	       	<div align="right">
+				<button dojoType="dijit.form.Button" id="selectIncProd" jsId="selectIncProd" onclick="selectProdFunClick();" i18nt="selectFloatButton" iconClass="selectIcon">ok</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivIncProd');" iconClass="openQueryIcon"  i18nt="openQuery" >query</button>
+				<span id="rowCountIncProd"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPageIncProd();"  id="but6IncProd" disabled='true' jsId="but6IncProd" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPageIncProd();" id="but7IncProd" disabled='true' jsId="but7IncProd" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangeIncProd(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangeIncProd(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangeIncProd(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangeIncProd(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpageIncProd();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<!--div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyleIncProd(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyleIncProd(this.label);"></div>
+						</div></div-->
+			</div>    
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridIncProd"  dojoType="dojox.Grid" autoWidth="false"  jsId="IncProd"	model="modelIncProd"  structure="layoutIncProd"  ></div>
+      </div>      

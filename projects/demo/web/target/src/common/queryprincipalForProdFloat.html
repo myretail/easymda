@@ -1,0 +1,172 @@
+
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCondprincipalForProd(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+
+	          if(queryProdPeoplespeopleName.getDisplayedValue()!=""){
+			  queryObject.peopleName=queryProdPeoplespeopleName.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplespeoplePassword.getDisplayedValue()!=""){
+			  queryObject.peoplePassword=queryProdPeoplespeoplePassword.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplespeopleStatus.getDisplayedValue()!=""){
+			  queryObject.peopleStatus=queryProdPeoplespeopleStatus.getDisplayedValue();//
+			  haveCon=true;}
+
+              d=queryDate_fun("ProdPeoplesbirthDay");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryObject.birthDay=d;haveCon=true;}
+
+	          if(queryProdPeoplessex.getDisplayedValue()!=""){
+			  queryObject.sex=queryProdPeoplessex.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplesbirthPlace.getDisplayedValue()!=""){
+			  queryObject.birthPlace=queryProdPeoplesbirthPlace.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplesaddress.getDisplayedValue()!=""){
+			  queryObject.address=queryProdPeoplesaddress.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplestel.getDisplayedValue()!=""){
+			  queryObject.tel=queryProdPeoplestel.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplesengageMode.getDisplayedValue()!=""){
+			  queryObject.engageMode=queryProdPeoplesengageMode.getDisplayedValue();//
+			  haveCon=true;}
+
+              d=queryDate_fun("ProdPeoplesengageDate");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryObject.engageDate=d;haveCon=true;}
+
+	          if(queryProdPeoplesgradeEnum.getDisplayedValue()!=""){
+			  queryObject.gradeEnum=queryProdPeoplesgradeEnum.getDisplayedValue();//
+			  haveCon=true;}
+
+	          if(queryProdPeoplesremark.getDisplayedValue()!=""){
+			  queryObject.remark=queryProdPeoplesremark.getDisplayedValue();//
+			  haveCon=true;}
+			
+	return haveCon;
+}
+	</script>
+	
+																																																																																																										<div id="queryprincipalForProdDiv" style="margin-right: 0px;  height: 150px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="queryPeoplespeopleName" >peopleName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryProdPeoplespeopleName"  jsId="queryProdPeoplespeopleName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="queryPeoplespeoplePassword" >peoplePassword:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryProdPeoplespeoplePassword"  jsId="queryProdPeoplespeoplePassword"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="queryPeoplespeopleStatus" >peopleStatus:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryProdPeoplespeopleStatus"  jsId="queryProdPeoplespeopleStatus"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryPeoplesbirthDay"  >birthDay:</td> 
+						<td align="left"  colspan="3"><span id="queryProdPeoplesbirthDayImg0"  ><input class="editerDate"   jsId="queryProdPeoplesbirthDay" id="queryProdPeoplesbirthDay"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryProdPeoplesbirthDayTime" id="queryProdPeoplesbirthDayTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryProdPeoplesbirthDayImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1ProdPeoplesbirthDay" id="query1ProdPeoplesbirthDay"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1ProdPeoplesbirthDayTime" id="query1ProdPeoplesbirthDayTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryProdPeoplesbirthDayImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryProdPeoplesbirthDayImgdown" >></span>
+							<span id="queryProdPeoplesbirthDayImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2ProdPeoplesbirthDay" id="query2ProdPeoplesbirthDay"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2ProdPeoplesbirthDayTime" id="query2ProdPeoplesbirthDayTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryProdPeoplesbirthDayImg" style="vertical-align:middle;margin-top:0px;">
+						</td>
+													<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="queryPeoplessex" >sex:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="queryProdPeoplessex"  jsId="queryProdPeoplessex"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					                <tr>
+							<td align="right" i18n="queryPeoplesbirthPlace" >birthPlace:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryProdPeoplesbirthPlace"  jsId="queryProdPeoplesbirthPlace"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="queryPeoplesaddress" >address:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryProdPeoplesaddress"  jsId="queryProdPeoplesaddress"   dojoType="dijit.form.TextBox"  />
+												</td>  
+													<td align="right"  i18n="queryPeoplestel" >tel:</td>
+						<td align="left"  >
+													<input type="text" class="editerInput"  id="queryProdPeoplestel"  jsId="queryProdPeoplestel"   dojoType="dijit.form.TextBox"  />
+												</td>  
+										  </tr>
+			                <tr>
+							<td align="right" i18n="queryPeoplesengageMode" >engageMode:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryProdPeoplesengageMode"  jsId="queryProdPeoplesengageMode"   dojoType="dijit.form.TextBox"  />
+													</td>
+																<td align="right"  i18n="queryPeoplesengageDate" >engageDate:</td>
+						<td align="left"   colspan="5"><span id="queryProdPeoplesengageDateImg0"  ><input class="editerDate"   jsId="queryProdPeoplesengageDate" id="queryProdPeoplesengageDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryProdPeoplesengageDateTime" id="queryProdPeoplesengageDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryProdPeoplesengageDateImg1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1ProdPeoplesengageDate" id="query1ProdPeoplesengageDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1ProdPeoplesengageDateTime" id="query1ProdPeoplesengageDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryProdPeoplesengageDateImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryProdPeoplesengageDateImgdown" >></span>
+							<span id="queryProdPeoplesengageDateImg2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2ProdPeoplesengageDate" id="query2ProdPeoplesengageDate"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2ProdPeoplesengageDateTime" id="query2ProdPeoplesengageDateTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryProdPeoplesengageDateImg" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+			                <tr>
+							<td align="right" i18n="queryPeoplesgradeEnum" >gradeEnum:</td>
+						<td align="left"  >
+						
+														<input  id="queryProdPeoplesgradeEnum"  jsId="queryProdPeoplesgradeEnum" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojoProd.gradeEnumStore" />
+													</td>
+														<td align="right"  i18n="queryPeoplesremark" >remark:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryProdPeoplesremark"  jsId="queryProdPeoplesremark"   dojoType="dijit.form.TextBox"  />
+												</td>  
+				
+
+
+    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+

@@ -1,0 +1,118 @@
+											
+<script type="text/javascript" >
+</script>
+		<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="ProdAFTab" jsId="ProdAFTab"  >
+		<div dojoType="dijit.layout.ContentPane" title="Prod"  id="ProdCrud" jsId="ProdCrud" selected="true" >
+		<div id="queryDivProd" style="margin-right: 0px;  height: 120px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+                <tr>
+							<td align="right" i18n="prodName" >prodName:</td>
+						<td align="left"  >
+						
+															<input type="text" class="editerInput"  id="queryProdprodName"  jsId="queryProdprodName"   dojoType="dijit.form.TextBox"  />
+													</td>
+														<td align="right"  i18n="code" >code:</td>
+						<td align="left"  colspan="3" >
+													<input type="text" class="editerInput"  id="queryProdcode"  jsId="queryProdcode"   dojoType="dijit.form.TextBox"  />
+												</td>  
+											<td align="right"  i18n="price" >price:</td>
+						<td align="left"  >
+							<span id="queryProdpriceImg0"  ><input type="text" class="editerNumber" jsId="queryProdprice"  id="queryProdprice"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="queryProdpriceImg1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="queryProdprice1"  id="queryProdprice1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryProdpriceImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryProdpriceImgdown" >></span>
+							<span id="queryProdpriceImg2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="queryProdprice2"  id="queryProdprice2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="queryProdpriceImg" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+								  </tr>
+			                <tr>
+							<td align="right" i18n="datef"  >datef:</td> 
+						<td align="left"  colspan="3"><span id="queryProddatefImg0"  ><input class="editerDate"   jsId="queryProddatef" id="queryProddatef"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="queryProddatefTime" id="queryProddatefTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="queryProddatefImg1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1Proddatef" id="query1Proddatef"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1ProddatefTime" id="query1ProddatefTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="queryProddatefImgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="queryProddatefImgdown" >></span>
+							<span id="queryProddatefImg2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2Proddatef" id="query2Proddatef"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2ProddatefTime" id="query2ProddatefTime" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="queryProddatefImg" style="vertical-align:middle;margin-top:0px;">
+						</td>
+													<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="prodType" >prodType:</td>
+						<td align="left"  >
+							 								<input type="text" class="editerInput"  id="queryProdprodType"  jsId="queryProdprodType"   dojoType="dijit.form.TextBox"  />  
+													</td></tr>
+					
+						<tr><td align="right"  i18n="prodCust"  ></td>
+					<td align="left" ><input  id="queryProdprodCust"  jsId="queryProdprodCust" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoProd.prodCustStore"  /></td>  
+										<td align="right"  i18n="principal"  ></td>
+					<td align="left" colspan="3" ><!-- --><input  id="queryProdprincipal"  jsId="queryProdprincipal" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojoProd.principalStore"  /></td>  
+				    <td align="right"    ></td><td align="right"    ></td></tr>
+
+         <tr align="center"><td></td>
+		 
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonProd();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	    </div>		
+	       	<div align="right">
+			<button dojoType="dijit.form.Button" onclick="addRowProd();" iconClass="addIcon" i18n="add"  >add</button>
+					<button dojoType="dijit.form.Button" onclick="removeSelectedRowsProd();" iconClass="delIcon" i18n="delete" >delete</button>
+					<button dojoType="dijit.form.Button"  onclick="call_funUpdProd();" i18n="save" iconClass="saveIcon">save</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivProd');" iconClass="openQueryIcon"  i18n="openQuery" >query</button>
+				
+			</div>    
+	         <div id="gridProd"  dojoType="dojox.Grid" autoWidth="false"  jsId="gridProd"	model="modelProd"  structure="layoutSingleRowProd" singleClickEdit="true" ></div>
+			 	<div align="right">
+			 <span id="rowCountProd"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPageProd();"  id="but6Prod" disabled='true' jsId="but6Prod" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPageProd();" id="but7Prod" disabled='true' jsId="but7Prod" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangeProd(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangeProd(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangeProd(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangeProd(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpageProd();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyleProd(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyleProd(this.label);"></div>
+						</div></div>
+    </div>  </div> 
+		
+		
+						<div dojoType="dijit.layout.ContentPane" title="orderRowds2product"  id="orderRowds2product" jsId="orderRowds2product" >
+				<div align="right">
+					<span id="rowCountorderRowds2product"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPageorderRowds2product();"  id="but6orderRowds2product" disabled='true' jsId="but6orderRowds2product" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPageorderRowds2product();" id="but7orderRowds2product" disabled='true' jsId="but7orderRowds2product" iconClass="downPageIcon" >pagedown</button>
+																																																																																																																																																																																																									<button dojoType="dijit.form.Button" onclick="addRoworderRowds2product();" iconClass="addIcon" >add</button>
+					<button dojoType="dijit.form.Button" onclick="removeorderRowds2product();" iconClass="delIcon" >delete</button>
+					<button dojoType="dijit.form.Button" id="but3orderRowds2product" jsId="but3orderRowds2product" onclick="call_funUpdorderRowds2product();"  iconClass="saveIcon">save</button>
+									</div>
+				<div id="gridorderRowds2product"  ></div>
+			</div>
+			</div>
+
