@@ -1,0 +1,3 @@
+http://m2eclipse.sonatype.org/update/
+http://subclipse.tigris.org/update_1.4.x
+http://subclipse.tigris.org/update_1.6.x

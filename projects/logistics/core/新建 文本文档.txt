@@ -1,0 +1,189 @@
+protected java.util.List handleGetWlTaskRow(com.logistics.entity.order.WlTaskRowVO WlTaskRowVO, int pageNumber, int pageSize, java.lang.String orderBy)
+    {
+    	 final Session session = getSession(false);
+
+         try
+         {
+             final Criteria criteria = session.createCriteria(com.logistics.entity.order.WlTaskRowImpl.class);
+             if (WlTaskRowVO != null) QueryAssCriteriaOrder.getTaskRowCriteria(WlTaskRowVO,criteria);
+             /*if (WlTaskRowVO.getTaskType() != null)
+                 criteria.add(Expression.ilike("taskType", WlTaskRowVO.getTaskType(), MatchMode.START));
+             if (!"%".equals(WlTaskRowVO.getPlanFetchTime())){
+               	if (WlTaskRowVO.getPlanFetchTime()=="null"){
+                     	criteria.add(Expression.eq("planFetchTime", null));
+                   }else  if (WlTaskRowVO.getPlanFetchTime().indexOf("to")==-1){
+                       criteria.add(Expression.eq("planFetchTime", ProjectUtil.getDate(WlTaskRowVO.getPlanFetchTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                   }else if(WlTaskRowVO.getPlanFetchTime().indexOf("to")!=WlTaskRowVO.getPlanFetchTime().length()-2){
+                   	String startDate  = WlTaskRowVO.getPlanFetchTime().substring(0,WlTaskRowVO.getPlanFetchTime().indexOf("to"));
+                   	String endDate  =WlTaskRowVO.getPlanFetchTime().substring(WlTaskRowVO.getPlanFetchTime().indexOf("to")+2,WlTaskRowVO.getPlanFetchTime().length());
+                   	if(startDate!="")criteria.add(Expression.ge("planFetchTime", ProjectUtil.getDate(startDate)));
+                   	if(endDate!="")criteria.add(Expression.le("planFetchTime", ProjectUtil.getDate(endDate)));
+                   }
+               }
+             if (WlTaskRowVO.getFetchUnitAddress() != null)
+                 criteria.add(Expression.ilike("fetchUnitAddress", WlTaskRowVO.getFetchUnitAddress(), MatchMode.START));
+             if (WlTaskRowVO.getFetchMan() != null)
+                 criteria.add(Expression.ilike("fetchMan", WlTaskRowVO.getFetchMan(), MatchMode.START));
+             if (WlTaskRowVO.getFetchTel() != null)
+                 criteria.add(Expression.ilike("fetchTel", WlTaskRowVO.getFetchTel(), MatchMode.START));
+             
+             if (!"%".equals(WlTaskRowVO.getPlanUnloadTime())){
+                	if (WlTaskRowVO.getPlanUnloadTime()=="null"){
+                      	criteria.add(Expression.eq("planUnloadTime", null));
+                    }else  if (WlTaskRowVO.getPlanUnloadTime().indexOf("to")==-1){
+                        criteria.add(Expression.eq("planUnloadTime", ProjectUtil.getDate(WlTaskRowVO.getPlanUnloadTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                    }else if(WlTaskRowVO.getPlanUnloadTime().indexOf("to")!=WlTaskRowVO.getPlanUnloadTime().length()-2){
+                    	String startDate  = WlTaskRowVO.getPlanUnloadTime().substring(0,WlTaskRowVO.getPlanUnloadTime().indexOf("to"));
+                    	String endDate  =WlTaskRowVO.getPlanUnloadTime().substring(WlTaskRowVO.getPlanUnloadTime().indexOf("to")+2,WlTaskRowVO.getPlanUnloadTime().length());
+                    	if(startDate!="")criteria.add(Expression.ge("planUnloadTime", ProjectUtil.getDate(startDate)));
+                    	if(endDate!="")criteria.add(Expression.le("planUnloadTime", ProjectUtil.getDate(endDate)));
+                    }
+                }
+             if (WlTaskRowVO.getUnloadUnitAddress() != null)
+                 criteria.add(Expression.ilike("unloadUnitAddress", WlTaskRowVO.getUnloadUnitAddress(), MatchMode.START));
+             if (WlTaskRowVO.getUnloadMan() != null)
+                 criteria.add(Expression.ilike("unloadMan", WlTaskRowVO.getUnloadMan(), MatchMode.START));
+             if (WlTaskRowVO.getUnloadTel() != null)
+                 criteria.add(Expression.ilike("unloadTel", WlTaskRowVO.getUnloadTel(), MatchMode.START));
+             if (WlTaskRowVO.getDriverTel() != null)
+                 criteria.add(Expression.ilike("driverTel", WlTaskRowVO.getDriverTel(), MatchMode.START));
+             if (WlTaskRowVO.getFollower() != null)
+                 criteria.add(Expression.ilike("follower", WlTaskRowVO.getFollower(), MatchMode.START));
+             if (!"%".equals(WlTaskRowVO.getPlanBackTime())){
+             	if (WlTaskRowVO.getPlanBackTime()=="null"){
+                   	criteria.add(Expression.eq("planBackTime", null));
+                 }else  if (WlTaskRowVO.getPlanBackTime().indexOf("to")==-1){
+                     criteria.add(Expression.eq("planBackTime", ProjectUtil.getDate(WlTaskRowVO.getPlanBackTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                 }else if(WlTaskRowVO.getPlanBackTime().indexOf("to")!=WlTaskRowVO.getPlanBackTime().length()-2){
+                 	String startDate  = WlTaskRowVO.getPlanBackTime().substring(0,WlTaskRowVO.getPlanBackTime().indexOf("to"));
+                 	String endDate  =WlTaskRowVO.getPlanBackTime().substring(WlTaskRowVO.getPlanBackTime().indexOf("to")+2,WlTaskRowVO.getPlanBackTime().length());
+                 	if(startDate!="")criteria.add(Expression.ge("planBackTime", ProjectUtil.getDate(startDate)));
+                 	if(endDate!="")criteria.add(Expression.le("planBackTime", ProjectUtil.getDate(endDate)));
+                 }
+             }
+             if (!"%".equals(WlTaskRowVO.getArriveFetchTime())){
+              	if (WlTaskRowVO.getArriveFetchTime()=="null"){
+                    	criteria.add(Expression.eq("planArriveFetchTime", null));
+                  }else  if (WlTaskRowVO.getArriveFetchTime().indexOf("to")==-1){
+                      criteria.add(Expression.eq("planArriveFetchTime", ProjectUtil.getDate(WlTaskRowVO.getArriveFetchTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                  }else if(WlTaskRowVO.getArriveFetchTime().indexOf("to")!=WlTaskRowVO.getArriveFetchTime().length()-2){
+                  	String startDate  = WlTaskRowVO.getArriveFetchTime().substring(0,WlTaskRowVO.getArriveFetchTime().indexOf("to"));
+                  	String endDate  =WlTaskRowVO.getArriveFetchTime().substring(WlTaskRowVO.getArriveFetchTime().indexOf("to")+2,WlTaskRowVO.getArriveFetchTime().length());
+                  	if(startDate!="")criteria.add(Expression.ge("planArriveFetchTime", ProjectUtil.getDate(startDate)));
+                  	if(endDate!="")criteria.add(Expression.le("planArriveFetchTime", ProjectUtil.getDate(endDate)));
+                  }
+              }
+             if (!"%".equals(WlTaskRowVO.getStartFetchTime())){
+               	if (WlTaskRowVO.getStartFetchTime()=="null"){
+                     	criteria.add(Expression.eq("planStartFetchTime", null));
+                   }else  if (WlTaskRowVO.getStartFetchTime().indexOf("to")==-1){
+                       criteria.add(Expression.eq("planStartFetchTime", ProjectUtil.getDate(WlTaskRowVO.getStartFetchTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                   }else if(WlTaskRowVO.getStartFetchTime().indexOf("to")!=WlTaskRowVO.getStartFetchTime().length()-2){
+                   	String startDate  = WlTaskRowVO.getStartFetchTime().substring(0,WlTaskRowVO.getStartFetchTime().indexOf("to"));
+                   	String endDate  =WlTaskRowVO.getStartFetchTime().substring(WlTaskRowVO.getStartFetchTime().indexOf("to")+2,WlTaskRowVO.getStartFetchTime().length());
+                   	if(startDate!="")criteria.add(Expression.ge("planStartFetchTime", ProjectUtil.getDate(startDate)));
+                   	if(endDate!="")criteria.add(Expression.le("planStartFetchTime", ProjectUtil.getDate(endDate)));
+                   }
+               }
+             if (!"%".equals(WlTaskRowVO.getEndFetchTime())){
+                	if (WlTaskRowVO.getEndFetchTime()=="null"){
+                      	criteria.add(Expression.eq("endFetchTime", null));
+                    }else  if (WlTaskRowVO.getEndFetchTime().indexOf("to")==-1){
+                        criteria.add(Expression.eq("endFetchTime", ProjectUtil.getDate(WlTaskRowVO.getEndFetchTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                    }else if(WlTaskRowVO.getEndFetchTime().indexOf("to")!=WlTaskRowVO.getEndFetchTime().length()-2){
+                    	String startDate  = WlTaskRowVO.getEndFetchTime().substring(0,WlTaskRowVO.getEndFetchTime().indexOf("to"));
+                    	String endDate  =WlTaskRowVO.getEndFetchTime().substring(WlTaskRowVO.getEndFetchTime().indexOf("to")+2,WlTaskRowVO.getEndFetchTime().length());
+                    	if(startDate!="")criteria.add(Expression.ge("endFetchTime", ProjectUtil.getDate(startDate)));
+                    	if(endDate!="")criteria.add(Expression.le("endFetchTime", ProjectUtil.getDate(endDate)));
+                    }
+                }
+             if (!"%".equals(WlTaskRowVO.getArriveUnloadTime())){
+             	if (WlTaskRowVO.getArriveUnloadTime()=="null"){
+                   	criteria.add(Expression.eq("arriveUnloadTime", null));
+                 }else  if (WlTaskRowVO.getArriveUnloadTime().indexOf("to")==-1){
+                     criteria.add(Expression.eq("arriveUnloadTime", ProjectUtil.getDate(WlTaskRowVO.getArriveUnloadTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                 }else if(WlTaskRowVO.getArriveUnloadTime().indexOf("to")!=WlTaskRowVO.getArriveUnloadTime().length()-2){
+                 	String startDate  = WlTaskRowVO.getArriveUnloadTime().substring(0,WlTaskRowVO.getArriveUnloadTime().indexOf("to"));
+                 	String endDate  =WlTaskRowVO.getArriveUnloadTime().substring(WlTaskRowVO.getArriveUnloadTime().indexOf("to")+2,WlTaskRowVO.getArriveUnloadTime().length());
+                 	if(startDate!="")criteria.add(Expression.ge("arriveUnloadTime", ProjectUtil.getDate(startDate)));
+                 	if(endDate!="")criteria.add(Expression.le("arriveUnloadTime", ProjectUtil.getDate(endDate)));
+                 }
+             }
+             if (!"%".equals(WlTaskRowVO.getStartUnloadTime())){
+              	if (WlTaskRowVO.getStartUnloadTime()=="null"){
+                    	criteria.add(Expression.eq("startUnloadTime", null));
+                  }else  if (WlTaskRowVO.getStartUnloadTime().indexOf("to")==-1){
+                      criteria.add(Expression.eq("startUnloadTime", ProjectUtil.getDate(WlTaskRowVO.getStartUnloadTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                  }else if(WlTaskRowVO.getStartUnloadTime().indexOf("to")!=WlTaskRowVO.getStartUnloadTime().length()-2){
+                  	String startDate  = WlTaskRowVO.getStartUnloadTime().substring(0,WlTaskRowVO.getStartUnloadTime().indexOf("to"));
+                  	String endDate  =WlTaskRowVO.getStartUnloadTime().substring(WlTaskRowVO.getStartUnloadTime().indexOf("to")+2,WlTaskRowVO.getStartUnloadTime().length());
+                  	if(startDate!="")criteria.add(Expression.ge("startUnloadTime", ProjectUtil.getDate(startDate)));
+                  	if(endDate!="")criteria.add(Expression.le("startUnloadTime", ProjectUtil.getDate(endDate)));
+                  }
+              }
+             if (!"%".equals(WlTaskRowVO.getEndUnloadTime())){
+               	if (WlTaskRowVO.getEndUnloadTime()=="null"){
+                     	criteria.add(Expression.eq("endUnloadTime", null));
+                   }else  if (WlTaskRowVO.getEndUnloadTime().indexOf("to")==-1){
+                       criteria.add(Expression.eq("endUnloadTime", ProjectUtil.getDate(WlTaskRowVO.getEndUnloadTime())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                   }else if(WlTaskRowVO.getEndUnloadTime().indexOf("to")!=WlTaskRowVO.getEndUnloadTime().length()-2){
+                   	String startDate  = WlTaskRowVO.getEndUnloadTime().substring(0,WlTaskRowVO.getEndUnloadTime().indexOf("to"));
+                   	String endDate  =WlTaskRowVO.getEndUnloadTime().substring(WlTaskRowVO.getEndUnloadTime().indexOf("to")+2,WlTaskRowVO.getEndUnloadTime().length());
+                   	if(startDate!="")criteria.add(Expression.ge("endUnloadTime", ProjectUtil.getDate(startDate)));
+                   	if(endDate!="")criteria.add(Expression.le("endUnloadTime", ProjectUtil.getDate(endDate)));
+                   }
+               }
+             
+             
+             if (WlTaskRowVO.getTrueOrFalse() != null)
+                 criteria.add(Expression.ilike("trueOrFalse", WlTaskRowVO.getTrueOrFalse(), MatchMode.START));
+             if (!"%".equals(WlTaskRowVO.getReturnDate())){
+                	if (WlTaskRowVO.getReturnDate()=="null"){
+                      	criteria.add(Expression.eq("returnDate", null));
+                    }else  if (WlTaskRowVO.getReturnDate().indexOf("to")==-1){
+                        criteria.add(Expression.eq("returnDate", ProjectUtil.getDate(WlTaskRowVO.getReturnDate())));//,"yyyy-MM-dd HH:mm:ss.SSS"
+                    }else if(WlTaskRowVO.getReturnDate().indexOf("to")!=WlTaskRowVO.getReturnDate().length()-2){
+                    	String startDate  = WlTaskRowVO.getReturnDate().substring(0,WlTaskRowVO.getReturnDate().indexOf("to"));
+                    	String endDate  =WlTaskRowVO.getReturnDate().substring(WlTaskRowVO.getReturnDate().indexOf("to")+2,WlTaskRowVO.getReturnDate().length());
+                    	if(startDate!="")criteria.add(Expression.ge("returnDate", ProjectUtil.getDate(startDate)));
+                    	if(endDate!="")criteria.add(Expression.le("returnDate", ProjectUtil.getDate(endDate)));
+                    }
+                }
+             
+             if (WlTaskRowVO.getStatus() != null)
+                 criteria.add(Expression.ilike("status", WlTaskRowVO.getStatus(), MatchMode.START));
+             if (WlTaskRowVO.getRemark() != null)
+                 criteria.add(Expression.ilike("remark", WlTaskRowVO.getRemark(), MatchMode.START));
+             if (WlTaskRowVO.getId() != 0)
+             criteria.add(Expression.eq("id", WlTaskRowVO.getId()));
+             //if (WlTaskRowVO.getTrwithor() != null && WlTaskRowVO.getTrwithor().length > 0) criteria.createCriteria("trwithor").add(Expression.in("id", WlTaskRowVO.getTrwithor()));
+             //if (WlTaskRowVO.getTask()!= null) criteria.createCriteria("task").add(Expression.eq("id", WlTaskRowVO.getTask()));
+             if (WlTaskRowVO.getFetchUnit() != null) criteria.createCriteria("fetchUnit").add(Expression.eq("id", WlTaskRowVO.getFetchUnit()));
+             if (WlTaskRowVO.getUnloadUnit() != null) criteria.createCriteria("unloadUnit").add(Expression.eq("id", WlTaskRowVO.getUnloadUnit()));
+             if (WlTaskRowVO.getMasterDriver() != null) criteria.createCriteria("masterDriver").add(Expression.eq("id", WlTaskRowVO.getMasterDriver()));
+             if (WlTaskRowVO.getAssistDriver() != null) criteria.createCriteria("assistDriver").add(Expression.eq("id", WlTaskRowVO.getAssistDriver()));*/
+           //条数
+             int totalCount = ((Integer) criteria.setProjection(Projections.rowCount())
+                     .uniqueResult())  
+                     .intValue();//取得符合条件的总数  
+       
+		      criteria.setProjection(null);  
+		     WlTaskRow or=new com.logistics.entity.order.WlTaskRowImpl();
+		     or.setId(new Long(totalCount));
+		     //or.setRemark(new Integer(totalCount).toString());
+		     if (pageNumber > 0 && pageSize > 0)
+		     {
+		     	criteria.setFirstResult(this.calculateFirstResult(pageNumber, pageSize));
+		     	criteria.setMaxResults(pageSize);
+		     }else{
+		     	criteria.setMaxResults(100);
+		     }
+		     List re=criteria.list();
+		     re.add(or);
+		     return re;
+         }
+         catch (org.hibernate.HibernateException ex)
+         {
+             throw super.convertHibernateAccessException(ex);
+         }
+}

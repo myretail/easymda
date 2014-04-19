@@ -1,0 +1,492 @@
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+     <style type="text/css">
+            @import "../dojo/dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+            @import "../dojo/dojo-release-1.0.0/dojo/resources/dojo.css";
+            @import "../dojo/dojo-release-1.0.0/dojox/grid/_grid/tundraGrid.css";
+            @import "../dojo/dojo-release-1.0.0/dojox/grid/_grid/Grid.css";
+            @import "../js/wlProject.css";
+	
+      </style>
+      <script type="text/javascript" src="../dojo/dojo-release-1.0.0/dojo/dojo.js"  
+                djConfig="parseOnLoad: true, isDebug: true,locale: 'zh-cn', extraLocale: ['zh-TW', 'fr']"></script>
+      <script>
+    
+            dojo.require("dojo.data.ItemFileWriteStore");
+            dojo.require("dijit.layout.SplitContainer");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.require("dijit.Tree");
+            dojo.require("dojo.parser");
+            dojo.require("dijit._tree.dndSource");
+            dojo.require("dijit.layout.TabContainer");
+            dojo.require("dijit.form.Button");
+            dojo.require("dojox.grid.Grid");
+            dojo.require("dojox.grid._data.model");
+            dojo.require("dojo.i18n");
+            dojo.require("dojox.validate._base");
+            dojo.require("dijit.form.ValidationTextBox");
+            dojo.require("dijit.form.TextBox");
+            dojo.require("dijit.form.FilteringSelect");
+            dojo.require("dojox.grid._data.dijitEditors");
+            
+            dojo.registerModulePath("mydojo", "../../../js/mydojo");
+            dojo.require("mydojo.FilteringSelect");
+            dojo.require("mydojo.ValidationTextBox");
+            dojo.require("mydojo.NumberTextBox");
+     </script>
+        
+     <script type="text/javascript" src="../js/soapclient.js"></script>
+     <script type="text/javascript" src="../js/wlProject.js"></script>
+     <script type="text/javascript" >
+     
+          var griddata =  new Array();
+          var deletedata=new Array();
+          var querydata =  new Array();
+          var queryvo=new ${manageable.name}VOJs(); //   
+          var totalCount=0 ;
+          var totalpage=0 ;
+          var pagenumber=1;
+          var pagesize=4;
+          var url=
+          var model = new dojox.grid.data.Table(null, griddata);
+          var editfield =[{type: 'dojox.GridRowView', width: '20px' },{
+          
+                 //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+                       
+                                 cells: [ [
+                                            //{name: '选择', width: 3, get:getChoise},
+                                           { name: 'choise', width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+                                           { name: 'No.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                                  ${comma} {name: '$member.name',field:${inum}, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
+ #elseif ($member.type.dateType)
+                                  ${comma}  {name: '$member.name',field:${inum}, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"}}
+   #set ($inum= $inum + 1)
+                                  ${comma}  {name: '${member.name}Time',field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+ #else
+    #if ($member.required)
+                                  ${comma}  {name: '$member.name', field: ${inum},width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30,invalidMessage:'can not be empty'}
+   #else
+                                  ${comma}  {name: '$member.name', field: ${inum},width: 10, editor: mydojo.ValidationTextBox , required:false ,maxLength:100,invalidMessage:'' }
+   #end
+  #end
+  #set ($inum= $inum + 1)
+  #set ($comma = ", ")
+#end
+#end                       
+#foreach($member in $manageable.manageableAssociationEnds)
+                                 ${comma}  {name: '$member.name', field: ${inum},width: 10 }
+   #set ($inum= $inum + 1)
+                                 ${comma}  {name: '${member.name}Id', field: ${inum}}//select or pop window
+   #set ($inum= $inum + 1)
+#end
+                                        ] ]
+                           }];
+
+function call_funUpd() {
+       //var s = grid.selection.getSelected();
+       var  d=new DateTimeQuery();
+       var n=new NumberQuery();
+       var sall=grid.model.data;
+       for(var i=0;i<sall.length;i++){
+       if(sall[i][0]==true){
+         var passAll=0;
+         var thisCell=sall[i];
+         var padd = new SOAPClientParameters2();
+         var vobject=new ${manageable.name}VOJs();
+         vobject.id=thisCell[1];
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+             if(dojox.validate.isInRange(thisCell[$inum],{max:9999999, min:0})){
+                n=new NumberQuery(); n.upNumber=thisCell[$inum];vobject.$member.name=n;
+             }else{grid.getCell($inum).getNode(i).innerHTML="<span style={color:red;line-height:16px}> not be double</span>";passAll=1;}//double
+
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')
+             if(thisCell[$inum] instanceof Date){d.upDate=dojo.date.locale.format(thisCell[$inum], grid.getCell($inum).constraint);
+             }else{grid.getCell($inum).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be date</span>"; passAll=1;}//not null
+ #set ($inum= $inum + 1) 
+             if(thisCell[$inum] instanceof Date){
+             d.upDate=d.upDate+" "+dojo.date.locale.format(thisCell[$inum], grid.getCell($inum).constraint);
+             vobject.$member.name=d;
+             }else{grid.getCell($inum).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be time</span>"; passAll=1;}//not null
+             
+#else        
+ #if ($member.required)
+             if(dojox.validate.isText(thisCell[$inum], {minlength: 1})){vobject.$member.name=thisCell[$inum];
+             }else{grid.getCell($inum).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;}//not null
+ #else
+              vobject.$member.name=thisCell[$inum];
+ #end
+#end
+#set ($inum= $inum + 1)
+#end
+#end
+       if(passAll==0){
+             if(thisCell[1]==0){//create new row
+                padd.add('${manageable.name}VO',vobject);
+                SOAPClient.invoke(url, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                grid.model.setDatum(ul,i,1);
+                });
+	         }else{//modify row
+                padd.add('${manageable.name}VO',vobject);
+                SOAPClient.invoke(url, "update${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                });
+	         }
+        } }}//for
+//submit delete
+          for(var i=0;i<deletedata.length;i++){
+               var pdel = new SOAPClientParameters();      
+               pdel.add('id',deletedata[i]);
+               SOAPClient.invoke(url, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+	             
+	           });
+          }
+          deletedata=new Array();
+          dojo.byId("rowCount").innerHTML = 'saved'; 
+//submit delete end          
+ }
+
+ function removeSelectedRowsGrid(){
+       //var s = grid.selection.getSelected();
+       var s= new Array();
+       var sall=grid.model.data;
+       for(var i=0;i<sall.length;i++){
+       if(sall[i][0]==true){
+          s.push(i);
+          var thisCell=sall[i];
+          if(thisCell[1]!=0){//the row which will be deleted
+            deletedata.splice(deletedata.length,0,thisCell[1]);
+          }
+      }    
+      grid.model.remove(s);//grid.removeSelectedRows();
+ }}
+        
+addRow = function(){
+          	grid.addRow([false,0,"","",""],grid.model.getRowCount());
+	        } 
+   
+
+
+
+      var querylayout =[{type: 'dojox.GridRowView', width: '20px' },{
+                  //从querySubdata中获得     
+             cells: [
+                      [
+                       //{name: '选择', width: 3, get:getChoise},
+                       { name: 'choise', width: 3, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+                       { name: 'No.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+                     ${comma}  {name: '$member.name', width: 10, get: function(inRowIndex){ return querySubdata[$inum];} }
+#set ($inum= $inum + 1)
+#set ($comma = ", ")
+#end
+#end                       
+#foreach($member in $manageable.manageableAssociationEnds)
+                     ${comma}  {name: '$member.name', width: 10, get: function(inRowIndex){ return querySubdata[$inum];} }
+#set ($inum= $inum + 1)
+                     ${comma}  {name: '${member.name}Id', width: 10, get: function(inRowIndex){ return querySubdata[$inum];}}//select or pop window
+#set ($inum= $inum + 1)
+#end
+                      ] ] }];
+                          
+//query
+
+   
+function querybutton(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvo.id=0 ;
+              queryvo=new ${manageable.name}VOJs();
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+              n=queryNumber_fun("${member.name}");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryvo.${member.name}=n;}  
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')   
+              d=queryDate_fun("${member.name}");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryvo.${member.name}=d;}
+#else
+              if(query${member.name}.getDisplayedValue()!="")queryvo.${member.name}=query${member.name}.getDisplayedValue();//
+#end
+#end
+#end        if(validstate==0){
+              pagenumber=1;
+              getVO(queryvo,pagenumber,pagesize,'0');
+              if(totalpage>1){dijit.byId("but7").setDisabled(false);}else{dijit.byId("but7").setDisabled(true);}
+             }      
+       }
+
+ querydis = function(){
+               querydisplay("queryDiv");
+            }
+ 
+ 
+
+
+function getVO(queryvo,pagenumber,pagesize,orderBy){
+
+      var pu = new SOAPClientParameters2();
+      pu.add('${manageable.name}VO',queryvo) ;
+      pu.add('pageNumber',pagenumber) ;
+	    pu.add('pageSize',pagesize) ;
+	    pu.add('orderBy',orderBy) ;
+      SOAPClient.invoke(url,"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydata=${manageable.name}VOtoArray_fun(ul,true);
+           totalCount=ul[ul.length-1]["ns:remark"]; 
+           totalpage=Math.ceil(new Number(totalCount)/pagesize);
+           document.getElementById("rowCount").innerHTML=" "+pagenumber+" / "+totalpage+" / "+totalCount+" " ;
+      }); 
+      querydata.splice(querydata.length-1,1);
+      model.setData(querydata);
+      //dijit.byId("grid").updateRowCount(querydata.length); 
+ }
+ 
+function init(){
+  getVO(queryvo,pagenumber,pagesize,'0');
+  if(totalpage>1)dijit.byId("but7").setDisabled(false);
+}
+
+ dojo.addOnLoad(init);            
+</script>
+</head>
+<body class="tundra">
+     
+     	<div id="queryDiv" style="margin-right: 30px;  height: 460px; display:none;" >
+              <table align="center" width=100% class="queryTable"  >
+                <tr ><td align="center" style="width:16%">Please input criterial:</td><td style="width:34%" colspan="2"></td><td style="width:17%"></td><td style="width:33%" colspan="2"></td></tr> 
+                <tr ><td align="center" style="width:16%">                       </td><td style="width:34%" colspan="2"></td><td style="width:17%"></td><td style="width:33%" colspan="2"></td></tr> 
+#set ($inum =1 ) 
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($inum==1)
+#set ($firsttype="")
+#set ($sectype="")
+#set ($thirtype="")
+#set ($inum=2) 
+                <tr  height="6" >
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                    <td align="right" style="width:16%">${member.name}:</td>
+                    <td align="left" style="width:17%"><span id="query${member.name}Img0"  ><input type="text" style="width:66%" jsId="query${member.name}"  id="query${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span id="query${member.name}Img1" style="{display:none}" ><input type="text" style="width:36%" jsId="query${member.name}1"  id="query${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"> <input type="text" style="{width:36%;}"  jsId="query${member.name}2"  id="query${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+                    </td>
+#set ($firsttype="double")          
+#elseif ($member.type.dateType)
+                    <td align="right" style="width:16%" >${member.name}:</td> 
+                    <td align="left" style="width:51%" colspan="3"><span id="query${member.name}Img0"  ><input style="{width:50%}"   jsId="query${member.name}" id="query${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:30%}" jsId="query${member.name}Time" id="query${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span id="query${member.name}Img1" style="{display:none}" ><input style="{width:30%}"   jsId="query1${member.name}" id="query1${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query1${member.name}Time" id="query1${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"><input style="{width:30%}"   jsId="query2${member.name}" id="query2${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query2${member.name}Time" id="query2${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                    </td>
+#set ($firsttype="date") 
+#else
+                    <td align="right" style="width:16%">${member.name}:</td>
+                    <td align="left" style="width:17%"><input type="text"  id="query${member.name}"  jsId="query${member.name}"   dojoType="dijit.form.TextBox"  /></td>
+#set ($firsttype="str") 
+#end
+#elseif ($inum==2)
+#set ($inum=3) 
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+#if ($firsttype=='double')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:17%"><span id="query${member.name}Img0"  ><input type="text" style="width:66%" jsId="query${member.name}"  id="query${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span id="query${member.name}Img1"  style="{display:none}" ><input type="text" style="width:36%" jsId="query${member.name}1"  id="query${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"> <input type="text" style="{width:36%;}"  jsId="query${member.name}2"  id="query${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+                    </td>  
+#set ($sectype="str")
+#end
+#if ($firsttype=='date')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:16%"><span id="query${member.name}Img0"  ><input type="text" style="width:66%" jsId="query${member.name}"  id="query${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span id="query${member.name}Img1"  style="{display:none}" ><input type="text" style="width:36%" jsId="query${member.name}1"  id="query${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"> <input type="text" style="{width:36%;}"  jsId="query${member.name}2"  id="query${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+                    </td>  
+#set ($sectype="")
+#set ($inum=1)
+#end                  
+#if ($firsttype=='str')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:17%"><span id="query${member.name}Img0"  ><input type="text" style="width:66%" jsId="query${member.name}"  id="query${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span id="query${member.name}Img1"  style="{display:none}" ><input type="text" style="width:36%" jsId="query${member.name}1"  id="query${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"> <input type="text" style="{width:36%;}"  jsId="query${member.name}2"  id="query${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+                    </td>  
+#set ($sectype="str")
+#end                 
+#elseif ($member.type.dateType)
+#if ($firsttype=='double')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:51%" colspan="3"><span id="query${member.name}Img0"  ><input style="{width:50%}"   jsId="query${member.name}" id="query${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:30%}" jsId="query${member.name}Time" id="query${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span id="query${member.name}Img1" style="{display:none}" ><input style="{width:30%}"   jsId="query1${member.name}" id="query1${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query1${member.name}Time" id="query1${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"><input style="{width:30%}"   jsId="query2${member.name}" id="query2${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query2${member.name}Time" id="query2${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                    </td>
+#set ($sectype="")
+#set ($inum=1)
+#end
+#if ($firsttype=='date')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:34%" colspan="2"><span id="query${member.name}Img0"  ><input style="{width:50%}"   jsId="query${member.name}" id="query${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:30%}" jsId="query${member.name}Time" id="query${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span id="query${member.name}Img1" style="{display:none}" ><input style="{width:30%}"   jsId="query1${member.name}" id="query1${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query1${member.name}Time" id="query1${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input style="{width:30%}"   jsId="query2${member.name}" id="query2${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query2${member.name}Time" id="query2${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                    </td>
+#set ($sectype="")
+#set ($inum=1)
+#end                  
+#if ($firsttype=='str')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:51%" colspan="3"><span id="query${member.name}Img0"  ><input style="{width:50%}"   jsId="query${member.name}" id="query${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:30%}" jsId="query${member.name}Time" id="query${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span id="query${member.name}Img1" style="{display:none}" ><input style="{width:30%}"   jsId="query1${member.name}" id="query1${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query1${member.name}Time" id="query1${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"><input style="{width:30%}"   jsId="query2${member.name}" id="query2${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query2${member.name}Time" id="query2${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                    </td>
+#set ($sectype="")
+#set ($inum=1)
+#end 
+#else
+#if ($firsttype=='double')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:17%"><input type="text"  id="query${member.name}"  jsId="query${member.name}"   dojoType="dijit.form.TextBox"  /></td>  
+#set ($sectype="str")
+#end
+#if ($firsttype=='date')
+                    <td align="right" style="width:17%"></td>
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:16%"><input type="text"  id="query${member.name}"  jsId="query${member.name}"   dojoType="dijit.form.TextBox"  /></td>  
+#set ($sectype="")
+#set ($inum=1)
+#end                  
+#if ($firsttype=='str')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:17%"><input type="text"  id="query${member.name}"  jsId="query${member.name}"   dojoType="dijit.form.TextBox"  /></td>  
+#set ($sectype="str")
+#end 
+#end
+#elseif($inum==3)
+#set ($inum=1) 
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:16%"><span id="query${member.name}Img0"  ><input type="text" style="width:66%" jsId="query${member.name}"  id="query${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span id="query${member.name}Img1"  style="{display:none}" ><input type="text" style="width:36%" jsId="query${member.name}1"  id="query${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"> <input type="text" style="{width:36%;}"  jsId="query${member.name}2"  id="query${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+                    </td>  
+#set ($thirtype="over")
+#elseif ($member.type.dateType)
+                    <td align="right" style="width:17%"> </td>
+                    <td align="right" style="width:16%"></td>
+                </tr><tr  height="6" >
+                    <td align="right" style="width:16%">${member.name}:</td>
+                    <td align="left" style="width:34%" colspan="2"><span id="query${member.name}Img0"  ><input style="{width:50%}"   jsId="query${member.name}" id="query${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:30%}" jsId="query${member.name}Time" id="query${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span id="query${member.name}Img1" style="{display:none}" ><input style="{width:30%}"   jsId="query1${member.name}" id="query1${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query1${member.name}Time" id="query1${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                        <span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgup">></span>
+                        <img src="../image/start.gif" onclick="queryType(this);" id="query${member.name}Img" height="15" width="20" border="0">
+                        <span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${member.name}Imgdown" >></span>
+                        <span id="query${member.name}Img2div" style="{display:none}"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="{width:30%}"   jsId="query2${member.name}" id="query2${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+                        <input style="{width:15%}" jsId="query2${member.name}Time" id="query2${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+                    </td>
+#set ($firsttype="date")
+#set ($inum=2)
+#else            
+#if ($sectype=='str')
+                    <td align="right" style="width:17%">${member.name}:</td>
+                    <td align="left" style="width:16%"><input type="text"  id="query${member.name}"  jsId="query${member.name}"   dojoType="dijit.form.TextBox"  /></td>  
+#set ($thirtype="over")
+#end       
+#end
+#if ($thirtype=="over"||$inum==1)        
+              </tr>
+#end      
+#end
+#end                       
+#end
+	
+           <tr align="center"><td></td><td colspan="2"><a onclick="querybutton();"><img src="../image/332.gif" height="20" width="20" border="0">OK</a></td><td></td><td colspan="2"></td></tr>
+						    </table>
+	     </div>
+	       		<div align="right">
+	          	 &nbsp;&nbsp;&nbsp;
+	          	     <button dojoType="dijit.form.Button" onclick="addRow();" iconClass="addIcon" >add</button>
+	                 <button dojoType="dijit.form.Button" onclick="removeSelectedRowsGrid();" iconClass="delIcon" >delete</button>
+	                 <button dojoType="dijit.form.Button" id="but3" jsId="but3" onclick="call_funUpd();"  iconClass="saveIcon">save</button>
+	          	     <button dojoType="dijit.form.Button" onclick="querydis();" iconClass="queryIcon" >query</button>
+                  
+         		</div>    
+	        
+	      
+	         <div id="rowCount"></div>
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="grid"  dojoType="dojox.Grid" autoWidth="false"  jsId="grid"	model="model"  structure="editfield" singleClickEdit="true" ></div>
+      </div> 
+      <div align="right" ><span id="rowCount"></span>
+        <button dojoType="dijit.form.myButton" onclick="upPage();"  id="but6" disabled='true' jsId="but6" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+        <button dojoType="dijit.form.myButton" onclick="downPage();" id="but7" disabled='true' jsId="but7" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+        <div id="668" dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+  			  <div dojoType="dijit.Menu">
+				  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChange(this.label);"></div>
+				  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChange(this.label);"></div>
+		      <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChange(this.label);"></div>
+					<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChange(this.label);"></div>
+					<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpage();"></div>
+		      </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+        </div>
+		    <div id="669" dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+  			   <div dojoType="dijit.Menu">
+  				 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyle(this.label);"></div>
+  				 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyle(this.label);"></div>
+		    </div></div>
+     </div>     
+</body></html>	

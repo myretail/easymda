@@ -1,0 +1,124 @@
+20080826:
+//dojo终于出了1.1.1，解决了一些Bug，可是还是有些地方用起来不够
+
+dojo可以生成数字输入框（dijit.form.NumberTextBox），包含数字大小、格式的验证功能，但是有个地方用起来不太顺手。当我们将constraints中的places设置为大于0的数字，如：constraints="{places:3,min:0,max:120}"，即输入的数字需保留的小数点后3位数。dojo在对其进行验证时，如果用户输入的是10.1，会被认为“输入的值无效”，用户必须输入10.100才被认为是有效值！这一点虽然算不上是Bug，但对于数字输入量大的用户来说，用起来会增加不少的麻烦。想要在验证时能够通过10.1，10.10这样的数值，其实也非常容易，修改number.js中的实数验证方法（dojo.number._realNumberRegexp）即可：将该方法中根据places生成正则表达式的语句 re += "\\d{" + flags.places + "}";//464行 修改为re = "(.\\d{0," + flags.places + "})?"; 
+
+20080901
+生成效率最高的树？
+树是系统中经常用到的控件，在数据量大的情况下，加载的速度通常就会比较慢！要想提高加载速度，最好就是分层的从服务端读取数据，分层加载页面的树结点。下面的树利用ajax技术，通过soap协议调用webService，读取数据库的数据；由dojo提供的树控件方法生成树。加载页面时，只读取、生成第一、二层的树结点；当用户第一次展开某结点时，再次从服务端读取该结点的子结点，由于使用了AJAX技术，每次访问服务端时，不再需要刷新网页，使得页面仍然会保持很好的稳定性。
+<script>
+           dojo.require("dojo.data.ItemFileWriteStore");
+           dojo.require("dijit.Tree");
+           dojo.require("dojo.parser");
+</script>
+        
+<script type="text/javascript" src="../js/soapclient.js"></script>//包括soap访问webService的方法，网上就可以下得到
+<script type="text/javascript" >
+var treesDate ={ label:'name',identifier:'eId',items:data};
+var popStore = new dojo.data.ItemFileWriteStore({data: treesDate});
+var myModel = new dijit.tree.ForestStoreModel({
+  				store: popStore,
+  				rootId: "0",
+  				rootLabel: "分类",
+  				childrenAttrs: ["children"]
+  			});        
+var _tree=dijit.byId("tree"); 
+/*
+读取webService数据方法
+codeID:父结点id,
+chitem：父结点item,
+layerSum: 总共要读取的层数
+*/       
+function getTreeNodes(codeID,chitem,layerSum){
+             var layerInt=0;
+		         var pl = new SOAPClientParameters();
+             pl.add('codeID',codeID) ;
+             pl.add('pageNumber',0) ;
+             pl.add('pageSize',0) ;
+             pl.add('orderBy',0) ;
+             SOAPClient.invoke(url, "getCodeByParCodeID", pl, false,  function GetEnu_callBack(ul, soapResponse){
+               var pInfo = {
+                   					parent: chitem,		
+                   					attribute: "children"	
+                   		};
+               if(ul!=null && ul.length>0 ){
+                     for(var i = 0; i < ul.length; i++){		
+                                  var ulo=ul[i];
+                                  var newitem=popStore.newItem({name: ulo["ns:name"],type:ulo["ns:parCode"] ,eId:ulo["ns:id"],haveChild:"0"}, pInfo);//haveChild=0:初始，1:有子结点，2:无子结点
+                                  if(layerInt<layerSum)getTreeNodes(ulo["ns:id"],newitem,layerInt+1,layerSum);
+                                  
+                             }
+                      if(chitem!=null){
+                            popStore.setValue(chitem,"haveChild","1"); 
+                            var node = dijit.byId("tree")._itemNodeMap[chitem.eId];
+                            node._updateItemClasses(node.item);
+                      }
+                }else{
+                    popStore.setValue(chitem,"haveChild","2");  
+                }       
+          });
+        
+        }
+        
+/*
+展开指定结点、指定层的树节点方法
+tree：展开的树
+treeNode：展开的树结点node
+layerSum: 展开指定结点下几层
+*/
+function expandAllChildrenNode(tree,treeNode,layerSum){
+		      var layerInt=0;
+		      tree._expandNode(treeNode);
+          var childrenArray=treeNode.getChildren();
+          for (var i=0; i<childrenArray.length; i++){//begin	
+             if(layerInt<layerSum) expandAllChildrenNode(tree,childrenArray[i],layerInt+1,layerSum);
+             //if(layerInt==layerSum&&tree.model.mayHaveChildren(childrenArray[i].item))childrenArray[i].
+             if(layerInt==layerSum)childrenArray[i]._updateItemClasses(childrenArray[i].item);
+          }
+        }              
+        
+   
+   
+function init(){
+        getTreeNodes(0,null,2);//打开页面时读取、加载两层树结点
+		    expandAllChildrenNode(_tree,_tree.rootNode,1);//默认展开只一层，加载第二层结点的目的主要是为了获得第一层结点是否可展开的信息
+/*
+当用户展开结点时加载该结点的子结点的子结点
+*/		    
+   dojo.connect(dijit.byId("tree"), "_onExpandoClick", function(message){
+                       var node = message.node;
+                       var ch2node=node.getChildren();
+                       for (var i=0; i<ch2node.length; i++){	
+                       if(ch2node[i].getChildren().length==0&&ch2node[i].item.haveChild=="0"){
+                         var ch2item =ch2node[i].item;
+                         getTreeNodes(ch2item.eId,ch2item,1);
+                       }
+                      
+                      }
+             });   
+}//END INIT
+            
+ dojo.addOnLoad(init);
+</head>
+<body class="tundra">
+<div id="tree" showRoot="true" persist="false" dojoType="dijit.Tree"  store="popStore" labelAttr="name"  childrenAttr="children"  model="myModel" ></div> 
+</body></html>
+
+20080918
+
+用dojo中的grid控件生成的嵌套表
+
+dojo的grid控件功能是比较强大的，也是我一开始想要学习它的原因。dojo中的grid其实就是table，很多时候，
+我们都需要展示有一对多关系的复杂数据。如：采购订单和订单中多种产品的信息；运输委托单和其中包含的多种货物的信息。这种情况下，使用grid
+的可展开、折叠的嵌套表来展示数据，可以兼顾信息量大和信息关系直观的要求。下图中显示的是两条运输委托单的概要信息，简单、清晰，使用户
+迅速了解当前运单的概况，找到需要进行操作的记录。
+
+当用户单击要进行操作的记录前的+号时，可展开嵌套表，表中显示的是运输委托单的详细信息和货物信息。
+
+
+
+
+
+
+
+

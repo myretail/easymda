@@ -1,0 +1,375 @@
+//name =${memberAs.association.name}AFTab.js 该模板尚未包含查询功能,是以关系表为基表
+//---begin---------判断是否为多对多的关系表
+#set ($ifcon= 0)
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($ifcon= 1)
+	#end
+#end		
+//---end---------判断是否为多对多的关系表
+#if($ifcon == 0)
+	#set ($allMenber= 1)
+	#set ($firstMenber= '')
+	#set ($lastMenber= '')
+	#foreach($memberAs in $manageable.manageableAssociationEnds)
+		#if(!${memberAs.many})   
+			#if($allMenber== 1)
+				#set ($lastMenber= $memberAs)
+			#elseif($allMenber== 2)
+				#set ($firstMenber= $memberAs)
+			#end
+			#set($allMenber= $allMenber + 1)
+		#end
+	#end
+	//----------lastMenber = $lastMenber   firstMenber=$firstMenber
+	//${lastMenber.association.name}AFTab.js	//还要引入：41.4模板生成的,以${firstMenber.type.name}为基表的js  ${firstMenber.association.name}AFTab2.js
+		  var NU${lastMenber.association.name} = false;//needUpdate
+		  var url${firstMenber.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+		  var deletedata${firstMenber.association.name} =   ",";
+		  var adddata${firstMenber.association.name} =    ",";
+		  var querydata${firstMenber.association.name} =  new Array();
+		  var pagenumber${firstMenber.association.name}=1;
+		  var totalCount${firstMenber.association.name}=0;
+		  var pagesize${firstMenber.association.name}=10;
+		  var orderBy${firstMenber.association.name}='0';
+		  var queryvo${firstMenber.association.name}=new ${manageable.name}VOJs();
+		  var oddstyle='';
+		  var model${firstMenber.association.name} = new dojox.grid.data.Table(null, querydata${firstMenber.association.name});
+		  var grid${lastMenber.association.name};
+
+		var getVO${firstMenber.association.name}${firstMenber.type.name}=function(id){
+
+			var pu = new SOAPClientParameters2();
+			pu.add('id',id) ;
+			SOAPClient.invoke(url${firstMenber.association.name},"get${firstMenber.type.name}For${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+			querydata${firstMenber.association.name}${firstMenber.type.name}=${firstMenber.type.name}VOtoArray_fun(ul,false);
+			totalCount${firstMenber.association.name}=ul[ul.length-1]["ns:id"]; 
+			querydata${firstMenber.association.name}${firstMenber.type.name}.splice(querydata${firstMenber.association.name}${firstMenber.type.name}.length-1,1);
+			}); 
+			model${firstMenber.association.name}.setData(querydata${firstMenber.association.name}${firstMenber.type.name});
+			var totalpage=Math.ceil(new Number(totalCount${firstMenber.association.name})/pagesize${firstMenber.association.name});
+		
+		if(totalpage>1){
+			if(pagenumber${firstMenber.association.name}==1){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}else if(pagenumber${lastMenber.association.name}==totalpage){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+			}else{
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}
+		}else{
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		
+		}
+		if(pagesize${firstMenber.association.name}==0){
+			totalpage=1;
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		}
+		if(totalpage==1)pagenumber${firstMenber.association.name}=1;
+		
+		 document.getElementById("rowCount${lastMenber.association.name}").innerHTML=i18nStr.di+" "+pagenumber${firstMenber.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${firstMenber.association.name}+" "+i18nStr.rowSize; 	
+
+	}
+	  
+	/*var getVO${firstMenber.association.name}=function(queryvo){
+
+		var pu = new SOAPClientParameters2();
+		pu.add('${manageable.name}VO',queryvo) ;
+		pu.add('pageNumber',pagenumber${firstMenber.association.name}) ;
+		pu.add('pageSize',pagesize${firstMenber.association.name}) ;
+		pu.add('orderBy',orderBy${firstMenber.association.name}) ;
+		SOAPClient.invoke(url${firstMenber.association.name},"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+		querydata${firstMenber.association.name}=${manageable.name}VOtoArray_fun(ul,false);
+		totalCount${firstMenber.association.name}=ul[ul.length-1]["ns:id"]; 
+		}); 
+		 var totalpage=Math.ceil(new Number(totalCount${firstMenber.association.name})/pagesize${firstMenber.association.name});
+		
+		if(totalpage>1){
+			if(pagenumber${firstMenber.association.name}==1){
+				dijit.byId("but6${firstMenber.association.name}").setDisabled(true);
+				dijit.byId("but7${firstMenber.association.name}").setDisabled(false);
+			}else if(pagenumber${firstMenber.association.name}==totalpage){
+				dijit.byId("but6${firstMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${firstMenber.association.name}").setDisabled(true);
+			}else{
+				dijit.byId("but6${firstMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${firstMenber.association.name}").setDisabled(false);
+			}
+		}else{
+			dijit.byId("but6${firstMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${firstMenber.association.name}").setDisabled(true);
+		
+		}
+		if(pagesize${firstMenber.association.name}==0){
+			totalpage=1;
+			dijit.byId("but6${firstMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${firstMenber.association.name}").setDisabled(true);
+		}
+		if(totalpage==1)pagenumber${firstMenber.association.name}=1;
+		
+		 document.getElementById("rowCount${firstMenber.association.name}").innerHTML=i18nStr.di+" "+pagenumber${firstMenber.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${firstMenber.association.name}+" "+i18nStr.rowSize; 	
+
+		querydata${firstMenber.association.name}.splice(querydata${firstMenber.association.name}.length-1,1);
+		model${firstMenber.association.name}.setData(querydata${firstMenber.association.name});
+	}*/
+	
+	function save${lastMenber.association.name}(){
+		var delArray=deletedata${firstMenber.association.name}.split(",");
+		for(var i=1;i<delArray.length-1;i++){
+			var pdel = new SOAPClientParameters();  
+			pdel.add('id',delArray[i]);
+				SOAPClient.invoke(url${firstMenber.association.name}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+			});
+		}
+		deletedata${firstMenber.association.name}=",";
+		
+		var addArray=adddata${firstMenber.association.name}.split(",");
+					  
+		for(var i=1;i<addArray.length-1;i++){
+			var vobject=new ${manageable.name}VOJs();
+			var ${lastMenber.type.name}vo=new ${lastMenber.type.name}VOJs();
+			${lastMenber.type.name}vo.id=mainID;
+			vobject.${lastMenber.name}=${lastMenber.type.name}vo;
+			var ${firstMenber.type.name}vo=new ${firstMenber.type.name}VOJs();
+			${firstMenber.type.name}vo.id=addArray[i];
+			vobject.${firstMenber.name}=${firstMenber.type.name}vo;
+			var padd = new SOAPClientParameters2(); 
+			padd.add('${manageable.name}VO',vobject);
+			SOAPClient.invoke(url${firstMenber.association.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+				for(var j=0;j<querydata${firstMenber.association.name}${firstMenber.type.name}.length;j++){
+					if(querydata${firstMenber.association.name}${firstMenber.type.name}[j][1]==addArray[i]){
+						querydata${firstMenber.association.name}${firstMenber.type.name}[j][querydata${firstMenber.association.name}${firstMenber.type.name}[j].length-1]=ul;
+						break;
+						}
+				}
+			});
+		}
+		
+		adddata${firstMenber.association.name}=",";
+		
+	}
+	
+	
+	var queryvo${firstMenber.name}=new ${firstMenber.type.name}VOJs();
+	var build${lastMenber.association.name}=function(){
+		if(NU${lastMenber.association.name} && mainID!=undefined && mainID!=''){
+		/*
+			var queryFloat${lastMenber.type.name}=new ${lastMenber.type.name}VOJs();
+			queryFloat${lastMenber.type.name}.id=mainID;
+			queryvo${firstMenber.association.name}.${lastMenber.name}=queryFloat${lastMenber.type.name};
+			getVO${firstMenber.association.name}(queryvo${firstMenber.association.name});
+			
+			if(grid${lastMenber.association.name}==undefined){
+				getVO${firstMenber.association.name}${firstMenber.type.name}(queryvo${firstMenber.name});
+				grid${lastMenber.association.name} = new dojox.Grid({
+							title: "",
+							id: "grid${lastMenber.association.name}",
+							jsId: "grid${lastMenber.association.name}",
+							structure: layout${firstMenber.association.name},
+							rowCount:querydata${firstMenber.association.name}${firstMenber.type.name}.length,
+							model:model${firstMenber.association.name}
+						}, dojo.byId("grid${lastMenber.association.name}"));
+					grid${lastMenber.association.name}.resize({ h: dijit.byId("bottomPane").domNode.clientHeight-90});
+					
+			}//else{
+				for(var i=0;i<querydata${firstMenber.association.name}${firstMenber.type.name}.length;i++){
+					querydata${firstMenber.association.name}${firstMenber.type.name}[i][0]=false;
+				}
+				for(var i=0;i<querydata${firstMenber.association.name}.length;i++){
+					for(var j=0;j<querydata${firstMenber.association.name}${firstMenber.type.name}.length;j++){
+						if(querydata${firstMenber.association.name}[i][2][1]== querydata${firstMenber.association.name}${firstMenber.type.name}[j][1] ){
+							querydata${firstMenber.association.name}${firstMenber.type.name}[j][0] =true;
+							break;
+						}
+					}
+				}
+				grid${lastMenber.association.name}.updateRowCount(querydata${firstMenber.association.name}${firstMenber.type.name}.length); 
+			//}*/
+			
+			getVO${firstMenber.association.name}${firstMenber.type.name}(mainID);
+			if(grid${lastMenber.association.name}==undefined){
+				grid${lastMenber.association.name} = new dojox.Grid({
+							title: "",
+							id: "grid${lastMenber.association.name}",
+							jsId: "grid${lastMenber.association.name}",
+							structure: layout${firstMenber.association.name},
+							rowCount:querydata${firstMenber.association.name}${firstMenber.type.name}.length,
+							model:model${firstMenber.association.name}
+						}, dojo.byId("grid${lastMenber.association.name}"));
+						
+				grid${lastMenber.association.name}.resize({ h: dijit.byId("bottomPane").domNode.clientHeight-90});
+				
+			}else{
+				
+				grid${lastMenber.association.name}.updateRowCount(querydata${firstMenber.association.name}${firstMenber.type.name}.length); 
+			}
+			
+			NU${lastMenber.association.name}=false;
+		}
+
+	}
+	
+	/*function pageSizeChange${lastMenber.association.name}(mylabel){
+			pagesize${lastMenber.association.name}=mylabel;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+
+		function allpage${lastMenber.association.name}(){
+			pagesize${lastMenber.association.name}=0;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}*/
+
+		function upPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}--;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+		function downPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}++;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+	
+
+	
+
+//${firstMenber.association.name}AFTab.js	//还要引入：41.4模板生成的,以${lastMenber.type.name}为基表的js  ${lastMenber.association.name}AFTab2.js
+		  var NU${firstMenber.association.name} = false;//needUpdate
+		  var url${lastMenber.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+		  var deletedata${lastMenber.association.name} =    ",";
+		  var adddata${lastMenber.association.name} =    ",";
+		  var querydata${lastMenber.association.name} =  new Array();
+		  var pagenumber${lastMenber.association.name}=1;
+		  var totalCount${lastMenber.association.name}=0;
+		  var pagesize${lastMenber.association.name}=10;
+		  var orderBy${lastMenber.association.name}='0';
+		  var queryvo${lastMenber.association.name}=new ${manageable.name}VOJs();
+		  var oddstyle='';
+		  var model${lastMenber.association.name} = new dojox.grid.data.Table(null, querydata${lastMenber.association.name});
+		  var grid${firstMenber.association.name};
+
+	var getVO${lastMenber.association.name}${lastMenber.type.name}=function(id){
+
+			var pu = new SOAPClientParameters2();
+			pu.add('id',id) ;
+			SOAPClient.invoke(url${lastMenber.association.name},"get${lastMenber.type.name}For${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+			querydata${lastMenber.association.name}${lastMenber.type.name}=${lastMenber.type.name}VOtoArray_fun(ul,false);
+			totalCount${lastMenber.association.name}=ul[ul.length-1]["ns:id"]; 
+			}); 
+			
+			var totalpage=Math.ceil(new Number(totalCount${lastMenber.association.name})/pagesize${lastMenber.association.name});
+		
+		if(totalpage>1){
+			if(pagenumber${lastMenber.association.name}==1){
+				dijit.byId("but6${firstMenber.association.name}").setDisabled(true);
+				dijit.byId("but7${firstMenber.association.name}").setDisabled(false);
+			}else if(pagenumber${firstMenber.association.name}==totalpage){
+				dijit.byId("but6${firstMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${firstMenber.association.name}").setDisabled(true);
+			}else{
+				dijit.byId("but6${firstMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${firstMenber.association.name}").setDisabled(false);
+			}
+		}else{
+			dijit.byId("but6${firstMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${firstMenber.association.name}").setDisabled(true);
+		
+		}
+		if(pagesize${lastMenber.association.name}==0){
+			totalpage=1;
+			dijit.byId("but6${firstMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${firstMenber.association.name}").setDisabled(true);
+		}
+		if(totalpage==1)pagenumber${lastMenber.association.name}=1;
+		
+		 document.getElementById("rowCount${firstMenber.association.name}").innerHTML=i18nStr.di+" "+pagenumber${lastMenber.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${lastMenber.association.name}+" "+i18nStr.rowSize; 	
+
+	}
+	  
+	function save${firstMenber.association.name}(){
+		var delArray=deletedata${lastMenber.association.name}.split(",");
+		for(var i=1;i<delArray.length-1;i++){
+			var pdel = new SOAPClientParameters();  
+			pdel.add('id',delArray[i]);
+				SOAPClient.invoke(url${lastMenber.association.name}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+			});
+		}
+		deletedata${lastMenber.association.name}=",";
+		
+		var addArray=adddata${lastMenber.association.name}.split(",");
+					  
+		for(var i=1;i<addArray.length-1;i++){
+			var vobject=new ${manageable.name}VOJs();
+			var ${firstMenber.type.name}vo=new ${firstMenber.type.name}VOJs();
+			${firstMenber.type.name}vo.id=mainID;
+			vobject.${firstMenber.name}=${firstMenber.type.name}vo;
+			var ${lastMenber.type.name}vo=new ${lastMenber.type.name}VOJs();
+			${lastMenber.type.name}vo.id=addArray[i];
+			vobject.${lastMenber.name}=${lastMenber.type.name}vo;
+			var padd = new SOAPClientParameters2(); 
+			padd.add('${manageable.name}VO',vobject);
+			SOAPClient.invoke(url${lastMenber.association.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+				for(var j=0;j<querydata${lastMenber.association.name}${lastMenber.type.name}.length;j++){
+					if(querydata${lastMenber.association.name}${lastMenber.type.name}[j][1]==addArray[i]){
+						querydata${lastMenber.association.name}${lastMenber.type.name}[j][querydata${lastMenber.association.name}${lastMenber.type.name}[j].length-1]=ul;
+						break;
+						}
+				}
+			});
+		}
+		
+		adddata${lastMenber.association.name}=",";
+		
+	}
+	  
+	var queryvo${lastMenber.name}=new ${lastMenber.type.name}VOJs();
+	
+	var build${firstMenber.association.name}=function(){
+		if(NU${firstMenber.association.name} && mainID!=undefined && mainID!=''){
+			getVO${lastMenber.association.name}${lastMenber.type.name}(mainID);
+			if(grid${firstMenber.association.name}==undefined){
+				grid${firstMenber.association.name} = new dojox.Grid({
+							title: "",
+							id: "grid${firstMenber.association.name}",
+							jsId: "grid${firstMenber.association.name}",
+							structure: layout${lastMenber.association.name},
+							rowCount:querydata${lastMenber.association.name}${lastMenber.type.name}.length,
+							model:model${lastMenber.association.name}
+						}, dojo.byId("grid${firstMenber.association.name}"));
+						
+				grid${firstMenber.association.name}.resize({ h: dijit.byId("bottomPane").domNode.clientHeight-90});
+				
+			}else{
+				
+				grid${firstMenber.association.name}.updateRowCount(querydata${lastMenber.association.name}${lastMenber.type.name}.length); 
+			}
+			
+			NU${firstMenber.association.name}=false;
+		}
+
+	}
+	
+	
+		/*function pageSizeChange${firstMenber.association.name}(mylabel){
+			pagesize${firstMenber.association.name}=mylabel;
+			getVO${firstMenber.association.name}${manageable.name}(queryvo${firstMenber.association.name}${manageable.name});
+		}
+
+		function allpage${firstMenber.association.name}(){
+			pagesize${firstMenber.association.name}=0;
+			getVO${firstMenber.association.name}${manageable.name}(queryvo${firstMenber.association.name}${manageable.name});
+		}*/
+
+		function upPage${firstMenber.association.name}(){
+			pagenumber${firstMenber.association.name}--;
+			getVO${firstMenber.association.name}${manageable.name}(queryvo${firstMenber.association.name}${manageable.name});
+		}
+		function downPage${firstMenber.association.name}(){
+			pagenumber${firstMenber.association.name}++;
+			getVO${firstMenber.association.name}${manageable.name}(queryvo${firstMenber.association.name}${manageable.name});
+		}
+	
+#end

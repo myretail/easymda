@@ -1,0 +1,29 @@
+querydojo:
+1.变量声明
+2.layout
+3。querybutton()
+4.${manageable.name}VOtoArray_fun(ulvo,edit)//移到js中
+5.querydis()
+6.allpage（）
+7.upPage
+8.downPage
+9.<div id="queryDiv">
+10.<div button>
+11.<div id="grid">
+
+editdojo:
+1.变量声明
+2.formatDate
+3.getChoise
+4.editfieldlayout
+5.call_funUpd()
+removeSelectedRowsGrid
+addRow
+querybutton
+5.querydis()
+6.allpage（）
+7.upPage
+8.downPage
+9.<div id="queryDiv">
+10.<div button>
+11.<div id="grid">

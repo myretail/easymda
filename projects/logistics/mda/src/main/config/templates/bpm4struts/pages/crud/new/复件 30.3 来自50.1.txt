@@ -1,0 +1,524 @@
+<script type="text/javascript" >
+//${manageable.name}SelectPane.html
+var urlpane${manageable.name} = getUrl()+ "services/${manageable.name}ManageService";
+var deletedatapane${manageable.name} =  new Array();
+var querydatapane${manageable.name} =  new Array();
+var pagenumberpane${manageable.name}=1;
+var totalCountpane${manageable.name}=0;
+var pagesizepane${manageable.name}=10;
+var orderBypane${manageable.name}='0';
+var queryvopane${manageable.name}=new ${manageable.name}VOJs();
+var oddstyle='';
+var modelpane${manageable.name} = new dojox.grid.data.Table(null, querydatapane${manageable.name});
+
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+			var ppane${manageable.name}${member.name} = new SOAPClientParameters();
+			ppane${manageable.name}${member.name}.add('eType','${member.name}');
+			var itempane${manageable.name}${member.name} = new Array();
+				SOAPClient.invoke(urle, "getEnumerationByType", ppane${manageable.name}${member.name}, false,  function GetEnu_callBack(ul, soapResponse){   
+				for(var i = 0; i < ul.length; i++){		
+				  var ulo=ul[i];
+				  itempane${manageable.name}${member.name}.push({name: ulo["ns:fieldName"], value:ulo["ns:fieldName"]});
+				}                
+			});       
+			var pane${manageable.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: item$member.name}}); 
+	#end
+#end
+
+//have set function's manageableAssociationEnds
+#foreach($member in $manageable.manageableAssociationEnds)
+	var ppane${manageable.name}${member.name} = new SOAPClientParameters2();
+	var itemspane${manageable.name}${member.name} = new Array();  
+		ppane${manageable.name}${member.name}.add('${member.type.name}VO',new  ${member.type.name}VOJs()) ;
+		ppane${manageable.name}${member.name}.add('pageNumber',0) ;
+		ppane${manageable.name}${member.name}.add('pageSize',0) ;
+	    ppane${manageable.name}${member.name}.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"${member.type.name}ManageService","get${member.type.name}", ppane${manageable.name}${member.name}, false,  function GetEnu_callBack(ul, soapResponse){      
+				for(var i = 0; i < ul.length-1; i++){		
+				  var ulo=ul[i];
+				  itemspane${manageable.name}${member.name}.push({name: ulo["ns:${member.type.name}Name"], value:ulo["ns:id"]});
+				}                
+	});       
+	var pane${manageable.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: itemspane${manageable.name}${member.name} }});
+
+	function pane${manageable.name}${member.name}Set(id,value){
+        	/*var itemselect=pane${manageable.name}${member.name}Store._getItemByIdentity(value);
+        	if(itemselect!='undefined'&& itemselect!=null){
+        	}*/
+        }
+#end
+	  
+	  
+	  
+/*var noPane${manageable.name};
+var selectPane${manageable.name}IDs;
+var oldFloatPane${manageable.name};
+var selectPane${manageable.name}InRow;
+var ifMultPane${manageable.name}=0;	*/
+	  
+var getChoisepane${manageable.name} = function(inRowIndex) {
+			if(select${manageable.name}IDs==querydatapane${manageable.name}[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="select${manageable.name}" id="'+querydatapane${manageable.name}[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="select${manageable.name}" id="'+querydatapane${manageable.name}[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpane${manageable.name}=[{
+	//根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepane${manageable.name}},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10}
+				#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+			${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydatapane${manageable.name}[inRowIndex]!=undefined && querydatapane${manageable.name}[inRowIndex][${inum}]!=undefined&& querydatapane${manageable.name}[inRowIndex][${inum}][2]!=undefined){str=querydatapane${manageable.name}[inRowIndex][${inum}][2];} return str;} ,width: 10 }
+			#set ($inum= $inum + 1)
+#end                        
+					]]}];	 
+					
+function getVOpane${manageable.name}(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('${manageable.name}VO',queryvo) ;
+      pu.add('pageNumber',pagenumberpane${manageable.name}) ;
+	    pu.add('pageSize',pagesizepane${manageable.name}) ;
+	    pu.add('orderBy',orderBypane${manageable.name}) ;
+      SOAPClient.invoke(urlpane${manageable.name},"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapane${manageable.name}=new Array();
+		   querydatapane${manageable.name}=${manageable.name}VOtoArray_fun(ul,false);
+           totalCountpane${manageable.name}=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapane${manageable.name}.splice(querydatapane${manageable.name}.length-1,1);
+      modelpane${manageable.name}.setData(querydatapane${manageable.name});
+      var totalpage=Math.ceil(new Number(totalCountpane${manageable.name})/pagesizepane${manageable.name});
+	  
+	if(totalpage>1){
+		if(pagenumberpane${manageable.name}==1){
+			dijit.byId("but6pane${manageable.name}").setDisabled(true);
+			dijit.byId("but7pane${manageable.name}").setDisabled(false);
+		}else if(pagenumberpane${manageable.name}==totalpage){
+			dijit.byId("but6pane${manageable.name}").setDisabled(false);
+			dijit.byId("but7pane${manageable.name}").setDisabled(true);
+		}else{
+			dijit.byId("but6pane${manageable.name}").setDisabled(false);
+			dijit.byId("but7pane${manageable.name}").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6pane${manageable.name}").setDisabled(true);
+		dijit.byId("but7pane${manageable.name}").setDisabled(true);
+	
+	}
+	if(pagesizepane${manageable.name}==0){
+		totalpage=1;
+		dijit.byId("but6pane${manageable.name}").setDisabled(true);
+		dijit.byId("but7pane${manageable.name}").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpane${manageable.name}=1;
+	
+	 document.getElementById("rowCountpane${manageable.name}").innerHTML=i18nStr.di+" "+pagenumberpane${manageable.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpane${manageable.name}+" "+i18nStr.rowSize; 	
+}
+
+ var select${manageable.name}FunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("select${manageable.name}");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMult${manageable.name}==0){
+              rep=querydatapane${manageable.name}[i];
+            }else{
+              rep[rep.length]=querydatapane${manageable.name}[i];
+            }
+          }
+      }
+    select${manageable.name}Fun(rep);
+	oldFloat${manageable.name}.hide();
+}  					
+
+
+//------------init 
+ getVOpane${manageable.name}(queryvopane${manageable.name});
+      if(gridpane${manageable.name}e==undefined){
+	  			 gridpane${manageable.name} = new dojox.Grid({
+					title: "ff",
+					id: "gridpane${manageable.name}",
+					jsId: "gridpane${manageable.name}",
+					structure: layoutpane${manageable.name},
+					rowCount:querydatapane${manageable.name}.length-1,
+					model:modelpane${manageable.name}
+				}, dojo.byId("gridpane${manageable.name}"));
+				
+			}else{ gridpane${manageable.name}.model.setData(querydatapane${manageable.name}); } 
+//-------------	
+
+var allpagepane${manageable.name} =function(){
+	pagesizepane${manageable.name}=0;
+	getVOpane${manageable.name}(queryvopane${manageable.name});
+}
+var  pagesizeChangepane${manageable.name}=function(mylabel){
+	pagesizepane${manageable.name}=mylabel;
+	getVOpane${manageable.name}(queryvopane${manageable.name});
+}           
+var upPagepane${manageable.name}= function(){
+	pagenumberpane${manageable.name}--;
+	getVOpane${manageable.name}(queryvopane${manageable.name});
+}
+var downPagepane${manageable.name} =function(){
+	pagenumberpane${manageable.name}++;
+	getVOpane${manageable.name}(queryvopane${manageable.name});
+}
+ 
+
+   
+function querybuttonpane${manageable.name}(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvo${manageable.name}.id=0 ;
+              queryvopane${manageable.name}=new ${manageable.name}VOJs();
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+					  n=queryNumber_fun("pane${manageable.name}${member.name}");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopane${manageable.name}.${member.name}=n;}  
+		#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')   
+					  d=queryDate_fun("pane${manageable.name}${member.name}");
+					  if(d==null){validstate=1;}else if(d.upSign!="%"){queryvopane${manageable.name}.${member.name}=d;}
+		#else
+					  if(querypane${manageable.name}${member.name}.getDisplayedValue()!="")queryvopane${manageable.name}.${member.name}=querypane${manageable.name}${member.name}.getDisplayedValue();//
+		#end
+	#end
+#end
+			
+#foreach($member in $manageable.manageableAssociationEnds)
+	if(querypane${manageable.name}${member.name}.getDisplayedValue()!=""){
+				var pane${manageable.name}${member.name}Query= new ${member.type.name}VOJs();
+				//${member.name}Query.${manageable.name}Name=query${member.name}.getDisplayedValue();
+				pane${manageable.name}${member.name}Query.id=querypane${manageable.name}${member.name}.getValue();
+				queryvopane${manageable.name}.${member.name}=pane${manageable.name}${member.name}Query;
+			  }
+#end
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpane${manageable.name}(queryvopane${manageable.name});
+             }      
+       }
+</script>
+<div id="queryDivpane${manageable.name}" style="margin-right: 0px;  height: 100px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+#set ($inum =1 ) 
+#set ($thirtype="")
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($inum==1)
+	#set ($firsttype="")
+	#set ($sectype="")
+	#set ($thirtype="")
+	#set ($inum=2) 
+                <tr>
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<span id="querypane${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber"   jsId="querypane${manageable.name}${member.name}"  id="querypane${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypane${manageable.name}${member.name}Img1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsid="querypane${manageable.name}${member.name}1"  id="querypane${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsid="querypane${manageable.name}${member.name}2"  id="querypane${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="double")          
+	#elseif ($member.type.dateType)
+						<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+						<td align="left"  colspan="3"><span id="querypane${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${manageable.name}${member.name}" id="querypane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${manageable.name}${member.name}Time" id="querypane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1pane${manageable.name}${member.name}" id="query1pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1pane${manageable.name}${member.name}Time" id="query1pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2pane${manageable.name}${member.name}" id="query2pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2pane${manageable.name}${member.name}Time" id="query2pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+		#set ($firsttype="date") 
+	#else
+						<td align="right" i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						
+							#if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+							<input  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>
+		#set ($firsttype="str") 
+	#end
+#elseif ($inum==2)
+	#set ($inum=3) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+		#if ($firsttype=='double')
+							<td align="right" i18n="${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="querypane${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${manageable.name}${member.name}"  id="querypane${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypane${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${manageable.name}${member.name}1"  id="querypane${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+								<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${manageable.name}${member.name}2"  id="querypane${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end
+		#if ($firsttype=='date')
+							<td align="right" colspan="2" > </td>
+							<td align="right" i18n="${member.name}" >${member.name}:</td>
+							<td align="left"  >
+								<span id="querypane${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${manageable.name}${member.name}"  id="querypane${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypane${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${manageable.name}${member.name}1"  id="querypane${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+								<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${manageable.name}${member.name}2"  id="querypane${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td></tr>  //?????????????????????????????????
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+		#if ($firsttype=='str')
+							<td align="right"  i18n="${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="querypane${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${manageable.name}${member.name}"  id="querypane${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypane${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${manageable.name}${member.name}1"  id="querypane${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+								<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${manageable.name}${member.name}2"  id="querypane${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end                 
+	#elseif ($member.type.dateType)
+		#if ($firsttype=='double')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="5"><span id="querypane${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${manageable.name}${member.name}" id="querypane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${manageable.name}${member.name}Time" id="querypane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1pane${manageable.name}${member.name}" id="query1pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1pane${manageable.name}${member.name}Time" id="query1pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2pane${manageable.name}${member.name}" id="query2pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2pane${manageable.name}${member.name}Time" id="query2pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+			#set ($sectype="")
+			#set ($inum=1)
+		#end
+		#if ($firsttype=='date')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" ><span id="querypane${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${manageable.name}${member.name}" id="querypane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${manageable.name}${member.name}Time" id="querypane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1pane${manageable.name}${member.name}" id="query1pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1pane${manageable.name}${member.name}Time" id="query1pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}">
+							<input class="editerDateSmaller"   jsId="query2pane${manageable.name}${member.name}" id="query2pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2pane${manageable.name}${member.name}Time" id="query2pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td> </tr><!--new modify-->
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"   colspan="5"><span id="querypane${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${manageable.name}${member.name}" id="querypane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${manageable.name}${member.name}Time" id="querypane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1pane${manageable.name}${member.name}" id="query1pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1pane${manageable.name}${member.name}Time" id="query1pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2pane${manageable.name}${member.name}" id="query2pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2pane${manageable.name}${member.name}Time" id="query2pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end 
+#else
+	#if ($firsttype=='double')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left" colspan="3" >
+						#if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+							<input  id="querypane${manageable.name}${member.name}" jsId="querypane${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>  
+	#set ($sectype="str")
+	#end
+	#if ($firsttype=='date')
+						<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							 #if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+							 <input  id="querypane${manageable.name}${member.name}" jsId="querypane${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />  
+							#end
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" >
+						#if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+						<input  id="querypane${manageable.name}${member.name}" jsId="querypane${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+	#set ($sectype="str")
+	#end 
+	#end
+#elseif($inum==3)
+	#set ($inum=1) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							<span id="querypane${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${manageable.name}${member.name}"  id="querypane${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypane${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${manageable.name}${member.name}1"  id="querypane${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${manageable.name}${member.name}2"  id="querypane${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+		#set ($thirtype="over")
+	#elseif ($member.type.dateType)
+						<td align="right"  > </td>
+						<td align="right"  ></td>
+					</tr><tr >
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3"><span id="querypane${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${manageable.name}${member.name}" id="querypane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${manageable.name}${member.name}Time" id="querypane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1pane${manageable.name}${member.name}" id="query1pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1pane${manageable.name}${member.name}Time" id="query1pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${manageable.name}${member.name}Imgdown" >></span>
+							<span id="querypane${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2pane${manageable.name}${member.name}" id="query2pane${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2pane${manageable.name}${member.name}Time" id="query2pane${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="date")
+		#set ($inum=2)
+	#else            
+		#if ($sectype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						#if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+							<input  id="querypane${manageable.name}${member.name}" jsId="querypane${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="pane${manageable.name}${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+		#set ($thirtype="over")
+		#end       
+	#end
+	#if ($thirtype=="over"||$inum==1)        
+				  </tr>
+	#end      
+	#end
+	#end                       
+#end
+
+
+#if ($thirtype!="over" && $inum!=1)     
+    </tr>
+#end 
+//外键
+#set ($inume =1) 
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if($inume ==1)
+					<tr><td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="pane${manageable.name}${member.name}Store"  /></td>  
+			#set ($inume =2)
+	#elseif ($inume ==2)
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" colspan="3" ><input  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="pane${manageable.name}${member.name}Store"  /></td>  
+			#set ($inume =3)
+	#elseif ($inume ==3)
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="querypane${manageable.name}${member.name}"  jsId="querypane${manageable.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="pane${manageable.name}${member.name}Store"  /></td>
+					</tr>
+			#set ($inume =1)
+	#end	
+#end
+#if ($inume!=1)     
+    </tr>
+#end
+
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpane${manageable.name}();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+				</div>	
+	       	<div align="right">
+				<button dojoType="dijit.form.Button" id="selectpane${manageable.name}" jsId="selectpane${manageable.name}" onclick="select${manageable.name}FunClick();" i18n="selectFloatButton" iconClass="plusIcon">ok</button>
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivpane${manageable.name}');" iconClass="queryIcon"  i18n="openQuery" >query</button>
+				<span id="rowCountpane${manageable.name}"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPagepane${manageable.name}();"  id="but6pane${manageable.name}" disabled='true' jsId="but6pane${manageable.name}" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPagepane${manageable.name}();" id="but7pane${manageable.name}" disabled='true' jsId="but7pane${manageable.name}" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangepane${manageable.name}(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangepane${manageable.name}(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangepane${manageable.name}(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangepane${manageable.name}(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpagepane${manageable.name}();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<!--div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStylepane${manageable.name}(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStylepane${manageable.name}(this.label);"></div>
+						</div></div-->
+			</div>    
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpane${manageable.name}"  dojoType="dojox.Grid" autoWidth="false"  jsId="pane${manageable.name}"	model="modelpane${manageable.name}"  structure="layoutpane${manageable.name}"  ></div>
+      </div>          

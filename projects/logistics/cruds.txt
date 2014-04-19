@@ -1,0 +1,657 @@
+
+AndroMDA 	  	History | Log In     View a printable version of the current page. Get help!  
+	   HOME    	   BROWSE PROJECT    	   FIND ISSUES    	
+    QUICK SEARCH:  
+	
+Learn more about Quick Search
+Issue Details [XML]
+
+Key: 	BPM-294
+Type: 	Improvement Improvement
+Status: 	Open Open
+Priority: 	Critical Critical
+Assignee: 	Wouter Zoons
+Reporter: 	Pierre Colot
+Votes: 	0 (View)
+Watchers: 	0 (View)
+Operations
+
+If you were logged in you would be able to see more operations.
+	
+Bpm4Struts Cartridge
+Reducing traitrous Backinglist hidden load
+Created: 10/Oct/06 11:22 AM   Updated: 10/Oct/06 11:22 AM
+Component/s: 	CRUD
+Affects Version/s: 	3.2
+Fix Version/s: 	None
+
+Environment: 	SNAPSHOT
+
+
+ Description  	 
+The crud BackingList mecanism load the full table ID, NAME.
+
+Performance issue occur if the related table has a lot of rows (80.000)
+
+In SpringCrudDaoBase, replace
+
+session.createQuery("select item.$identifier.name, item.$member.type.displayAttribute.name from $member.type.fullyQualifiedEntityName item order by item.$member.type.displayAttribute.name").list();
+
+by
+
+java.Util.List backingListSelection = session.createQuery("select item.$identifier.name, item.$member.type.displayAttribute.name from $member.type.fullyQualifiedEntityName item order by item.$member.type.displayAttribute.name")##no CRLF
+#if ($manageable.maximumListSize > 0)
+.setFirstResult(0).setMaxResults($manageable.maximumListSize + 1)
+#end##no CRLF
+.list();
+
+Dependencies based on backingList have to be updated to complain with partial list. Those dependencies only refer to CRUD jsp templates.
+
+I use partial backing list to initialize the form.
+I complete the backinglists with the selected rows.
+I add a marker to track incomplete lists
+
+I also improve the display :
+
+I display business name for the Association Ends
+I manage Multiple Association Ends with classic two boxes selections
+
+I disable the following in-progres work :
+
+I suppress the implicit selection on entity switching
+I unsuccessfully try to manage readonly field indication on enumeration, list boxes, .. (in comment ###)
+I prepare the support for URI and URN (The back office is not done)
+
+
+[code]--- \andromda\tags\andromda-src-3.2-SNAPSHOT-20061001\cartridges\andromda-bpm4struts\src\templates\bpm4struts\pages\crud\manageable.jsp.vsl Mon Oct 02 11:39:04 2006
++++ \andromda\branches\andromda-src-3.2-SNAPSHOT-20061001-fork\cartridges\andromda-bpm4struts\src\templates\bpm4struts\pages\crud\manageable.jsp.vsl Tue Oct 10 10:00:17 2006
+@@ -27,38 +27,208 @@
+         //<![CDATA[
+ #else
+         //<!--
+-#end
+- function setSelect(multi, form, name, value)
+- {
+- var select = form.elements[name];
+- var options = select.options;
+-
+- // for browser compatibility's sake we go through the options ourselves
+- for (var i=0; i<options.length; i++)
+- {
+- if (multi)
+- {
+- // Array.indexOf is defined in Javascript 1.5, not before
+- options[i].selected = arrayContainsElement(value,options[i].value);
+- }
+- else
+- {
+- if (options[i].value == value)
+- {
+- select.selectedIndex = i;
+- break;
+- }
+- }
+-
+- }
+- }
+-
+- function arrayContainsElement(array, element)
+- {
+- var containsElement = false;
+- for (var i=0; i<array.length && !containsElement; i++) containsElement = (array[i] == element);
+- return containsElement;
++#end
++
++ function moveFromWindow(winFrom, winTo) {
++ winTo.disabled = false;
++ maxexceeded = false;
++
++ // Suppress any existing continue List ...
++ if (winTo.length > 0)
++ {
++ if (winTo[winTo.length - 1].value == -1)
++ {
++ maxexceeded = true;
++ winTo[winTo.length - 1] = null;
++ }
++ }
++
++ fromLen = winFrom.length ;
++
++ for (i=0; i<fromLen ; i++){
++ if ((winFrom.options[i].selected == true) && (winFrom.options[i].value != -1)) {
++ winTolen = winTo.length;
++ winTo.options[winTolen]= new Option(winFrom.options[i].text, winFrom.options[i].value);
++ }
++ }
++ for (i = (fromLen -1); i>=0; i--){
++ if ((winFrom.options[i].selected == true ) && (winFrom.options[i].value != -1)) {
++ winFrom.options[i] = null;
++ }
++ }
++
++ // add continue List ... if more than max list size
++ if (((winTo.length + winFrom.length) >= $manageable.maximumListSize) && maxexceeded)
++ {
++ winTo[winTo.length] = new Option("...", -1);
++ }
++
++ }
++
++ function moveAllFromWindow(winFrom, winTo) {
++ winTo.disabled = false;
++ maxexceeded = false;
++
++ // Suppress any existing continue List ...
++ if (winTo.length > 0)
++ {
++ if (winTo[winTo.length - 1].value == -1)
++ {
++ maxexceeded = true;
++ winTo[winTo.length - 1] = null;
++ }
++ }
++
++ fromLen = winFrom.length ;
++
++ for (i=0; i<fromLen ; i++){
++ if (winFrom.options[i].value != -1) {
++ winTolen = winTo.length;
++ winTo.options[winTolen]= new Option(winFrom.options[i].text, winFrom.options[i].value);
++ }
++ }
++ for (i = (fromLen -1); i>=0; i--){
++ if (winFrom.options[i].value != -1) {
++ winFrom.options[i] = null;
++ }
++ }
++
++ // add continue List ... if more than max list size
++ if (((winTo.length + winFrom.length) >= $manageable.maximumListSize) && maxexceeded)
++ {
++ winTo[winTo.length] = new Option("...", -1);
++ }
++
++ }
++
++ function setUniqueSelected(multi, form, name, value)
++ {
++ var select = form.elements[name];
++ var options = select.options;
++
++ for (var i=0; i<options.length; i++)
++ {
++ if (options[i].value == value)
++ {
++ select.selectedIndex = i;
++ break;
++ }
++ }
++ }
++
++ function setMultipleSelected(multi, form, name, value, text)
++ {
++ var select = form.elements[name];
++ var options = select.options;
++
++ var nameBackingList = name + "PropositionList";
++ var selectBackingList = form.elements[nameBackingList];
++ var optionsBackingList = selectBackingList.options;
++
++ select.disabled = false;
++ selectBackingList.disabled = false;
++
++ // Suppress any existing continue List ...
++ if (optionsBackingList.length > 0)
++ {
++ if (optionsBackingList[optionsBackingList.length - 1].value == -1)
++ {
++ optionsBackingList[optionsBackingList.length - 1] = null;
++ }
++ }
++
++ //Selected List
++ //Copy All Previous Selected to BackingList
++ for (var i=0, j=optionsBackingList.length; i<options.length; i++, j++)
++ {
++ optionsBackingList[j] = new Option(options[i].text, options[i].value);
++ }
++
++ //Replace or Add Details to Selected List
++ for (var i=0; i<value.length; i++)
++ {
++ if (i<options.length) {
++ options[i].text = text[i];
++ options[i].value = value[i];
++ } else {
++ options[i] = new Option(text[i], value[i]);
++ }
++ }
++
++ //Remove Previous Selected not Replaced
++ for (var i=options.length; i>=value.length; i--)
++ {
++ options[i] = null;
++ }
++
++ //BackingList
++ //Remove every Seleted from BackingList
++ //Pack
++ for (var i=0, j=0; i<optionsBackingList.length; i++, j++)
++ {
++
++ if (arrayContainsElement(value, optionsBackingList[i].value))
++ {
++ j = j - 1;
++ } else {
++ if (i != j)
++ {
++ optionsBackingList[j].value = optionsBackingList[i].value;
++ optionsBackingList[j].text = optionsBackingList[i].text;
++ }
++ }
++ }
++
++ //Remove exceeding
++ var lastoptionsBackingList = optionsBackingList.length - value.length
++ for (var i=optionsBackingList.length; i>=lastoptionsBackingList; i--)
++ {
++ optionsBackingList[i] = null;
++ }
++
++ // add continue List ... if more than max list size
++ if ((options.length + optionsBackingList.length) >= $manageable.maximumListSize)
++ {
++ optionsBackingList[optionsBackingList.length] = new Option("...", -1);
++ }
++
++ }
++
++ function indexOfValue(array, element)
++ {
++ var containsElement = -1;
++ for (var i=0; i<array.length && (containsElement == -1); i++)
++ {
++ containsElement = ((array[i].value == element) ? i : -1);
++ }
++ return containsElement;
++ }
++
++
++ function arrayContainsElement(array, element)
++ {
++ var containsElement = false;
++
++ //Array.indexOf is defined in Javascript 1.5, not before.
++ //Array.indexOf is not supproted by Internet Explorer 6.0
++ if (navigator.userAgent.indexOf('Mozilla') !=-1)
++ {
++ for (var i=0; i<array.length && !containsElement; i++)
++ {
++ containsElement = (array[i] == element);
++ }
++
++ }
++
++ //Array.indexOf is defined in Javascript 1.5, not before.
++ //Array.indexOf is supproted by FireFox 1.5
++ if (navigator.userAgent.indexOf('Gecko') !=-1)
++ {
++ containsElement = (value.indexOf(options[i].value) >= 0);
+             }
++
++ return containsElement;
++ }
+ 
+             function setAction(crud) { document.forms['${manageable.formBeanName}'].elements['$manageable.actionParameter'].value = crud; }
+ 
+@@ -90,7 +260,8 @@
+ #end
+ #foreach($member in $manageable.manageableAssociationEnds)
+ #if ($member.many)
+-"[]",## no newline
++",",## no newline
++",",## no newline
+ #else
+ "",## no newline
+ #end
+@@ -105,26 +276,57 @@
+ #end
+ #end
+ #foreach($member in $manageable.manageableAssociationEnds)
++#if ($member.many)
++${member.name}ID,## no newline
++#end
+ $member.name,## no newline
+ #end
+ form)
+             {
+ #foreach($member in $manageable.manageableAttributes)
+ #if ($member.type.enumeration)
+- setSelect(false,form,"$member.name",$member.name);
++ setUniqueSelected(false,form,"$member.name",$member.name);
+ #elseif ($member.type.fullyQualifiedName == 'boolean' || $member.type.fullyQualifiedName == 'java.lang.Boolean')
+                 form.elements["$member.name"].checked = $member.name;
+ #elseif ($member.type.dateType)
+                 form.elements["${member.name}AsString"].value = $member.name;
++#elseif ($member.type.fullyQualifiedName.startsWith("java.net"))
++ form.elements["${member.name}AsString"].value = $member.name;
+ #elseif (!$member.needsFileUpload)## file upload fields apparently cannot have DHTML set their values (probably because the path could be invalid)
+                 form.elements["$member.name"].value = $member.name;
+ #end
+ #end
+ #foreach($member in $manageable.manageableAssociationEnds)
+ #if ($member.many)
+- setSelect(true,form,"$member.name",${member.name}.substring(1,${member.name}.length-1).split(", "));
++ setMultipleSelected(true,form,
++ "${member.name}",
++ (${member.name}ID.length > 1 ? ${member.name}ID.substring(1,${member.name}ID.length-1).split(",") : []),
++ (${member.name}.length > 1 ? ${member.name}.substring(1,${member.name}.length-1).split(",") : [])
++ );
+ #else
+- setSelect(false,form,"$member.name",$member.name);
++ setUniqueSelected(false,form,"$member.name",$member.name);
++#end
++#end
++ }
++
++
++ function setMultipleOptionSelected(selected, form, name)
++ {
++ var select = form.elements[name];
++ var options = select.options;
++
++ for (var i=0; i<options.length; i++)
++ {
++ options[i].selected = selected;
++ }
++ }
++
++
++ function setAllMultipleOptionSelected(selected, form)
++ {
++#foreach($member in $manageable.manageableAssociationEnds)
++#if ($member.many)
++ setMultipleOptionSelected(selected, form, "$member.name");
+ #end
+ #end
+             }
+@@ -184,13 +389,13 @@
+                     <input type="submit" id="readButton" class="button" value="<bean:message key="button.read"/>" onclick="${onclickEvent}setAction('read');"/>
+ #end
+ #if ($manageable.create)
+- <input type="submit" id="createButton" class="button" value="<bean:message key="button.create"/>" onclick="setAction('create');"/>
++ <input type="submit" id="createButton" class="button" value="<bean:message key="button.create"/>" onclick="setAction('create');setAllMultipleOptionSelected(true, this.form);"/>
+ #end
+ #if ($manageable.delete)
+                     <input type="submit" id="deleteButton" class="button" value="<bean:message key="button.delete"/>" disabled="disabled" onclick="setAction('delete');"/>
+ #end
+ #if ($manageable.update)
+- <input type="submit" id="updateButton" class="button" value="<bean:message key="button.update"/>" disabled="disabled" onclick="setAction('update');return validateUpdate();"/>
++ <input type="submit" id="updateButton" class="button" value="<bean:message key="button.update"/>" disabled="disabled" onclick="setAction('update');setAllMultipleOptionSelected(true, this.form);return validateUpdate();"/>
+ #end
+ #if ($manageable.preload)
+                     <input type="button" id="clearButton" class="button" value="<bean:message key="button.clear"/>" onclick="clearFields(this.form);"/>
+@@ -200,7 +405,7 @@
+ <div id="entitySwitcher">
+     <nobr>
+         <bean:message key="select.other.entity"/>
+- <select onchange="document.location=this.options[this.selectedIndex].value+'?$manageableReferenceParameterPrefix$manageable.name='+this.form.elements['$manageable.manageableIdentifier.name'].value;">
++ <select onchange="document.location=this.options[this.selectedIndex].value;">
+ #foreach ($manageableEntry in $manageable.allManageables)
+ #if ($stringUtils.isNotBlank($securityRealm) && !$manageableEntry.users.empty)
+         <logic:present role="#commaSeparatedNames($manageableEntry.users)">
+@@ -263,12 +468,25 @@
+ #elseif ($member.needsFileUpload)
+                         <display:column media="html" headerClass="$member.name" paramId="$member.name" titleKey="$member.messageKey">
+ #set ($test = "!empty row.${member.name}")
+-#set ($linkQuery = "?${manageable.actionParameter}=${member.getterName}&${identifier.name}=${${identifierValue}}")
++#set ($linkQuery = "")
+                             <c:if test="${${test}}"><html:link action="$manageable.actionPath$linkQuery"><div class="binaryData"><nobr><bean:message key="binary.data"/></nobr></div></html:link></c:if>
+                         </display:column>
+ #else
+ #if($member.type.displayAttribute.name!=$member.manageableIdentifier.name)
+-#if($member.many)#set($propertySuffix='Labels')#else#set($propertySuffix='Label')#end#else#set($propertySuffix='')#end
++ #if($member.many)
++ #set($propertySuffix='Labels')
++ #set ($rowValue = "row.${member.name}${propertySuffix}")
++ #set ($rowItem = "row${member.name}Item")
++ <display:column media="$manageable.tableExportTypes"
++ property="${member.name}${propertySuffix}"
++ titleKey="$member.messageKey"/>
++ <display:column media="html"
++ headerClass="$member.name" paramId="$member.name" maxLength="$manageableFieldMaxLength"
++ sortProperty="${member.name}${propertySuffix}" sortable="$manageable.tableSortable"
++ titleKey="$member.messageKey"><nobr><formatting:escape language="javascript,html">## no newline
++<c:forEach var="$rowItem" items="${${rowValue}}">${${rowItem}}, </c:forEach></formatting:escape></nobr></display:column>
++ #else
++ #set($propertySuffix='Label')
+ #set ($rowValue = "row.${member.name}${propertySuffix}")
+                         <display:column media="$manageable.tableExportTypes"
+                             property="${member.name}${propertySuffix}"
+@@ -277,6 +495,18 @@
+                             headerClass="$member.name" paramId="$member.name" maxLength="$manageableFieldMaxLength"
+                             sortProperty="${member.name}${propertySuffix}" sortable="$manageable.tableSortable"
+                             titleKey="$member.messageKey"><nobr><formatting:escape language="javascript,html">${${rowValue}}</formatting:escape></nobr></display:column>
++ #end
++#else
++ #set($propertySuffix='')
++ #set ($rowValue = "row.${member.name}${propertySuffix}")
++ <display:column media="$manageable.tableExportTypes"
++ property="${member.name}${propertySuffix}"
++ titleKey="$member.messageKey"/>
++ <display:column media="html"
++ headerClass="$member.name" paramId="$member.name" maxLength="$manageableFieldMaxLength"
++ sortProperty="${member.name}${propertySuffix}" sortable="$manageable.tableSortable"
++ titleKey="$member.messageKey"><nobr><formatting:escape language="javascript,html">${${rowValue}}</formatting:escape></nobr></display:column>
++#end
+ #end
+ #end
+ #end
+[/code]
+
+
+
+[code]--- \andromda\tags\andromda-src-3.2-SNAPSHOT-20061001\cartridges\andromda-bpm4struts\src\templates\bpm4struts\pages\crud\manageable.jsp.vm Mon Oct 02 11:39:04 2006
++++ \andromda\branches\andromda-src-3.2-SNAPSHOT-20061001-fork\cartridges\andromda-bpm4struts\src\templates\bpm4struts\pages\crud\manageable.jsp.vm Tue Oct 10 10:43:34 2006
+@@ -9,16 +9,31 @@
+ ##
+ #macro ( renderAttribute $field $indent )
+ #set ($quote ='"')
++#set ($fieldName = $field.name)
++#set ($fieldReadOnly = "${field.readOnly}")
++#set ($propertyValue = "${manageableFormName}.${fieldName}")
++${indent}<c:set var="propertyValue" value="${${propertyValue}}"/>
+ #if($field.fieldRowCount)#set($rowCount=" rows=$quote$field.fieldRowCount$quote")#else#set($rowCount='')#end
+ #if($field.widgetType == "textarea" && $field.fieldColumnCount)#set($columnCount=" cols=$quote$field.fieldColumnCount$quote")#elseif($field.fieldColumnCount)#set($columnCount=" size=$quote$field.fieldColumnCount$quote")#else#set($columnCount='')#end
+ #if ($field.type.fullyQualifiedName == 'boolean' || $field.type.fullyQualifiedName == 'java.lang.Boolean')
+ ${indent}<html:checkbox name="$manageableFormName" property="$field.name" styleClass="criteriaField" styleId="$field.name"/>
+ #elseif ($field.type.enumeration)
+ ${indent}<html:select name="$manageableFormName" property="$field.name"$columnCount>
++###if(!$fieldReadOnly)
+ ${indent} <option value=""><bean:message key="select.option.blank"/></option>
++###end
+ #foreach ($literal in $field.type.literals)
+ #if ($literal.type.stringType)#set ($quote = '')#else#set ($quote = '"')#end
+-${indent} <html:option value=${quote}${literal.enumerationValue}${quote}>$literal.name</html:option>
++<c:set var="selected" value=""/>
++#set ($test = "propertyValue == ${literal.enumerationValue}")
++####if($fieldReadOnly)
++###<c:if test='${${test}}'>
++###${indent} <option value=${quote}${literal.enumerationValue}${quote} selected>${${literal.enumerationValue}}</option>
++###</c:if>
++####else
++<c:if test='${${test}}'><c:set var="selected" value="selected"/></c:if>
++${indent} <option value=${quote}${literal.enumerationValue}${quote} ${selected}>${${literal.enumerationValue}}</option>
++####end
+ #end
+ ${indent}</html:select>
+ #elseif ($field.type.dateType)
+@@ -45,47 +60,79 @@
+ ${indent}//-->
+ #end
+ ${indent}</script>
++#elseif ($field.type.fullyQualifiedName.startsWith("java.net"))
++${indent}<html:$field.widgetType name="$manageableFormName" property="${field.name}AsString" styleClass="criteriaField"$columnCount styleId="$field.name" readonly="${fieldReadOnly}" disabled="${fieldReadOnly}"/>
+ #elseif ($field.needsFileUpload)
+ ${indent}<html:file name="$manageableFormName" property="$field.name" styleClass="criteriaField"$columnCount styleId="$field.name"/>
+ #elseif ($field.widgetType == "textarea")
+-${indent}<html:$field.widgetType name="$manageableFormName" property="$field.name" styleClass="criteriaField"$columnCount$rowCount styleId="$field.name"/>
++${indent}<html:$field.widgetType name="$manageableFormName" property="$field.name" styleClass="criteriaField"$columnCount$rowCount styleId="$field.name" readonly="${fieldReadOnly}" disabled="${fieldReadOnly}"/>
++#elseif ($field.widgetType == "text")
++${indent}<html:$field.widgetType name="$manageableFormName" property="$field.name" styleClass="criteriaField"$columnCount styleId="$field.name" readonly="${fieldReadOnly}" disabled="${fieldReadOnly}"/>
+ #else
+-${indent}<html:$field.widgetType name="$manageableFormName" property="$field.name" styleClass="criteriaField"$columnCount styleId="$field.name"/>
++${indent}<html:$field.widgetType name="$manageableFormName" property="$field.name" styleClass="criteriaField"$columnCount styleId="$field.name" readonly="${fieldReadOnly}" disabled="${fieldReadOnly}"/>
+ #end
+ #end
+ ##
+ ##
+ ##
+ #macro ( renderAssociationEnd $field $indent )
++${indent}<table>
++${indent}<tr>
++#set ($list = "${manageableFormName}.${field.name}")
++#set ($backingList = "${manageableFormName}.${field.name}BackingList")
++
++#if (!$field.many)
++#set ($test = "empty $backingList")
++${indent}<td align="center">
++${indent}<c:set var="valueIndex" value="${${list}}"/>
+ ${indent}<c:choose>
+-#set ($list = "${manageableFormName}.${field.name}BackingList")
+-#set ($test = "empty $list")
+ ${indent} <c:when test="${${test}}">
+-${indent} <select name="$field.name" disabled="disabled"$columnCount/>
++${indent} <select name="$field.name" disabled="disabled"$columnCount size="1"/>
+ ${indent} </c:when>
+ ${indent} <c:otherwise>
+ #if ($field.type.resolveable)
+-${indent} <select name="$field.name"$columnCount#if($field.many) multiple="multiple"#end>
+-#if (!$field.many)
+-${indent} <option value=""><bean:message key="select.option.blank"/></option>
+-#end
+-${indent} <c:forEach var="valueLabel" items="${${list}}">
+-#set ($value = '${valueLabel[0]}')
+-#set ($label = '${valueLabel[1]}')
+-#if ($member.many)
+-#set ($items = "${manageableFormName}.$field.name")
+- <option value="$value"<collections:contains item="${valueLabel}" array="${${items}}"> selected="selected"</collections:contains>>$label</option>
+-#else
+-#set ($test = "valueLabel[0] eq ${manageableFormName}.$field.name")
++${indent} <select name="$field.name"$columnCount size="1">
++${indent} <option value=""><bean:message key="select.option.blank"/></option>
++${indent} <c:forEach var="backingListValue" items="${${backingList}}">
++#set ($test = "${valueIndex} == ${backingListValue}[0]")
++#set ($value = '${backingListValue[0]}')
++#set ($label = '${backingListValue[1]}')
+ ${indent} <c:choose>
+-${indent} <c:when test="${${test}}">
++${indent} <c:when test="${test}">
+ ${indent} <option value="$value" selected="selected">$label</option>
+ ${indent} </c:when>
+ ${indent} <c:otherwise>
+ ${indent} <option value="$value">$label</option>
+ ${indent} </c:otherwise>
+ ${indent} </c:choose>
++${indent} </c:forEach>
++${indent} </select>
++#else
++${indent} <html:text name="$manageableFormName" property="$field.name"$columnCount/>
+ #end
++${indent} </c:otherwise>
++${indent}</c:choose>
++${indent}</td>
++
++#else
++#set ($test = "empty $list")
++${indent}<td align="center">
++${indent}<c:choose>
++${indent} <c:when test="${${test}}">
++${indent} <select name="$field.name" disabled="disabled"$columnCount multiple="multiple"/>
++${indent} </c:when>
++${indent} <c:otherwise>
++#if ($field.type.resolveable)
++${indent} <select name="$field.name"$columnCount multiple="multiple">
++${indent} <c:forEach var="valueIndex" items="${${list}}">
++${indent} <c:forEach var="backingListValue" items="${${backingList}}">
++#set ($test = "${valueIndex} == ${backingListValue}[0]")
++${indent} <c:if test='${test}'>
++#set ($value = "${backingListValue}[0]")
++#set ($label = "${backingListValue}[1]")
++${indent} <option value="$value" selected="selected">$label</option>
++${indent} </c:if>
++${indent} </c:forEach>
+ ${indent} </c:forEach>
+ ${indent} </select>
+ #else
+@@ -93,6 +140,35 @@
+ #end
+ ${indent} </c:otherwise>
+ ${indent}</c:choose>
++${indent}</td>
++${indent}<td align="center">
++${indent} <html:img page="/layout/flechedroitesimple.gif" onclick="moveFromWindow(${field.name},${field.name}PropositionList)" alt=">" title=">" /><br/>
++${indent} <html:img page="/layout/flechegauchesimple.gif" onclick="moveFromWindow(${field.name}PropositionList,${field.name})" alt="<" title="<" /><br/>
++${indent} <html:img page="/layout/flechedroitedouble.gif" onclick="moveAllFromWindow(${field.name},${field.name}PropositionList)" alt=">>" title=">>" /><br/>
++${indent} <html:img page="/layout/flechegauchedouble.gif" onclick="moveAllFromWindow(${field.name}PropositionList,${field.name})" alt="<<" title="<<" />
++${indent}</td>
++${indent}<td align="center">
++${indent}<c:choose>
++#set ($testBackingList = "empty $backingList")
++${indent} <c:when test="${${testBackingList}}">
++${indent} <select name="${field.name}PropositionList" disabled="disabled"$columnCount multiple="multiple"/>
++${indent} </c:when>
++${indent} <c:otherwise>
++#if ($field.type.resolveable)
++${indent} <select name="${field.name}PropositionList"$columnCount multiple="multiple">
++${indent} <c:forEach var="valueLabel" items="${${backingList}}">
++#set ($value = '${valueLabel[0]}')
++#set ($label = '${valueLabel[1]}')
++${indent} <option value="$value">$label</option>
++${indent} </c:forEach>
++${indent} </select>
++#end
++${indent} </c:otherwise>
++${indent}</c:choose>
++${indent}</td>
++#end
++${indent}</tr>
++${indent}</table>
+ #end
+ ##
+ ##
+@@ -140,8 +216,24 @@
+ #end
+ #end
+ #foreach($member in $manageable.manageableAssociationEnds)
++#if($member.type.displayAttribute.name!=$member.manageableIdentifier.name)
++#if($member.many)
++#set($propertySuffix='')
++#set ($rowValue = "row.${member.name}${propertySuffix}")
++#set ($rowItem = "row${member.name}Item")
++'<formatting:escape language="javascript">,<c:forEach var="$rowItem" items="${${rowValue}}">${${rowItem}},</c:forEach></formatting:escape>',## no newline
++#set($propertySuffix='Labels')
++#set ($rowValue = "row.${member.name}${propertySuffix}")
++#set ($rowItem = "row${member.name}Item")
++'<formatting:escape language="javascript">,<c:forEach var="$rowItem" items="${${rowValue}}">${${rowItem}},</c:forEach></formatting:escape>',## no newline
++#else
+ #set($property = "row.${member.name}")## by default we take the property straight for the row value object
+ '<formatting:escape language="javascript">${${property}}</formatting:escape>',## no newline
++#end
++#else
++#set($property = "row.${member.name}")## by default we take the property straight for the row value object
++'<formatting:escape language="javascript">${${property}}</formatting:escape>',## no newline
++#end
+ #end
+ this.form);## no newline
+ #end
+[/code]
+
+ All  	 Comments  	 Change History  	  	  Sort Order: [Ascending order - Click to sort in descending order]
+There are no comments yet on this issue.
+ 
+
+This site is running on Atlassian JIRA with a free Open Source Project / Non-profit License (license details).
+JIRA is an issue tracking and bug tracking application. Evaluate JIRA for your organisation.
+Powered by Atlassian JIRA? the Professional Issue Tracker. (Professional Edition, Version: 3.4.2-#108) - Bug/feature request - Contact Administrators

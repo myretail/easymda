@@ -1,0 +1,185 @@
+#set ($associationname= '')
+#set ($definedUnm= 2)
+#set ($iListnum= 0)
+#foreach($memberAs in $manageable.manageableAssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+	#if(!${memberAs.many})  
+#set($iListnum=$iListnum+1)
+#if($iListnum == $definedUnm)	
+#set ($associationname= ${memberAs.association.name})
+	//name =${memberAs.association.name}AFTab.js
+  var NU${memberAs.association.name} = false;//needUpdate
+  var url${memberAs.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+  var deletedata${memberAs.association.name} =  new Array();
+  var querydata${memberAs.association.name} =  new Array();
+  var pagenumber${memberAs.association.name}=1;
+  var totalCount${memberAs.association.name}=0;
+  var pagesize${memberAs.association.name}=10;
+  var orderBy${memberAs.association.name}='0';
+  var queryvo${memberAs.association.name}=new ${manageable.name}VOJs();
+  var oddstyle='';
+  var model${memberAs.association.name} = new dojox.grid.data.Table(null, querydata${memberAs.association.name});
+  var grid${memberAs.association.name};
+  
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.type.fullyQualifiedName=='com.logistics.entity.order.StringEnum')
+		/*	var p${manageable.name}${member.name} = new SOAPClientParameters();
+			p${manageable.name}${member.name}.add('eType','${member.name}');
+			var item${manageable.name}${member.name} = new Array();
+				SOAPClient.invoke(urle, "getEnumerationByType", p${manageable.name}${member.name}, false,  function GetEnu_callBack(ul, soapResponse){   
+				for(var i = 0; i < ul.length; i++){		
+				  var ulo=ul[i];
+				  item${manageable.name}${member.name}.push({name: ulo["ns:fieldName"], value:ulo["ns:fieldName"]});
+				}                
+			});       
+			var ${manageable.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: item$member.name}}); */
+			
+	#end
+#end  
+
+//have set function's manageableAssociationEnds
+#foreach($member in $manageable.manageableAssociationEnds)
+	/*var p${manageable.name}${member.name} = new SOAPClientParameters();
+	var items${manageable.name}${member.name} = new Array();  
+		p${manageable.name}${member.name}.add('${member.type.name}VO',new  ${member.type.name}VOJs()) ;
+		p${manageable.name}${member.name}.add('pageNumber',0) ;
+		p${manageable.name}${member.name}.add('pageSize',0) ;
+	    p${manageable.name}${member.name}.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"${member.type.name}ManageService","get${member.type.name}", p${manageable.name}${member.name}, false,  function GetEnu_callBack(ul, soapResponse){      
+				for(var i = 0; i < ul.length-1; i++){		
+				  var ulo=ul[i];
+				  items${manageable.name}${member.name}.push({name: ulo["ns:${member.type.name}Name"], value:ulo["ns:id"]});
+				}                
+	});       
+	var ${manageable.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: items${manageable.name}${member.name} }});*/
+var ${manageable.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: [] }});
+	function ${manageable.name}${member.name}Set(id,value){
+        	/*var itemselect=${member.name}Store._getItemByIdentity(value);
+        	if(itemselect!='undefined'&& itemselect!=null){
+        	}*/
+        }
+#end
+
+  
+  
+var getVO${memberAs.association.name}=function(queryvo){
+
+	var pu = new SOAPClientParameters2();
+	pu.add('${manageable.name}VO',queryvo) ;
+	pu.add('pageNumber',pagenumber${memberAs.association.name}) ;
+	pu.add('pageSize',pagesize${memberAs.association.name}) ;
+	pu.add('orderBy',orderBy${memberAs.association.name}) ;
+	SOAPClient.invoke(url${memberAs.association.name},"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+	querydata${memberAs.association.name}=${manageable.name}VOtoArray_fun(ul,false);
+	totalCount${memberAs.association.name}=ul[ul.length-1]["ns:id"]; 
+	}); 
+	var totalpage=Math.ceil(new Number(totalCount${memberAs.association.name})/pagesize${memberAs.association.name});
+	
+	if(totalpage>1){
+		if(pagenumber${memberAs.association.name}==1){
+			dijit.byId("but6${memberAs.association.name}").setDisabled(true);
+			dijit.byId("but7${memberAs.association.name}").setDisabled(false);
+		}else if(pagenumber${memberAs.association.name}==totalpage){
+			dijit.byId("but6${memberAs.association.name}").setDisabled(false);
+			dijit.byId("but7${memberAs.association.name}").setDisabled(true);
+		}else{
+			dijit.byId("but6${memberAs.association.name}").setDisabled(false);
+			dijit.byId("but7${memberAs.association.name}").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6${memberAs.association.name}").setDisabled(true);
+		dijit.byId("but7${memberAs.association.name}").setDisabled(true);
+	
+	}
+	if(pagesize${memberAs.association.name}==0){
+		totalpage=1;
+		dijit.byId("but6${memberAs.association.name}").setDisabled(true);
+		dijit.byId("but7${memberAs.association.name}").setDisabled(true);
+	}
+	if(totalpage==1)pagenumber${memberAs.association.name}=1;
+	
+	 document.getElementById("rowCount${memberAs.association.name}").innerHTML=i18nStr.di+" "+pagenumber${memberAs.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${memberAs.association.name}+" "+i18nStr.rowSize; 	
+
+	querydata${memberAs.association.name}.splice(querydata${memberAs.association.name}.length-1,1);
+	model${memberAs.association.name}.setData(querydata${memberAs.association.name});
+}
+
+var build${memberAs.association.name}=function(){
+	if(NU${memberAs.association.name} && mainID!=undefined && mainID!=''){
+		var queryFloat${memberAs.type.name}=new ${memberAs.type.name}VOJs();
+		queryFloat${memberAs.type.name}.id=mainID;
+		queryvo${memberAs.association.name}.${memberAs.name}=queryFloat${memberAs.type.name};
+		getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+		if(grid${memberAs.association.name}==undefined){
+			  grid${memberAs.association.name} = new dojox.Grid({
+						title: "",
+						id: "grid${memberAs.association.name}",
+						jsId: "grid${memberAs.association.name}",
+						structure: layout${memberAs.association.name},
+						rowCount:querydata${memberAs.association.name}.length,
+						model:model${memberAs.association.name}
+					}, dojo.byId("grid${memberAs.association.name}"));
+				grid${memberAs.association.name}.resize({ h: dijit.byId("bottomPane").domNode.clientHeight-90});
+				
+		}else{
+			grid${memberAs.association.name}.updateRowCount(querydata${memberAs.association.name}.length); 
+		}
+		NU${memberAs.association.name}=false;
+	}
+
+}
+	var layout${memberAs.association.name}=[{
+           //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+   
+			 cells: [ [
+					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+					   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+         ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+		#set ($inum= $inum + 1)
+  #elseif ($member.type.dateType)
+		${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+		#set ($inum= $inum + 1)
+  #else
+        ${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10 }
+			#set ($inum= $inum + 1)
+  #end
+  #set ($comma = ", ")
+#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于单表不许其他判断
+		${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+		#set ($inum= $inum + 1)
+#end
+       ] ]
+                           }]; 
+
+function pageSizeChange${memberAs.association.name}(mylabel){
+	pagesize${memberAs.association.name}=mylabel;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+
+function allpage${memberAs.association.name}(){
+	pagesize${memberAs.association.name}=0;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+
+function upPage${memberAs.association.name}(){
+	pagenumber${memberAs.association.name}--;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+function downPage${memberAs.association.name}(){
+	pagenumber${memberAs.association.name}++;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+
+
+#end
+
+	//build${memberAs.association.name}();
+#end
+#end

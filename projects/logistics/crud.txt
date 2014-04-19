@@ -1,0 +1,160 @@
+${member.type.displayAttribute.name}
+  ${member.type.displayAttribute} 
+  ${member.type} 
+  ${member.type.fullyQualifiedName}
+  ${member.type.name}
+	
+
+ crud.txt
+Index: SpringCrudDao.vsl
+===================================================================
+RCS file: /cvsroot/andromda/cartridges/andromda-spring/src/templates/spring/crud/SpringCrudDao.vsl,v
+retrieving revision 1.10.6.2
+diff -r1.10.6.2 SpringCrudDao.vsl
+13a14,15
+>     public $manageable.fullyQualifiedEntityName create($manageable.fullyQualifiedManageableValueObjectName valueObject);
+> 
+17a20,23
+>     public $manageable.fullyQualifiedEntityName read($identifier.type.fullyQualifiedName id);
+> 
+>     public java.util.List read($manageable.fullyQualifiedManageableValueObjectName valueObject);
+> 
+33a40,41
+>     public $manageable.fullyQualifiedEntityName update($manageable.fullyQualifiedManageableValueObjectName valueObject);
+> 
+Index: SpringCrudDaoBase.vsl
+===================================================================
+RCS file: /cvsroot/andromda/cartridges/andromda-spring/src/templates/spring/crud/SpringCrudDaoBase.vsl,v
+retrieving revision 1.34.4.8
+diff -r1.34.4.8 SpringCrudDaoBase.vsl
+67a68,72
+>     public $manageable.fullyQualifiedEntityName create($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>     {
+>         return this.getDao().create(toEntity(valueObject));
+>     }
+> 
+112a118,135
+>     public $manageable.fullyQualifiedEntityName read($identifier.type.fullyQualifiedName id)
+>     {
+>         return this.getDao().load(id);
+>     }
+> 
+>     public java.util.List read($manageable.fullyQualifiedManageableValueObjectName valueObject) {
+>         return read(
+> #foreach ($member in $manageable.manageableAttributes)
+>                 valueObject.${member.getterName}(),
+> #end
+> #foreach ($member in $manageable.manageableAssociationEnds)
+>                 valueObject.${member.getterName}()#if($velocityCount != $manageable.manageableAssociationEnds.size()),
+> #end
+> #end
+> 
+>         );
+>     }
+> 
+251a275,279
+>     public $manageable.fullyQualifiedEntityName update($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>     {
+>         return this.getDao().create(toEntity(valueObject));
+>     }
+> 
+326c354,384
+< }
+\ No newline at end of file
+---
+> 
+>     private $manageable.fullyQualifiedEntityName toEntity($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>     {
+>         $manageable.fullyQualifiedEntityName entity = new ${manageable.fullyQualifiedEntityName}Impl();
+> #foreach ($member in $manageable.manageableAttributes)
+> #if ($member.needsFileUpload)
+> // (binary fields are not returned because of reasons of performance) ## no newline
+> #end
+>         entity.${member.setterName}(valueObject.${member.getterName}());
+> #end
+> 
+> #foreach ($member in $manageable.manageableAssociationEnds)
+> #if ($member.many)
+>         // $member.name is a many relationship
+> #else
+> #if ($member.type.manageableIdentifier)
+>         final $member.type.manageableIdentifier.type.fullyQualifiedName $member.name = valueObject.${member.getterName}();
+> #if (!$member.type.primitive)
+>         if ($member.name != null)
+> #end
+>         {
+>             entity.${member.setterName}(this.${member.name}Dao.load(${member.name}));
+>         }
+> #end
+> #end
+> 
+> #end
+> 
+>         return entity;
+>     }
+> }
+Index: SpringCrudService.vsl
+===================================================================
+RCS file: /cvsroot/andromda/cartridges/andromda-spring/src/templates/spring/crud/SpringCrudService.vsl,v
+retrieving revision 1.10.6.2
+diff -r1.10.6.2 SpringCrudService.vsl
+13a14,16
+>     public $manageable.fullyQualifiedManageableValueObjectName create($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>         throws Exception#if ($ejbViewType.equalsIgnoreCase("remote")), java.rmi.RemoteException#end;
+> 
+18a22,27
+>     public $manageable.fullyQualifiedManageableValueObjectName read(${identifier.type.fullyQualifiedName} id)
+>         throws Exception#if ($ejbViewType.equalsIgnoreCase("remote")), java.rmi.RemoteException#end;
+> 
+>     public java.util.List read($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>         throws Exception#if ($ejbViewType.equalsIgnoreCase("remote")), java.rmi.RemoteException#end;
+> 
+38a48,50
+>     public $manageable.fullyQualifiedManageableValueObjectName update($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>         throws Exception#if ($ejbViewType.equalsIgnoreCase("remote")), java.rmi.RemoteException#end;
+> 
+Index: SpringCrudServiceBase.vsl
+===================================================================
+RCS file: /cvsroot/andromda/cartridges/andromda-spring/src/templates/spring/crud/SpringCrudServiceBase.vsl,v
+retrieving revision 1.16.6.4
+diff -r1.16.6.4 SpringCrudServiceBase.vsl
+27a28,36
+>     public $manageable.fullyQualifiedManageableValueObjectName create($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>         throws Exception
+> #if ($ejbViewType.equalsIgnoreCase("remote"))
+>             , java.rmi.RemoteException
+> #end
+>     {
+>         return toValueObject(this.dao.create(valueObject));
+>     }
+> 
+48a58,75
+>     public java.util.List read($manageable.fullyQualifiedManageableValueObjectName valueObject)
+>         throws Exception
+> #if ($ejbViewType.equalsIgnoreCase("remote"))
+>             , java.rmi.RemoteException
+> #end
+>     {
+>         return this.dao.read(valueObject);
+>     }
+> 
+>     public $manageable.fullyQualifiedManageableValueObjectName read(${identifier.type.fullyQualifiedName} id)
+>         throws Exception
+> #if ($ejbViewType.equalsIgnoreCase("remote"))
+>             , java.rmi.RemoteException
+> #end
+>     {
+>         return toValueObject(dao.read(id));
+>     }
+> 
+100a128,137
+>     public $manageable.fullyQualifiedManageableValueObjectName update(
+>             $manageable.fullyQualifiedManageableValueObjectName valueObject)
+>             throws Exception
+> #if ($ejbViewType.equalsIgnoreCase("remote"))
+>             , java.rmi.RemoteException
+> #end
+>     {
+>         return toValueObject(this.dao.update(valueObject));
+>     }
+> 
