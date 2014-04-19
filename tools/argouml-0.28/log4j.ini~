@@ -1,0 +1,23 @@
+# Set root logger level to DEBUG and its only appender to A1.
+log4j.rootLogger=INFO, A1, A2
+
+# A1 is set to be a ConsoleAppender.
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+
+# A2 is set to be a FileAppender.
+log4j.appender.A2=org.apache.log4j.DailyRollingFileAppender
+
+# A1 uses PatternLayout.
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d [%t] %-5p %c - %m%n
+
+# A2 uses PatternLayout.
+log4j.appender.A2.layout=org.apache.log4j.PatternLayout
+log4j.appender.A2.layout.ConversionPattern=%-4r %d [%t] %-5p %c %x - %m%n
+log4j.appender.A2.File=/home/will/tools/argouml-0.28/run.log
+#
+log4j.logger.org.argouml.patternwizard=DEBUG
+#log4j.logger.com.ibm.dsw.quote.appcache=WARN
+#log4j.logger.com.ibm.dsw.common.taglib=WARN
+#log4j.logger.com.ibm.ead4j.topaz.persistence.jdbc.TransactionContext_jdbc=WARN
+#log4j.logger.com.ibm.dsw.quote.base.cache.QuoteCacheLoader=INFO
