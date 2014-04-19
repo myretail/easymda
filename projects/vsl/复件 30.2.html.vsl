@@ -1,0 +1,21 @@
+#set ($myMainTable = '0')   
+#foreach($member in $manageable.referencingManageables)
+	#set($myMainTable = ${member.name})  
+#end
+#if(${myMainTable} != '0')
+<script type="text/javascript" >
+<!--  获得主表类型var mainTable=new VO(); 这里包含了子表的（eg：tr）的箭尾和主表   30.1中子表箭尾需引入下面的   不加上面的script会导致tab的大小无效-->
+</script>
+#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+#set($filePath=${stringUtils.replace($di,".","/")})
+#set($filePath = "../common/${manageable.name}SelectTab.html")
+				<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="${manageable.name}SelectTab" jsId="${manageable.name}SelectTab"  >
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if(!${member.many}) 
+		#if(${myMainTable}!=${member.type.name})
+			<div dojoType="dojox.layout.ContentPane" href="../common/${member.association.name}SelectPane.html" title="${member.name}"  id="${member.name}SelectPane" jsId="${member.name}SelectPane" ></div>
+		#end
+	#end
+#end     
+		</div>
+#end

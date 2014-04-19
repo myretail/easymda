@@ -1,0 +1,198 @@
+#set ($myMainTable = '0')   
+#foreach($member in $manageable.referencingManageables)
+	#set($myMainTable = ${member.name})  
+#end
+#if(${myMainTable} != '0')
+
+//${member.type.name}SubCrudForSubGrid.js==${manageable.name}SubCrudForSubGrid.js
+//获得主表类型var mainTable=new VO();
+
+var addRowSub = function(addindex){
+	  var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${myMainTable}[addindex][1],"${myMainTable}Child"));
+	  subGrid.addRow([false,0,"","","","","","","","","","","","","","","","","",""],subGrid.model.getRowCount());
+}
+
+
+var deleteSub= function(mainRow,subIndexRow,subId){
+	var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${myMainTable}[mainRow][1],"${myMainTable}Child"));
+	var s= new Array();
+	s[0]=subIndexRow;
+	if(subId!=0){
+		var pdel = new SOAPClientParameters();      
+	    pdel.add('id',subId);
+	    SOAPClient.invoke(url${myMainTable}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+	});}
+	subGrid.model.remove(s);
+ }
+
+function saveSubRow(subGrid,thisCell,i){		 
+         var vobject=new ${manageable.name}VOJs();
+		 var passAll=0;
+         var padd = new SOAPClientParameters2();
+	     vobject.id=thisCell[1];
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+             if(dojox.validate.isInRange(thisCell[$inum],{max:9999999, min:0})){
+              var  n=new NumberQuery(); n.upNumber=thisCell[$inum];vobject.$member.name=n;
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}> not be double</span>";passAll=1;}//double
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')
+ var  d=new DateTimeQuery();
+             if(thisCell[$inum] instanceof Date){ d.upDate=dojo.date.locale.format(thisCell[$inum], subGrid.getCell(subGrid.model.fieldArray[$inum]).constraint);
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be date</span>"; passAll=1;}//not null
+ #set ($inum= $inum + 1) 
+             if(thisCell[$inum] instanceof Date){
+             d.upDate=d.upDate+" "+dojo.date.locale.format(thisCell[$inum], subGrid.getCell(subGrid.model.fieldArray[$inum]).constraint);
+             vobject.$member.name=d;
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be time</span>"; passAll=1;}//not null
+
+#else        
+ #if ($member.required)
+             if(dojox.validate.isText(thisCell[$inum], {minlength: 1})){vobject.$member.name=thisCell[$inum];
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;}//not null
+ #else
+              vobject.$member.name=thisCell[$inum];
+ #end
+#end
+
+#set ($inum= $inum + 1)
+#end
+#end
+
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if(!${member.many})
+		#set ($ifmain= '0')
+		#foreach($member2 in $manageable.referencingManageables)
+			#if(${member2.name}==${member.type.name})
+				#set ($ifmain= '1')
+			#end
+		#end
+		#if(${ifmain}=='1')
+			var mainTable=new ${myMainTable}VOJs();
+			mainTable.id=querydata${myMainTable}[subGrid.dataRow][1];
+            vobject.${member.name}=mainTable;
+		#else
+			var manageable=new ${member.type.name}VOJs();
+			 if(querydata${myMainTable}[subGrid.dataRow][childRow][i]!=''&&querydata${myMainTable}[subGrid.dataRow][childRow][i][$inum]!=undefined){
+				manageable.id=querydata${myMainTable}[subGrid.dataRow][childRow][i][$inum][1];
+				vobject.${member.name}=manageable;
+			 }else{
+			 subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;
+			 }
+		#end
+		#set ($inum= $inum + 1)
+	#end
+#end
+
+
+
+       if(passAll==0){
+             if(thisCell[1]==0){//create new row
+                padd.add('${manageable.name}VO',vobject);
+                SOAPClient.invoke(url${manageable.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                subGrid.model.setDatum(ul,i,1);
+				
+                });
+	         }else{//modify row
+                padd.add('${manageable.name}VO',vobject);
+                SOAPClient.invoke(url${manageable.name}, "update${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                });
+	         }
+			 //querydata${myMainTable}[document.getElementById('erowIndex${manageable.name}').value][childRow]=querydataSub;//????????????????????????????????????????????????????????????????????????????/
+        } }
+		
+function call_funUpdGridSub(mainRow,subIndexRow) {
+var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${myMainTable}[mainRow][1],"${myMainTable}Child"));
+	
+	if(subGrid){
+	var sall=subGrid.model.data;
+	if(subIndexRow==undefined || subIndexRow==''){
+		for(var i=0;i<sall.length;i++){
+         var thisCell=sall[i];
+         saveSubRow(subGrid,thisCell,i);
+		}//for
+	}else{
+		 var thisCell=sall[subIndexRow];
+		saveSubRow(subGrid,thisCell,subIndexRow);
+	}}
+}		  
+
+var url${manageable.name} = getUrl()+ "services/${manageable.name}ManageService";
+//var deletedata${manageable.name} =  new Array();
+//var querydata${manageable.name} =  new Array();
+var deletedataSub =  new Array();
+//var querydataSub=  new Array();
+var pagenumber${manageable.name}=1;
+var pagesize${manageable.name}=10;
+var orderBy${manageable.name}='0';
+var queryvo${manageable.name}=new ${manageable.name}VOJs();
+var oddstyle='';
+//var modelChildAdd = new dojox.grid.data.Table(null, querydataSub);
+var childLayout;
+var childLayoutOdd;
+
+function buildChildLayout(pre,mystyle,addRowIndex){
+	var myLayout=[{
+          
+                 //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydata中取数据
+                       
+ cells: [ [
+			{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydata${myMainTable}[addRowIndex][childRow]!=undefined) ? 0:querydata${myMainTable}[addRowIndex][childRow][inRowIndex][1]+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
+			{ name: pre+i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool,headerStyles:mystyle },//
+		    { name: pre+i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} ,headerStyles:mystyle},//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+         ${comma} {name: pre+i18nStr.$member.name,field:${inum}, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 },headerStyles:mystyle }
+		#set ($inum= $inum + 1)
+  #elseif ($member.type.dateType)
+		${comma}  {name:pre+i18nStr.${member.name},field:${inum}, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"},headerStyles:mystyle}
+		#set ($inum= $inum + 1)
+		${comma}  {name: pre+i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"},headerStyles:mystyle}
+		#set ($inum= $inum + 1)
+  #else
+    #if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+		${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10 , editor: mydojo.FilteringSelect ,options:item${member.name}Option,required:${member.required} ,invalidMessage:'can not be empty'}
+		#set ($inum= $inum + 1)
+	#else
+		#if ($member.name=='remark')
+		    ${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
+			#set ($inum= $inum + 1)
+		#else
+			${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30,headerStyles:mystyle}
+			#set ($inum= $inum + 1)
+		#end
+    #end
+  #end
+  #set ($comma = ", ")
+#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于单表不许其他判断
+	#if(!${member.many})
+		#if(${myMainTable}!=${member.type.name})	
+				 ${comma}  {name: pre+i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${myMainTable}[addRowIndex][childRow]!=undefined && querydata${myMainTable}[addRowIndex][childRow][inRowIndex]!=undefined && querydata${myMainTable}[addRowIndex][childRow][inRowIndex][${inum}]!=undefined&& querydata${myMainTable}[addRowIndex][childRow][inRowIndex][${inum}][2]!=undefined){str=querydata${myMainTable}[addRowIndex][childRow][inRowIndex][${inum}][2];strid=querydata${myMainTable}[addRowIndex][childRow][inRowIndex][${inum}][1];} return str+'<button dojoType="dijit.form.Button" onclick="select${member.type.name}('+strid+','+inRowIndex+',${inum},0,event,'+addRowIndex+');"   iconClass="${member.type.name}Icon">sel</button>';} ,width: 10 ,headerStyles:mystyle}
+		#end
+		#set ($inum= $inum + 1)
+	#end
+#end
+                                        ] ]
+                           }];  
+						   
+			return myLayout;			   
+}
+
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if(${myMainTable}!=${member.type.name})	
+		function select${member.type.name}Fun(rep){
+			querydata${myMainTable}[mainRowIndex${member.type.name}][childRow][select${member.type.name}InRow][no${member.type.name}]=rep;
+			var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${myMainTable}[mainRowIndex${member.type.name}][1],"${myMainTable}Child"));
+			subGrid.model.setDatum(rep,select${member.type.name}InRow,no${member.type.name});	
+		}
+	#end	
+#end			
+
+#end

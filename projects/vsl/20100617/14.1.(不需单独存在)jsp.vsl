@@ -1,0 +1,1069 @@
+#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+#set($filePath=${stringUtils.replace($di,".","/")})
+#set($filePath = "${filePath}/14${manageable.name}.jsp")
+<%
+String peopleId = request.getParameter("peopleId");
+%>
+<html>
+<!--这里的一对多，只考虑了一个主表对一个子表，没有考虑一个主表对多个子表的情况（见var dataChild=querydata${manageable.name}[inRowIndex]）-->
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+     <style type="text/css">
+            @import "../dojo/dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+            @import "../dojo/dojo-release-1.0.0/dojo/resources/dojo.css";
+            @import "../dojo/dojo-release-1.0.0/dojox/grid/_grid/tundraGrid.css";
+            @import "../dojo/dojo-release-1.0.0/dojox/grid/_grid/Grid.css";
+            @import "../js/dijitTests.css";
+            @import "../js/wlProject.css";
+			@import "../dojo/dojo-release-1.0.0/dojox/layout/resources/FloatingPane.css"; 
+		    @import "../dojo/dojo-release-1.0.0/dojox/layout/resources/ResizeHandle.css"; 
+			@import "../dojo/dojo-release-1.0.0/dojox/layout/tests/_expando.css"; 
+
+      </style>
+      <script type="text/javascript" src="../dojo/dojo-release-1.0.0/dojo/dojo.js"  
+                djConfig="parseOnLoad: true, isDebug: true,locale: 'zh-cn', extraLocale: ['zh-TW', 'fr']"></script>
+      <script>
+    
+            dojo.require("dojo.data.ItemFileWriteStore");
+            dojo.require("dojo.parser");
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.Menu");
+			dojo.require("dijit.Tree");
+            dojo.require("dojox.grid.Grid");
+            dojo.require("dojox.validate._base");
+            dojo.require("dojox.grid._data.model");
+            dojo.require("dijit.form.ValidationTextBox");
+            dojo.require("dijit.form.TextBox");
+            dojo.require("dijit.form.FilteringSelect");
+            dojo.require("dijit.form.ComboBox");
+            dojo.require("dijit.form.Textarea");
+            dojo.require("dojox.grid._data.dijitEditors");
+            dojo.require("dojox.layout.FloatingPane");
+			dojo.require("dijit.layout.TabContainer");
+			dojo.require("dijit.layout.BorderContainer");
+			dojo.require("dijit.layout.ContentPane");
+			dojo.require("dojox.layout.ExpandoPane");
+            dojo.registerModulePath("mydojo", "../../../js/mydojo");
+            dojo.require("mydojo.FilteringSelect");
+            dojo.require("mydojo.ValidationTextBox");
+            dojo.require("mydojo.NumberTextBox");
+     </script>
+        
+     <script type="text/javascript" src="../js/soapclient.js"></script>
+     <script type="text/javascript" src="../js/wlProject.js"></script>
+     <script type="text/javascript" src="../js/myi18n.js"></script>
+	 <script type="text/javascript" src="../js/${manageable.name}.js"></script>
+	
+	 #foreach($member in $manageable.manageableAssociationEnds)
+		<script type="text/javascript" src="../js/${member.type.name}.js"></script>
+	 #end
+	 #set ($ifMain = 0) 
+	  #set ($subName = '') 
+	 #foreach($member in $manageable.manageableAssociationEnds)
+		#if(${member.many})
+			#set ($ifMain = 1) 
+			#set ($childRow = 0) 
+			#set($dai = ${stringUtils.lastIndexOf(${member.type.packageName}, 'entity.')} + 6)
+			#set($dap = ${stringUtils.substring(${member.type.packageName}, $dai)})
+			<script type="text/javascript" src="..${stringUtils.replace($dap,'.','/')}/${member.type.name}SubQueryTab.js"></script><!--14.2 sub Table script    eg:taskRow.js    判断是否为主表，且初始化子表的行数childRow=0-->
+			#set ($subName = ${member.type}) 
+		#end	
+	#end
+	 #foreach($member in $manageable.AssociationEnds)<!--箭头和子表-->
+		#if(!${member.many})
+				#set($dai = ${stringUtils.lastIndexOf(${member.otherEnd.type.packageName}, 'entity.')} + 6)
+				#set($dap = ${stringUtils.substring(${member.otherEnd.type.packageName}, $dai)})
+				<script type="text/javascript" src="..${stringUtils.replace($dap,'.','/')}/${member.association.name}AFTab.js"></script>
+		#end
+	 #end			
+	#foreach($memberSub in $subName.AssociationEnds)<!--子表的箭头-->
+		#if(!${memberSub.many})
+			#set($dai = ${stringUtils.lastIndexOf(${member.otherEnd.type.packageName}, 'entity.')} + 6)
+			#set($dap = ${stringUtils.substring(${member.otherEnd.type.packageName}, $dai)})
+			<script type="text/javascript" src="..${stringUtils.replace($dap,'.','/')}/${memberSub.association.name}AFSubTab.js"></script>
+		#end
+	#end	
+			
+		
+	<script type="text/javascript" >
+	  var url${manageable.name} = getUrl()+ "services/${manageable.name}ManageService";
+	  var deletedata${manageable.name} =  new Array();
+	  var querydata${manageable.name} =  new Array();
+	  var pagenumber${manageable.name}=1;
+	  var totalCount${manageable.name}=0;
+	  var pagesize${manageable.name}=10;
+	  var orderBy${manageable.name}='0';
+	  var queryvo${manageable.name}=new ${manageable.name}VOJs();
+	  var oddstyle='';
+	  var model${manageable.name} = new dojox.grid.data.Table(null, querydata${manageable.name});
+	  var urle = getUrl()+ "services/BasicManageService";
+	  var model${manageable.name}Detail;
+	  var model${manageable.name}Child;
+	  
+#foreach($member in $manageable.manageableAttributes)
+	#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+			var p${member.name} = new SOAPClientParameters();
+			p${member.name}.add('eType','${member.name}');
+			var item${member.name} = new Array();
+			var item${member.name}Option = new Array();
+				SOAPClient.invoke(urle, "getEnumerationByType", p${member.name}, false,  function GetEnu_callBack(ul, soapResponse){   
+				for(var i = 0; i < ul.length; i++){		
+				  var ulo=ul[i];
+				  item${member.name}.push({name: ulo["ns:fieldName"], value:ulo["ns:fieldName"]});
+				  item${member.name}Option.push(ulo["ns:fieldName"]);
+				}                
+			});  
+			if(item${member.name}.length==0)item${member.name}.push({name:'' , value:''});			
+			var ${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: item$member.name}}); 
+	#end
+#end
+
+//have set function's manageableAssociationEnds
+#foreach($member in $manageable.manageableAssociationEnds)
+	var p${member.name} = new SOAPClientParameters();
+	var items${member.name} = new Array();  
+		p${member.name}.add('${member.type.name}VO',new  ${member.type.name}VOJs()) ;
+		p${member.name}.add('pageNumber',0) ;
+		p${member.name}.add('pageSize',0) ;
+	    p${member.name}.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"${member.type.name}ManageService","get${member.type.name}", p${member.name}, false,  function GetEnu_callBack(ul, soapResponse){      
+				var tempData=${member.type.name}VOtoArray_fun(ul,false);
+				for(var i = 0; i < tempData.length-1; i++){		
+				  items${member.name}.push({name: tempData[i][2], value:tempData[i][1]});
+				}                
+	});       
+	if(items${member.name}.length==0)items${member.name}.push({name:'' , value:''});
+	var ${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: items${member.name} }});
+
+	function ${member.name}Set(id,value){
+        	/*var itemselect=${member.name}Store._getItemByIdentity(value);
+				if(itemselect!='undefined'&& itemselect!=null){
+				}*/
+	}
+#end
+
+#set ($totleinum = 0)   
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+#if ($totleinum<=9)//begin buildLayout
+var mainLayout =[{//修改概要信息字段数时要修改相应的colSpan、toggle
+					onBeforeRow: onBeforeRow,
+					 cells: [
+                      [
+						{ name: i18nStr.detail, width: 3, get: getCheck${manageable.name}, styles: 'text-align: center;' },
+						{ name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10}
+				#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于
+
+		#if(!${member.many})                                             
+			 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydata${manageable.name}[inRowIndex]!=undefined && querydata${manageable.name}[inRowIndex][${inum}]!=undefined){str=querydata${manageable.name}[inRowIndex][${inum}][2];} return str;} ,width: 10 }
+			#set ($comma = ", ")
+			#set ($inum= $inum + 1)
+		#else
+			#set ($childRow = $inum) 
+		#end
+#end                        
+					],[
+							{ name: '\u8be6\u7ec6', colSpan: $totleinum+1 ,styles: 'padding: 0; margin: 0;', get: getSub${manageable.name} }//value: '<div style="height:0px; background-color: white;"></div>'
+						  ]
+				  ]
+	  
+				}];	 
+				
+function getSub${manageable.name}(inRowIndex){
+		var cell = this;
+		setTimeout(function() { buildSubgrid${manageable.name}(inRowIndex, cell); }, 0);
+		var h =0;
+		if(detailRows${manageable.name}[inRowIndex]&&querydata${manageable.name}[inRowIndex][$childRow].length>0){
+							h=65+25*querydata${manageable.name}[inRowIndex][$childRow].length;  		}
+	return '<div style="height:'+h+'px; background-color: white;"></div>';
+}				
+
+#else
+#if($totleinum>9 && $totleinum<=20 )
+#set($rowint = $rowint + 2)
+#set($rowint = $totleinum / 2) <!--rowint=$rowint-->
+
+
+var mainLayout =[{//修改概要信息字段数时要修改相应的colSpan、toggle
+					onBeforeRow: onBeforeRow,
+					 cells: [
+                      [
+						{ name: i18nStr.detail, width: 3, get: getCheck${manageable.name}, styles: 'text-align: center;' },
+						{ name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+	#if ($inum<=$rowint)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10}
+				#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+	#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于
+	#if ($inum<=$rowint)
+		#if(!${member.many})                                             
+			 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydata${manageable.name}[inRowIndex]!=undefined && querydata${manageable.name}[inRowIndex][${inum}]!=undefined){str=querydata${manageable.name}[inRowIndex][${inum}][2];} return str;} ,width: 10 }
+			#set ($comma = ", ")
+			#set ($inum= $inum + 1)
+		#else
+			#set ($childRow = $inum) 
+		#end
+	#end
+#end                        
+					],[
+							{ name: '\u8be6\u7ec6', colSpan: 12,styles: 'padding: 0; margin: 0;', get: getDetail${manageable.name} }//value: '<div style="height:0px; background-color: white;"></div>'
+						  ]
+				  ]
+	  
+				}];	 
+
+
+function buildMainDetailLayout(pre,mystyle){
+var myLayout=[{noscroll: true,
+					 cells: [
+                      [
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+			  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				#if($inum > $rowint)    
+					 				
+					 ${comma} {name: pre+i18nStr.$member.name,field:${inum}, width: 8,headerStyles:mystyle}
+					 #set ($comma = ", ")
+				#end
+					#set ($inum= $inum + 1)
+			  #elseif ($member.type.dateType)
+				#if($inum > $rowint)
+					${comma}  {name: pre+i18nStr.${member.name},field:${inum}, width: 8,headerStyles:mystyle}
+					#set ($comma = ", ")
+					
+				#end
+					#set ($inum= $inum + 1)
+			  #else
+				#if($inum > $rowint)
+					${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 10,headerStyles:mystyle}
+					#set ($comma = ", ")
+					
+				#end
+					#set ($inum= $inum + 1)
+			  #end
+			  
+		#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于
+
+		#if(!${member.many}) 
+			#if($inum > $rowint)
+			 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydata${manageable.name}[inRowIndex]!=undefined && querydata${manageable.name}[inRowIndex][${inum}]!=undefined){str=querydata${manageable.name}[inRowIndex][${inum}][2];} return str;} ,width: 10,headerStyles:mystyle }
+			 #set ($comma = ", ")
+			#end
+			#set ($inum= $inum + 1)
+		#else
+			#set ($childRow = $inum) 
+			#set ($inum= $inum + 1)
+		#end
+#end                        
+					]]}];	 
+	return  myLayout;
+}
+
+#else
+
+var mainLayout =[{//修改概要信息字段数时要修改相应的colSpan、toggle
+					onBeforeRow: onBeforeRow,
+					 cells: [
+                      [
+						{ name: i18nStr.detail, width: 3, get: getCheck${manageable.name}, styles: 'text-align: center;' },
+						{ name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+	#if ($inum<=9)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10}
+				#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+	#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于
+	#if ($inum<=9)
+		#if(!${member.many})                                             
+			 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydata${manageable.name}[inRowIndex]!=undefined && querydata${manageable.name}[inRowIndex][${inum}]!=undefined){str=querydata${manageable.name}[inRowIndex][${inum}][2];} return str;} ,width: 10 }
+			#set ($comma = ", ")
+			#set ($inum= $inum + 1)
+		#else
+			#set ($childRow = $inum) 
+		#end
+	#end
+#end                        
+					],[
+							{ name: '\u8be6\u7ec6', colSpan: 11,styles: 'padding: 0; margin: 0;', get: getDetail${manageable.name} }//value: '<div style="height:0px; background-color: white;"></div>'
+						  ]
+				  ]
+	  
+				}];	 
+
+
+function buildMainDetailLayout(pre,mystyle){
+var myLayout=[{noscroll: true,
+					 cells: [
+                      [
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+			  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				#if($inum >9)    
+					//#set ($comma = ", ")				
+					 ${comma} {name: pre+i18nStr.$member.name,field:${inum}, width: 8,headerStyles:mystyle}
+				#end
+					#set ($inum= $inum + 1)
+			  #elseif ($member.type.dateType)
+				#if($inum >= 9)
+					#set ($comma = ", ")
+					${comma}  {name: pre+i18nStr.${member.name},field:${inum}, width: 8,headerStyles:mystyle}
+				#end
+					#set ($inum= $inum + 1)
+			  #else
+				#if($inum >= 9)
+					#set ($comma = ", ")
+					${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 10,headerStyles:mystyle}
+				#end
+					#set ($inum= $inum + 1)
+			  #end
+			  
+		#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于
+
+		#if(!${member.many}) 
+			#if($inum >= 9)
+			 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydata${manageable.name}[inRowIndex]!=undefined && querydata${manageable.name}[inRowIndex][${inum}]!=undefined){str=querydata${manageable.name}[inRowIndex][${inum}][2];} return str;} ,width: 10,headerStyles:mystyle }
+			#set ($comma = ", ")
+			#end
+			#set ($inum= $inum + 1)
+		#else
+			#set ($childRow = $inum) 
+			#set ($inum= $inum + 1)
+		#end
+#end                        
+					]]}];	 
+	return  myLayout;
+}
+#end
+var mainDetailLayout;
+var mainDetailLayoutOdd;
+mainDetailLayout= buildMainDetailLayout(pre,headerstyle);
+mainDetailLayoutOdd=buildMainDetailLayout(pre,headerstyleodd);
+
+function getDetail${manageable.name}(inRowIndex){
+		var cell = this;
+		setTimeout(function() { buildSubgrid${manageable.name}(inRowIndex, cell); }, 0);
+		var h =0;
+		if(detailRows${manageable.name}[inRowIndex]&&querydata${manageable.name}[inRowIndex][$childRow].length>0){
+							h=65+25*querydata${manageable.name}[inRowIndex][$childRow].length;  		}
+	return '<div style="height:45px; background-color: white;"></div><div style="height:'+h+'px; background-color: white;"></div>';
+}
+
+#end//end buildLayout
+
+var detailRows${manageable.name}=[];
+
+function onBeforeRow(inDataIndex, inRow) {	if (inRow[1]!=undefined)inRow[1].hidden = !detailRows${manageable.name}[inDataIndex];}	
+
+function toggle${manageable.name}(inIndex, inShow) {
+        			if (!inShow) destroySubGridIdGeneral('',querydata${manageable.name}[inIndex][1],"${manageable.name}MainDetail");
+					if (!inShow) destroySubGridIdGeneral('',querydata${manageable.name}[inIndex][1],"${manageable.name}Child");
+				    detailRows${manageable.name}[inIndex] = inShow;
+				    dijit.byId("grid${manageable.name}").updateRow(inIndex); 
+				    
+    } 
+
+function getCheck${manageable.name}(inRowIndex) {
+	var image = (detailRows${manageable.name}[inRowIndex] ? 'open.gif' : 'closed.gif');
+	var show = (detailRows${manageable.name}[inRowIndex] ? 'false' : 'true');
+	return '<img src="../image/' + image + '" onclick="toggle${manageable.name}(' + inRowIndex + ', ' + show + ')" height="11" width="11">';
+}
+
+
+
+//function makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString) {return parentRowIndex+"_"+idString+"_" + inRowIndex;		}
+
+//function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
+
+	  
+function buildSubgrid${manageable.name}(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)是根据主表id生成mainDetailGrid的id
+	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
+#if ($totleinum<=11)
+		var child = inCell.getNode(inRowIndex).firstChild;
+#else
+		var mainDetail = inCell.getNode(inRowIndex).firstChild;
+		var child = inCell.getNode(inRowIndex).lastChild;
+#end
+		var idmainDetail = makeSubGridIdGeneral('',querydata${manageable.name}[inRowIndex][1],"${manageable.name}MainDetail");//makeSubgridIdMainDetail(querydata${manageable.name}[inRowIndex][1]);//taskmakeSubgridId(taskRowSubdata[inRowIndex][1]);
+		var idchild = makeSubGridIdGeneral('',querydata${manageable.name}[inRowIndex][1],"${manageable.name}Child");
+		var subGridMainDetail = dijit.byId(idmainDetail);
+		var subGridChild = dijit.byId(idchild);
+		var dataChild=querydata${manageable.name}[inRowIndex][$childRow];
+		if(dataChild.length!=0){
+			if (subGridChild){
+				subGridChild.model.setData(dataChild);
+				child.appendChild(subGridChild.domNode);
+			}else{
+				model${manageable.name}Child=new dojox.grid.data.Table(null, dataChild);
+				var childProps= {
+								autoHeight: true, 
+								autoRender: false,
+								rowCount:dataChild.length,
+								model:model${manageable.name}Child	};
+				childProps.dataRow = inRowIndex;
+				childProps.id = idchild;
+				if(Math.ceil(inRowIndex/2)>inRowIndex/2){
+					childProps.structure=childLayoutOdd;
+				}else{
+					childProps.structure=childLayout;
+				}
+				subGridChild = new dojox.Grid(childProps, child);//grid作为嵌套表时，不能自动调整DIV的大小
+				dojo.connect(dijit.byId(idchild), "doclick", function(e){
+						//var subid=e.grid.id;
+						//console.log("subid:"+subid);
+						//var subRow=subid.substring(subid.lastIndexOf('_')+1);
+						//console.log("subRow:"+subRow);
+						//subMainID=subRow;
+						subMainID=querydata${manageable.name}[e.grid.dataRow][$childRow][e.rowIndex][1];
+						console.log("subMainID:"+subMainID);
+						resetNU();
+						clickRowTab();		
+				});
+			}
+			if (subGridChild) {
+				subGridChild.render();
+				subGridChild.cacheHeight = subGridChild.domNode.offsetHeight;
+			}	      				
+		}
+#if ($totleinum>11)		
+		var detailDate=[];
+		detailDate[0]=querydata${manageable.name}[inRowIndex];  
+	    model${manageable.name}Detail=new dojox.grid.data.Table(null, detailDate);
+		if (subGridMainDetail) {
+			subGridMainDetail.model.setData(detailDate);
+			mainDetail.appendChild(subGridMainDetail.domNode);
+		} else {
+			var mainDetailProps = {
+				rowCount: 1, 
+				autoHeight: true, 
+				autoRender: false,
+				model:model${manageable.name}Detail
+				};
+				mainDetailProps.dataRow = inRowIndex;
+				mainDetailProps.id = idmainDetail;//	tasksubGridProps.widgetId = id;
+				if(Math.ceil(inRowIndex/2)>inRowIndex/2){
+					mainDetailProps.structure=mainDetailLayoutOdd;
+				}else{
+					mainDetailProps.structure=mainDetailLayout;
+				}
+				subGridMainDetail = new dojox.Grid(mainDetailProps, mainDetail );
+				dojo.connect(dijit.byId(idmainDetail), "doclick", function(e){
+						//var mainDetailid=e.grid.id;
+						console.log("e.grid.dataRow:"+e.grid.dataRow);
+						//var subRow=mainDetailid.substring(mainDetailid.lastIndexOf('_')+1);
+						//console.log("subRow:"+subRow);
+						//mainID=querydataWlTask[subRow][8][e.rowIndex][1];
+						mainID=querydata${manageable.name}[e.grid.dataRow][1];
+						resetNU();
+						clickRowTab();		
+				});
+		}
+			
+		if (subGridMainDetail) {
+				subGridMainDetail.render();
+				subGridMainDetail.cacheHeight = subGridMainDetail.domNode.offsetHeight;
+			}	
+#end
+		inCell.grid.rowHeightChanged(inRowIndex);
+    }   
+}
+//var childLayout=//???????????????????????????????/ 不能直接生成，需引用js、html！！！！！
+
+function querybutton${manageable.name}(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvo.id=0 ;
+              queryvo${manageable.name}=new ${manageable.name}VOJs();
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+              n=queryNumber_fun("${manageable.name}${member.name}");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryvo${manageable.name}.${member.name}=n;}  
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')   
+              d=queryDate_fun("${manageable.name}${member.name}");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryvo${manageable.name}.${member.name}=d;}
+#else
+	          if(query${manageable.name}${member.name}.getDisplayedValue()!="")queryvo${manageable.name}.${member.name}=query${manageable.name}${member.name}.getDisplayedValue();//
+#end
+#end
+#end
+			
+#foreach($member in $manageable.manageableAssociationEnds)
+	if(query${manageable.name}${member.name}.getDisplayedValue()!=""){
+				var ${member.name}Query= new ${member.type.name}VOJs();
+				//${member.name}Query.${manageable.name}Name=query${manageable.name}${member.name}.getDisplayedValue();
+				${member.name}Query.id=query${manageable.name}${member.name}.getValue();
+				queryvo${manageable.name}.${member.name}=${member.name}Query;
+			  }
+#end
+
+			if(validstate==0){
+              pagenumber${manageable.name}=1;
+              get${manageable.name}VO(queryvo${manageable.name}); 
+             }      
+       }
+
+function get${manageable.name}VO(queryvo){
+	var totalCount=0;
+	deletedata${manageable.name} =new Array();
+      var pu = new SOAPClientParameters2();
+      pu.add('${manageable.name}VO',queryvo) ;
+      pu.add('pageNumber',pagenumber${manageable.name}) ;
+	    pu.add('pageSize',pagesize${manageable.name}) ;
+	    pu.add('orderBy',orderBy${manageable.name}) ;
+      SOAPClient.invoke(url${manageable.name},"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydata${manageable.name}=new Array();
+		   querydata${manageable.name}=${manageable.name}VOtoArray_fun(ul,false);
+           totalCount${manageable.name}=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydata${manageable.name}.splice(querydata${manageable.name}.length-1,1);
+	  grid${manageable.name}.selection.clear();
+      model${manageable.name}.setData(querydata${manageable.name});
+      //dijit.byId("grid").updateRowCount(querydata${manageable.name}.length); 
+	   var totalpage=Math.ceil(new Number(totalCount${manageable.name})/pagesize${manageable.name});
+	  
+	if(totalpage>1){
+		if(pagenumber${manageable.name}==1){
+			dijit.byId("but6${manageable.name}").setDisabled(true);
+			dijit.byId("but7${manageable.name}").setDisabled(false);
+		}else if(pagenumber${manageable.name}==totalpage){
+			dijit.byId("but6${manageable.name}").setDisabled(false);
+			dijit.byId("but7${manageable.name}").setDisabled(true);
+		}else{
+			dijit.byId("but6${manageable.name}").setDisabled(false);
+			dijit.byId("but7${manageable.name}").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6${manageable.name}").setDisabled(true);
+		dijit.byId("but7${manageable.name}").setDisabled(true);
+	
+	}
+	if(pagesize${manageable.name}==0){
+		totalpage=1;
+		dijit.byId("but6${manageable.name}").setDisabled(true);
+		dijit.byId("but7${manageable.name}").setDisabled(true);
+	}
+	if(totalpage==1)pagenumber${manageable.name}=1;
+	
+	 document.getElementById("rowCount${manageable.name}").innerHTML=i18nStr.di+" "+pagenumber${manageable.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${manageable.name}+" "+i18nStr.rowSize; 	
+}
+var connecthandle=0;
+var handle;
+function init(){
+	grid${manageable.name}.onStyleRow=OnStyleRowClassBlue();
+	get${manageable.name}VO(queryvo${manageable.name});
+	var m = dijit.byId("bottomPane"); 
+	if(m._showing)m.toggle();
+  
+setTimeout(function(){
+	grid${manageable.name}.resize({h: document.body.clientHeight-86});
+	//connect doclick 始终有效；而不是由_showEnd、_hideEnd控制
+	
+	/*dojo.connect(dijit.byId("bottomPane"), "_showEnd", function(e){
+		if(connecthandle==0){
+			handle=dojo.connect(dijit.byId("grid${manageable.name}"), "doclick", function(e){
+				mainID=querydata${manageable.name}[e.rowIndex][1];
+				resetNU();
+				clickRowTab();		
+			});
+			connecthandle=1;
+		}
+	  });
+	  dojo.connect(dijit.byId("bottomPane"), "_hideEnd", function(e){
+		if(connecthandle==1){
+			dojo.disconnect(handle);
+			connecthandle=0;
+		}
+	  });	*/
+		dojo.connect(dijit.byId("grid${manageable.name}"), "doclick", function(e){
+			if(e.cellIndex<11){
+				mainID=querydata${manageable.name}[e.rowIndex][1];
+				resetNU();
+				clickRowTab();		
+			}
+		});
+	
+	  
+	  
+	  
+	  
+	   dojo.connect(dijit.byId("bottomPane"), "_afterResize", function(e){
+			${manageable.name}AFTab.resize({t:10,h: dijit.byId("bottomPane").domNode.clientHeight-40});
+#foreach($member in $manageable.AssociationEnds)
+	#if(!${member.many})
+		if(dijit.byId("grid${member.association.name}")!=undefined)grid${member.association.name}.resize({h: dijit.byId("bottomPane").domNode.clientHeight-90});
+	#end
+ #end
+		grid${manageable.name}.resize({h:document.body.clientHeight-dijit.byId("bottomPane").domNode.clientHeight-36});
+	  }); 
+	  
+	},0);
+}
+
+ dojo.addOnLoad(init);   
+
+function myOnLoad(){
+	dojo.connect(dijit.byId("${manageable.name}AFTab"), "selectChild", function(e){
+	clickRowTab();
+	}); 
+} 
+
+function resetNU(trueTab){
+	#foreach($member in $manageable.AssociationEnds)
+		#if(!${member.many})
+			NU${member.association.name}=true;
+		#end
+	#end
+	SubResetNU(trueTab);
+}
+function clickRowTab(){
+	#set ($ifString = "if")
+		#foreach($member in $manageable.AssociationEnds)
+			#if(!${member.many})
+				$ifString (dijit.byId("${manageable.name}AFTab").selectedChildWidget.id=="${member.association.name}"){
+					build${member.association.name}();
+				#set ($ifString = "}else if") 
+			#end
+		#end
+		#if($ifString == "}else if")
+		}
+		#end
+	SubClickRowTab();
+}
+
+
+
+var subMainID;		
+var mainID;
+
+#foreach($member in $manageable.manageableAssociationEnds)
+	function select${member.type.name}Fun(rep){
+		querydata${manageable.name}[select${member.type.name}InRow][no${member.type.name}]=rep;
+		grid${manageable.name}.updateRow(select${member.type.name}InRow);		
+	}
+#end
+
+
+function allopen(){
+          for(var i =0;i<querydata${manageable.name}.length;i++){
+            toggle${manageable.name}(i,true);
+          }
+ }  
+
+function allclose(){
+          for(var i =0;i<querydata${manageable.name}.length;i++){
+            toggle${manageable.name}(i,false);
+          }
+}
+</script>
+</head>	 
+<body class="tundra">
+<div id="bc" style="width:100%; height:100%;" dojoType="dijit.layout.BorderContainer">
+<div dojoType="dijit.layout.ContentPane"  title="" region="center" id="topPane" 	 >
+#set($rowinum = $totleinum / 3) <!--rowinum=$rowinum-->
+#if( ($rowinum * 3 )< $totleinum)
+	#set($rowinum = $rowinum + 2)
+#else
+	#set($rowinum = $rowinum + 1)
+#end	
+
+#set($queryHeight = $rowinum*20 + 40) 
+<div id="queryDiv${manageable.name}" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+#set ($inum =1 ) 
+#set ($thirtype="")
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($inum==1)
+	#set ($firsttype="")
+	#set ($sectype="")
+	#set ($thirtype="")
+	#set ($inum=2) 
+                <tr>
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<span id="query${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber"   jsId="query${manageable.name}${member.name}"  id="query${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="query${manageable.name}${member.name}Img1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="query${manageable.name}${member.name}1"  id="query${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="query${manageable.name}${member.name}2"  id="query${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="double")          
+	#elseif ($member.type.dateType)
+						<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+						<td align="left"  colspan="3"><span id="query${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${member.name}" id="query${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${member.name}Time" id="query${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1${manageable.name}${member.name}" id="query1${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1${manageable.name}${member.name}Time" id="query1${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2${manageable.name}${member.name}" id="query2${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2${manageable.name}${member.name}Time" id="query2${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+		#set ($firsttype="date") 
+	#else
+						<td align="right" i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						
+							#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>
+		#set ($firsttype="str") 
+	#end
+#elseif ($inum==2)
+	#set ($inum=3) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+		#if ($firsttype=='double')
+							<td align="right" i18n="${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="query${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${member.name}"  id="query${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="query${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${member.name}1"  id="query${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+								<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${member.name}2"  id="query${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end
+		#if ($firsttype=='date')
+							<td align="right" colspan="2" > </td>
+							<td align="right" i18n="${member.name}" >${member.name}:</td>
+							<td align="left"  >
+								<span id="query${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${member.name}"  id="query${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="query${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${member.name}1"  id="query${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+								<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${member.name}2"  id="query${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td></tr>  //?????????????????????????????????
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+		#if ($firsttype=='str')
+							<td align="right"  i18n="${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="query${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${member.name}"  id="query${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="query${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${member.name}1"  id="query${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+								<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${member.name}2"  id="query${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end                 
+	#elseif ($member.type.dateType)
+		#if ($firsttype=='double')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="5"><span id="query${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${member.name}" id="query${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${member.name}Time" id="query${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1${manageable.name}${member.name}" id="query1${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1${manageable.name}${member.name}Time" id="query1${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2${manageable.name}${member.name}" id="query2${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2${manageable.name}${member.name}Time" id="query2${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+			#set ($sectype="")
+			#set ($inum=1)
+		#end
+		#if ($firsttype=='date')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" ><span id="query${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${member.name}" id="query${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${member.name}Time" id="query${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1${manageable.name}${member.name}" id="query1${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1${manageable.name}${member.name}Time" id="query1${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}">
+							<input class="editerDateSmaller"   jsId="query2${manageable.name}${member.name}" id="query2${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2${manageable.name}${member.name}Time" id="query2${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td> </tr><!--new modify-->
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"   colspan="5"><span id="query${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${member.name}" id="query${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${member.name}Time" id="query${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1${manageable.name}${member.name}" id="query1${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1${manageable.name}${member.name}Time" id="query1${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2${manageable.name}${member.name}" id="query2${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2${manageable.name}${member.name}Time" id="query2${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end 
+#else
+	#if ($firsttype=='double')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left" colspan="3" >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="query${manageable.name}${member.name}" jsId="query${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>  
+	#set ($sectype="str")
+	#end
+	#if ($firsttype=='date')
+						<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							 #if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							 <input  id="query${manageable.name}${member.name}" jsId="query${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />  
+							#end
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+						<input  id="query${manageable.name}${member.name}" jsId="query${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+	#set ($sectype="str")
+	#end 
+	#end
+#elseif($inum==3)
+	#set ($inum=1) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							<span id="query${manageable.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${member.name}"  id="query${manageable.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="query${manageable.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${member.name}1"  id="query${manageable.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${member.name}2"  id="query${manageable.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+		#set ($thirtype="over")
+	#elseif ($member.type.dateType)
+						<td align="right"  > </td>
+						<td align="right"  ></td>
+					</tr><tr >
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3"><span id="query${manageable.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${member.name}" id="query${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${member.name}Time" id="query${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1${manageable.name}${member.name}" id="query1${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1${manageable.name}${member.name}Time" id="query1${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2${manageable.name}${member.name}" id="query2${manageable.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2${manageable.name}${member.name}Time" id="query2${manageable.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="date")
+		#set ($inum=2)
+	#else            
+		#if ($sectype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="query${manageable.name}${member.name}" jsId="query${manageable.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+		#set ($thirtype="over")
+		#end       
+	#end
+	#if ($thirtype=="over"||$inum==1)        
+				  </tr>
+	#end      
+	#end
+	#end                       
+#end
+
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if($inum ==1)
+		
+					<tr><td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}" class="selectInput" dojoType="dijit.form.myFilteringSelect" store="${member.name}Store"  /><div dojoType="dijit.form.myDropDownButton" iconClass="dialogIcon"  ><div dojoType="dijit.TooltipDialog"  href="../common/query${member.type.name}Float.html"title="detail" execute="" ></div></div></td>  
+			#set ($inum =2)
+		
+	#elseif ($inum ==2)
+		
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" colspan="3"  ><!----><input  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}" class="selectInput" dojoType="dijit.form.myFilteringSelect" store="${member.name}Store"  /><div dojoType="dijit.form.myDropDownButton" iconClass="dialogIcon"  ><div dojoType="dijit.TooltipDialog"  href="../common/query${member.type.name}Float.html"title="detail" execute="" ></div></div></td>  
+			#set ($inum =3)
+		
+	#elseif ($inum ==3)
+		
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="query${manageable.name}${member.name}"  jsId="query${manageable.name}${member.name}" class="selectInput" dojoType="dijit.form.myFilteringSelect" store="${member.name}Store"  /><div dojoType="dijit.form.myDropDownButton" iconClass="dialogIcon"  ><div dojoType="dijit.TooltipDialog"  href="../common/query${member.type.name}Float.html"title="detail" execute="" ></div></div></td>
+					</tr>
+			#set ($inum =1)
+		
+	#end	
+#end
+#if ($inum==2)     
+    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+#end
+#if ($inum==3)     
+    <td align="right"    ></td><td align="right"    ></td></tr>
+#end
+
+         <tr align="center"><td></td>
+           <td colspan="1"> <button dojoType="dijit.form.Button" onclick="querybutton${manageable.name}();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="1"><button dojoType="dijit.form.Button"  i18n="reset" iconClass="resetIcon">reset</button></td><td colspan="3"></td></tr>
+         </table>
+	    </div>		
+
+<div align="right">
+	<button dojoType="dijit.form.Button" onclick="querydisplay('queryDiv${manageable.name}');" iconClass="queryIcon"  i18n="openQuery" >query</button>
+	<span id="rowCount${manageable.name}"></span>
+		<button dojoType="dijit.form.myButton" onclick="upPage${manageable.name}();"  id="but6${manageable.name}" disabled='true' jsId="but6${manageable.name}" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+		<button dojoType="dijit.form.myButton" onclick="downPage${manageable.name}();" id="but7${manageable.name}" disabled='true' jsId="but7${manageable.name}" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+		<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+			  <div dojoType="dijit.Menu">
+				  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChange${manageable.name}(this.label);"></div>
+				  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChange${manageable.name}(this.label);"></div>
+			  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChange${manageable.name}(this.label);"></div>
+					<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChange${manageable.name}(this.label);"></div>
+					<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpage${manageable.name}();"></div>
+			  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+		</div>
+		<div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+		   <div dojoType="dijit.Menu">
+			 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStyle${manageable.name}(this.label);"></div>
+			 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStyle${manageable.name}(this.label);"></div>
+		</div></div>
+		<button dojoType="dijit.form.myButton" onclick="allopen();"  iconClass="allopenIcon" i18n="allopen" >allopen</button>
+		<button dojoType="dijit.form.myButton" onclick="allclose();" iconClass="allcloseIcon" i18n="allclose"  >allclose</button>
+</div>   
+
+<div id="grid${manageable.name}"  dojoType="dojox.Grid"  autoWidth="false" 	jsId="grid${manageable.name}"	model="model${manageable.name}" structure="mainLayout"  ></div>
+ </div>      
+	<div dojoType="dojox.layout.ExpandoPane" splitter="true" duration="125" region="bottom" title="" style="height:375px;" href="${manageable.name}2AFTab.html" onLoad="myOnLoad" id="bottomPane" jsId="bottomPane" >
+	</div> 
+</div>	
+</body>
+<script type="text/javascript">trans18tag();</script>
+</html>					 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					

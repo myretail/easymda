@@ -1,0 +1,54 @@
+#set($filePath = "js/msg.cn")
+{
+#foreach ($manageable in $manageables)
+	//manageable.name = ${manageable.name}
+	#foreach($member in $manageable.manageableAttributes)
+		${member.name}:"${member.name}",
+		Inc${manageable.name}${member.name}:"${member.name}:",
+	#end
+	
+	#foreach($member in $manageable.manageableAssociationEnds)
+		${member.name}:"${member.name}",
+		Inc${manageable.name}${member.name}:"${member.name}:",
+	#end
+
+	#foreach($member in $manageable.AssociationEnds)
+		#if(!${member.many})
+			${member.association.name}:"${member.association.name}",
+		#end
+	 #end
+#end
+reset:"重置",
+detail:"明细",
+add:"增加",
+edit:"编缉",
+deleteConfirm:"确定删除所选记录？",
+di:"第",
+page:"页",
+totle:"共",
+rowSize:"条",
+sum:"合计",
+openQuery:"条件查询",
+relQuery:"相关查询",
+chart:"图表",
+row:"折叠明细",
+col:"显示明细",
+queryNote:"查询条件：",
+addNote:"新增记录：",
+chose:"选择",
+no:"序号",
+save:"保存",
+delete:"删除",
+allopen:"全部展开",
+allclose:"全部折叠",
+query:"查询",
+pageup:"上一页",
+pagedown:"下一页",
+remark:"备注",
+ok:"确定",
+selectFloatButton:"确定",
+addRow:"addRow",
+delRow:"delRow"
+
+
+}

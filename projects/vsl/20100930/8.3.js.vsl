@@ -1,0 +1,756 @@
+#set ($filePath= '')
+#set ($definedUnm= 1)
+#set ($iListnum= 0)
+#foreach($memberAs in $manageable.manageableAssociationEnds)
+	#if(!${memberAs.many})  
+	#set($iListnum=$iListnum+1)
+  #if($iListnum == $definedUnm)	
+//---begin---------判断是否为多对多的关系表
+#set ($ifcon= 0)
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($ifcon= 1)
+	#end
+#end		
+#if($ifcon == 0)
+//---end---------判断是否为多对多的关系表
+	#set ($allMenber= 1)
+	#set ($firstMenber= '')
+	#set ($lastMenber= '')
+	#foreach($memberAs in $manageable.manageableAssociationEnds)
+		#if(!${memberAs.many})   
+			#if($allMenber== 1)
+				#if($definedUnm == 1)
+					#set ($lastMenber= $memberAs)
+				#elseif($definedUnm == 2)
+					#set ($firstMenber= $memberAs)
+				#end
+			#elseif($allMenber== 2)
+				#if($definedUnm == 1)
+					#set ($firstMenber= $memberAs)
+				#elseif($definedUnm == 2)
+					#set ($lastMenber= $memberAs)
+				#end
+			#end
+			#set($allMenber= $allMenber + 1)
+		#end
+	#end
+	#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+	#set($filePath= "${stringUtils.replace($di,'.','/')}/${lastMenber.association.name}FloatAFTab.js")//set (= ${lastMenber.association.name})
+
+	//----------lastMenber = $lastMenber   firstMenber=$firstMenber
+	//${lastMenber.association.name}AFTab.js	
+	
+	//---begin---------判断是否为tree结构表sno
+				#set ($iftree= 0)
+				#foreach($membert in $firstMenber.type.manageableAttributes)
+					#if ($membert.name == 'parentId')
+						#set ($iftree= 1)
+					#end
+				#end		
+				#if($iftree == 0)
+		//---end---------判断是否为tree结构表sno
+	
+	#set ($associationname= ${lastMenber.association.name})
+		/*  var NU${lastMenber.association.name} = false;//needUpdate
+		  var url${firstMenber.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+		  var deletedata${firstMenber.association.name} =   ",";
+		  var adddata${firstMenber.association.name} =    ",";
+		  var querydata${firstMenber.association.name} =  new Array();
+		  var pagenumber${firstMenber.association.name}=1;
+		  var totalCount${firstMenber.association.name}=0;
+		  var pagesize${firstMenber.association.name}=10;
+		  var orderBy${firstMenber.association.name}='0';
+		  var queryvo${firstMenber.association.name}=new Object();
+		  var oddstyle='';
+		  var model${firstMenber.association.name} = new dojox.grid.data.Table(null, querydata${firstMenber.association.name});
+		  var grid${lastMenber.association.name};*/
+
+		var getVO${firstMenber.association.name}${firstMenber.type.name}=function(id){
+
+			var pu = new SOAPClientParameters2();
+			pu.add('id',id) ;
+			SOAPClient.invoke(url${firstMenber.association.name},"get${firstMenber.type.name}By${lastMenber.type.name}Id", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+			querydata${firstMenber.association.name}${firstMenber.type.name}=dojo${manageable.name}.${firstMenber.type.name}VOtoArray_fun(ul,false);
+			totalCount${firstMenber.association.name}=ul[ul.length-1]["ns:id"]; 
+			querydata${firstMenber.association.name}${firstMenber.type.name}.splice(querydata${firstMenber.association.name}${firstMenber.type.name}.length-1,1);
+			querydata${firstMenber.association.name}${firstMenber.type.name}=selected_fun(querydata${firstMenber.association.name}${firstMenber.type.name});
+			}); 
+			model${firstMenber.association.name}.setData(querydata${firstMenber.association.name}${firstMenber.type.name});
+			var totalpage=Math.ceil(new Number(totalCount${firstMenber.association.name})/pagesize${firstMenber.association.name});
+		
+		if(totalpage>1){
+			if(pagenumber${firstMenber.association.name}==1){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}else if(pagenumber${lastMenber.association.name}==totalpage){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+			}else{
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}
+		}else{
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		
+		}
+		if(pagesize${firstMenber.association.name}==0){
+			totalpage=1;
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		}
+		if(totalpage==1)pagenumber${firstMenber.association.name}=1;
+		
+		 document.getElementById("rowCount${lastMenber.association.name}").innerHTML=i18nStr.di+" "+pagenumber${firstMenber.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${firstMenber.association.name}+" "+i18nStr.rowSize; 	
+
+	}
+	  
+	function selected_fun(transData){
+			 for(var i = 0; i < transData.length; i++){		
+                        var row = transData[i];
+                        if(row[row.length-1]==undefined){
+							row[0] = false;
+						}else{
+							row[0] = true;
+						}
+						transData[i]=row;
+						}
+				return 		transData;
+		  }
+	
+	/*function save${lastMenber.association.name}(){
+		var delArray=deletedata${firstMenber.association.name}.split(",");
+		for(var i=1;i<delArray.length-1;i++){
+			var pdel = new SOAPClientParameters();  
+			pdel.add('id',delArray[i]);
+				SOAPClient.invoke(url${firstMenber.association.name}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+			});
+		}
+		deletedata${firstMenber.association.name}=",";
+		
+		var addArray=adddata${firstMenber.association.name}.split(",");
+					  
+		for(var i=1;i<addArray.length-1;i++){
+			var vobject=new Object();
+			var ${lastMenber.type.name}vo=new Object();
+			${lastMenber.type.name}vo.id=mainID;
+			vobject.${lastMenber.name}=${lastMenber.type.name}vo;
+			var ${firstMenber.type.name}vo=new Object();
+			${firstMenber.type.name}vo.id=addArray[i];
+			vobject.${firstMenber.name}=${firstMenber.type.name}vo;
+			var padd = new SOAPClientParameters2(); 
+			padd.add('${manageable.name}VO',vobject);
+			SOAPClient.invoke(url${firstMenber.association.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+				for(var j=0;j<querydata${firstMenber.association.name}${firstMenber.type.name}.length;j++){
+					if(querydata${firstMenber.association.name}${firstMenber.type.name}[j][1]==addArray[i]){
+						querydata${firstMenber.association.name}${firstMenber.type.name}[j][querydata${firstMenber.association.name}${firstMenber.type.name}[j].length-1]=ul;
+						break;
+						}
+				}
+			});
+		}
+		
+		adddata${firstMenber.association.name}=",";
+		
+	}*/
+	
+	
+	var queryvo${firstMenber.name}=new Object();
+	var build${lastMenber.association.name}=function(){
+		if( mainID!=undefined && mainID!=''){
+			getVO${firstMenber.association.name}${firstMenber.type.name}(mainID);
+			if(grid${lastMenber.association.name}==undefined){
+				grid${lastMenber.association.name} = new dojox.Grid({
+							title: "",
+							id: "grid${lastMenber.association.name}",
+							jsId: "grid${lastMenber.association.name}",
+							structure: layout${firstMenber.association.name},
+							rowCount:querydata${firstMenber.association.name}${firstMenber.type.name}.length,
+							model:model${firstMenber.association.name}
+						}, dojo.byId("grid${lastMenber.association.name}"));
+						
+				//grid${lastMenber.association.name}.resize({ h: dijit.byId("bottomPane").domNode.clientHeight-90});
+			}else{
+				grid${lastMenber.association.name}.updateRowCount(querydata${firstMenber.association.name}${firstMenber.type.name}.length); 
+			}}
+
+	}
+	
+	/*function pageSizeChange${lastMenber.association.name}(mylabel){
+			pagesize${lastMenber.association.name}=mylabel;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+
+		function allpage${lastMenber.association.name}(){
+			pagesize${lastMenber.association.name}=0;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}*/
+
+		function upPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}--;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+		function downPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}++;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+	
+
+	  #foreach ($associatedClass in $manageable.allAssociatedClasses)  
+      #if(${firstMenber.type.name}== ${associatedClass.name})  //associatedClass==manageable
+		
+        #foreach($memberAs in $associatedClass.AssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+	         #if(!${memberAs.many}) 
+              #if(${memberAs.association.name}==${firstMenber.association.name})
+              
+              //begin from 41.4
+		var querydata${memberAs.association.name}${associatedClass.name} =  new Array();
+		
+		var getChoise${memberAs.association.name}= function(inRowIndex) {
+			if(true==querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][0]){//'+querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][1]+'
+				 return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id="" checked="true" type="checkbox"  />';//onClick="click${memberAs.association.name}('+inRowIndex+')"
+			 }else{
+				 return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id=""  type="checkbox"  />';//onClick="click${memberAs.association.name}('+inRowIndex+')"
+			 }
+		}
+
+/*function click${memberAs.association.name}(row){//  
+			
+			if(querydata${memberAs.association.name}${associatedClass.name}[row][querydata${memberAs.association.name}${associatedClass.name}[row].length-1]==undefined){
+				var idStr=","+querydata${memberAs.association.name}${associatedClass.name}[row][1]+",";
+			
+				if(adddata${memberAs.association.name}.indexOf(idStr)==-1){
+					adddata${memberAs.association.name}=adddata${memberAs.association.name}+querydata${memberAs.association.name}${associatedClass.name}[row][1]+",";
+				}else{
+					
+					adddata${memberAs.association.name}=adddata${memberAs.association.name}.substring(0,adddata${memberAs.association.name}.indexOf(idStr))+adddata${memberAs.association.name}.substring(adddata${memberAs.association.name}.indexOf(idStr)+idStr.length-1);
+				}
+			
+			}else{
+				
+				var idStr=","+querydata${memberAs.association.name}${associatedClass.name}[row][querydata${memberAs.association.name}${associatedClass.name}[row].length-1]+",";
+				
+				if(deletedata${memberAs.association.name}.indexOf(idStr)==-1){
+					deletedata${memberAs.association.name}=deletedata${memberAs.association.name}+querydata${memberAs.association.name}${associatedClass.name}[row][querydata${memberAs.association.name}${associatedClass.name}[row].length-1]+",";
+				}else{
+					deletedata${memberAs.association.name}=deletedata${memberAs.association.name}.substring(0,deletedata${memberAs.association.name}.indexOf(idStr))+deletedata${memberAs.association.name}.substring(deletedata${memberAs.association.name}.indexOf(idStr)+idStr.length-1);
+				}
+			}
+	}		*/
+#set ($totleinum = 0)   
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+		var layout${memberAs.association.name}=[{
+				   //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+		   
+					 cells: [ [
+							   //{ name: i18nStr.chose, width: 3, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+							   { name: i18nStr.chose, width: 3,styles: 'text-align: center;', get:getChoise${memberAs.association.name}},
+							   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+		#set ($comma = "")
+		#set ($inum = 2)                       
+		#foreach($member in $associatedClass.manageableAttributes)
+		#if ($member.name != ${associatedClass.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10 }
+					#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+		#end  
+
+		#foreach($member in $associatedClass.manageableAssociationEnds)//对于单表不许其他判断
+				${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}${associatedClass.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+				#set ($inum= $inum + 1)
+				 #set ($comma = ", ")
+		#end
+			   ] ]
+								   }]; 
+								 //end from 41.4
+              #end
+           #end
+        #end
+	#end
+    #end
+#else//isTree	
+	#set ($associationname= ${lastMenber.association.name})
+		  var NU${lastMenber.association.name} = false;//needUpdate
+		  var url${firstMenber.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+		/*  var deletedata${firstMenber.association.name} =   ",";
+		  var adddata${firstMenber.association.name} =    ",";
+		  var querydata${firstMenber.association.name} =  new Array();
+		  var pagenumber${firstMenber.association.name}=1;
+		  var totalCount${firstMenber.association.name}=0;
+		  var pagesize${firstMenber.association.name}=10;
+		  var orderBy${firstMenber.association.name}='0';
+		  var queryvo${firstMenber.association.name}=new Object();
+		  var oddstyle='';
+		  var model${firstMenber.association.name} = new dojox.grid.data.Table(null, querydata${firstMenber.association.name});
+		  var grid${lastMenber.association.name};*/
+
+	var getVO${firstMenber.association.name}${firstMenber.type.name}=function(id){
+
+			var pu = new SOAPClientParameters2();
+			pu.add('${lastMenber.name}Id',id) ;
+			pu.add('parentId',0) ;
+			SOAPClient.invoke(url${firstMenber.association.name},"get${firstMenber.type.name}By${lastMenber.type.name}IdAndParentId", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+			 querydata${firstMenber.association.name}${firstMenber.type.name}=dojo${manageable.name}.${firstMenber.type.name}VOtoArray_fun(ul,false);
+			 totalCount${firstMenber.association.name}=ul[ul.length-1]["ns:id"]; 
+			 querydata${firstMenber.association.name}${firstMenber.type.name}.splice(querydata${firstMenber.association.name}${firstMenber.type.name}.length-1,1);
+			}); 
+			model${firstMenber.association.name}.setData(querydata${firstMenber.association.name}${firstMenber.type.name});
+			
+	/*var totalpage=Math.ceil(new Number(totalCount${firstMenber.association.name})/pagesize${firstMenber.association.name});
+		
+		if(totalpage>1){
+			if(pagenumber${firstMenber.association.name}==1){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}else if(pagenumber${lastMenber.association.name}==totalpage){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+			}else{
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}
+		}else{
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		
+		}
+		if(pagesize${firstMenber.association.name}==0){
+			totalpage=1;
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		}
+		if(totalpage==1)pagenumber${firstMenber.association.name}=1;
+		
+		 document.getElementById("rowCount${lastMenber.association.name}").innerHTML=i18nStr.di+" "+pagenumber${firstMenber.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${firstMenber.association.name}+" "+i18nStr.rowSize; 	
+	*/
+	}
+	  
+
+	
+	/*function save${lastMenber.association.name}(){
+		var delArray=deletedata${firstMenber.association.name}.split(",");
+		for(var i=1;i<delArray.length-1;i++){
+			var pdel = new SOAPClientParameters();  
+			pdel.add('id',delArray[i]);
+				SOAPClient.invoke(url${firstMenber.association.name}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+			});
+		}
+		deletedata${firstMenber.association.name}=",";
+		
+		var addArray=adddata${firstMenber.association.name}.split(",");
+					  
+		for(var i=1;i<addArray.length-1;i++){
+			var vobject=new Object();
+			var ${lastMenber.type.name}vo=new Object();
+			${lastMenber.type.name}vo.id=mainID;
+			vobject.${lastMenber.name}=${lastMenber.type.name}vo;
+			var ${firstMenber.type.name}vo=new Object();
+			${firstMenber.type.name}vo.id=addArray[i];
+			vobject.${firstMenber.name}=${firstMenber.type.name}vo;
+			var padd = new SOAPClientParameters2(); 
+			padd.add('${manageable.name}VO',vobject);
+			SOAPClient.invoke(url${firstMenber.association.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+				var node = _tree._itemNodeMap[addArray[i]];
+				popStore.setValue(node.item,"selectIf",ul); 
+			});
+		}
+		
+		adddata${firstMenber.association.name}=",";
+		
+	}*/
+	
+	var _tree;
+	var queryvo${firstMenber.name}=new Object();
+	
+	var build${lastMenber.association.name}=function(){
+	
+		if( mainID!=undefined && mainID!=''){
+		
+			if(grid${lastMenber.association.name}==undefined){
+				_tree = new dijit.Tree({
+				id: "tree",
+				getIconClass:selIconClass,
+				model: myModel//,
+				//dndController: "dijit._tree.dndSource" 
+			});
+			dojo.byId("grid${lastMenber.association.name}").appendChild(_tree.domNode);
+			_tree.startup();
+				
+				
+				getTreeNodes(mainID,0,null,0,1);
+				expandAllChildrenNode(_tree,_tree.rootNode,0,1);
+	 
+				 dojo.connect(dijit.byId("grid${lastMenber.association.name}"), "_onExpandoClick", function(message){
+							   // _expandNode
+							   var node = message.node;
+							   var ch2node=node.getChildren();
+							   for (var i=0; i<ch2node.length; i++){	
+							   //alert(ch2node.length);
+							   if(ch2node[i].getChildren().length==0&&ch2node[i].item.haveChild=="0"){
+								 var ch2item =ch2node[i].item;
+								 getTreeNodes(mainID,ch2item.eId,ch2item,0,1);
+							   }}
+				});   
+			  
+				//查询列表----begin
+				/*alert("Execute of node " + continentStore.getLabel(item)
+				+", population=" + continentStore.getValue(item, "population"));*/
+				/* dojo.connect(_tree, "onClick", function(item,node){
+					changeIconClass(item,node);
+					if(item.selectIf==undefined || item.selectIf==''){
+						var idStr=","+item.eId+",";
+					
+						if(adddata${firstMenber.association.name}.indexOf(idStr)==-1){
+							adddata${firstMenber.association.name}=adddata${firstMenber.association.name}+item.eId+",";
+						}else{
+							adddata${firstMenber.association.name}=adddata${firstMenber.association.name}.substring(0,adddata${firstMenber.association.name}.indexOf(idStr))+adddata${firstMenber.association.name}.substring(adddata${firstMenber.association.name}.indexOf(idStr)+idStr.length-1);
+						}
+					}else{
+						var idStr=","+item.selectIf+",";
+						if(deletedata${firstMenber.association.name}.indexOf(idStr)==-1){
+							deletedata${firstMenber.association.name}=deletedata${firstMenber.association.name}+item.selectIf+",";
+						}else{
+							deletedata${firstMenber.association.name}=deletedata${firstMenber.association.name}.substring(0,deletedata${firstMenber.association.name}.indexOf(idStr))+deletedata${firstMenber.association.name}.substring(deletedata${firstMenber.association.name}.indexOf(idStr)+idStr.length-1);
+						}
+					}
+				}); */
+			}
+			//NU${lastMenber.association.name}=false;
+		}
+	}
+	
+	/*function pageSizeChange${lastMenber.association.name}(mylabel){
+			pagesize${lastMenber.association.name}=mylabel;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+
+		function allpage${lastMenber.association.name}(){
+			pagesize${lastMenber.association.name}=0;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}*/
+
+		function upPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}--;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+		function downPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}++;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+	
+	var selIconClass= function(/*dojo.data.Item*/ item, /*Boolean*/ opened){
+		// summary: user overridable function to return CSS class name to display icon
+		//return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
+		//console.log("item.selectIf:"+item.selectIf);
+		//for(var t in item){console.log(t+":"+item[t]);}
+		return (!item.root)?((item.selectIf==undefined || item.selectIf=='') ? "dijitUnSelected" : "dijitSelected"): (opened ? "dijitFolderOpened" : "dijitFolderClosed") ;
+	}
+	
+	var changeIconClass= function(/*dojo.data.Item*/ item,node){
+		// summary: user overridable function to return CSS class name to display icon
+		//return (!item || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
+		//console.log("item.item._iconClass:"+item.iconNode.class  );
+		//console.log("itemnode._iconClass:"+node.iconNode.class);
+		//for(var t in node.iconNode){console.log(t+":"+node.iconNode[t]);}
+		//for(var t in item.iconNode){console.log(t+"::::"+item.iconNode[t]);}
+		var classNameTemp=node.iconNode.className;
+		if(classNameTemp.indexOf("dijitSelected")==-1){
+		// "dijitUnSelected" : "dijitSelected";
+			node.iconNode.className=classNameTemp.replace("dijitUnSelected","dijitSelected");
+		}else{
+			node.iconNode.className=classNameTemp.replace("dijitSelected","dijitUnSelected");
+		}
+		console.log("node.iconNode.className:"+node.iconNode.className  );
+	}
+
+
+	
+	  #foreach ($associatedClass in $manageable.allAssociatedClasses)  
+      #if(${firstMenber.type.name}== ${associatedClass.name})  //associatedClass==manageable
+        #foreach($memberAs in $associatedClass.AssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+	         #if(!${memberAs.many}) 
+              #if(${memberAs.association.name}==${firstMenber.association.name})
+              
+              //begin from 41.4
+                  	var querydata${memberAs.association.name}${associatedClass.name} =  new Array();//???????????
+					function getTreeNodes(${lastMenber.name}Id,ParentSno,chitem,layerInt,layerSum){//首层layerInt=0
+						var pu = new SOAPClientParameters2();
+						pu.add('id',${lastMenber.name}Id) ;
+						pu.add('pid',ParentSno) ;
+						SOAPClient.invoke(url${firstMenber.association.name},"get${firstMenber.type.name}By${lastMenber.type.name}IdAndParentId", pu, false,  function GetEnu_callBack(ul, soapResponse){      //应为HandleForRoleOperateByParentId
+									   var pInfo = {
+													parent: chitem,		
+													attribute: "children"	
+										};
+							   if(ul!=null && ul.length>1 ){
+							   var re=dojo${manageable.name}.${firstMenber.type.name}VOtoArray_fun(ul,false);
+									 for(var i = 0; i < ul.length-1; i++){		
+					  //var newitem=popStore.newItem({name:ulo["ns:handleName"] ,type:ulo["ns:handleSno"] ,eId:ulo["ns:id"],haveChild:"0",selectIf:ulo["ns:selected"]}, pInfo);//haveChild=0初始，1有子结点，2无子结点
+					  //if(layerInt<layerSum)getTreeNodes(${lastMenber.name}Id,ulo["ns:handleSno"]+"___",newitem,layerInt+1,layerSum);
+							  var newitem=popStore.newItem({name:re[i][2] ,type:ul[i]["ns:parentId"] ,eId:re[i][1],haveChild:"0",selectIf:ul[i]["ns:selected"]}, pInfo);
+							  if(layerInt<layerSum)getTreeNodes(peopleId,re[i][1],newitem,layerInt+1,layerSum);
+									  }
+									 if(chitem!=null){
+											popStore.setValue(chitem,"haveChild","1"); 
+											var node = dijit.byId("tree")._itemNodeMap[chitem.eId];
+											node._updateItemClasses(node.item);
+											//node.expand();       
+									  }
+								}else{
+									popStore.setValue(chitem,"haveChild","2");  
+								}       
+						  });
+					
+					}
+		
+		function expandAllChildrenNode(tree,treeNode,layerInt,layerSum){
+		      //treeNode.expand();
+		      var childrenArray=treeNode.getChildren();
+          if(childrenArray.length>0)tree._expandNode(treeNode);
+          for (var i=0; i<childrenArray.length; i++){//begin	
+             if(layerInt<layerSum) expandAllChildrenNode(tree,childrenArray[i],layerInt+1,layerSum);
+             //if(layerInt==layerSum&&tree.model.mayHaveChildren(childrenArray[i].item))childrenArray[i].
+             if(layerInt==layerSum)childrenArray[i]._updateItemClasses(childrenArray[i].item);
+          }
+        }       
+		
+		var poptarts ={ label:'name',identifier:'eId',items:querydata${memberAs.association.name}${associatedClass.name}};
+         var popStore = new dojo.data.ItemFileWriteStore({data: poptarts});
+		 var myModel = new dijit.tree.ForestStoreModel({
+  				store: popStore,
+  				rootId: "root",
+  				rootLabel: "tree",
+  				childrenAttrs: ["children"]
+  			});      
+					
+								 //end from 41.4
+              #end
+           #end
+        #end
+      #end
+    #end		
+		
+#end	
+#else
+//---begin---------判断是否直接关联了tree结构表sno
+#set ($iftree= 0)
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name == 'parentId')
+		#set ($iftree= 1)
+	#end
+#end		
+#if($iftree == 1)
+//---end---------判断是否为tree结构表sno
+
+
+#else
+//以下是普通表
+#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+#set($filePath= "${stringUtils.replace($di,'.','/')}/${memberAs.association.name}FloatAFTab.js")//set (= ${memberAs.association.name})
+  //name =${memberAs.association.name}FloatAFTab.js  manageable.name=${manageable.name}
+  #foreach($memberAss in $manageable.AssociationEnds)
+		#if(${memberAs.association.name}==${memberAss.association.name})
+			#set($ass=$memberAss)
+		#end
+	#end
+  var NU${memberAs.association.name} = false;//needUpdate
+  var url${memberAs.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+ /* var deletedata${memberAs.association.name} =  new Array();
+  var querydata${memberAs.association.name} =  new Array();
+  var pagenumber${memberAs.association.name}=1;
+  var totalCount${memberAs.association.name}=0;
+  var pagesize${memberAs.association.name}=10;
+  var orderBy${memberAs.association.name}='0';
+  var queryvo${memberAs.association.name}=new Object();
+  var oddstyle='';
+  var model${memberAs.association.name} = new dojox.grid.data.Table(null, querydata${memberAs.association.name});
+  var grid${memberAs.association.name};*/
+   
+  
+var getVO${memberAs.association.name}=function(queryvo,id){
+
+	var pu = new SOAPClientParameters2();
+	pu.add('${manageable.name}VO',queryvo) ;
+	pu.add('pageNumber',${memberAs.association.name}FloatArray[id].pagenumber${memberAs.association.name}) ;
+	pu.add('pageSize',${memberAs.association.name}FloatArray[id].pagesize${memberAs.association.name}) ;
+	pu.add('orderBy',${memberAs.association.name}FloatArray[id].orderBy${memberAs.association.name}) ;
+	SOAPClient.invoke(url${memberAs.association.name},"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+		//判断本表是否为子表,当一个表是多个表的子表时，此处可能有错误。	
+#if($manageable.referencingManageables.size()>0)
+	#foreach($membermain in $manageable.referencingManageables)
+		#if(${membermain.name}==${memberAs.type.name})
+			//${membermain.name}-----${memberAs.type.name}
+			${memberAs.association.name}FloatArray[id].querydata${memberAs.association.name}=dojo${membermain.name}.${manageable.name}VOtoArray_fun(ul,false);
+		#else
+		     //${membermain.name}-----${memberAs.type.name}
+			${memberAs.association.name}FloatArray[id].querydata${memberAs.association.name}=dojo${manageable.name}.${manageable.name}VOtoArray_fun(ul,false);
+		#end
+	#end
+#else
+	${memberAs.association.name}FloatArray[id].querydata${memberAs.association.name}=dojo${manageable.name}.${manageable.name}VOtoArray_fun(ul,false);
+#end
+
+	${memberAs.association.name}FloatArray[id].totalCount${memberAs.association.name}=ul[ul.length-1]["ns:id"]; 
+	}); 
+	var totalpage=Math.ceil(new Number(${memberAs.association.name}FloatArray[id].totalCount${memberAs.association.name})/${memberAs.association.name}FloatArray[id].pagesize${memberAs.association.name});
+	
+	if(totalpage>1){
+		if(${memberAs.association.name}FloatArray[id].pagenumber${memberAs.association.name}==1){
+			dijit.byId("but6${memberAs.association.name}"+id).setDisabled(true);
+			dijit.byId("but7${memberAs.association.name}"+id).setDisabled(false);
+		}else if(${memberAs.association.name}FloatArray[id].pagenumber${memberAs.association.name}==totalpage){
+			dijit.byId("but6${memberAs.association.name}"+id).setDisabled(false);
+			dijit.byId("but7${memberAs.association.name}"+id).setDisabled(true);
+		}else{
+			dijit.byId("but6${memberAs.association.name}"+id).setDisabled(false);
+			dijit.byId("but7${memberAs.association.name}"+id).setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6${memberAs.association.name}"+id).setDisabled(true);
+		dijit.byId("but7${memberAs.association.name}"+id).setDisabled(true);
+	
+	}
+	if(${memberAs.association.name}FloatArray[id].pagesize${memberAs.association.name}==0){
+		totalpage=1;
+		dijit.byId("but6${memberAs.association.name}"+id).setDisabled(true);
+		dijit.byId("but7${memberAs.association.name}"+id).setDisabled(true);
+	}
+	if(totalpage==1)${memberAs.association.name}FloatArray[id].pagenumber${memberAs.association.name}=1;
+	
+	 document.getElementById("rowCount${memberAs.association.name}"+id).innerHTML=i18nStr.di+" "+${memberAs.association.name}FloatArray[id].pagenumber${memberAs.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+${memberAs.association.name}FloatArray[id].totalCount${memberAs.association.name}+" "+i18nStr.rowSize; 	
+
+	${memberAs.association.name}FloatArray[id].querydata${memberAs.association.name}.splice(${memberAs.association.name}FloatArray[id].querydata${memberAs.association.name}.length-1,1);
+	${memberAs.association.name}FloatArray[id].model${memberAs.association.name}.setData(${memberAs.association.name}FloatArray[id].querydata${memberAs.association.name});
+}
+
+var build${memberAs.association.name}=function(mainID){
+	if( mainID!=undefined && mainID!=''){
+		    var openFloat=dijit.byId("openFloat_"+mainID);
+		var openGrid=dijit.byId("grid${memberAs.association.name}"+mainID);
+		if(openGrid==undefined){
+		openFloat.setContent("<table style=\" position:absolute;top:0px;\"><tr height=\"25px\" width=\"100%\"><td align=\"left\" style=\"background:transparent\"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prodCust2prods List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td><td align=\"right\" ><span ></span>&nbsp;&nbsp;<div ></div><div > </div><div ></div><div ></div><div ></div></td></tr></table><div style=\"{width:999px;height:500px; position:absolute;top:30px;}\" ><div ></div></div>");
+
+	  	${memberAs.association.name}FloatArray[mainID] = new ${memberAs.association.name}FloatPara(mainID);
+		var openContainerTable=openFloat.containerNode.children[0].children[0].children[0].children[1].childNodes;
+		openContainerTable[0].innerHTML="<span id=\"rowCount${memberAs.association.name}"+mainID+"\"></span>";
+var but1 = new dijit.form.myButton({label:"pageup",id:"but6${memberAs.association.name}"+mainID,disabled:"true",onclick:"upPage${memberAs.association.name}("+mainID+");",iconClass:"upPageIcon"},openContainerTable[1]);
+var but2= new dijit.form.myButton({label:"pagedown",id:"but7${memberAs.association.name}"+mainID,disabled:"true",onclick:"downPage${memberAs.association.name}("+mainID+");",iconClass:"downPageIcon"},openContainerTable[2]);
+	//var but3 = new dijit.form.Button({label:"add",iconClass:"addIcon"},openContainerTable[3]);
+	//var but4 = new dijit.form.Button({label:"delete",iconClass:"delIcon"},openContainerTable[4]);//,onClick:"remove${memberAs.association.name}("+mainID+")"
+	//var but5 = new dijit.form.Button({label:"save",iconClass:"saveIcon",id:"but3${memberAs.association.name}"+mainID },openContainerTable[5]);//,onclick:but3${memberAs.association.name}(mainID)
+		//dojo.connect(but3, "onClick", function(e){  addRow${memberAs.association.name}(""+mainID); });
+		//dojo.connect(but4, "onClick", function(e){  remove${memberAs.association.name}(""+mainID); });
+		//dojo.connect(but5, "onClick", function(e){  call_funUpd${memberAs.association.name}(""+mainID); });
+		var openContainerGrid=openFloat.containerNode.children[1].children[0];
+
+				var queryFloat${memberAs.type.name}=new Object();
+		queryFloat${memberAs.type.name}.id=mainID;
+		${memberAs.association.name}FloatArray[mainID].queryvo${memberAs.association.name}.${memberAs.name}=queryFloat${memberAs.type.name};
+		getVO${memberAs.association.name}(${memberAs.association.name}FloatArray[mainID].queryvo${memberAs.association.name},mainID);
+		//if(${memberAs.association.name}FloatArray[mainID].grid${memberAs.association.name}==""){
+			  ${memberAs.association.name}FloatArray[mainID].grid${memberAs.association.name} = new dojox.Grid({
+					title: "",
+					id: "grid${memberAs.association.name}"+mainID,
+					jsId: "grid${memberAs.association.name}"+mainID,
+					structure: buildLayout${memberAs.association.name}(mainID),
+					rowCount:${memberAs.association.name}FloatArray[mainID].querydata${memberAs.association.name}.length,
+					model:${memberAs.association.name}FloatArray[mainID].model${memberAs.association.name}
+				},openContainerGrid);
+				//grid${memberAs.association.name}.resize({w: dijit.byId("rightPane").domNode.clientWidth-16,h:dijit.byId("rightPane").domNode.clientHeight-100});
+				
+		}else{
+			${memberAs.association.name}FloatArray[mainID].grid${memberAs.association.name}.updateRowCount(${memberAs.association.name}FloatArray[mainID].querydata${memberAs.association.name}.length); 
+		}}
+
+}
+
+#set ($totleinum = 0)   
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#if ($member.type.dateType)
+			#set ($totleinum= $totleinum + 1)
+		#end
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+var buildLayout${memberAs.association.name} = function(floatMainID){		
+
+	var layout${memberAs.association.name}=[{
+           //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+   
+			 cells: [ [
+					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+					   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+         ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+		#set ($inum= $inum + 1)
+  #elseif ($member.type.dateType)
+		${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+		#set ($inum= $inum + 1)
+  #else
+		${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10}
+		#set ($inum= $inum + 1)
+  #end
+  #set ($comma = ", ")
+#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于单表不许其他判断
+	#if(!${member.many})  
+		 #set ($ifo = 0)
+		#foreach($member2 in $manageable.referencingManageables)
+			#if(${member2.name}==${member.type.name})
+				#set ($ifo = 1)
+			#end
+		#end
+		#if($ifo == 0)
+			#if(${member.name}==${ass.otherEnd.name})
+				//${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex]!=undefined && ${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && ${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}][2]!=undefined){str=${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+			#else
+				${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex]!=undefined && ${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && ${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}][2]!=undefined){str=${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=${memberAs.association.name}FloatArray[floatMainID].querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+				#set ($comma = ", ")
+			#end
+			#set ($inum= $inum + 1)
+		#else
+			#set ($inum= $inum + 1)
+		#end
+	#else
+		#set ($inum= $inum + 1)
+	#end
+#end
+                                        ] ]
+                           }]; 
+
+return layout${memberAs.association.name};
+}
+
+
+#end
+#end
+#end
+#end
+#end

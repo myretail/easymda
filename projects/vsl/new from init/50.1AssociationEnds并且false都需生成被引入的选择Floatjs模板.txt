@@ -1,0 +1,137 @@
+var no${manageable.name};
+var select${manageable.name}IDs;
+var oldFloat${manageable.name};
+var select${manageable.name}InRow;
+var ifMult${manageable.name}=0;
+var mainRowIndex${manageable.name};
+function select${manageable.name}(myID,inrow,${manageable.name}ColNo,ifMult${manageable.name},e,mainRowIndex){
+	var floath=e.screenY-window.screen.availHeight+document.body.clientHeight+30;
+	if(floath+255>document.body.clientHeight)floath=floath-255;
+	var floatw=e.screenX;
+	if(e.screenX+505>document.body.clientWidth)floatw=floatw-500;
+		select${manageable.name}InRow=inrow;
+		no${manageable.name}=${manageable.name}ColNo;
+		select${manageable.name}IDs=myID;
+		//ifMult=ifMults;
+		mainRowIndex${manageable.name}=mainRowIndex;
+		oldFloat${manageable.name} = dijit.byId("select${manageable.name}Float_1");
+		if(oldFloat${manageable.name}==undefined){
+			var div = dojo.doc.createElement('div');
+			dojo.body().appendChild(div);
+			var fp = new dojox.layout.FloatingPane({id:"select${manageable.name}Float_1",title:"选择地点",
+				maxable: true,closable: true,resizable: true ,dockable:true,
+				href:"../common/select${manageable.name}Float.html"},div);
+			dojo.style(fp.domNode,{
+				width:"500px",height:"255px",top:floath, left:floatw,position:"absolute",zIndex:"980"});
+			oldFloat${manageable.name}=fp;
+			fp.startup();
+			fp.show();
+			
+		}else{
+			dojo.style(oldFloat${manageable.name}.domNode,{width:"500px",height:"255px",
+				top:floath, left:floatw,
+				position:"absolute",zIndex:"980"});
+			oldFloat${manageable.name}.show();
+		}
+}
+
+//vo应该与entity完全一致！！！？？？（不！：vo除包含entity的元素之外，还应包含其他的类似外键id的字段，以提高效率）但目前可暂时与entity完全相同
+function ${manageable.name}VOJs(){
+	this.id;
+	#set ($comma = "")
+	#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+			${comma}this.${member.name}
+			#set ($comma = ",")
+		#end
+	#end
+	#foreach($member in $manageable.manageableAssociationEnds)
+		${comma}this.${member.name}
+			#set ($comma = ",")
+	#end
+}
+function ${manageable.name}VOtoArray_fun(ulvo,edit){
+            var querydata=new Array();
+            var items = new Array();
+            var ul=new Array();
+            var ulo="";
+            var le="";
+            var d="",t;
+            var arraytag="0";
+            if(ulvo!=null){
+              if(ulvo.length==undefined){
+                 ul[0]=ulvo;
+                 arraytag="1";
+                 le=1;
+              }else{
+                 ul=ulvo;
+                 le=ul.length;
+              }        
+              if(edit==false){
+                    for(var i = 0; i < le; i++){		
+                        items = new Array();
+                        ulo=ul[i];
+                        items[0] = false;
+                        items[1] = ulo["ns:id"];
+                        
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if($member.type.dateType)
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){items[$inum] = t['ns:upDate'];}
+#elseif($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){items[$inum] =  t['ns:upNumber'];}
+#else
+                        items[$inum] = ulo["ns:$member.name"];//
+#end
+#set ($inum= $inum + 1)
+#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+                         items[$inum] = ulo["ns:$member.name"];
+#set ($inum= $inum + 1)
+#end
+                      if(arraytag=="0"){
+                        querydata[i]=items;
+                      }else{
+                        querydata=items;
+                      }
+                    }
+                  }else{
+                    for(var i = 0; i < le; i++){		
+                        items = new Array();
+                        ulo=ul[i];
+                        items[0] = false;
+                        items[1] = ulo["ns:id"];
+                        
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if($member.type.dateType)
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){
+                        d=dojo.date.locale.parse(new String( t['ns:upDate']),{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" });}
+                        items[$inum] = d;
+#set ($inum= $inum + 1)
+                        items[$inum] = d;                        
+#elseif($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){items[$inum] =  t['ns:upNumber'];}
+#else
+                        items[$inum] = ulo["ns:$member.name"];//
+#end
+#set ($inum= $inum + 1)
+#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+                         items[$inum] = ${member.type.name}VOtoArray_fun(ulo["ns:$member.name"],edit);
+#set ($inum= $inum + 1)
+#end
+                      if(arraytag=="0"){
+                        querydata[i]=items;
+                      }else{
+                        querydata=items;
+                      }
+                    }
+                  } 
+            }    
+            return querydata;
+}

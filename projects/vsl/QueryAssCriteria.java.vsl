@@ -1,0 +1,81 @@
+#foreach ($manageable in $manageables)
+#if(${manageable.name}=='Enumeration')
+#set($di=${stringUtils.lastIndexOf(${manageable.packageName}, '.')} - 1)//di=$di
+#set($d1=${stringUtils.substring(${manageable.packageName}, 0,$di)})//d1=$d1
+package  ${stringUtils.substring($d1, 0,${stringUtils.lastIndexOf($d1, '.')})}.util;
+#end
+#end
+
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
+
+#foreach ($manageable in $manageables)
+import ${manageable.fullyQualifiedName}VO;
+#end
+public class QueryAssCriteria  extends org.springframework.orm.hibernate3.support.HibernateDaoSupport{
+#foreach ($manageable in $manageables)	
+	public static void get${manageable.name}Criteria(${manageable.fullyQualifiedName}VO  ${stringUtils.uncapitalize(${manageable.name})}VO, Criteria criteria){
+		#foreach ($member in $manageable.manageableAttributes)
+#if ($member.type.primitive)
+#if ($member.type.fullyQualifiedName == 'boolean')
+            if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)()) criteria.add(Expression.eq("$member.name", java.lang.Boolean.TRUE));
+    
+            #elseif ($member.type.fullyQualifiedName == 'double')
+			  if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null)
+              ProjectUtil.getNumberCriteria(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)(),"$member.name",criteria);
+			#elseif ($member.type.fullyQualifiedName == 'date')
+				if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null)
+				ProjectUtil.getDateCriteria(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)(),"$member.name",criteria);
+			#else
+				criteria.add(Expression.eq("$member.name", new ${member.type.wrapperName}(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)())));
+			#end
+
+#else
+            
+#if ($member.type.stringType)
+		if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null)
+                criteria.add(Expression.ilike("$member.name", ${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)(), MatchMode.ANYWHERE));
+#elseif ($member.type.dateType)
+		if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null)
+           ProjectUtil.getDateCriteria(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)(),"$member.name",criteria);
+#elseif ($member.type.fullyQualifiedName == 'java.lang.Boolean')
+		if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null)
+            if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)().booleanValue()) criteria.add(Expression.eq("$member.name", java.lang.Boolean.TRUE));
+#else
+        #if($member.name=='id')
+			if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != 0)criteria.add(Expression.eq("id", ${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)()));
+		#else
+			if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null)
+             ProjectUtil.getNumberCriteria(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)(),"$member.name",criteria);
+		#end
+#end
+#end
+#end
+#foreach ($member in $manageable.manageableAssociationEnds)
+#if ($member.many)
+            if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null && ${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)().length > 0){
+             	//criteria.createCriteria("$member.name").add(Expression.in("$member.manageableIdentifier.name", $member.name));
+             	final Criteria criteria$member.name =criteria.createCriteria("$member.name");
+            	QueryAssCriteria.get${member.type.name}Criteria(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)()[0],criteria$member.name);
+             }
+#else
+            //if ($member.name != null) criteria.createCriteria("$member.name").add(Expression.eq("$member.manageableIdentifier.name", $member.name));
+			if (${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)() != null ){
+             	//criteria.createCriteria("$member.name").add(Expression.in("$member.manageableIdentifier.name", $member.name));
+             	final Criteria criteria$member.name =criteria.createCriteria("$member.name");
+            	QueryAssCriteria.get${member.type.name}Criteria(${stringUtils.uncapitalize(${manageable.name})}VO.get$stringUtils.upperCamelCaseName($member.name)(),criteria$member.name);
+             }
+#end
+#end
+	}
+#end	
+
+	 
+}

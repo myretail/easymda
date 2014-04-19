@@ -1,0 +1,10 @@
+#foreach($member in $manageable.manageableAssociationEnds)
+#if(${member.many})
+	#set ($ifMain = 1) 
+	{menber.otherEnd.name} =  ${menber.otherEnd.name}
+	#set ($subtype =  ${menber.otherEnd.type})
+#end	
+#end
+
+结论：${menber.otherEnd.name}无效
+	  ${menber.otherEnd.type}

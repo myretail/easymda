@@ -1,0 +1,254 @@
+#set ($ifcon= 0)
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($ifcon= 1)
+	#end
+#end		
+#if($ifcon == 0)
+//---end---------判断是否为多对多的关系表
+
+	#set ($allMenber= 1)
+	#set ($firstMenber= '')
+	#set ($lastMenber= '')
+	#foreach($memberAs in $manageable.manageableAssociationEnds)
+		#if(!${memberAs.many})   
+			#if($allMenber== 1)
+				#set ($lastMenber= $memberAs)
+			#elseif($allMenber== 2)
+				#set ($firstMenber= $memberAs)
+			#end
+			#set($allMenber= $allMenber + 1)
+		#end
+	#end
+	//----------lastMenber = $lastMenber   firstMenber=$firstMenber
+	//${lastMenber.association.name}AFTab.js	
+	#set ($associationname= ${lastMenber.association.name})
+		  var NU${lastMenber.association.name} = false;//needUpdate
+		  var url${firstMenber.association.name} = getUrl()+ "services/${manageable.name}ManageService";
+		  var deletedata${firstMenber.association.name} =   ",";
+		  var adddata${firstMenber.association.name} =    ",";
+		  var querydata${firstMenber.association.name} =  new Array();
+		  var pagenumber${firstMenber.association.name}=1;
+		  var totalCount${firstMenber.association.name}=0;
+		  var pagesize${firstMenber.association.name}=10;
+		  var orderBy${firstMenber.association.name}='0';
+		  var queryvo${firstMenber.association.name}=new ${manageable.name}VOJs();
+		  var oddstyle='';
+		  var model${firstMenber.association.name} = new dojox.grid.data.Table(null, querydata${firstMenber.association.name});
+		  var grid${lastMenber.association.name};
+
+		var getVO${firstMenber.association.name}${firstMenber.type.name}=function(id){
+
+			var pu = new SOAPClientParameters2();
+			pu.add('id',id) ;
+			SOAPClient.invoke(url${firstMenber.association.name},"get${firstMenber.type.name}For${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+			querydata${firstMenber.association.name}${firstMenber.type.name}=${firstMenber.type.name}VOtoArray_fun(ul,false);
+			totalCount${firstMenber.association.name}=ul[ul.length-1]["ns:id"]; 
+			querydata${firstMenber.association.name}${firstMenber.type.name}.splice(querydata${firstMenber.association.name}${firstMenber.type.name}.length-1,1);
+			}); 
+			model${firstMenber.association.name}.setData(querydata${firstMenber.association.name}${firstMenber.type.name});
+			var totalpage=Math.ceil(new Number(totalCount${firstMenber.association.name})/pagesize${firstMenber.association.name});
+		
+		if(totalpage>1){
+			if(pagenumber${firstMenber.association.name}==1){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}else if(pagenumber${lastMenber.association.name}==totalpage){
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+			}else{
+				dijit.byId("but6${lastMenber.association.name}").setDisabled(false);
+				dijit.byId("but7${lastMenber.association.name}").setDisabled(false);
+			}
+		}else{
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		
+		}
+		if(pagesize${firstMenber.association.name}==0){
+			totalpage=1;
+			dijit.byId("but6${lastMenber.association.name}").setDisabled(true);
+			dijit.byId("but7${lastMenber.association.name}").setDisabled(true);
+		}
+		if(totalpage==1)pagenumber${firstMenber.association.name}=1;
+		
+		 document.getElementById("rowCount${lastMenber.association.name}").innerHTML=i18nStr.di+" "+pagenumber${firstMenber.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${firstMenber.association.name}+" "+i18nStr.rowSize; 	
+
+	}
+	  
+
+	
+	function save${lastMenber.association.name}(){
+		var delArray=deletedata${firstMenber.association.name}.split(",");
+		for(var i=1;i<delArray.length-1;i++){
+			var pdel = new SOAPClientParameters();  
+			pdel.add('id',delArray[i]);
+				SOAPClient.invoke(url${firstMenber.association.name}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+			});
+		}
+		deletedata${firstMenber.association.name}=",";
+		
+		var addArray=adddata${firstMenber.association.name}.split(",");
+					  
+		for(var i=1;i<addArray.length-1;i++){
+			var vobject=new ${manageable.name}VOJs();
+			var ${lastMenber.type.name}vo=new ${lastMenber.type.name}VOJs();
+			${lastMenber.type.name}vo.id=mainID;
+			vobject.${lastMenber.name}=${lastMenber.type.name}vo;
+			var ${firstMenber.type.name}vo=new ${firstMenber.type.name}VOJs();
+			${firstMenber.type.name}vo.id=addArray[i];
+			vobject.${firstMenber.name}=${firstMenber.type.name}vo;
+			var padd = new SOAPClientParameters2(); 
+			padd.add('${manageable.name}VO',vobject);
+			SOAPClient.invoke(url${firstMenber.association.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+				for(var j=0;j<querydata${firstMenber.association.name}${firstMenber.type.name}.length;j++){
+					if(querydata${firstMenber.association.name}${firstMenber.type.name}[j][1]==addArray[i]){
+						querydata${firstMenber.association.name}${firstMenber.type.name}[j][querydata${firstMenber.association.name}${firstMenber.type.name}[j].length-1]=ul;
+						break;
+						}
+				}
+			});
+		}
+		
+		adddata${firstMenber.association.name}=",";
+		
+	}
+	
+	
+	var queryvo${firstMenber.name}=new ${firstMenber.type.name}VOJs();
+	var build${lastMenber.association.name}=function(){
+		if(NU${lastMenber.association.name} && mainID!=undefined && mainID!=''){
+
+			
+			getVO${firstMenber.association.name}${firstMenber.type.name}(mainID);
+			if(grid${lastMenber.association.name}==undefined){
+				grid${lastMenber.association.name} = new dojox.Grid({
+							title: "",
+							id: "grid${lastMenber.association.name}",
+							jsId: "grid${lastMenber.association.name}",
+							structure: layout${firstMenber.association.name},
+							rowCount:querydata${firstMenber.association.name}${firstMenber.type.name}.length,
+							model:model${firstMenber.association.name}
+						}, dojo.byId("grid${lastMenber.association.name}"));
+						
+				grid${lastMenber.association.name}.resize({ h: dijit.byId("bottomPane").domNode.clientHeight-90});
+				
+			}else{
+				
+				grid${lastMenber.association.name}.updateRowCount(querydata${firstMenber.association.name}${firstMenber.type.name}.length); 
+			}
+			
+			NU${lastMenber.association.name}=false;
+		}
+
+	}
+	
+	/*function pageSizeChange${lastMenber.association.name}(mylabel){
+			pagesize${lastMenber.association.name}=mylabel;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+
+		function allpage${lastMenber.association.name}(){
+			pagesize${lastMenber.association.name}=0;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}*/
+
+		function upPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}--;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+		function downPage${lastMenber.association.name}(){
+			pagenumber${lastMenber.association.name}++;
+			getVO${lastMenber.association.name}${manageable.name}(queryvo${lastMenber.association.name}${manageable.name});
+		}
+	
+
+	  #foreach ($associatedClass in $manageable.allAssociatedClasses)  
+      #if(${firstMenber.type.name}== ${associatedClass.name})  //associatedClass==manageable
+        #foreach($memberAs in $associatedClass.AssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+	         #if(!${memberAs.many}) 
+              #if(${memberAs.association.name}==${firstMenber.association.name})
+              
+              //begin from 41.4
+                  	var querydata${memberAs.association.name}${associatedClass.name} =  new Array();
+		
+		var getChoise${memberAs.association.name}= function(inRowIndex) {
+			if(true==querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][0]){//'+querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][1]+'
+				 return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id="" checked="true" type="checkbox" onClick="click${memberAs.association.name}('+inRowIndex+')" />';
+			 }else{
+				 return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id=""  type="checkbox" onClick="click${memberAs.association.name}('+inRowIndex+')" />';
+			 }
+		}
+
+function click${memberAs.association.name}(row){//  
+			
+			if(querydata${memberAs.association.name}${associatedClass.name}[row][querydata${memberAs.association.name}${associatedClass.name}[row].length-1]==undefined){
+				var idStr=","+querydata${memberAs.association.name}${associatedClass.name}[row][1]+",";
+			
+				if(adddata${memberAs.association.name}.indexOf(idStr)==-1){
+					adddata${memberAs.association.name}=adddata${memberAs.association.name}+querydata${memberAs.association.name}${associatedClass.name}[row][1]+",";
+				}else{
+					
+					adddata${memberAs.association.name}=adddata${memberAs.association.name}.substring(0,adddata${memberAs.association.name}.indexOf(idStr))+adddata${memberAs.association.name}.substring(adddata${memberAs.association.name}.indexOf(idStr)+idStr.length-1);
+				}
+			
+			}else{
+				
+				var idStr=","+querydata${memberAs.association.name}${associatedClass.name}[row][querydata${memberAs.association.name}${associatedClass.name}[row].length-1]+",";
+				
+				if(deletedata${memberAs.association.name}.indexOf(idStr)==-1){
+					deletedata${memberAs.association.name}=deletedata${memberAs.association.name}+querydata${memberAs.association.name}${associatedClass.name}[row][querydata${memberAs.association.name}${associatedClass.name}[row].length-1]+",";
+				}else{
+					deletedata${memberAs.association.name}=deletedata${memberAs.association.name}.substring(0,deletedata${memberAs.association.name}.indexOf(idStr))+deletedata${memberAs.association.name}.substring(deletedata${memberAs.association.name}.indexOf(idStr)+idStr.length-1);
+				}
+			}
+	}		
+#set ($totleinum = 0)   
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+		var layout${memberAs.association.name}=[{
+				   //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+		   
+					 cells: [ [
+							   //{ name: i18nStr.chose, width: 3, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+							   { name: i18nStr.chose, width: 3,styles: 'text-align: center;', get:getChoise${memberAs.association.name}},
+							   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+		#set ($comma = "")
+		#set ($inum = 2)                       
+		#foreach($member in $associatedClass.manageableAttributes)
+		#if ($member.name != ${associatedClass.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10 }
+					#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+		#end  
+
+		#foreach($member in $associatedClass.manageableAssociationEnds)//对于单表不许其他判断
+				${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}${associatedClass.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}${associatedClass.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+				#set ($inum= $inum + 1)
+		#end
+			   ] ]
+								   }]; 
+								 //end from 41.4
+              #end
+           #end
+        #end
+      #end
+    #end
+
+	
+#end

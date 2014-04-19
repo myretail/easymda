@@ -1,0 +1,133 @@
+		<div id="addDiv" style="margin-right: 0px;  height: ${addHeight}px; display:none;" >
+              <table align="center" width="100%" id="0" class="editorTable"  >
+                <tr >
+				<td align="center" style="{width:11%}" i18n="addNote" ></td>
+                <td style="{width:22%}" ><input id="${manageable.name}Id" style="{display:none}"  type="text"  /></td>
+                <td style="{width:11%}"><input id="erowIndex" style="{display:none}"  type="text"  /></td>
+                <td style="{width:23%}" ></td>
+                <td style="{width:11%}"></td>
+                <td style="{width:22%}"></td>
+				</tr> 
+                <tr ><td align="center" style="{width:11%}"></td>
+                <td style="{width:22%}" ></td>
+                <td style="{width:11%}"></td>
+				<td style="{width:23%}" ></td>
+                <td style="{width:11%}"></td>
+                <td style="{width:22%}"></td></tr>  
+#set ($inum =1 ) 
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($inum==1)
+	#set ($inum=2) 
+                <tr>
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<input type="text" class="editerNumber"   jsId="add${member.name}"  id="add${member.name}"  dojoType="mydojo.NumberTextBox" constraints="{min:0,max:9999999,places:4 }" />
+			</td>
+	#elseif ($member.type.dateType)
+			<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+			<td align="left" >
+				<input class="editerDate"   jsId="add${member.name}" id="add${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+				<input class="editerTime" jsId="add${member.name}Time" id="add${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours.">
+			</td>
+	#else
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+				#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+					<input  id="add${member.name}"  jsId="add${member.name}" class="editerInput"  dojoType="dijit.form.myFilteringSelect" store="${member.name}Store"  />
+				#else
+						<input type="text" class="editerInput"  id="add${member.name}"  jsId="add${member.name}"   dojoType="dijit.form.ValidationTextBox" required="$member.required" />
+				#end
+			</td>
+	#end
+#elseif ($inum==2)
+	#set ($inum=3) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<input type="text" class="editerNumber"   jsId="add${member.name}"  id="add${member.name}"  dojoType="mydojo.NumberTextBox" constraints="{min:0,max:9999999,places:4 }" />
+			</td>
+	#elseif ($member.type.dateType)
+			<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+			<td align="left" >
+				<input class="editerDate"   jsId="add${member.name}" id="add${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+				<input class="editerTime" jsId="add${member.name}Time" id="add${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours.">
+			</td>
+	#else
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+				#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+					<input  id="add${member.name}"  jsId="add${member.name}" class="editerInput"  dojoType="dijit.form.myFilteringSelect" store="${member.name}Store"  />
+				#else
+						<input type="text" class="editerInput"  id="add${member.name}"  jsId="add${member.name}"   dojoType="dijit.form.ValidationTextBox" required="$member.required" />
+				#end
+			</td>
+	#end
+#elseif($inum==3)
+	#set ($inum=1) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<input type="text" class="editerNumber"   jsId="add${member.name}"  id="add${member.name}"  dojoType="mydojo.NumberTextBox" constraints="{min:0,max:9999999,places:4 }" />
+			</td>
+	#elseif ($member.type.dateType)
+			<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+			<td align="left" >
+				<input class="editerDate"   jsId="add${member.name}" id="add${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+				<input class="editerTime" jsId="add${member.name}Time" id="add${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours.">
+			</td>
+	#else
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+				#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+					<input  id="add${member.name}"  jsId="add${member.name}" class="editerInput"  dojoType="dijit.form.myFilteringSelect" store="${member.name}Store"  />
+				#else
+						<input type="text" class="editerInput"  id="add${member.name}"  jsId="add${member.name}"   dojoType="dijit.form.ValidationTextBox" required="$member.required" />
+				#end
+			</td>
+	#end
+	</tr>	
+#end
+#end                       
+#end
+
+ <!--//if ($inum==1)     
+//   /tr
+//end
+
+//set ($inume =1) -->
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if($inum ==1)
+		#if(!${member.many})    
+					<tr><td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="add${member.name}"  jsId="add${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="${member.name}Store" onchange="${member.name}Set(0,arguments[0]);" /></td>  
+			#set ($inum =2)
+		#end	
+	#elseif ($inum ==2)
+		#if(!${member.many})    
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><!--colspan="3" --><input  id="add${member.name}"  jsId="add${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="${member.name}Store" onchange="${member.name}Set(0,arguments[0]);" /></td>  
+			#set ($inum =3)
+		#end	
+	#elseif ($inum ==3)
+		#if(!${member.many})    
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="add${member.name}"  jsId="add${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="${member.name}Store" onchange="${member.name}Set(0,arguments[0]);" /></td>
+					</tr>
+			#set ($inum =1)
+		#end	
+	#end	
+#end
+#if ($inum==2)     
+    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+#end
+#if ($inum==3)     
+    <td align="right"    ></td><td align="right"    ></td></tr>
+#end
+ <tr align="center"><td></td>
+           <td colspan="5"><button dojoType="dijit.form.Button" onclick="addDivAdd();" iconClass="addIcon"  i18n="add" >add</button>
+				<button dojoType="dijit.form.Button" onclick="addDivRemove();" iconClass="delIcon"  i18n="delete" >remove</button>
+				<button dojoType="dijit.form.Button" onclick="addDivSave();" iconClass="saveIcon"   i18n="save">save</button></td>
+           <td colspan="2"></td></tr>
+</table></div>

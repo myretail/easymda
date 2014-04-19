@@ -1,0 +1,106 @@
+#set ($filePath= "common/detail${manageable.name}Float.html")
+<table align="center" width="100%" id="0" class="viewTable"  >
+<tr></tr><tr></tr>              
+#set ($inum =1 ) 
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($inum==1)
+	#set ($inum=2) 
+                <tr>
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<input  type="text"  class="editerNumber"   jsId="detail${member.name}"  id="detail${member.name}"  />
+			</td>
+	#elseif ($member.type.dateType)
+			<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+			<td align="left" >
+				<input class="addDate" type="text"   jsId="detail${member.name}" id="detail${member.name}"   />
+			</td>
+	#else
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+				<input type="text" class="editerInput"  id="detail${member.name}"  jsId="detail${member.name}"   />
+			</td>
+	#end
+#elseif ($inum==2)
+	#set ($inum=3) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<input type="text" class="editerNumber"   jsId="detail${member.name}"  id="detail${member.name}"  />
+			</td>
+	#elseif ($member.type.dateType)
+			<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+			<td align="left" >
+				<input class="addDate"   jsId="detail${member.name}" id="detail${member.name}"   />
+			</td>
+	#else
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+				<input type="text" class="editerInput"  id="detail${member.name}"  jsId="detail${member.name}"   />
+			</td>
+	#end
+#elseif($inum==3)
+	#set ($inum=1) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<input type="text" class="editerNumber"   jsId="detail${member.name}"  id="detail${member.name}"  />
+			</td>
+	#elseif ($member.type.dateType)
+			<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+			<td align="left" >
+				<input class="addDate"   jsId="detail${member.name}" id="detail${member.name}"   />
+			</td>
+	#else
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+				
+						<input type="text" class="editerInput"  id="detail${member.name}"  jsId="detail${member.name}"  />
+			</td>
+	#end
+	</tr>	
+#end
+#end                       
+#end
+
+ <!--//if ($inum==1)     
+//   /tr
+//end
+
+//set ($inume =1) -->
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if($inum ==1)
+		#if(!${member.many})    
+					<tr><td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="detail${member.name}"  jsId="detail${member.name}" class="editerInput" /></td>  
+			#set ($inum =2)
+		#end	
+	#elseif ($inum ==2)
+		#if(!${member.many})    
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><!--colspan="3" --><input  id="detail${member.name}"  jsId="detail${member.name}" class="editerInput"  /></td>  
+			#set ($inum =3)
+		#end	
+	#elseif ($inum ==3)
+		#if(!${member.many})    
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="detail${member.name}"  jsId="detail${member.name}" class="editerInput" /></td>
+					</tr>
+			#set ($inum =1)
+		#end	
+	#end	
+#end
+#if ($inum==2)     
+    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+#end
+#if ($inum==3)     
+    <td align="right"    ></td><td align="right"    ></td></tr>
+#end
+ <tr align="center"><td></td>
+           <td colspan="5"><!--button dojoType="dijit.form.Button" onclick="addDivAdd();" iconClass="addIcon"  i18n="add" >add</button>
+				<button dojoType="dijit.form.Button" onclick="addDivRemove();" iconClass="delIcon"  i18n="delete" >remove</button>
+				<button dojoType="dijit.form.Button" onclick="addDivSave();" iconClass="saveIcon"   i18n="save">save</button--></td>
+           <td colspan="2"></td></tr>
+</table>

@@ -1,0 +1,827 @@
+#set ($filePath= '')
+#set ($definedUnm= 1)
+#set ($iListnum= 0)
+#foreach($memberAs in $manageable.manageableAssociationEnds)
+	#if(!${memberAs.many})  
+	#set($iListnum=$iListnum+1)
+  #if($iListnum == $definedUnm)	
+#set ($mainTableName = "")
+#foreach($member in $manageable.referencingManageables)
+			#set ($mainTableName = ${member.name}) 
+#end
+#if(!($mainTableName == ""))
+	#foreach($member in $manageable.manageableAssociationEnds)
+		#if(${member.type.name} == $mainTableName)
+			#set($mainTableManageableAttributes=${member.type.manageableAttributes})
+			#set($mainTableManageableAssociationEnds=${member.type.manageableAssociationEnds})
+			#set($mainTableManageableIdentifierName=${member.type.manageableIdentifier.name})
+			#set($mainTableReferencingManageables=${member.type.referencingManageables})
+			#set($mainTableOtherName=${member.otherEnd.name})
+		#end
+	#end
+
+#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+  #set($filePath= "${stringUtils.replace($di,'.','/')}/${memberAs.association.name}RightAFTab.js")//set (= ${memberAs.association.name})
+	//name =${memberAs.association.name}RightAFTab.js  manageable.name=${mainTableName}
+	#foreach($memberAss in $manageable.AssociationEnds)
+		#if(${memberAs.association.name}==${memberAss.association.name})
+			#set($ass=$memberAss)
+		#end
+	#end
+  var NU${memberAs.association.name} = false;//needUpdate
+  var url${memberAs.association.name} = getUrl()+ "services/${mainTableName}ManageService";
+  var deletedata${memberAs.association.name} =  new Array();
+  var querydata${memberAs.association.name} =  new Array();
+  var pagenumber${memberAs.association.name}=1;
+  var totalCount${memberAs.association.name}=0;
+  var pagesize${memberAs.association.name}=10;
+  var orderBy${memberAs.association.name}='0';
+  var queryvo${memberAs.association.name}=new Object();
+  var oddstyle='';
+  var model${memberAs.association.name} = new dojox.grid.data.Table(null, querydata${memberAs.association.name});
+  var grid${memberAs.association.name};
+  var urle2 = getUrl()+ "services/BasicManageService";   
+//----------move from 30.1 begin-----------
+
+#set ($totleinum = 0)   
+#foreach($member in $mainTableManageableAttributes)
+	#if ($member.name != ${mainTableManageableIdentifierName})
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $mainTableManageableAssociationEnds)
+	#if(!${member.many})  
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+                  // totleinum = $totleinum 
+#if($totleinum < 13)
+	var layout${memberAs.association.name} =[{//薷母要息侄时要薷应colSpantoggle
+					onBeforeRow: onBeforeRow,
+					 cells: [
+                      [
+						//{ name: 'choise', width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },
+						{ name: i18nStr.detail, width: 3, get: getCheck${mainTableName}, styles: 'text-align: center;' },
+							{ name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+	#set ($comma = "")
+	#set ($inum = 2)                       
+	#foreach($member in $mainTableManageableAttributes)
+		#if ($member.name != ${mainTableManageableIdentifierName})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8 }
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+			${comma}  {name: i18nStr.${member.name},field:${inum}, width: 10}
+				#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+	#end
+	 
+
+	#foreach($member in $mainTableManageableAssociationEnds)//
+			#if(!${member.many})                                             
+				 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+				#set ($comma = ", ")
+				#set ($inum= $inum + 1)
+			#else
+				#set ($childRow = $inum)
+				#set ($inum= $inum + 1)			
+			#end
+	#end 
+	#set($rowinum = $totleinum + 2 )
+#elseif 	($totleinum >= 13)
+	#set($rowinum = ($totleinum +2)/ 2)  //rowinum=$rowinum
+	#set($ifodd=0)
+#if($rowinum*2 != ($totleinum+2))
+	#set($rowinum = $rowinum + 1)
+	#set($ifodd=1)
+#end
+		var layout${memberAs.association.name} =[{//?????????colSpantoggle
+					onBeforeRow: onBeforeRow,
+					 cells: [
+                      [
+						//{ name: 'choise', width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },
+						{ name: i18nStr.detail, width: 3, get: getCheck${mainTableName}, styles: 'text-align: center;' },
+						{ name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+	#set ($comma = "")
+	#set ($inum = 2)  
+	#set ($inumStart = 3)  
+	#set ($inum2 = 0)	
+	#set ($layoutium = 0) 
+	#foreach($member in $mainTableManageableAttributes)
+	#if ($member.name != ${mainTableManageableIdentifierName})
+	//---------------------------------------------------------------------//rowinum=$rowinum   inum=$inum
+		#if ($inumStart < $rowinum )
+			  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+					 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8 }
+					#set ($inum= $inum + 1)
+					#set ($inumStart= $inumStart + 1)
+			  #elseif ($member.type.dateType)
+					${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+					#set ($inum= $inum + 1)
+					#set ($inumStart= $inumStart + 1)
+			  #else
+					${comma}  {name: i18nStr.${member.name},field:${inum}, width: 10}
+					#set ($inum= $inum + 1)
+					#set ($inumStart= $inumStart + 1)
+			  #end
+			  #set ($comma = ", ")
+			//--------------  if ($inum == $rowinum)
+		#elseif ($inumStart == $rowinum)//
+			#if ($layoutium == 0)
+				#if ($member.name != ${mainTableManageableIdentifierName})
+					  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+							 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8 }
+							#set ($inum= $inum + 1)
+							#set ($inumStart= $inumStart + 1)
+					  #elseif ($member.type.dateType)
+							 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8 }
+							#set ($inum= $inum + 1)
+							#set ($inumStart= $inumStart + 1)
+					  #else
+					     ${comma} {name: i18nStr.$member.name,field:${inum}, width: 10 }
+							#set ($inum= $inum + 1)
+							#set ($inumStart= $inumStart + 1)
+					  #end
+					  #set ($comma = ", ")
+				#end
+				],[
+				#set ($comma = "")
+				#set ($inum2 = $inum)
+				#set ($layoutium = 1) 
+			#end
+		#else                     //----------------(inum:$inum)  (rowinum: $rowinum)
+			//delete1
+			 #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+					 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8 }
+					#set ($inum= $inum + 1)
+					#set ($inumStart= $inumStart + 1)
+			  #elseif ($member.type.dateType)
+					 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8 }
+							#set ($inum= $inum + 1)
+							#set ($inumStart= $inumStart + 1)
+			  #else
+				${comma} {name: i18nStr.$member.name,field:${inum}, width: 10 }
+							#set ($inum= $inum + 1)
+							#set ($inumStart= $inumStart + 1)
+			  #end
+			  #set ($comma = ", ")
+		#end 
+	#end
+	#end
+	
+	#foreach($member in $mainTableManageableAssociationEnds)//
+		#if ($inumStart < $rowinum)
+			#if(!${member.many})                                             
+				 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+				#set ($comma = ", ")
+				#set ($inum= $inum + 1)
+				#set ($inumStart= $inumStart + 1)
+			#else
+				#set ($childRow = $inum)
+				#set ($inum= $inum + 1)			
+			#end
+		#elseif ($inumStart == $rowinum)
+			#if ($layoutium == 0)
+				#if(!${member.many})                                             
+					 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+					#set ($comma = ", ")
+					#set ($inum= $inum + 1)
+					#set ($inumStart= $inumStart + 1)
+				#else
+					#set ($childRow = $inum)
+					#set ($inum= $inum + 1)			
+				#end
+				],[
+				  #set ($layoutium = 1)
+				  #set ($inum2 = $inum)
+			#end
+		#else  //($inumStart > $rowinum)
+			//delete2
+			#if(!${member.many})                                             
+					 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+					#set ($comma = ", ")
+					#set ($inum= $inum + 1)
+					#set ($inumStart= $inumStart + 1)
+				#else
+					#set ($childRow = $inum)
+					#set ($inum= $inum + 1)			
+				#end
+		#end
+	#end 
+	#if ($ifodd != 0)
+		${comma}  {name: ' ',colSpan: $ifodd ,value:' ' ,width: 10 }
+		#set ($comma = ", ")
+	#end
+
+	
+#end
+],[
+				{ name: '\u8be6\u7ec6', colSpan: ${rowinum} ,styles: 'padding: 0; margin: 0;', get: getDetail${mainTableName} }//value: '<div style="height:0px; background-color: white;"></div>'
+			  ]
+		  ]
+
+		}];	 
+
+
+
+
+var detailRows${mainTableName}=[];
+
+#if($totleinum < 13)
+function onBeforeRow(inDataIndex, inRow) {	if (inRow[1]!=undefined)inRow[1].hidden = !detailRows${mainTableName}[inDataIndex];}	
+#else
+function onBeforeRow(inDataIndex, inRow) {	if (inRow[2]!=undefined)inRow[2].hidden = !detailRows${mainTableName}[inDataIndex];}	
+#end
+
+function toggle${mainTableName}(inIndex, inShow) {
+        			//if (!inShow) destroySubGridIdGeneral('',querydata${memberAs.association.name}[inIndex][1],"${mainTableName}MainDetail");
+					if (!inShow) destroySubGridIdGeneral('',querydata${memberAs.association.name}[inIndex][1],"${mainTableName}Child");
+				    detailRows${mainTableName}[inIndex] = inShow;
+				    dijit.byId("grid${memberAs.association.name}").updateRow(inIndex); 
+				    
+    } 
+
+function getCheck${mainTableName}(inRowIndex) {
+	var image = (detailRows${mainTableName}[inRowIndex] ? 'open.gif' : 'closed.gif');
+	var show = (detailRows${mainTableName}[inRowIndex] ? 'false' : 'true');
+	return '<img src="../image/' + image + '" onclick="toggle${mainTableName}(' + inRowIndex + ', ' + show + ')" height="11" width="11">';
+}
+
+function getDetail${mainTableName}(inRowIndex){
+	if(detailRows${mainTableName}[inRowIndex]){
+		var cell = this;
+		setTimeout(function() { buildSubgrid${memberAs.association.name}(inRowIndex, cell); }, 0);  }
+		var h =0;
+		if(detailRows${mainTableName}[inRowIndex]&&querydata${memberAs.association.name}[inRowIndex][$childRow].length>0){
+							h=65+25*querydata${memberAs.association.name}[inRowIndex][$childRow].length;  		}
+	return '<div style="height:'+h+'px; background-color: white;"></div>';
+}
+
+//function makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString) {return parentRowIndex+"_"+idString+"_" + inRowIndex;		}
+
+//function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
+var childRow= ${childRow};
+var layoutInRowIndex;	  
+function buildSubgrid${memberAs.association.name}(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)?idmainDetailGridid
+	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
+		var child = inCell.getNode(inRowIndex).firstChild;
+		//var child = inCell.getNode(inRowIndex).lastChild;
+		//var idmainDetail = makeSubGridIdGeneral('',querydata${memberAs.association.name}[inRowIndex][1],"${mainTableName}MainDetail");//makeSubgridIdMainDetail(querydata${memberAs.association.name}[inRowIndex][1]);//taskmakeSubgridId(taskRowSubdata[inRowIndex][1]);
+		var idchild = makeSubGridIdGeneral('',querydata${memberAs.association.name}[inRowIndex][1],"${mainTableName}Child");
+		//var subGridMainDetail = dijit.byId(idmainDetail);
+		var subGridChild = dijit.byId(idchild);
+		var dataChild=querydata${memberAs.association.name}[inRowIndex][$childRow];
+		//if(dataChild.length!=0){
+			if (subGridChild){
+				subGridChild.model.setData(dataChild);
+				child.appendChild(subGridChild.domNode);
+			}else{
+				model${mainTableName}Child=new dojox.grid.data.Table(null, dataChild);
+				var childProps= {
+								autoHeight: true, 
+								autoRender: false,
+								rowCount:dataChild.length,
+								model:model${mainTableName}Child						};
+				childProps.dataRow = inRowIndex;
+				childProps.id = idchild;
+				if(Math.ceil(inRowIndex/2)>inRowIndex/2){
+					childLayoutOdd=buildChildLayout(pre,headerstyleodd,inRowIndex);	
+					childProps.structure=childLayoutOdd;
+				}else{
+					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
+					childProps.structure=childLayout;
+				}
+				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?С
+			}
+			if (subGridChild) {
+				subGridChild.render();
+				subGridChild.cacheHeight = subGridChild.domNode.offsetHeight;
+			}	      				
+		//}
+		
+		/*var detailDate=[];
+		detailDate[0]=querydata${memberAs.association.name}[inRowIndex];  
+	    model${mainTableName}Detail=new dojox.grid.data.Table(null, detailDate);
+		if (subGridMainDetail) {
+			subGridMainDetail.model.setData(detailDate);
+			mainDetail.appendChild(subGridMainDetail.domNode);
+		} else {
+			var mainDetailProps = {
+				rowCount: 1, 
+				autoHeight: true, 
+				autoRender: false,
+				model:model${mainTableName}Detail
+				};
+				mainDetailProps.dataRow = inRowIndex;
+				mainDetailProps.id = idmainDetail;//	tasksubGridProps.widgetId = id;
+				if(Math.ceil(inRowIndex/2)>inRowIndex/2){
+					mainDetailProps.structure=mainDetailLayoutOdd;
+				}else{
+					mainDetailProps.structure=mainDetailLayout;
+				}
+				subGridMainDetail = new dojox.Grid(mainDetailProps, mainDetail );
+		}
+			
+		if (subGridMainDetail) {
+				subGridMainDetail.render();
+				subGridMainDetail.cacheHeight = subGridMainDetail.domNode.offsetHeight;
+			}*/	
+		inCell.grid.rowHeightChanged(inRowIndex);
+    }   
+}
+
+
+  
+//-----------move from 30.1 end------------  
+var getVO${memberAs.association.name}=function(queryvo){
+
+	var pu = new SOAPClientParameters2();
+	pu.add('${mainTableName}VO',queryvo) ;
+	pu.add('pageNumber',pagenumber${memberAs.association.name}) ;
+	pu.add('pageSize',pagesize${memberAs.association.name}) ;
+	pu.add('orderBy',orderBy${memberAs.association.name}) ;
+	SOAPClient.invoke(url${memberAs.association.name},"get${mainTableName}", pu, false,  function GetEnu_callBack(ul, soapResponse){     
+//判断本表是否为子表,当一个表是多个表的子表时，此处可能有错误。	
+#if($mainTableReferencingManageables.size()>0)
+	#foreach($membermain in $mainTableReferencingManageables)
+		#if(${membermain.name}==${memberAs.type.name})
+			//${membermain.name}-----${memberAs.type.name}
+			querydata${memberAs.association.name}=dojo${membermain.name}.${mainTableName}VOtoArray_fun(ul,false);
+		#else
+		     //${membermain.name}-----${memberAs.type.name}
+			querydata${memberAs.association.name}=dojo${mainTableName}.${mainTableName}VOtoArray_fun(ul,false);
+		#end
+	#end
+#else
+	querydata${memberAs.association.name}=dojo${mainTableName}.${mainTableName}VOtoArray_fun(ul,false);
+#end	
+	totalCount${memberAs.association.name}=ul[ul.length-1]["ns:id"]; 
+	}); 
+	var totalpage=Math.ceil(new Number(totalCount${memberAs.association.name})/pagesize${memberAs.association.name});
+	
+	if(totalpage>1){
+		if(pagenumber${memberAs.association.name}==1){
+			dijit.byId("but6${memberAs.association.name}").setDisabled(true);
+			dijit.byId("but7${memberAs.association.name}").setDisabled(false);
+		}else if(pagenumber${memberAs.association.name}==totalpage){
+			dijit.byId("but6${memberAs.association.name}").setDisabled(false);
+			dijit.byId("but7${memberAs.association.name}").setDisabled(true);
+		}else{
+			dijit.byId("but6${memberAs.association.name}").setDisabled(false);
+			dijit.byId("but7${memberAs.association.name}").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6${memberAs.association.name}").setDisabled(true);
+		dijit.byId("but7${memberAs.association.name}").setDisabled(true);
+	
+	}
+	if(pagesize${memberAs.association.name}==0){
+		totalpage=1;
+		dijit.byId("but6${memberAs.association.name}").setDisabled(true);
+		dijit.byId("but7${memberAs.association.name}").setDisabled(true);
+	}
+	if(totalpage==1)pagenumber${memberAs.association.name}=1;
+	
+	 document.getElementById("rowCount${memberAs.association.name}").innerHTML=i18nStr.di+" "+pagenumber${memberAs.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCount${memberAs.association.name}+" "+i18nStr.rowSize; 	
+
+	querydata${memberAs.association.name}.splice(querydata${memberAs.association.name}.length-1,1);
+	model${memberAs.association.name}.setData(querydata${memberAs.association.name});
+}
+
+var build${memberAs.association.name}=function(){
+	if(NU${memberAs.association.name} && mainID!=undefined && mainID!=''){
+		var queryFloat${memberAs.type.name}=new Object();
+		queryFloat${memberAs.type.name}.id=mainID;
+		var queryFloat${manageable.name}=new Object();
+		queryFloat${manageable.name}.${memberAs.name}=queryFloat${memberAs.type.name};
+		queryvo${memberAs.association.name}.$mainTableOtherName =[queryFloat${manageable.name}];
+
+		queryvo${memberAs.association.name}.${memberAs.name}=queryFloat${memberAs.type.name};
+		getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+		if(dijit.byId("grid${memberAs.association.name}")==undefined){
+			  grid${memberAs.association.name} = new dojox.Grid({
+						title: "",
+						id: "grid${memberAs.association.name}",
+						jsId: "grid${memberAs.association.name}",
+						structure: layout${memberAs.association.name},
+						rowCount:querydata${memberAs.association.name}.length,
+						model:model${memberAs.association.name}
+					}, dojo.byId("grid${memberAs.association.name}"));
+				grid${memberAs.association.name}.resize({w: dijit.byId("rightPane").domNode.clientWidth-16,h:dijit.byId("rightPane").domNode.clientHeight-100}); 
+				
+		}else{
+			grid${memberAs.association.name}.updateRowCount(querydata${memberAs.association.name}.length); 
+		}
+		NU${memberAs.association.name}=false;
+	}
+
+}
+
+
+	
+#foreach($member in $mainTableManageableAssociationEnds)//对于单表不许其他判断
+	#if(!${member.many})  
+		 #set ($ifo = 0)
+		#foreach($member2 in $mainTableReferencingManageables)
+			#if(${member2.name}==${member.type.name})
+				#set ($ifo = 1)
+			#end
+		#end
+		#if($ifo != 0)
+			#if(${member.name}!=${ass.otherEnd.name})
+				var dojo${member.type.name}Select;
+			#end
+		#end
+	#end
+#end
+			   
+/*var addRow${memberAs.association.name} = function(){
+var addrow=[];
+		#foreach($member in $mainTableManageableAttributes)
+			#if ($member.name != ${mainTableManageableIdentifierName})
+				#if($member.type.dateType)
+					addrow.push('');
+					addrow.push('');
+				#else
+					addrow.push('');
+				#end
+			#end
+		#end
+		#foreach($member in $mainTableManageableAssociationEnds)
+			#if(!${member.many})  
+				addrow.push([false,mainID,mainName]);
+			#else
+				addrow.push('');
+			#end
+		#end
+	addrow.splice(0,0,false,0);
+	grid${memberAs.association.name}.addRow(addrow,grid${memberAs.association.name}.model.getRowCount());
+} 						
+
+
+function remove${memberAs.association.name}(){
+       var s= new Array();
+       var sall=grid${memberAs.association.name}.model.data;
+       for(var i=0;i<sall.length;i++){
+       if(sall[i][0]==true){
+          s.push(i);
+          var thisCell=sall[i];
+          if(thisCell[1]!=0){//the row which will be deleted
+            deletedata${memberAs.association.name}.splice(deletedata${memberAs.association.name}.length,0,thisCell[1]);
+       }}}
+       grid${memberAs.association.name}.model.remove(s);//grid.removeSelectedRows();
+ }
+
+function call_funUpd${memberAs.association.name}() {
+       var sall=grid${memberAs.association.name}.model.data;
+       for(var i=0;i<sall.length;i++){
+       if(sall[i][0]==true){
+         var passAll=0;
+         var thisCell=sall[i];
+         var padd = new SOAPClientParameters2();
+         var vobject=new Object();
+         vobject.id=thisCell[1];
+#set ($inum = 2)                       
+#foreach($member in $mainTableManageableAttributes)
+#if ($member.name != ${mainTableManageableIdentifierName})
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+             if(dojox.validate.isInRange(thisCell[$inum],{max:9999999, min:0})){
+              var  n=new NumberQuery(); n.upNumber=thisCell[$inum];vobject.$member.name=n;
+             }else{grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}> not be double</span>";passAll=1;}//double
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')
+var  d=new DateTimeQuery();
+             if(thisCell[$inum] instanceof Date){ d.upDate=dojo.date.locale.format(thisCell[$inum], grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).constraint);
+             }else{grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be date</span>"; passAll=1;}//not null
+ #set ($inum= $inum + 1) 
+             if(thisCell[$inum] instanceof Date){
+             d.upDate=d.upDate+" "+dojo.date.locale.format(thisCell[$inum], grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).constraint);
+             vobject.$member.name=d;
+             }else{grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be time</span>"; passAll=1;}//not null
+ 
+#else        
+ #if ($member.required)
+             if(dojox.validate.isText(thisCell[$inum], {minlength: 1})){vobject.$member.name=thisCell[$inum];
+             }else{grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;}//not null
+ #else
+              vobject.$member.name=thisCell[$inum];
+ #end
+#end
+
+#set ($inum= $inum + 1)
+#end
+#end
+
+#foreach($member in $mainTableManageableAssociationEnds)
+	#if(!${member.many})
+		#set ($ifo = 0)
+		#foreach($member2 in $mainTableReferencingManageables)
+			#if(${member2.name}==${member.type.name})
+				#set ($ifo = 1)
+			#end
+		#end
+		#if($ifo == 0)
+			var manageable=new Object();
+			 if(querydata${memberAs.association.name}[i][$inum]!=''&&querydata${memberAs.association.name}[i][$inum]!=undefined){
+             manageable.id=querydata${memberAs.association.name}[i][$inum][1];
+             vobject.${member.name}=manageable;
+			 }else{
+			 grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;
+			 }
+		#else//
+			var manageable=new Object();
+			 if(querydata${memberAs.association.name}[i][$inum]!=''&&querydata${memberAs.association.name}[i][$inum]!=undefined){
+             manageable.id=querydata${memberAs.association.name}[i][$inum][1];
+             vobject.${member.name}=manageable;
+			 }else{
+			 grid${memberAs.association.name}.getCell(grid${memberAs.association.name}.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;
+			 }
+		#end
+		#set ($inum= $inum + 1)
+	#else
+		#set ($inum= $inum + 1)
+	#end
+#end
+
+
+
+       if(passAll==0){
+             if(thisCell[1]==0){//create new row
+                padd.add('${mainTableName}VO',vobject);
+                SOAPClient.invoke(url${memberAs.association.name}, "create${mainTableName}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                grid${memberAs.association.name}.model.setDatum(ul,i,1);
+				});
+	         }else{//modify row
+                padd.add('${mainTableName}VO',vobject);
+                SOAPClient.invoke(url${memberAs.association.name}, "update${mainTableName}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                });
+	         }
+			 call_funUpdGridSub(i);
+        } }}//for
+//submit delete
+          for(var i=0;i<deletedata${memberAs.association.name}.length;i++){
+               var pdel = new SOAPClientParameters();      
+               pdel.add('id',deletedata${memberAs.association.name}[i]);
+               SOAPClient.invoke(url${memberAs.association.name}, "delete${mainTableName}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+	             
+	           });
+          }
+          deletedata${memberAs.association.name}=new Array();
+          //dojo.byId("rowCount").innerHTML = 'saved'; 
+//submit delete end          
+	
+ } 
+ */
+/*#foreach($member in $mainTableManageableAssociationEnds)
+	function select${member.type.name}Fun(rep){
+#if($mainTableReferencingManageables.size()==0)
+		querydata${memberAs.association.name}[dojo${mainTableName}.select${member.type.name}InRow][dojo${mainTableName}.no${member.type.name}]=rep;
+		grid${memberAs.association.name}.updateRow(dojo${mainTableName}.select${member.type.name}InRow);	
+#else
+		#foreach($memberSub in $mainTableReferencingManageables)
+			#set ($mainTable = $memberSub.name)
+		#end
+		querydata${memberAs.association.name}[dojo${mainTable}.select${member.type.name}InRow][dojo${mainTable}.no${member.type.name}]=rep;
+		grid${memberAs.association.name}.updateRow(dojo${mainTable}.select${member.type.name}InRow);	
+		
+#end
+			
+	}
+#end*/
+
+function pageSizeChange${memberAs.association.name}(mylabel){
+	pagesize${memberAs.association.name}=mylabel;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+
+function allpage${memberAs.association.name}(){
+	pagesize${memberAs.association.name}=0;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+
+function upPage${memberAs.association.name}(){
+	pagenumber${memberAs.association.name}--;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+function downPage${memberAs.association.name}(){
+	pagenumber${memberAs.association.name}++;
+	getVO${memberAs.association.name}(queryvo${memberAs.association.name});
+}
+
+//move from 30.4 begin---------
+/*var addRowSub = function(addindex){
+	  var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${memberAs.association.name}[addindex][1],"${mainTableName}Child"));
+	  var addrow=[];
+	  	#foreach($member in $manageable.manageableAttributes)
+			#if ($member.name != $manageable.manageableIdentifier.name)
+				#if($member.type.dateType)
+					addrow.push('');
+					addrow.push('');
+				#else
+					addrow.push('');
+				#end
+			#end
+		#end
+		#foreach($member in $manageable.manageableAssociationEnds)
+			#if(!${member.many} && ${member.type.name}!=${mainTableName})  
+				addrow.push([]);
+			#else
+				addrow.push('');
+			#end
+		#end
+	addrow.splice(0,0,false,0);
+	
+	  subGrid.addRow(addrow,subGrid.model.getRowCount());
+}
+
+
+var deleteSub= function(mainRow,subIndexRow,subId){
+	var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${memberAs.association.name}[mainRow][1],"${mainTableName}Child"));
+	var s= new Array();
+	s[0]=subIndexRow;
+	if(subId!=0){
+		var pdel = new SOAPClientParameters();      
+	    pdel.add('id',subId);
+	    SOAPClient.invoke(url${mainTableName}, "delete${manageable.name}", pdel, false,  function GetEnu_callBack(ul, soapResponse){
+	});}
+	subGrid.model.remove(s);
+ }
+
+function saveSubRow(subGrid,thisCell,i){		 
+         var vobject=new Object();
+		 var passAll=0;
+         var padd = new SOAPClientParameters2();
+	     vobject.id=thisCell[1];
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != $manageable.manageableIdentifier.name)
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+             if(dojox.validate.isInRange(thisCell[$inum],{max:9999999, min:0})){
+              var  n=new NumberQuery(); n.upNumber=thisCell[$inum];vobject.$member.name=n;
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}> not be double</span>";passAll=1;}//double
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')
+ var  d=new DateTimeQuery();
+             if(thisCell[$inum] instanceof Date){ d.upDate=dojo.date.locale.format(thisCell[$inum], subGrid.getCell(subGrid.model.fieldArray[$inum]).constraint);
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be date</span>"; passAll=1;}//not null
+ #set ($inum= $inum + 1) 
+             if(thisCell[$inum] instanceof Date){
+             d.upDate=d.upDate+" "+dojo.date.locale.format(thisCell[$inum], subGrid.getCell(subGrid.model.fieldArray[$inum]).constraint);
+             vobject.$member.name=d;
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>must be time</span>"; passAll=1;}//not null
+
+#else        
+ #if ($member.required)
+             if(dojox.validate.isText(thisCell[$inum], {minlength: 1})){vobject.$member.name=thisCell[$inum];
+             }else{subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;}//not null
+ #else
+              vobject.$member.name=thisCell[$inum];
+ #end
+#end
+
+#set ($inum= $inum + 1)
+#end
+#end
+
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if(!${member.many})
+		#set ($ifmain= '0')
+		#foreach($member2 in $manageable.referencingManageables)
+			#if(${member2.name}==${member.type.name})
+				#set ($ifmain= '1')
+			#end
+		#end
+		#if(${ifmain}=='1')
+			var mainTable=new Object();
+			mainTable.id=querydata${memberAs.association.name}[subGrid.dataRow][1];
+            vobject.${member.name}=mainTable;
+		#else
+			var manageable=new Object();
+			 if(querydata${memberAs.association.name}[subGrid.dataRow][childRow][i]!=''&&querydata${memberAs.association.name}[subGrid.dataRow][childRow][i][$inum]!=undefined){
+				manageable.id=querydata${memberAs.association.name}[subGrid.dataRow][childRow][i][$inum][1];
+				vobject.${member.name}=manageable;
+			 }else{
+			 subGrid.getCell(subGrid.model.fieldArray[$inum]).getNode(i).innerHTML="<span style={color:red;line-height:16px}>can not be null</span>"; passAll=1;
+			 }
+		#end
+		#set ($inum= $inum + 1)
+	#end
+#end
+
+
+
+       if(passAll==0){
+             if(thisCell[1]==0){//create new row
+                padd.add('${manageable.name}VO',vobject);
+                SOAPClient.invoke(url${manageable.name}, "create${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                subGrid.model.setDatum(ul,i,1);
+				
+                });
+	         }else{//modify row
+                padd.add('${manageable.name}VO',vobject);
+                SOAPClient.invoke(url${manageable.name}, "update${manageable.name}", padd, false,  function GetEnu_callBack(ul, soapResponse){
+                });
+	         }
+			 //querydata${memberAs.association.name}[document.getElementById('erowIndex${manageable.name}').value][childRow]=querydataSub;//????????????????????????????????????????????????????????????????????????????/
+        } }
+		
+function call_funUpdGridSub(mainRow,subIndexRow) {
+var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${memberAs.association.name}[mainRow][1],"${mainTableName}Child"));
+	if(subGrid){
+	
+	var sall=subGrid.model.data;
+	if(subIndexRow==undefined && subIndexRow==''){
+		for(var i=0;i<sall.length;i++){
+         var thisCell=sall[i];
+         saveSubRow(subGrid,thisCell,i);
+		}//for
+	}else{
+		 var thisCell=sall[subIndexRow];
+		saveSubRow(subGrid,thisCell,subIndexRow);
+	}}
+}		  
+*/
+var url${manageable.name} = getUrl()+ "services/${manageable.name}ManageService";
+//var deletedata${manageable.name} =  new Array();
+//var querydata${manageable.name} =  new Array();
+var deletedataSub =  new Array();
+//var querydataSub=  new Array();
+var pagenumber${manageable.name}=1;
+var pagesize${manageable.name}=10;
+var orderBy${manageable.name}='0';
+var queryvo${manageable.name}=new Object();
+var oddstyle='';
+//var modelChildAdd = new dojox.grid.data.Table(null, querydataSub);
+var childLayout;
+var childLayoutOdd;
+
+function buildChildLayout(pre,mystyle,addRowIndex){
+	var myLayout=[{
+          
+                 //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydata中取数据
+                       
+ cells: [ [
+			//{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydata${memberAs.association.name}[addRowIndex][childRow]!=undefined ? 0:querydata${memberAs.association.name}[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
+			//{ name: pre+i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool,headerStyles:mystyle },//
+		    { name: pre+i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} ,headerStyles:mystyle},//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != $manageable.manageableIdentifier.name)
+  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+         ${comma} {name: pre+i18nStr.$member.name,field:${inum}, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 },headerStyles:mystyle }
+		#set ($inum= $inum + 1)
+  #elseif ($member.type.dateType)
+		${comma}  {name:pre+i18nStr.${member.name},field:${inum}, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"},headerStyles:mystyle}
+		#set ($inum= $inum + 1)
+		${comma}  {name: pre+i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"},headerStyles:mystyle}
+		#set ($inum= $inum + 1)
+  #else
+    #if ($member.required)
+	    ${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30,invalidMessage:'can not be empty',headerStyles:mystyle}
+		#set ($inum= $inum + 1)
+	#else
+		#if ($member.name=='remark')
+		    ${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
+			#set ($inum= $inum + 1)
+		#else
+			${comma}  {name: pre+i18nStr.$member.name, field: ${inum},width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30,headerStyles:mystyle}
+			#set ($inum= $inum + 1)
+		#end
+    #end
+  #end
+  #set ($comma = ", ")
+#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于单表不许其他判断
+	#if(!${member.many})
+		#if(${mainTableName}!=${member.type.name})	
+				 ${comma}  {name: pre+i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}[addRowIndex][childRow][inRowIndex]!=undefined && querydata${memberAs.association.name}[addRowIndex][childRow][inRowIndex][${inum}]!=undefined&& querydata${memberAs.association.name}[addRowIndex][childRow][inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}[addRowIndex][childRow][inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}[addRowIndex][childRow][inRowIndex][${inum}][1];} return str;} ,width: 10 ,headerStyles:mystyle}
+		#end
+		#set ($inum= $inum + 1)
+	#end
+#end
+                                        ] ]
+                           }];  
+						   
+			return myLayout;			   
+}
+
+/*#foreach($member in $manageable.manageableAssociationEnds)
+	#if(${mainTableName}!=${member.type.name})	
+		function select${member.type.name}Fun(rep){
+			querydata${memberAs.association.name}[dojo${mainTableName}.mainRowIndex${member.type.name}][childRow][dojo${mainTableName}.select${member.type.name}InRow][dojo${mainTableName}.no${member.type.name}]=rep;
+			var subGrid = dijit.byId(makeSubGridIdGeneral('',querydata${memberAs.association.name}[dojo${mainTableName}.mainRowIndex${member.type.name}][1],"${mainTableName}Child"));
+			subGrid.model.setDatum(rep,dojo${mainTableName}.select${member.type.name}InRow,dojo${mainTableName}.no${member.type.name});	
+		}
+	#end	
+#end	*/
+//move from 30.4 end-----------
+#end
+#end
+#end
+#end

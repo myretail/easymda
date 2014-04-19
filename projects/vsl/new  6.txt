@@ -1,0 +1,194 @@
+yesterday,I fininshed the evaluation report which lists the impact to webauth by the new 5.2 web accessibility checklists.
+delete1:
+
+
+	#if($layoutium == 0) 
+					#if ($member.name != ${manageable.manageableIdentifier.name})
+					  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+							 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
+							#set ($inum= $inum + 1)
+					  #elseif ($member.type.dateType)
+							${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"}}
+							#set ($comma = ", ")
+							#set ($inum= $inum + 1)
+							#if ($inum == $rowinum)	
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)
+							#elseif($inum == ($rowinum +1))
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)
+								 #set ($rowinum=$rowinum +1)
+								 #set ($ifodd = $ifodd + 1 )
+							#else
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)								 
+							#end
+					  #else
+delete1:
+#if($layoutium == 0) 
+					#if ($member.name != ${manageable.manageableIdentifier.name})
+					  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+							 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
+							#set ($inum= $inum + 1)
+					  #elseif ($member.type.dateType)
+							${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"}}
+							#set ($comma = ", ")
+							#set ($inum= $inum + 1)
+							#if ($inum == $rowinum)	
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)
+							#elseif($inum == ($rowinum +1))
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)
+								 #set ($rowinum=$rowinum +1)
+								 #set ($ifodd = $ifodd + 1 )
+							#else
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)								 
+							#end
+					  #else
+delete1:
+	#if($layoutium == 0) 
+					#if ($member.name != ${manageable.manageableIdentifier.name})
+					  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+							 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
+							#set ($inum= $inum + 1)
+					  #elseif ($member.type.dateType)
+							${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"}}
+							#set ($comma = ", ")
+							#set ($inum= $inum + 1)
+							#if ($inum == $rowinum)	
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set ($inum= $inum + 1)
+							#elseif($inum == ($rowinum +1))
+								 ${comma}  {name: i18nStr.${member.name}Time,field:${inum}, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
+								 #set 
+　　详情咨询：400-880-8682					#end
+
+
+					  #end
+					  #set ($comma = ", ")
+					  ]
+					  #set ($layoutium = 1)  
+					  #set ($ifodd = $ifodd + 1 ) 
+					  #set ($inum2 = $inum)
+					#end
+				#end
+
+布帘、果盘、洗脚盆 \软质冰格
+delete2
+周一：卤蛋，粥     |       猪骨汤  米饭   炒豆腐
+周二：咸菜，粥     |       猪蹄（4个）    粥  木耳腐竹  
+周三：咸菜，粥     |       炖牛肉   米饭/馒头  炒生菜/油麦菜
+周四：卤蛋，粥     |       拌海蜇黄瓜  粥      炸羊肉片
+周五：卤蛋，粥     |       炒蘑菇  米饭/馒头   牛骨汤
+  
+ 
+
+
+#if($layoutium == 0) 
+				#if(!${member.many})                                             
+					 ${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${manageable.name}[inRowIndex]!=undefined && querydata${manageable.name}[inRowIndex][${inum}]!=undefined && querydata${manageable.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${manageable.name}[inRowIndex][${inum}][2];strid=querydata${manageable.name}[inRowIndex][${inum}][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojo${manageable.name}.select${member.type.name}('+strid+','+inRowIndex+',${inum},0,event);"   >';} ,width: 10 }
+					#set ($comma = ", ")
+					#set ($inum= $inum + 1)
+				#else
+					#set ($childRow = $inum)
+					#set ($inum= $inum + 1)			
+				#end
+				]
+				#set ($layoutium = 1)
+				#set ($ifodd = $ifodd + 1 )
+				#set ($inum2 = $inum)
+			#end			
+75/1000 15*75=1。125
+ 2600       13,0730		28.5530          14.2765-13,0730=8000元			
+（得到房产并支付补偿款的一方需支付的金额可能较大，要求支付补偿款的一方证明自己的支付能力，以保护另一方的权益。）			
+一、对起诉状的理解
+			
+1。对于起诉状中提出分割徐戈去世后遗产的诉求，我方同意分割。
+
+（在徐戈去世后，被告方曾多次提出将四区房产由原告兄弟二人继承，二人没有接受。2010年四区房产动迁，在动迁阶段兄弟二人提出分割遗产，我方希望动迁结束后，根据四区房产动迁后的价值进行分割。？？？？）
+	2。对于起诉状中所提的遗产计算方式，我方认为表达不够清晰、明确：首先没有明确写出相关的每处房产的价值；其次没有明确写出相关的每处房产中作为可继承部分的比例。所以我方无法给出对起诉状中遗产计算结果的明确意见（同意或不同意）。
+	（被告方虽然无法从起诉书中明确获知具体的遗产计算依据和方式，但是，起诉书中提到的原、被告平分可继承遗产23.5万元的要求，即原告徐军、徐昕二人各分得5.875万元。针对这项要求，被告方同意支付原告兄弟二人各5。875万元，共计11.75万元。这样既可满足被告诉求，也可节省双方当事人和法庭的时间，达到提前和解的目的。？？？）
+	
+二、被告方意见：
+
+1。为了公平的分割遗产，首先需要明确每处房产的价值。因为（，如果原告方不同意被告方提出的支付共计11.75万元现金的和解方式，那么）最终的遗产分割执行，必定是一方获得房产，并拿出法定比例补偿款给对方的形式。当原、被告双方对房产价值发生异议时，我方建议采用双方竞价的方式。因为如果采用法院指定评估机构估值的方式，估值可能低于市场价值，而导致原、被告双方都要求获得同一处房产，给对方补偿款的情况，此时也只能通过双方竞价的方式来决定最终谁获得房产，从而浪费了给评估公司的费用。
+
+（特别是四区房产，现正处于动迁阶段，房子已上交动迁办，且与动迁办签订合同，回迁后分配的房子面积将会由49平增加为63平米，该处房产将由30多年的旧房变为全新，对于该处房产如果不采用竞价方式，双方对估值的异议将无法解决。？？？？？）
+
+2。起诉状中提出的四区、七区房产分别有70%为婚前财产，李金志从手中的房产证和凭据中没有看到相应的证明，请原告在开庭时出具相关证据。二十区的房产是在徐戈去世后购买的，购房款中有6万元为借款，被告可在开庭时出具证据。
+
+3。李金志、彭云因个人原因，无法出庭，委托刘玉喜为代理人。
+
+补充：徐戈可能遗留存款的，如果查询的花费不超过500元，被告同意与原告共同支付。如果查询所需费用超过500元，被告则不建议查询，也不负担费用。？？？？？？？？？？？？（问法官查询费用的问题）
+
+诉讼费用：我方同意支付14？？？万元，达成和解，如果原告不同意该和解条件，那么如果法庭裁定原告方最后可分得的金额不大于14万，我方则要求法庭裁定起诉费用全部由原告方承担。
+
+
+
+四区   63 * 2500元 = 15,7500 - 1 =14.75 * 0.85 = 12,5375 
+
+七区   38 * 1800元 = 7,0000  * 0.15            = 1,0500
+
+20区   111 * 2600  = 28,8600 * 0.50            = 14,4300
+
+									合计       = 28.0175 * 0.5 = 14,010 - 14.7500 =-7400元
+--------------------------                 
+			
+四区   63 * 3500元 = 22,0500 - 1 =21,0500 * 0.85 = 17,8900
+
+七区   38 * 1800元 = (7,0000 + 2,0000) * 0.15    = 1,3500
+
+20区   111 * 3500  = 38,8500 * 0.50             = 19,4250
+
+									合计       = 38.665 * 0.5 = 19,333 - 21.0500 = -1,7000元
+									
+									
+									
+									
+一、对起诉状的理解
+			
+1。对于起诉状中提出分割徐戈去世后遗产的诉求，我方同意分割。
+
+2。对于起诉状中所提的遗产计算方式，我方认为表达不够清晰、明确：首先没有明确写出相关的每处房产的价值；其次没有明确写出相关的每处房产中作为可继承部分的比例。所以我方无法给出对起诉状中遗产计算结果的明确意见（同意或不同意）。
+		
+二、被告方意见：
+
+1。为了公平的分割遗产，首先需要明确每处房产的价值。因为最终的遗产分割执行，必定是一方获得房产，并拿出法定比例补偿款给对方的形式。当原、被告双方对房产价值发生异议时，我方建议采用双方竞价的方式。因为如果采用法院指定评估机构估值的方式，估值可能低于市场价值，而导致原、被告双方都要求获得同一处房产，给对方补偿款的情况，此时也只能通过双方竞价的方式来决定最终谁获得房产，从而浪费了给评估公司的费用。
+
+2。起诉状中提出的四区、七区房产分别有70%为婚前财产，李金志从手中的房产证和凭据中没有看到相应的证明，请原告在开庭时出具相关证据。二十区的房产是在徐戈去世后购买的，购房款中有6万元为借款，被告可在开庭时出具证据。
+
+3。李金志、彭云因个人原因，无法出庭，委托刘玉喜为代理人。
+
+补充：徐戈可能遗留存款的，如果查询的花费不超过500元，被告同意与原告共同支付。如果查询所需费用超过500元，被告则不建议查询，也不负担费用。
+
+诉讼费用：我方同意支付15万元（不包括可能的遗留存款），达成和解，如果原告不同意该和解条件，那么如果法庭裁定原告方最后可分得的金额不大于14万，我方则要求法庭裁定起诉费用全部由原告方承担。
+
+
+------------------------------以下部分，内部参考，不给小军看---------------------------------
+四区 3200元      总价 20,1600元
+二十区 3500元    总价 38,8500元
+七区             总价 10万
+可继承部分合计        37,3000元
+需支出                18,6500元
+四区价值与支出差价    19,1600 - 18,6500 =5100yuan
+
+
+
+四区   63 * 2500元 = 15,7500 - 1 =14.75 * 0.85 = 12,5375 
+
+七区   38 * 1800元 = 7,0000  * 0.15            = 1,0500
+
+20区   111 * 2600  = 28,8600 * 0.50            = 14,4300
+
+									合计       = 28.0175 * 0.5 = 14,010 - 14.7500 =-7400元
+--------------------------                 
+			
+四区   63 * 3500元 = 22,0500 - 1 =21,0500 * 0.85 = 17,8900
+
+七区   38 * 1800元 = (7,0000 + 2,0000) * 0.15    = 1,3500
+
+20区   111 * 3500  = 38,8500 * 0.50             = 19,4250
+
+									合计       = 38.665 * 0.5 = 19,333 - 21.0500 = -1,7000元

@@ -1,0 +1,10 @@
+<table id="${member.association.name}Table"  style=" position:absolute;top:0px; width:90%; visibility:hidden ;z-index:9000">		
+	<tr height="25px" width="100%">
+		<td align="right" >
+			<img src="../image/imgTitle.jpg" class="imgTitleStyle" >
+			<span id="rowCount${member.association.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button dojoType="dijit.form.myButton" onclick="upPage${member.association.name}();"  id="but6${member.association.name}" disabled='true' jsId="but6${member.association.name}" iconClass="upPageIcon" >pageup</button>
+			<button dojoType="dijit.form.myButton" onclick="downPage${member.association.name}();" id="but7${member.association.name}" disabled='true' jsId="but7${member.association.name}" iconClass="downPageIcon" >pagedown</button>
+		</td>
+	</tr>
+</table>

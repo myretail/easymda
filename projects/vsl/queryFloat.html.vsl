@@ -1,0 +1,373 @@
+
+#set ($definedUnm= 1)
+#set ($iListnum= 0)
+#foreach($memberQuery in $manageable.manageableAssociationEnds)
+#set($iListnum=$iListnum+1)
+#if($iListnum == $definedUnm)
+#set ($filePath= "common/query${memberQuery.name}For${manageable.name}Float.html")
+#set ($ManageableQuery= ${memberQuery.type})
+
+<script type="text/javascript">
+/*dojo.connect(dijit.byId("queryprodCustTD"), "onBlur", function(e){
+	if(dijit.byId("queryprodCustTD")._isShown()){
+		//alert("uuuu:"+dijit.byId("queryprodCustTD")._isShown());
+		
+	}
+
+}); */
+function getQueryCond${memberQuery.name}For${manageable.name}(queryObject){
+	var haveCon=false;
+ 	 var d,n;
+     var validstate=0;
+#foreach($member in $ManageableQuery.manageableAttributes)
+#if ($member.name != ${ManageableQuery.manageableIdentifier.name})
+
+#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+              n=queryNumber_fun("${manageable.name}${ManageableQuery.name}${member.name}");
+              if(n==null){validstate=1;}else if(n.upSign!="%"){queryObject.${member.name}=n;haveCon=true;}  
+#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')   
+              d=queryDate_fun("${manageable.name}${ManageableQuery.name}${member.name}");
+              if(d==null){validstate=1;}else if(d.upSign!="%"){queryObject.${member.name}=d;haveCon=true;}
+#else
+	          if(query${manageable.name}${ManageableQuery.name}${member.name}.getDisplayedValue()!=""){
+			  queryObject.${member.name}=query${manageable.name}${ManageableQuery.name}${member.name}.getDisplayedValue();//
+			  haveCon=true;}
+#end
+#end
+#end
+			
+#foreach($member in $ManageableQuery.manageableAssociationEnds)
+	if(query${manageable.name}${ManageableQuery.name}${member.name}.getDisplayedValue()!=""){
+				var ${member.name}Query= new Object();
+				//${member.name}Query.${ManageableQuery.name}Name=query${member.name}.getDisplayedValue();
+				${member.name}Query.id=query${manageable.name}${ManageableQuery.name}${member.name}.getValue();
+				queryObject.${member.name}=${member.name}Query;
+				haveCon=true;
+			  }
+#end
+	return haveCon;
+}
+	</script>
+	
+#foreach($member in $ManageableQuery.manageableAttributes)
+	#if ($member.name != ${ManageableQuery.manageableIdentifier.name})
+		#if ($member.type.dateType)
+			#set ($totleinum= $totleinum + 1)
+		#end
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $ManageableQuery.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+#set($rowinum = $totleinum / 3) 
+#if( ($rowinum * 3 )< $totleinum)
+	#set($rowinum = $rowinum + 2)
+#else
+	#set($rowinum = $rowinum + 1)
+#end
+#set($queryHeight = $rowinum*25 ) 
+#set ($totleinum = 0)   
+#foreach($member in $ManageableQuery.manageableAttributes)
+	#if ($member.name != ${ManageableQuery.manageableIdentifier.name})
+		#if ($member.type.dateType)
+			#set ($totleinum= $totleinum + 1)
+		#end
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $ManageableQuery.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+#set($rowinum = $totleinum / 3) 
+#if( ($rowinum * 3 )< $totleinum)
+	#set($rowinum = $rowinum + 2)
+#else
+	#set($rowinum = $rowinum + 1)
+#end
+#set($queryHeight = $rowinum*25 ) 
+<div id="query${memberQuery.name}For${manageable.name}Div" style="margin-right: 0px;  height: ${queryHeight}px; width:600px;" >
+  <table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" ></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+#set ($inum =1 ) 
+#set ($thirtype="")
+#foreach($member in $ManageableQuery.manageableAttributes)
+#if ($member.name != ${ManageableQuery.manageableIdentifier.name})
+#if ($inum==1)
+	#set ($firsttype="")
+	#set ($sectype="")
+	#set ($thirtype="")
+	#set ($inum=2) 
+                <tr>
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input type="text" class="editerNumber"   jsId="query${manageable.name}${ManageableQuery.name}${member.name}"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsId="query${manageable.name}${ManageableQuery.name}${member.name}1"  id="query${manageable.name}${ManageableQuery.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}2"  id="query${manageable.name}${ManageableQuery.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="double")          
+	#elseif ($member.type.dateType)
+						<td align="right" i18n="query${ManageableQuery.name}${member.name}"  >${member.name}:</td> 
+						<td align="left"  colspan="3"><span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${ManageableQuery.name}${member.name}" id="query${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${ManageableQuery.name}${member.name}Time" id="query${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1${manageable.name}${ManageableQuery.name}${member.name}" id="query1${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1${manageable.name}${ManageableQuery.name}${member.name}Time" id="query1${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2${manageable.name}${ManageableQuery.name}${member.name}" id="query2${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2${manageable.name}${ManageableQuery.name}${member.name}Time" id="query2${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+		#set ($firsttype="date") 
+	#else
+						<td align="right" i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						
+							#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojo${manageable.name}.${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>
+		#set ($firsttype="str") 
+	#end
+#elseif ($inum==2)
+	#set ($inum=3) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+		#if ($firsttype=='double')
+							<td align="right" i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${ManageableQuery.name}${member.name}"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${ManageableQuery.name}${member.name}1"  id="query${manageable.name}${ManageableQuery.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}2"  id="query${manageable.name}${ManageableQuery.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end
+		#if ($firsttype=='date')
+							<td align="right" colspan="2" > </td>
+							<td align="right" i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+							<td align="left"  >
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${ManageableQuery.name}${member.name}"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${ManageableQuery.name}${member.name}1"  id="query${manageable.name}${ManageableQuery.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}2"  id="query${manageable.name}${ManageableQuery.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td></tr>  <!--?????????????????????????????????-->
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+		#if ($firsttype=='str')
+							<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${ManageableQuery.name}${member.name}"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${ManageableQuery.name}${member.name}1"  id="query${manageable.name}${ManageableQuery.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+								<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}2"  id="query${manageable.name}${ManageableQuery.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end                 
+	#elseif ($member.type.dateType)
+		#if ($firsttype=='double')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="5"><span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${ManageableQuery.name}${member.name}" id="query${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${ManageableQuery.name}${member.name}Time" id="query${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1${manageable.name}${ManageableQuery.name}${member.name}" id="query1${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1${manageable.name}${ManageableQuery.name}${member.name}Time" id="query1${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2${manageable.name}${ManageableQuery.name}${member.name}" id="query2${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2${manageable.name}${ManageableQuery.name}${member.name}Time" id="query2${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+			#set ($sectype="")
+			#set ($inum=1)
+		#end
+		#if ($firsttype=='date')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" ><span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${ManageableQuery.name}${member.name}" id="query${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${ManageableQuery.name}${member.name}Time" id="query${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1${manageable.name}${ManageableQuery.name}${member.name}" id="query1${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1${manageable.name}${ManageableQuery.name}${member.name}Time" id="query1${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}">
+							<input class="editerDateSmaller"   jsId="query2${manageable.name}${ManageableQuery.name}${member.name}" id="query2${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2${manageable.name}${ManageableQuery.name}${member.name}Time" id="query2${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td> </tr><!--new modify-->
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"   colspan="5"><span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${ManageableQuery.name}${member.name}" id="query${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${ManageableQuery.name}${member.name}Time" id="query${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1${manageable.name}${ManageableQuery.name}${member.name}" id="query1${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1${manageable.name}${ManageableQuery.name}${member.name}Time" id="query1${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2${manageable.name}${ManageableQuery.name}${member.name}" id="query2${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2${manageable.name}${ManageableQuery.name}${member.name}Time" id="query2${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end 
+#else
+	#if ($firsttype=='double')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left" colspan="3" >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="query${manageable.name}${ManageableQuery.name}${member.name}" jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojo${manageable.name}.${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>  
+	#set ($sectype="str")
+	#end
+	#if ($firsttype=='date')
+						<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							 #if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							 <input  id="query${manageable.name}${ManageableQuery.name}${member.name}" jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojo${manageable.name}.${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}"   dojoType="dijit.form.TextBox"  />  
+							#end
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+						<input  id="query${manageable.name}${ManageableQuery.name}${member.name}" jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojo${manageable.name}.${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+	#set ($sectype="str")
+	#end 
+	#end
+#elseif($inum==3)
+	#set ($inum=1) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="query${manageable.name}${ManageableQuery.name}${member.name}"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsId="query${manageable.name}${ManageableQuery.name}${member.name}1"  id="query${manageable.name}${ManageableQuery.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}2"  id="query${manageable.name}${ManageableQuery.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+		#set ($thirtype="over")
+	#elseif ($member.type.dateType)
+						<td align="right"  > </td>
+						<td align="right"  ></td>
+					</tr><tr >
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3"><span id="query${manageable.name}${ManageableQuery.name}${member.name}Img0"  ><input class="editerDate"   jsId="query${manageable.name}${ManageableQuery.name}${member.name}" id="query${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="query${manageable.name}${ManageableQuery.name}${member.name}Time" id="query${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1${manageable.name}${ManageableQuery.name}${member.name}" id="query1${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1${manageable.name}${ManageableQuery.name}${member.name}Time" id="query1${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Imgdown" >></span>
+							<span id="query${manageable.name}${ManageableQuery.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2${manageable.name}${ManageableQuery.name}${member.name}" id="query2${manageable.name}${ManageableQuery.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2${manageable.name}${ManageableQuery.name}${member.name}Time" id="query2${manageable.name}${ManageableQuery.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="query${manageable.name}${ManageableQuery.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="date")
+		#set ($inum=2)
+	#else            
+		#if ($sectype=='str')
+						<td align="right"  i18n="query${ManageableQuery.name}${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="query${manageable.name}${ManageableQuery.name}${member.name}" jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="dojo${manageable.name}.${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+		#set ($thirtype="over")
+		#end       
+	#end
+	#if ($thirtype=="over"||$inum==1)        
+				  </tr>
+	#end      
+	#end
+	#end                       
+#end
+
+
+
+#foreach($member in $ManageableQuery.manageableAssociationEnds)
+	#if($inum ==1)
+		#if(!${member.many})
+					<tr><td align="right"  i18n="query${ManageableQuery.name}${member.name}"  ></td>
+					<td align="left" ><input  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojo${manageable.name}.${member.name}Store"  /></td>  
+			#set ($inum =2)
+		#end
+	#elseif ($inum ==2)
+		#if(!${member.many})
+					<td align="right"  i18n="query${ManageableQuery.name}${member.name}"  ></td>
+					<td align="left" ><!--colspan="3" --><input  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojo${manageable.name}.${member.name}Store"  /></td>  
+			#set ($inum =3)
+		#end
+	#elseif ($inum ==3)
+		#if(!${member.many})
+					<td align="right"  i18n="query${ManageableQuery.name}${member.name}"  ></td>
+					<td align="left" ><input  id="query${manageable.name}${ManageableQuery.name}${member.name}"  jsId="query${manageable.name}${ManageableQuery.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="dojo${manageable.name}.${member.name}Store"  /></td>
+					</tr>
+			#set ($inum =1)
+		#end	
+	#end	
+#end
+#if ($inum==2)     
+    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+#end
+#if ($inum==3)     
+    <td align="right"    ></td><td align="right"    ></td></tr>
+#end
+
+         </table>
+	     </div>
+	       	<!--div align="center">
+				<button dojoType="dijit.form.Button"   iconClass="selectFloatButton" type="submit">confirm</button> 
+				<button dojoType="dijit.form.Button"   iconClass="resetIcon">reset</button>
+			</div-->    
+		
+
+#end
+#end

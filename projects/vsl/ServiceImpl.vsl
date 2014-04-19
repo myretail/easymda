@@ -1,0 +1,80 @@
+// license-header java merge-point
+/**
+ * This is only generated once! It will never be overwritten.
+ * You can (and have to!) safely modify it by hand.
+ */
+#if ($stringUtils.isNotBlank($service.packageName))
+package $service.packageName;
+#end
+//set($filePath='../../../core/src/main/java/${stringUtils.replace(${service.packageName},".","/")}')
+#set($filePath=${stringUtils.replace(${service.packageName},".","/")})
+#foreach ($operation in $service.implementationOperations)
+	#if($stringUtils.indexOf(${operation.name},'create')!= -1)
+		#set ($entityname = ${stringUtils.replace(${operation.name},'create', '')})
+		import ${stringUtils.replace(${service.packageName},'service', 'entity')}.${entityname};
+		import ${stringUtils.replace(${service.packageName},'service', 'entity')}.${entityname}Dao;
+		import ${stringUtils.replace(${service.packageName},'service', 'entity')}.${entityname}VO;
+	#end
+#end
+
+import java.util.Collection;
+import java.util.Random;
+import java.util.List;
+
+#set ($superclass = $service.generalization)
+/**
+ * @see $service.fullyQualifiedName
+ */
+public class ${service.name}Impl
+#if($superclass)
+	implements ${service.fullyQualifiedName}Base
+#end
+    extends ${service.fullyQualifiedName}Base
+{
+
+#foreach ($operation in $service.implementationOperations)
+#set ($returnType = $operation.returnType)
+#set ($returnObject = "returnValue")
+    /**
+     * @see ${service.fullyQualifiedName}#${operation.getSignature(false)}
+     */
+#if ($operation.exceptionsPresent)
+    protected $returnType.fullyQualifiedName handle${stringUtils.capitalize($operation.signature)}
+        throws $operation.exceptionList
+#else
+    protected $returnType.fullyQualifiedName handle${stringUtils.capitalize($operation.signature)}
+		throws java.lang.Exception
+#end
+    {
+        // ${toDoTag} implement $operation.visibility $returnType.fullyQualifiedName $operation.signature $operation.name
+	#if($stringUtils.indexOf(${operation.name},'get')!= -1)
+		${stringUtils.replace(${operation.name},'get', '')}Dao infoDao=this.get${stringUtils.replace(${operation.name},'get', '')}Dao();
+	 	Collection infos = infoDao.get${stringUtils.replace(${operation.name},'get', '')}(${stringUtils.replace(${operation.name},'get', '')}, pageNumber, pageSize, orderBy);
+	 	return infoDao.to${stringUtils.replace(${operation.name},'get', '')}VOArray(infos);
+	#elseif ($stringUtils.indexOf(${operation.name},'create')!= -1)
+		return this.get${stringUtils.replace(${operation.name},'create', '')}Dao().create(this.get${stringUtils.replace(${operation.name},'create', '')}Dao().${stringUtils.uncapitalize(${stringUtils.replace(${operation.name},'create', '')})}VOToEntity(${stringUtils.replace(${operation.name},'create', '')})).getId();
+	#elseif ($stringUtils.indexOf(${operation.name},'update')!= -1)
+		${stringUtils.replace(${operation.name},'update', '')} entity =this.get${stringUtils.replace(${operation.name},'update', '')}Dao().load(${stringUtils.replace(${operation.name},'update', '')}.getId());
+    	this.get${stringUtils.replace(${operation.name},'update', '')}Dao().${stringUtils.uncapitalize(${stringUtils.replace(${operation.name},'update', '')})}VOToEntity(${stringUtils.replace(${operation.name},'update', '')}, entity, false);
+    	this.get${stringUtils.replace(${operation.name},'update', '')}Dao().update(entity);
+		
+	#elseif ($stringUtils.indexOf(${operation.name},'delete')!= -1)
+		this.get${stringUtils.replace(${operation.name},'delete', '')}Dao().remove(id);
+	#else
+#set ($returnTypeName = $operation.type.fullyQualifiedName)
+#if ($operation.returnTypePresent)
+#if (!$operation.type.primitive)
+        return null;
+#elseif ("boolean" == $returnTypeName)
+        return false;
+#else
+        return ($returnTypeName)0;
+#end
+#else
+        throw new java.lang.UnsupportedOperationException("${service.fullyQualifiedName}.${operation.signature} Not implemented!");
+#end
+	#end
+    }
+	
+#end
+}

@@ -1,0 +1,11 @@
+	<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"  id="${manageable.name}AFFloat" jsId="${manageable.name}AFFloat"  >
+#foreach($member in $manageable.AssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+	#if(!${member.many})      
+			<div dojoType="dijit.layout.ContentPane" i18n="${member.association.name}"  id="${member.association.name}" jsId="${member.association.name}" >
+				<div align="right"><span id="rowCount${member.association.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+				<div style="{width:100%;height:500px;}" ><div id="grid${member.association.name}"  ></div></div>
+			</div>
+	#end
+#end     
+	</div>

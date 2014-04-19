@@ -1,0 +1,248 @@
+#set ($filePath = "js/${manageable.name}.js")
+if(!dojo._hasResource["projectDojo.${manageable.name}"]){ //_hasResource checks added by build. Do not use _hasResource directly in your code.
+dojo._hasResource["projectDojo.${manageable.name}"] = true;
+dojo.provide("projectDojo.${manageable.name}");
+
+#foreach($member in $manageable.manageableAssociationEnds)
+#if(${member.many})
+dojo.require("projectDojo.sub${member.type.name}");
+#else
+#set ($isSuper = 0)
+#foreach($memberSub in $manageable.referencingManageables)
+#if(${memberSub.name}==${member.type.name})
+#set ($isSuper = 1)
+dojo.require("projectDojo.${member.type.name}");
+#end
+#end
+#if($isSuper == 0)
+dojo.require("projectDojo.${member.type.name}");
+#end
+#end
+#end
+dojo.declare("projectDojo.${manageable.name}",
+#if($manageable.manageableAssociationEnds.size()==0) 
+null,
+#else
+[
+#set ($comma = "")
+#foreach($member in $manageable.manageableAssociationEnds)
+#if(${member.many})
+	$comma projectDojo.sub${member.type.name}
+	#set ($comma = ",")
+#else
+	#set ($isSuper = 0)
+	#foreach($memberSub in $manageable.referencingManageables)
+		#if(${memberSub.name}==${member.type.name})
+			#set ($isSuper = 1)
+			$comma projectDojo.${member.type.name}
+			#set ($comma = ",")
+		#end
+	#end
+	#if($isSuper == 0)
+		$comma projectDojo.${member.type.name}
+		#set ($comma = ",")
+	#end
+#end	
+#end
+],
+#end
+{
+#if($manageable.referencingManageables.size()==0)
+	no${manageable.name}:'',
+	select${manageable.name}IDs:'',
+	oldFloat${manageable.name}:'',
+	select${manageable.name}InRow:'',
+	ifMult${manageable.name}:0,
+	mainRowIndex${manageable.name}:'',
+#set ($comma = ",")
+#foreach($member in $manageable.manageableAssociationEnds)
+	${member.name}Store:''	$comma
+#end
+
+#foreach($member in $manageable.manageableAttributes)
+#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+	${member.name}Store:''	$comma
+	item${member.name}Option:'' $comma
+#end
+#end
+
+select${manageable.name}:function (myID,inrow,${manageable.name}ColNo,ifMult${manageable.name},e,mainRowIndex){
+	var floath=e.screenY-window.screen.availHeight+document.body.clientHeight+30;
+	if(floath+255>document.body.clientHeight)floath=floath-255;
+	var floatw=e.screenX;
+	if(e.screenX+505>document.body.clientWidth)floatw=floatw-500;
+		this.select${manageable.name}InRow=inrow;
+		this.no${manageable.name}=${manageable.name}ColNo;
+		this.select${manageable.name}IDs=myID;
+		//ifMult=ifMults;
+		this.mainRowIndex${manageable.name}=mainRowIndex;
+		this.oldFloat${manageable.name} = dijit.byId("select${manageable.name}Float_1");
+		dojo${manageable.name}Select=this;
+		if(this.oldFloat${manageable.name}==undefined){
+			var div = dojo.doc.createElement('div');
+			dojo.body().appendChild(div);
+			var fp = new dojox.layout.FloatingPane({id:"select${manageable.name}Float_1",title:"selectFloat",//title:i18nStr.select${manageable.name},
+				maxable: true,closable: true,resizable: true ,dockable:true,
+				href:"../common/select${manageable.name}Float.html"},div);
+			dojo.style(fp.domNode,{
+				width:"500px",height:"300px",top:floath, left:floatw,position:"absolute",zIndex:"980"});//255
+			this.oldFloat${manageable.name}=fp;
+			fp.startup();
+			fp.show();
+			
+		}else{
+			dojo.style(this.oldFloat${manageable.name}.domNode,{width:"500px",height:"300px",//255
+				top:floath, left:floatw,
+				position:"absolute",zIndex:"980"});
+			this.oldFloat${manageable.name}.show();
+			dijit.byId("gridInc${manageable.name}").model.setData(querydataInc${manageable.name}); 
+		}
+},
+
+${manageable.name}VOtoArray_fun:function(ulvo,edit){
+            var querydata=new Array();
+            var items = new Array();
+            var ul=new Array();
+            var ulo="";
+            var le="";
+            var d="",t;
+            var arraytag="0";//isArray
+            if(ulvo!=null){
+              if(ulvo.length==undefined){
+                 ul[0]=ulvo;
+                 arraytag="1";
+                 le=1;
+              }else{
+                 ul=ulvo;
+                 le=ul.length;
+              }        
+              if(edit==false){
+                    for(var i = 0; i < le; i++){		
+                        items = new Array();
+                        ulo=ul[i];
+                        items[0] = false;
+                        items[1] = ulo["ns:id"];
+                        
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if($member.type.dateType)
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){items[$inum] = t['ns:upDate'];}
+#elseif($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){items[$inum] =  isNaN(t['ns:upNumber'])?'':t['ns:upNumber'];}
+#else
+                        items[$inum] = ulo["ns:$member.name"];//
+#end
+#set ($inum= $inum + 1)
+#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+                         items[$inum] = this.${member.type.name}VOtoArray_fun(ulo["ns:$member.name"],edit);
+#set ($inum= $inum + 1)
+#end
+                      if(arraytag=="0"){
+                        querydata[i]=items;
+                      }else{
+                        querydata=items;
+                      }
+                    }
+                  }else{//edit==true
+                    for(var i = 0; i < le; i++){		
+                        items = new Array();
+                        ulo=ul[i];
+                        items[0] = false;
+                        items[1] = ulo["ns:id"];
+                        
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if($member.type.dateType)
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){
+                        d=dojo.date.locale.parse(new String( t['ns:upDate']),{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" });}
+                        items[$inum] = d;
+#set ($inum= $inum + 1)
+                        items[$inum] = d;                        
+#elseif($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+                        t=ulo["ns:$member.name"];if(t!=null&&t!=undefined){items[$inum] =  isNaN(t['ns:upNumber'])?0:t['ns:upNumber'];}
+#else
+                        items[$inum] = ulo["ns:$member.name"];//
+#end
+#set ($inum= $inum + 1)
+#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+                         items[$inum] = this.${member.type.name}VOtoArray_fun(ulo["ns:$member.name"],edit);
+#set ($inum= $inum + 1)
+#end
+                      if(arraytag=="0"){
+                        querydata[i]=items;
+                      }else{
+                        querydata=items;
+                      }
+                    }
+                  } 
+            }//!=null                     
+            return querydata;
+},
+		
+
+init${manageable.name}:function (){ 
+	var thisObj=this;
+	var urle = getUrl()+ "services/BasicManageService"; 
+#foreach($member in $manageable.manageableAssociationEnds)
+#if(${member.many})
+	thisObj.init${member.type.name}();
+#else
+	#set ($isSuper = 0)
+	#foreach($memberSub in $manageable.referencingManageables)
+		#if(${memberSub.name}==${member.type.name})
+			#set ($isSuper = 1)
+		#end
+	#end
+	#if($isSuper == 0)
+		thisObj.init${member.type.name}();
+	#end
+#end	
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+if(this.${member.name}Store==''){
+	var p${member.name} = new SOAPClientParameters();
+	var items${member.name} = new Array();  
+		p${member.name}.add('${member.type.name}VO',new Object()) ;
+		p${member.name}.add('pageNumber',0) ;
+		p${member.name}.add('pageSize',0) ;
+	    p${member.name}.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"${member.type.name}ManageService","get${member.type.name}", p${member.name}, false,  function GetEnu_callBack(ul, soapResponse){      
+				var tempData=thisObj.${member.type.name}VOtoArray_fun(ul,false);
+				for(var i = 0; i < tempData.length-1; i++){		
+				  items${member.name}.push({name: tempData[i][2], value:tempData[i][1]});
+				}                
+	});       
+	if(items${member.name}.length==0)items${member.name}.push({name:'' , value:''});
+	this.${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: items${member.name} }});
+}
+
+#end
+
+#foreach($member in $manageable.manageableAttributes)
+	#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+			var p${member.name} = new SOAPClientParameters();
+			p${member.name}.add('eType','${member.name}');
+			var item${member.name} = new Array();
+			this.item${member.name}Option = new Array();
+				SOAPClient.invoke(urle, "getEnumerationByType", p${member.name}, false,  function GetEnu_callBack(ul, soapResponse){   
+				for(var i = 0; i < ul.length; i++){		
+				  var ulo=ul[i];
+				  item${member.name}.push({name: ulo["ns:fieldName"], value:ulo["ns:fieldName"]});
+				  thisObj.item${member.name}Option.push(ulo["ns:fieldName"]);
+				}                
+			});       
+			if(item${member.name}.length==0)item${member.name}.push({name:'' , value:''});
+			this.${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: item$member.name}}); 
+	#end
+#end
+}
+#end
+});
+}
+

@@ -1,0 +1,88 @@
+#foreach($memberAs in $manageable.AssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+	#if(!${memberAs.many})  
+	//${memberAs.association.name}AFTab2.js
+		//var url${memberAs.association.name}${manageable.name} = getUrl()+ "services/${manageable.name}ManageService";
+		var querydata${memberAs.association.name}${manageable.name} =  new Array();
+		
+		var getChoise${memberAs.association.name}= function(inRowIndex) {
+			if(true==querydata${memberAs.association.name}${manageable.name}[inRowIndex][0]){//'+querydata${memberAs.association.name}${manageable.name}[inRowIndex][1]+'
+				 return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id="" checked="true" type="checkbox" onClick="click${memberAs.association.name}('+inRowIndex+')" />';
+			 }else{
+				 return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id=""  type="checkbox" onClick="click${memberAs.association.name}('+inRowIndex+')" />';
+			 }
+		}
+
+	function click${memberAs.association.name}(row){//  
+			
+			if(querydata${memberAs.association.name}${manageable.name}[row][querydata${memberAs.association.name}${manageable.name}[row].length-1]==undefined){
+				var idStr=","+querydata${memberAs.association.name}${manageable.name}[row][1]+",";
+			
+				if(adddata${memberAs.association.name}.indexOf(idStr)==-1){
+					adddata${memberAs.association.name}=adddata${memberAs.association.name}+querydata${memberAs.association.name}${manageable.name}[row][1]+",";
+				}else{
+					
+					adddata${memberAs.association.name}=adddata${memberAs.association.name}.substring(0,adddata${memberAs.association.name}.indexOf(idStr))+adddata${memberAs.association.name}.substring(adddata${memberAs.association.name}.indexOf(idStr)+idStr.length-1);
+				}
+			
+			}else{
+				
+				var idStr=","+querydata${memberAs.association.name}${manageable.name}[row][querydata${memberAs.association.name}${manageable.name}[row].length-1]+",";
+				
+				if(deletedata${memberAs.association.name}.indexOf(idStr)==-1){
+					deletedata${memberAs.association.name}=deletedata${memberAs.association.name}+querydata${memberAs.association.name}${manageable.name}[row][querydata${memberAs.association.name}${manageable.name}[row].length-1]+",";
+				}else{
+					deletedata${memberAs.association.name}=deletedata${memberAs.association.name}.substring(0,deletedata${memberAs.association.name}.indexOf(idStr))+deletedata${memberAs.association.name}.substring(deletedata${memberAs.association.name}.indexOf(idStr)+idStr.length-1);
+				}
+			}
+	}		
+#set ($totleinum = 0)   
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+		var layout${memberAs.association.name}=[{
+				   //根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+		   
+					 cells: [ [
+							   //{ name: i18nStr.chose, width: 3, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
+							   { name: i18nStr.chose, width: 3,styles: 'text-align: center;', get:getChoise${memberAs.association.name}},
+							   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+		#set ($comma = "")
+		#set ($inum = 2)                       
+		#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10 }
+					#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+		#end  
+
+		#foreach($member in $manageable.manageableAssociationEnds)//对于单表不许其他判断
+				${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';var strid;if(querydata${memberAs.association.name}${manageable.name}[inRowIndex]!=undefined && querydata${memberAs.association.name}${manageable.name}[inRowIndex][${inum}]!=undefined && querydata${memberAs.association.name}${manageable.name}[inRowIndex][${inum}][1]!=undefined){str=querydata${memberAs.association.name}${manageable.name}[inRowIndex][${inum}][2];strid=querydata${memberAs.association.name}${manageable.name}[inRowIndex][${inum}][1];} return str;} ,width: 10 }
+				#set ($inum= $inum + 1)
+		#end
+			   ] ]
+								   }]; 
+								   
+	
+		
+		function getAllVO(){
+		
+		
+		}
+
+		
+#end
+#end

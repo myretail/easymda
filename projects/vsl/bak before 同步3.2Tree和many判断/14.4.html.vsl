@@ -1,0 +1,43 @@
+#set ($ifMain = 0) 
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if(${member.many})
+		#set ($ifMain = 1) 
+		#set ($entity = $member.type)
+	#end	
+#end
+#if($ifMain == 1) 
+#set($di=${stringUtils.replace(${manageable.packageName},"entity.","")})
+#set($filePath="${stringUtils.replace($di,'.','/')}/${manageable.name}2AFTab.html")
+<script type="text/javascript" >
+</script>
+<!--myname=${manageable.name}2AFTab.html 
+1.不加上面的script会导致tab的大小无效
+2.只有manageable是主表时才会生成这个文件
+-->
+		<div dojoType="dijit.layout.TabContainer" style="height:100%; width:100%;"   id="${manageable.name}AFTab" jsId="${manageable.name}AFTab"  >
+#foreach($member in $manageable.AssociationEnds)<!--//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试-->
+	#if(!${member.many})      
+			<div dojoType="dijit.layout.ContentPane" title="${member.association.name}"  id="${member.association.name}" jsId="${member.association.name}" >
+				<div align="right">
+					<span id="rowCount${member.association.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPage${member.association.name}();"  id="but6${member.association.name}" disabled='true' jsId="but6${member.association.name}" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPage${member.association.name}();" id="but7${member.association.name}" disabled='true' jsId="but7${member.association.name}" iconClass="downPageIcon" >pagedown</button>
+				</div>
+				<div id="grid${member.association.name}"  ></div>
+			</div>
+	#end
+#end     
+#foreach($member in $entity.AssociationEnds)<!--//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试-->
+	#if(!${member.many})      
+			<div dojoType="dijit.layout.ContentPane" title="${member.association.name}"  id="${member.association.name}" jsId="${member.association.name}" >
+				<div align="right">
+					<span id="rowCount${member.association.name}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button dojoType="dijit.form.myButton" onclick="upPage${member.association.name}();"  id="but6${member.association.name}" disabled='true' jsId="but6${member.association.name}" iconClass="upPageIcon" >pageup</button>
+					<button dojoType="dijit.form.myButton" onclick="downPage${member.association.name}();" id="but7${member.association.name}" disabled='true' jsId="but7${member.association.name}" iconClass="downPageIcon" >pagedown</button>
+				</div>
+				<div id="grid${member.association.name}"  ></div>
+			</div>
+	#end
+#end
+		</div>
+#end 

@@ -1,0 +1,555 @@
+#set ($filePath= '')
+#set ($definedUnm= 1)
+#set ($iListnum= 0)
+#foreach($memberAs in $manageable.AssociationEnds)
+#if(!${memberAs.many})      
+#set($iListnum=$iListnum+1)
+#if($iListnum == $definedUnm)
+#set($filePath= "../common/${memberAs.association.name}SelectPane.html")
+
+<script type="text/javascript" >
+//${memberAs.association.name}SelectPane.html
+var urlpane${memberAs.association.name}= getUrl()+ "services/${manageable.name}ManageService";
+var deletedatapane${memberAs.association.name} =  new Array();
+var querydatapane${memberAs.association.name} =  new Array();
+var pagenumberpane${memberAs.association.name}=1;
+var totalCountpane${memberAs.association.name}=0;
+var pagesizepane${memberAs.association.name}=10;
+var orderBypane${memberAs.association.name}='0';
+var queryvopane${memberAs.association.name}=new ${manageable.name}VOJs();
+var oddstyle='';
+var modelpane${memberAs.association.name} = new dojox.grid.data.Table(null, querydatapane${memberAs.association.name});
+
+#foreach($member in $manageable.manageableAttributes)
+	#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+			var ppane${memberAs.association.name}${member.name} = new SOAPClientParameters();
+			ppane${memberAs.association.name}${member.name}.add('eType','${member.name}');
+			var itempane${memberAs.association.name}${member.name} = new Array();
+				SOAPClient.invoke(urle, "getEnumerationByType", ppane${memberAs.association.name}${member.name}, false,  function GetEnu_callBack(ul, soapResponse){   
+				for(var i = 0; i < ul.length; i++){		
+				  var ulo=ul[i];
+				  itempane${memberAs.association.name}${member.name}.push({name: ulo["ns:fieldName"], value:ulo["ns:fieldName"]});
+				}                
+			});  
+			if(itempane${memberAs.association.name}${member.name}.length==0)itempane${memberAs.association.name}${member.name}.push({name:'' , value:''});     
+			var pane${memberAs.association.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: itempane${memberAs.association.name}${member.name}}}); 
+	#end
+#end
+
+//have set function's manageableAssociationEnds
+#foreach($member in $manageable.manageableAssociationEnds)
+	var ppane${memberAs.association.name}${member.name} = new SOAPClientParameters2();
+	var itemspane${memberAs.association.name}${member.name} = new Array();  
+		ppane${memberAs.association.name}${member.name}.add('${member.type.name}VO',new  ${member.type.name}VOJs()) ;
+		ppane${memberAs.association.name}${member.name}.add('pageNumber',0) ;
+		ppane${memberAs.association.name}${member.name}.add('pageSize',0) ;
+	    ppane${memberAs.association.name}${member.name}.add('orderBy','0') ;
+	SOAPClient.invoke(getUrl()+ "services/"+"${member.type.name}ManageService","get${member.type.name}", ppane${memberAs.association.name}${member.name}, false,  function GetEnu_callBack(ul, soapResponse){      
+				var tempData=${member.type.name}VOtoArray_fun(ul,false);
+				for(var i = 0; i < tempData.length-1; i++){		
+				  itemspane${memberAs.association.name}${member.name}.push({name: tempData[i][2], value:tempData[i][1]});
+				}                
+	});       
+if(itemspane${memberAs.association.name}${member.name}.length==0)itemspane${memberAs.association.name}${member.name}.push({name:'' , value:''});
+	var pane${memberAs.association.name}${member.name}Store = new dojo.data.ItemFileWriteStore({data: {identifier:"value", items: itemspane${memberAs.association.name}${member.name} }});//
+
+	function pane${memberAs.association.name}${member.name}Set(id,value){
+        	/*var itemselect=pane${memberAs.association.name}${member.name}Store._getItemByIdentity(value);
+        	if(itemselect!='undefined'&& itemselect!=null){
+        	}*/
+        }
+#end
+	  
+	  
+	  
+var noPane${memberAs.association.name};
+var selectPane${memberAs.association.name}IDs;
+var oldFloatPane${memberAs.association.name};
+var selectPane${memberAs.association.name}InRow;
+var ifMultPane${memberAs.association.name}=0;	
+	  
+var getChoisepane${memberAs.association.name} = function(inRowIndex) {
+			if(selectPane${memberAs.association.name}IDs==querydatapane${memberAs.association.name}[inRowIndex][1]){
+                  return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id="'+querydatapane${memberAs.association.name}[inRowIndex][1]+'" checked="true" type="checkbox"/>'
+              }else{
+                  return  '<input class="dojoxGrid-input"  name="select${memberAs.association.name}" id="'+querydatapane${memberAs.association.name}[inRowIndex][1]+'"  type="checkbox"/>'
+              }
+			    }	  
+	  
+var layoutpane${memberAs.association.name}=[{
+	//根据field的值，依据默认的顺序，从js中的toArray转换方法返回的querydate中取数据
+	    cells: [ [
+			  {name: 'select', width: 3, get:getChoisepane${memberAs.association.name}},
+                { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
+#set ($comma = "")
+#set ($inum = 2)                       
+#foreach($member in $manageable.manageableAttributes)
+		#if ($member.name != ${manageable.manageableIdentifier.name})
+		  #if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+				 ${comma} {name: i18nStr.$member.name,field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #elseif ($member.type.dateType)
+				${comma}  {name: i18nStr.${member.name},field:${inum}, width: 8}
+				#set ($inum= $inum + 1)
+		  #else
+				${comma}  {name: i18nStr.$member.name, field: ${inum},width: 10}
+				#set ($inum= $inum + 1)
+		  #end
+		  #set ($comma = ", ")
+		#end
+#end  
+
+#foreach($member in $manageable.manageableAssociationEnds)//对于可修改的layout，($member in $manageable.manageableAssociationEnds)并if(!${member.many})  的字段应弹出Float的选择窗口待测试
+			${comma}  {name: i18nStr.$member.name,field: ${inum},get:function(inRowIndex){ var str='';if(querydatapane${memberAs.association.name}[inRowIndex]!=undefined && querydatapane${memberAs.association.name}[inRowIndex][${inum}]!=undefined&& querydatapane${memberAs.association.name}[inRowIndex][${inum}][2]!=undefined){str=querydatapane${memberAs.association.name}[inRowIndex][${inum}][2];} return str;} ,width: 10 }
+			#set ($inum= $inum + 1)
+			#set ($comma = ", ")			
+#end                        
+					]]}];	 
+					
+function getVOpane${memberAs.association.name}(queryvo){
+	var totalCount=0;
+      var pu = new SOAPClientParameters2();
+      pu.add('${manageable.name}VO',queryvo) ;
+      pu.add('pageNumber',pagenumberpane${memberAs.association.name}) ;
+	    pu.add('pageSize',pagesizepane${memberAs.association.name}) ;
+	    pu.add('orderBy',orderBypane${memberAs.association.name}) ;
+      SOAPClient.invoke(urlpane${memberAs.association.name},"get${manageable.name}", pu, false,  function GetEnu_callBack(ul, soapResponse){      
+           querydatapane${memberAs.association.name}=new Array();
+		   querydatapane${memberAs.association.name}=${manageable.name}VOtoArray_fun(ul,false);
+           totalCountpane${memberAs.association.name}=ul[ul.length-1]["ns:id"]; 
+      }); 
+      querydatapane${memberAs.association.name}.splice(querydatapane${memberAs.association.name}.length-1,1);
+      modelpane${memberAs.association.name}.setData(querydatapane${memberAs.association.name});
+      var totalpage=Math.ceil(new Number(totalCountpane${memberAs.association.name})/pagesizepane${memberAs.association.name});
+	  
+	if(totalpage>1){
+		if(pagenumberpane${memberAs.association.name}==1){
+			dijit.byId("but6pane${memberAs.association.name}").setDisabled(true);
+			dijit.byId("but7pane${memberAs.association.name}").setDisabled(false);
+		}else if(pagenumberpane${memberAs.association.name}==totalpage){
+			dijit.byId("but6pane${memberAs.association.name}").setDisabled(false);
+			dijit.byId("but7pane${memberAs.association.name}").setDisabled(true);
+		}else{
+			dijit.byId("but6pane${memberAs.association.name}").setDisabled(false);
+			dijit.byId("but7pane${memberAs.association.name}").setDisabled(false);
+		}
+	}else{
+		dijit.byId("but6pane${memberAs.association.name}").setDisabled(true);
+		dijit.byId("but7pane${memberAs.association.name}").setDisabled(true);
+	
+	}
+	if(pagesizepane${memberAs.association.name}==0){
+		totalpage=1;
+		dijit.byId("but6pane${memberAs.association.name}").setDisabled(true);
+		dijit.byId("but7pane${memberAs.association.name}").setDisabled(true);
+	}
+	if(totalpage==1)pagenumberpane${memberAs.association.name}=1;
+	
+	 document.getElementById("rowCountpane${memberAs.association.name}").innerHTML=i18nStr.di+" "+pagenumberpane${memberAs.association.name}+" "+i18nStr.page+" / "+i18nStr.totle+" "+totalpage+" "+i18nStr.page+" / "+i18nStr.sum+" "+totalCountpane${memberAs.association.name}+" "+i18nStr.rowSize; 	
+}
+
+ var select${memberAs.association.name}FunClick =function(){
+    var rep=new Array();
+    var allpeos=document.getElementsByName("select${memberAs.association.name}");
+        for(var i=0;i<allpeos.length;i++){
+          if(allpeos[i].checked==true){
+            //rep=allpeos[i].id;
+            if(ifMultPane${memberAs.association.name}==0){
+              rep=querydatapane${memberAs.association.name}[i];
+            }else{
+              rep[rep.length]=querydatapane${memberAs.association.name}[i];
+            }
+          }
+      }
+	   return rep;
+    //select${memberAs.association.name}Fun(rep);
+	//oldFloat${memberAs.association.name}.hide();
+}  					
+
+
+//------------init 
+ getVOpane${memberAs.association.name}(queryvopane${memberAs.association.name});
+      if(gridpane${memberAs.association.name}==undefined){
+	  			 gridpane${memberAs.association.name}= new dojox.Grid({
+					title: "ff",
+					id: "gridpane${memberAs.association.name}",
+					jsId: "gridpane${memberAs.association.name}",
+					structure: layoutpane${memberAs.association.name},
+					rowCount:querydatapane${memberAs.association.name}.length-1,
+					model:modelpane${memberAs.association.name}
+				}, dojo.byId("gridpane${memberAs.association.name}"));
+				
+			}else{ 
+			//gridpane${memberAs.association.name}.model.setData(querydatapane${memberAs.association.name}); 
+			} 
+//-------------	
+
+var allpagepane${memberAs.association.name}=function(){
+	pagesizepane${memberAs.association.name}=0;
+	getVOpane${memberAs.association.name}(queryvopane${memberAs.association.name});
+}
+var  pagesizeChangepane${memberAs.association.name}=function(mylabel){
+	pagesizepane${memberAs.association.name}=mylabel;
+	getVOpane${memberAs.association.name}(queryvopane${memberAs.association.name});
+}           
+var upPagepane${memberAs.association.name}= function(){
+	pagenumberpane${memberAs.association.name}--;
+	getVOpane${memberAs.association.name}(queryvopane${memberAs.association.name});
+}
+var downPagepane${memberAs.association.name}=function(){
+	pagenumberpane${memberAs.association.name}++;
+	getVOpane${memberAs.association.name}(queryvopane${memberAs.association.name});
+}
+ 
+
+   
+function querybuttonpane${memberAs.association.name}(){
+              //var p = new SOAPClientParameters2();
+              var d,n;
+              var validstate=0;
+              //queryvo${memberAs.association.name}.id=0 ;
+              queryvopane${memberAs.association.name}=new ${manageable.name}VOJs();
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+					  n=queryNumber_fun("pane${memberAs.association.name}${member.name}");
+					  if(n==null){validstate=1;}else if(n.upSign!="%"){queryvopane${memberAs.association.name}.${member.name}=n;}  
+		#elseif ($member.type.fullyQualifiedName == 'java.util.Calendar'||$member.type.fullyQualifiedName == 'java.util.Date')   
+					  d=queryDate_fun("pane${memberAs.association.name}${member.name}");
+					  if(d==null){validstate=1;}else if(d.upSign!="%"){queryvopane${memberAs.association.name}.${member.name}=d;}
+		#else
+					  if(querypane${memberAs.association.name}${member.name}.getDisplayedValue()!="")queryvopane${memberAs.association.name}.${member.name}=querypane${memberAs.association.name}${member.name}.getDisplayedValue();//
+		#end
+	#end
+#end
+			
+#foreach($member in $manageable.manageableAssociationEnds)
+	if(querypane${memberAs.association.name}${member.name}.getDisplayedValue()!=""){
+				var pane${memberAs.association.name}${member.name}Query= new ${member.type.name}VOJs();
+				//${member.name}Query.${memberAs.association.name}Name=query${member.name}.getDisplayedValue();
+				pane${memberAs.association.name}${member.name}Query.id=querypane${memberAs.association.name}${member.name}.getValue();
+				queryvopane${memberAs.association.name}.${member.name}=pane${memberAs.association.name}${member.name}Query;
+			  }
+#end
+
+			if(validstate==0){
+              pagenumber=1;
+			  getVOpane${memberAs.association.name}(queryvopane${memberAs.association.name});
+             }      
+       }
+#set ($totleinum = 0)   
+#foreach($member in $manageable.manageableAttributes)
+	#if ($member.name != ${manageable.manageableIdentifier.name})
+		#if ($member.type.dateType)
+			#set ($totleinum= $totleinum + 1)
+		#end
+		#set ($totleinum= $totleinum + 1)
+	#end
+#end
+#foreach($member in $manageable.manageableAssociationEnds)
+		#set ($totleinum= $totleinum + 1)
+#end
+	   
+</script>
+<div id="queryDivpane${memberAs.association.name}" style="margin-right: 0px;  height: ${queryHeight}px; display:none;" >
+					<table align="center" width=100% class="queryTable"  >
+	<tr >
+	<td align="center" style="{width:11%}" i18n="queryNote" >Please input criterial:</td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td>
+	</tr> 
+	<tr ><td align="center" style="{width:11%}"></td>
+	<td style="{width:22%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}" ></td>
+	<td style="{width:6%}" ></td>
+	<td style="{width:11%}"></td>
+	<td style="{width:22%}"></td></tr>  
+#set ($inum =1 ) 
+#set ($thirtype="")
+#foreach($member in $manageable.manageableAttributes)
+#if ($member.name != ${manageable.manageableIdentifier.name})
+#if ($inum==1)
+	#set ($firsttype="")
+	#set ($sectype="")
+	#set ($thirtype="")
+	#set ($inum=2) 
+                <tr>
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+			<td align="right" i18n="${member.name}" >${member.name}:</td>
+			<td align="left"  >
+							<span id="querypane${memberAs.association.name}${member.name}Img0"  ><input type="text" class="editerNumber"   jsId="querypane${memberAs.association.name}${member.name}"  id="querypane${memberAs.association.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1" style="{display:none}" ><input type="text"  class="editerNumberSmall" jsid="querypane${memberAs.association.name}${member.name}1"  id="querypane${memberAs.association.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"> <input type="text"  class="editerNumberSmall"  jsid="querypane${memberAs.association.name}${member.name}2"  id="querypane${memberAs.association.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="double")          
+	#elseif ($member.type.dateType)
+						<td align="right" i18n="${member.name}"  >${member.name}:</td> 
+						<td align="left"  colspan="3"><span id="querypane${memberAs.association.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${memberAs.association.name}${member.name}" id="querypane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${memberAs.association.name}${member.name}Time" id="querypane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1pane${memberAs.association.name}${member.name}" id="query1pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1pane${memberAs.association.name}${member.name}Time" id="query1pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2pane${memberAs.association.name}${member.name}" id="query2pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2pane${memberAs.association.name}${member.name}Time" id="query2pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+		#set ($firsttype="date") 
+	#else
+						<td align="right" i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						
+							#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="pane${memberAs.association.name}${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>
+		#set ($firsttype="str") 
+	#end
+#elseif ($inum==2)
+	#set ($inum=3) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+		#if ($firsttype=='double')
+							<td align="right" i18n="${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="querypane${memberAs.association.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${memberAs.association.name}${member.name}"  id="querypane${memberAs.association.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypane${memberAs.association.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${memberAs.association.name}${member.name}1"  id="querypane${memberAs.association.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+								<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${memberAs.association.name}${member.name}2"  id="querypane${memberAs.association.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end
+		#if ($firsttype=='date')
+							<td align="right" colspan="2" > </td>
+							<td align="right" i18n="${member.name}" >${member.name}:</td>
+							<td align="left"  >
+								<span id="querypane${memberAs.association.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${memberAs.association.name}${member.name}"  id="querypane${memberAs.association.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypane${memberAs.association.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${memberAs.association.name}${member.name}1"  id="querypane${memberAs.association.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+								<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${memberAs.association.name}${member.name}2"  id="querypane${memberAs.association.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td></tr>  //?????????????????????????????????
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+		#if ($firsttype=='str')
+							<td align="right"  i18n="${member.name}" >${member.name}:</td>
+							<td align="left" colspan="3" >
+								<span id="querypane${memberAs.association.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${memberAs.association.name}${member.name}"  id="querypane${memberAs.association.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span id="querypane${memberAs.association.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${memberAs.association.name}${member.name}1"  id="querypane${memberAs.association.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+								<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+								<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+								<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${memberAs.association.name}${member.name}2"  id="querypane${memberAs.association.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+								<img src="../image/nStart.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							</td>  
+			#set ($sectype="str")
+		#end                 
+	#elseif ($member.type.dateType)
+		#if ($firsttype=='double')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="5"><span id="querypane${memberAs.association.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${memberAs.association.name}${member.name}" id="querypane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="querypane${memberAs.association.name}${member.name}Time" id="querypane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1pane${memberAs.association.name}${member.name}" id="query1pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1pane${memberAs.association.name}${member.name}Time" id="query1pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2pane${memberAs.association.name}${member.name}" id="query2pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2pane${memberAs.association.name}${member.name}Time" id="query2pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td>
+			#set ($sectype="")
+			#set ($inum=1)
+		#end
+		#if ($firsttype=='date')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" ><span id="querypane${memberAs.association.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${memberAs.association.name}${member.name}" id="querypane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${memberAs.association.name}${member.name}Time" id="querypane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1pane${memberAs.association.name}${member.name}" id="query1pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1pane${memberAs.association.name}${member.name}Time" id="query1pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}">
+							<input class="editerDateSmaller"   jsId="query2pane${memberAs.association.name}${member.name}" id="query2pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2pane${memberAs.association.name}${member.name}Time" id="query2pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td> </tr><!--new modify-->
+			#set ($sectype="")
+			#set ($inum=1)
+		#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"   colspan="5"><span id="querypane${memberAs.association.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${memberAs.association.name}${member.name}" id="querypane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsid="querypane${memberAs.association.name}${member.name}Time" id="querypane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmall"   jsId="query1pane${memberAs.association.name}${member.name}" id="query1pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query1pane${memberAs.association.name}${member.name}Time" id="query1pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmall"   jsId="query2pane${memberAs.association.name}${member.name}" id="query2pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmall" jsId="query2pane${memberAs.association.name}${member.name}Time" id="query2pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end 
+#else
+	#if ($firsttype=='double')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left" colspan="3" >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="querypane${memberAs.association.name}${member.name}" jsId="querypane${memberAs.association.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="pane${memberAs.association.name}${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+							#end
+						</td>  
+	#set ($sectype="str")
+	#end
+	#if ($firsttype=='date')
+						<td align="right" colspan="2" ></td>
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							 #if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							 <input  id="querypane${memberAs.association.name}${member.name}" jsId="querypane${memberAs.association.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="pane${memberAs.association.name}${member.name}Store" />
+							#else
+								<input type="text" class="editerInput"  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}"   dojoType="dijit.form.TextBox"  />  
+							#end
+						</td></tr>
+	#set ($sectype="")
+	#set ($inum=1)
+	#end                  
+	#if ($firsttype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3" >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+						<input  id="querypane${memberAs.association.name}${member.name}" jsId="querypane${memberAs.association.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="pane${memberAs.association.name}${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+	#set ($sectype="str")
+	#end 
+	#end
+#elseif($inum==3)
+	#set ($inum=1) 
+	#if ($member.type.fullyQualifiedName == 'double' || $member.type.fullyQualifiedName == 'long')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+							<span id="querypane${memberAs.association.name}${member.name}Img0"  ><input type="text" class="editerNumber" jsId="querypane${memberAs.association.name}${member.name}"  id="querypane${memberAs.association.name}${member.name}"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1"  style="{display:none}" ><input type="text" class="editerNumberSmall" jsid="querypane${memberAs.association.name}${member.name}1"  id="querypane${memberAs.association.name}${member.name}1"  dojoType="mydojo.NumberTextBox"  /></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"> <input type="text" class="editerNumberSmall"  jsid="querypane${memberAs.association.name}${member.name}2"  id="querypane${memberAs.association.name}${member.name}2"  dojoType="mydojo.NumberTextBox"  /></span>
+							<img src="../image/nStart.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>  
+		#set ($thirtype="over")
+	#elseif ($member.type.dateType)
+						<td align="right"  > </td>
+						<td align="right"  ></td>
+					</tr><tr >
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  colspan="3"><span id="querypane${memberAs.association.name}${member.name}Img0"  ><input class="editerDate"   jsId="querypane${memberAs.association.name}${member.name}" id="querypane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTime" jsId="querypane${memberAs.association.name}${member.name}Time" id="querypane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img1" style="{display:none}" ><input class="editerDateSmaller"   jsId="query1pane${memberAs.association.name}${member.name}" id="query1pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query1pane${memberAs.association.name}${member.name}Time" id="query1pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<span hidefocus="true" style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgup">></span>
+							<span hidefocus="false"  style="{display:none}" onclick="selectSign(this);" id="querypane${memberAs.association.name}${member.name}Imgdown" >></span>
+							<span id="querypane${memberAs.association.name}${member.name}Img2div" style="{display:none}"><input class="editerDateSmaller"   jsId="query2pane${memberAs.association.name}${member.name}" id="query2pane${memberAs.association.name}${member.name}"  constraints="{datePattern:'yyyy-MM-dd'}" dojoType="dijit.form.DateTextBox"  />
+							<input class="editerTimeSmaller" jsId="query2pane${memberAs.association.name}${member.name}Time" id="query2pane${memberAs.association.name}${member.name}Time" value="00:00" dojoType="dijit.form.TimeTextBox" constraints="{timePattern:'HH:mm'}"   invalidMessage="Invalid time. Use HH:mm where HH is 00 - 23 hours."></span>
+							<img src="../image/start.gif" onclick="queryType(this);" id="querypane${memberAs.association.name}${member.name}Img" style="vertical-align:middle;margin-top:0px;">
+							
+						</td>
+		#set ($firsttype="date")
+		#set ($inum=2)
+	#else            
+		#if ($sectype=='str')
+						<td align="right"  i18n="${member.name}" >${member.name}:</td>
+						<td align="left"  >
+						#if ($stringUtils.indexOf($member.name,'Enum')!= -1)
+							<input  id="querypane${memberAs.association.name}${member.name}" jsId="querypane${memberAs.association.name}${member.name}" class="editerInput"  dojoType="dijit.form.FilteringSelect" store="pane${memberAs.association.name}${member.name}Store" />
+						#else
+							<input type="text" class="editerInput"  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}"   dojoType="dijit.form.TextBox"  />
+						#end
+						</td>  
+		#set ($thirtype="over")
+		#end       
+	#end
+	#if ($thirtype=="over"||$inum==1)        
+				  </tr>
+	#end      
+	#end
+	#end                       
+#end
+
+
+#foreach($member in $manageable.manageableAssociationEnds)
+	#if($inum ==1)
+					<tr><td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="pane${memberAs.association.name}${member.name}Store"  /></td>  
+			#set ($inum =2)
+	#elseif ($inum ==2)
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" colspan="3" ><input  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="pane${memberAs.association.name}${member.name}Store"  /></td>  
+			#set ($inum =3)
+	#elseif ($inum ==3)
+					<td align="right"  i18n="${member.name}"  ></td>
+					<td align="left" ><input  id="querypane${memberAs.association.name}${member.name}"  jsId="querypane${memberAs.association.name}${member.name}" class="editerInput" dojoType="dijit.form.myFilteringSelect" store="pane${memberAs.association.name}${member.name}Store"  /></td>
+					</tr>
+			#set ($inum =1)
+	#end	
+#end
+#if ($inum==2)     
+    <td align="right"    ></td><td align="right"    ></td><td align="right"    ></td><td align="right"    ></td></tr>
+#end
+#if ($inum==3)     
+    <td align="right"    ></td><td align="right"    ></td></tr>
+#end
+
+         <tr align="center"><td></td>
+           <td colspan="2"> <button dojoType="dijit.form.Button" onclick="querybuttonpane${memberAs.association.name}();" iconClass="queryIcon"  i18n="query" >query</button></td>
+           <td colspan="3"></td><td colspan="2"></td></tr>
+         </table>
+	</div>	
+	       	<div align="right">
+				<!--button dojoType="dijit.form.Button" id="selectpane${memberAs.association.name}" jsId="selectpane${memberAs.association.name}" onclick="select${memberAs.association.name}FunClick();" i18n="selectFloatButton" iconClass="plusIcon">ok</button-->
+				<button dojoType="dijit.form.Button" onclick="querydisplay('queryDivpane${memberAs.association.name}');" iconClass="queryIcon"  i18n="openQuery" >query</button>
+				<span id="rowCountpane${memberAs.association.name}"></span>
+						<button dojoType="dijit.form.myButton" onclick="upPagepane${memberAs.association.name}();"  id="but6pane${memberAs.association.name}" disabled='true' jsId="but6pane${memberAs.association.name}" iconClass="upPageIcon" >pageup</button><!--span dojoType="dijit.Tooltip" connectId="but6">pageup</span-->
+						<button dojoType="dijit.form.myButton" onclick="downPagepane${memberAs.association.name}();" id="but7pane${memberAs.association.name}" disabled='true' jsId="but7pane${memberAs.association.name}" iconClass="downPageIcon" >pagedown</button><!--span dojoType="dijit.Tooltip" connectId="but7">pagedown</span-->
+						<div  dojoType="dijit.form.myDropDownButton" iconClass="pageIcon" ><span>pageNumber</span>
+							  <div dojoType="dijit.Menu">
+								  <div dojoType="dijit.MenuItem" label="10"  iconClass="toPageIcon"		onClick="pageSizeChangepane${memberAs.association.name}(this.label);"></div>
+								  <div dojoType="dijit.MenuItem"  label="30" iconClass="toPageIcon"		onClick="pageSizeChangepane${memberAs.association.name}(this.label);"></div>
+							  <div dojoType="dijit.MenuItem"  label="50" iconClass="toPageIcon"		onClick="pageSizeChangepane${memberAs.association.name}(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="100" iconClass="toPageIcon"	onClick="pageSizeChangepane${memberAs.association.name}(this.label);"></div>
+									<div dojoType="dijit.MenuItem"  label="noPage" iconClass="noPageIcon"	onClick="allpagepane${memberAs.association.name}();"></div>
+							  </div><!--span dojoType="dijit.Tooltip" connectId="668"></span-->
+						</div>
+						<!--div dojoType="dijit.form.myDropDownButton" iconClass="pageStyleIcon"><span>pageStyle</span>
+						   <div dojoType="dijit.Menu">
+							 <div dojoType="dijit.MenuItem"  iconClass="rowIcon"		label="row"	onClick="pageStylepane${memberAs.association.name}(this.label);"></div>
+							 <div dojoType="dijit.MenuItem"  iconClass="colIcon"		label="col"	onClick="pageStylepane${memberAs.association.name}(this.label);"></div>
+						</div></div-->
+			</div>    
+	    <div style="{height:90%;width:100%}"  >
+	         <div id="gridpane${memberAs.association.name}"  dojoType="dojox.Grid" autoWidth="false"  jsId="pane${memberAs.association.name}"	model="modelpane${memberAs.association.name}"  structure="layoutpane${memberAs.association.name}"  ></div>
+      </div>          
+	  
+
+#end
+#end
+#end
