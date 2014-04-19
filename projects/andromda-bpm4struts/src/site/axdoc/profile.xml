@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document><properties><title>AndroMDA BPM4Struts Cartridge Profile</title></properties><body>
+    
+        
+            Most of the model elements will require a stereotype to be processed correctly, below you will find
+            a table indicating on which model element you may put what stereotype, it will also
+            denote which effect this has on the generation process.
+        
+        
+            Sometimes it happens you want to add information to the model but there is no clean way of doing it.
+            In those cases you may want to resort to tagged values, but these cases should be considered with
+            caution. A tagged value is something extra, something optional, and the application should
+            run fine without them.
+        
+        
+            Bpm4struts allows you to add tagged values here and there but provides a default value
+            in case they are missing.
+        
+    
+    <section name="AndroMDA BPM4Struts Cartridge Profile"><p>
+                This profile contains all elements that can be applied on the model used as the
+                MDA transformation process. These elements are specific to the AndroMDA BPM4Struts Cartridge component.
+            </p><div class="profileElementGroup"><a name="Data Types" class="profileElementGroupTitle">Data Types</a><div class="profileElementGroupDocumentation">
+                            @TODO: write the documentation for 'Data Types' profile element group !!!
+                        </div><ul><li><a href="#datatype::byte" title="">datatype::byte</a></li><li><a href="#datatype::char" title="">datatype::char</a></li><li><a href="#datatype::double" title="">datatype::double</a></li><li><a href="#datatype::float" title="">datatype::float</a></li><li><a href="#datatype::int" title="">datatype::int</a></li><li><a href="#datatype::long" title="">datatype::long</a></li><li><a href="#datatype::short" title="">datatype::short</a></li><li><a href="#datatype::Time" title="">datatype::Time</a></li><li><a href="#datatype::URL" title="">datatype::URL</a></li></ul></div><div class="profileElementGroup"><a name="Stereotypes" class="profileElementGroupTitle">Stereotypes</a><div class="profileElementGroupDocumentation">
+                            Stereotypes are the names you sometimes see appear in UML diagrams, they typically look
+                            like &lt;&lt;MyStereotype&gt;&gt; and can be applied on any type of UML model element.
+                        </div><ul><li><a href="#FrontEndException" title="Applied on: Transition">FrontEndException</a></li><li><a href="#FrontEndSessionObject" title="Applied on: Class">FrontEndSessionObject</a></li></ul></div><div class="profileElementGroup"><a name="Tagged Values" class="profileElementGroupTitle">Tagged Values</a><div class="profileElementGroupDocumentation">
+                            Sometimes it happens you want to add information to the model but there is no clean way
+                            of doing it. In those cases you may want to resort to tagged values, but these cases should
+                            be considered with caution. A tagged value is something extra, something optional,
+                            and the application should run fine without them.
+                        </div><div class="profileElementGroupDocumentation"><documentation>
+                Bpm4struts allows you to add tagged values here and there but provides a
+                default value in case they are missing.
+            </documentation></div><ul><li><a href="#@andromda.manageable.table.displayname" title="Applied on: A class with the &lt;&lt;Manageable&gt;&gt; stereotype">@andromda.manageable.table.displayname</a></li><li><a href="#@andromda.manageable.table.maxlistsize" title="Applied on: A class with the &lt;&lt;Manageable&gt;&gt; stereotype">@andromda.manageable.table.maxlistsize</a></li><li><a href="#@andromda.manageable.table.pagesize" title="Applied on: A class with the &lt;&lt;Manageable&gt;&gt; stereotype">@andromda.manageable.table.pagesize</a></li><li><a href="#@andromda.manageable.table.resolveable" title="Applied on: Association end to a class with the &lt;&lt;Manageable&gt;&gt; stereotype">@andromda.manageable.table.resolveable</a></li><li><a href="#@andromda.presentation.action.success.message" title="Applied on: Transition">@andromda.presentation.action.success.message</a></li><li><a href="#@andromda.presentation.action.warning.message" title="Applied on: Transition">@andromda.presentation.action.warning.message</a></li><li><a href="#@andromda.presentation.exception.type" title="Applied on: Transition">@andromda.presentation.exception.type</a></li><li><a href="#@andromda.presentation.view.field.format" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.field.format</a></li><li><a href="#@andromda.presentation.view.field.multibox" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.field.multibox</a></li><li><a href="#@andromda.presentation.view.field.radio" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.field.radio</a></li><li><a href="#@andromda.presentation.view.field.readonly" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.field.readonly</a></li><li><a href="#@andromda.presentation.view.field.required" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.field.required</a></li><li><a href="#@andromda.presentation.view.table.columns" title="Applied on: Parameter of type datatype::Collection going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.table.columns</a></li><li><a href="#@andromda.presentation.view.table.export" title="Applied on: Parameter of type datatype::Collection going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.table.export</a></li><li><a href="#@andromda.presentation.view.table.maxrows" title="Applied on: Parameter of type datatype::Collection going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.table.maxrows</a></li><li><a href="#@andromda.presentation.view.table.sortable" title="Applied on: Parameter of type datatype::Collection going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.view.table.sortable</a></li><li><a href="#@andromda.presentation.web.action.form.key" title="Applied on: A &lt;&lt;FrontEndUseCase&gt;&gt;">@andromda.presentation.web.action.form.key</a></li><li><a href="#@andromda.presentation.web.action.form.scope" title="Applied on: Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.action.form.scope</a></li><li><a href="#@andromda.presentation.web.action.redirect" title="Applied on: Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.action.redirect</a></li><li><a href="#@andromda.presentation.web.action.resettable" title="Applied on: Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.action.resettable</a></li><li><a href="#@andromda.presentation.web.action.tablelink" title="Applied on: Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.action.tablelink</a></li><li><a href="#@andromda.presentation.web.action.type" title="Applied on: Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.action.type</a></li><li><a href="#@andromda.presentation.web.view.field.calendar" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.calendar</a></li><li><a href="#@andromda.presentation.web.view.field.reset" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.reset</a></li><li><a href="#@andromda.presentation.web.view.field.rows" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype, while having @andromda.presentation.web.view.field.textarea">@andromda.presentation.web.view.field.rows</a></li><li><a href="#@andromda.presentation.web.view.field.size" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.size</a></li><li><a href="#@andromda.presentation.web.view.field.tablelink" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.tablelink</a></li><li><a href="#@andromda.presentation.web.view.field.type" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.type</a></li><li><a href="#@andromda.presentation.web.view.field.validators" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.validators</a></li><li><a href="#@andromda.presentation.web.view.field.validwhen" title="Applied on: Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.presentation.web.view.field.validwhen</a></li><li><a href="#@andromda.struts.view.table.decorator" title="Applied on: Parameter of type datatype::Collection going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype">@andromda.struts.view.table.decorator</a></li></ul></div><p>
+        
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="FrontEndException" class="profileElementTitle">FrontEndException</a><a href="#Stereotypes" title="Go to Stereotypes profile element group">(Back to Stereotypes)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Modeled on a transition it designates an exception occuring while processing an action,
+                    must exit an action state and enter a JSP page.
+                </documentation></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="FrontEndSessionObject" class="profileElementTitle">FrontEndSessionObject</a><a href="#Stereotypes" title="Go to Stereotypes profile element group">(Back to Stereotypes)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Class</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    These classes can be associated to controllers. They represent objects that persist
+                    during the session of the user. For each such session object associated with a controller
+                    the controller will have accessor methods for this object. <i>Use a dependency from the controller
+                    to the session object to properly model this relationship, a controller can depend on many
+                    such session objects; and in the same way a session object might be shared between controllers.</i>
+                </documentation></td></tr></table></div>
+        
+        
+            
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.action.type" class="profileElementTitle">@andromda.presentation.web.action.type</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates the type of trigger causing the action.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">form</value></code> (default)
+                                            </li><li><code><value>hyperlink</value></code></li><li><code><value>image</value></code></li><li><code><value>table</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.action.tablelink" class="profileElementTitle">@andromda.presentation.web.action.tablelink</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes this action applies on the information shown in a tabular format, you will need to specify
+                    the name of the table as the value, optionally suffix with a dot and the name of the column.
+                    If the column is specified the action will be rendered in that specific column, otherwise a new
+                    column will be created for it.
+                </documentation></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.action.form.scope" class="profileElementTitle">@andromda.presentation.web.action.form.scope</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    This allows one to override the action form scope defined
+                    by the <a href="namespace.html#actionFormScope">actionFormScope</a> namespace property.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>session</value></code></li><li><code><value>request</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.action.form.key" class="profileElementTitle">@andromda.presentation.web.action.form.key</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>A &lt;&lt;FrontEndUseCase&gt;&gt;</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes the key used to store this use-case's action forms under.
+                    This feature is useful when you are using Struts Tiles to execute more than one action at the
+                    same time; an example would be a sidebar such as a menu
+                    that automatically reloads on each request, you will not want this sidebar's action to collide
+                    with the form from the other 'real' action.
+                    <em>Please note that using this feature in combination with passing parameters across use-cases
+                    will not work, only use this feature for use-cases that stand on their own.</em>
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">form</value></code> (default)
+                                            </li><li><code><value>any string is allowed</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.action.resettable" class="profileElementTitle">@andromda.presentation.web.action.resettable</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Set this value to <code>true</code> if you want to be able
+                    to reset forms to their initial values
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.action.success.message" class="profileElementTitle">@andromda.presentation.action.success.message</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    On action completion will have a success message rendered on screen
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>
+                        Any message you would like to see displayed, it will be included in the resource bundle
+                        for internationalization
+                    </value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.action.warning.message" class="profileElementTitle">@andromda.presentation.action.warning.message</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    On action completion will have a warning message rendered on screen
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>
+                        Any message you would like to see displayed, it will be included in the resource bundle
+                        for internationalization
+                    </value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.field.required" class="profileElementTitle">@andromda.presentation.view.field.required</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes whether or not this is a required field. If a field is required its type will always be
+                    checked (you cannot enter a String value when an int is expected)
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.size" class="profileElementTitle">@andromda.presentation.web.view.field.size</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes the number of columns an input field should have.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">browser specific</value></code> (default)
+                                            </li><li><code><value>any strictly positive integer</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.rows" class="profileElementTitle">@andromda.presentation.web.view.field.rows</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>
+                    Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype,
+                    while having <code>@andromda.presentation.web.view.field.textarea</code>
+                </appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes the number of rows on a textarea field.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">5</value></code> (default)
+                                            </li><li><code><value>any strictly positive integer</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.field.readonly" class="profileElementTitle">@andromda.presentation.view.field.readonly</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates the parameter is read only, it's value cannot be entered by the user
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.field.format" class="profileElementTitle">@andromda.presentation.view.field.format</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    The format of this field's value.
+                    <p>
+                        <table cellpadding="5" rules="all">
+                            <tr>
+                                <th>Type</th>
+                                <th>Value</th>
+                                <th>Arguments</th>
+                                <th>Example</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>int, float, double, java.lang.Integer, java.lang.Float, java.lang.Double</td>
+                                <td>range</td>
+                                <td>2 of this type</td>
+                                <td>range 2 12</td>
+                                <td>Specifies in which range the value of this attribute must fall</td>
+                            </tr>
+                            <tr>
+                                <td>java.util.Date, java.sql.Date</td>
+                                <td>N/A</td>
+                                <td>[strict] (format)</td>
+                                <td>strict dd/MM/yyyy </td>
+                                <td>The format in which dates need to be specified (optionally strict) (*)</td>
+                            </tr>
+                            <tr>
+                                <td>java.lang.String</td>
+                                <td>minlength</td>
+                                <td>an integer value</td>
+                                <td>minlength 4</td>
+                                <td>Specifies the minimum number of characters</td>
+                            </tr>
+                            <tr>
+                                <td>java.lang.String</td>
+                                <td>maxlength</td>
+                                <td>an integer value</td>
+                                <td>maxlength 4</td>
+                                <td>Specifies the maximum number of characters</td>
+                            </tr>
+                            <tr>
+                                <td>java.lang.String</td>
+                                <td>pattern</td>
+                                <td>a regular expression</td>
+                                <td>pattern [a-zA-Z]*</td>
+                                <td>Validates format according to a regular expression (**), the leading
+                                    '^' and trailing '$' must not be specified</td>
+                            </tr>
+                            <tr>
+                                <td>java.lang.String</td>
+                                <td>creditcard</td>
+                                <td>N/A</td>
+                                <td>creditcard</td>
+                                <td>Validates the value to be a creditcard number, according to what is known as the Luhn check</td>
+                            </tr>
+                            <tr>
+                                <td>java.lang.String</td>
+                                <td>email</td>
+                                <td>N/A</td>
+                                <td>email</td>
+                                <td>Checks if the specified value is a possible email address, IP addresses are also taken into account,
+                                    you may specify this format in combination with other validator format, the only requirement is
+                                    that when you specify 'email' it should be the last sequence of characters;
+                                    delimit those validators using a space</td>
+                            </tr>
+                        </table>
+                    </p>
+                    <p>
+                        (*) The format is specified by the java.text.SimpleDateFormat class from the Java 2 SDK, please
+                        refer to the JavaDoc documentation of that class for more information, this format is case-sensitive
+                        <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/text/SimpleDateFormat.html">
+                        SimpleDateFormat JavaDoc</a>
+                        <br/>
+                        (**) The pattern expression is a Perl regular expression as you would you use in Javascript,
+                        by convention it requires the ^ and $ to denote respectively the beginning and ending of the pattern
+                        <a href="http://devedge.netscape.com/library/manuals/2000/javascript/1.5/guide/regexp.html#1010689">
+                        Netscape's guide to regular expressions in Javascript</a>
+                    </p>
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>Any of the formats listed above</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.type" class="profileElementTitle">@andromda.presentation.web.view.field.type</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates the type of parameter, this information will be used when rendering the pages,
+                    possible values are: link, multibox, text, textarea, checkbox, radio, select, password,
+                    hidden and plaintext.
+                    One of the tables below give some more information about field formats, for a list of
+                    possible types see <a href="user-guide.html#Field_Types">this page</a>
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">text</value></code> (default)
+                                            </li><li><code><value>select</value></code></li><li><code><value>password</value></code></li><li><code><value>hidden</value></code></li><li><code><value>textarea</value></code></li><li><code><value>checkbox</value></code></li><li><code><value>radio</value></code></li><li><code><value>link</value></code></li><li><code><value>multibox</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.field.multibox" class="profileElementTitle">@andromda.presentation.view.field.multibox</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Can only be used in combination with
+                    <code>@andromda.presentation.web.view.field.type=multibox</code> in a table. This tagged value
+                    specified the incoming page-variable that is holding the values to match against. If
+                    a match is found the checkbox will be checked for the corresponding row.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>any name of a page-variable that is a datatype::Collection type</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.field.radio" class="profileElementTitle">@andromda.presentation.view.field.radio</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Can be used in combination with the <code>@andromda.presentation.web.view.field.type=radio</code>
+                    tagged value. Use it to specify the number of options to render, the values of these
+                    options will always be the same, alternatively
+                    you can specify a comma-separated list of runtime properties if you prefer the values
+                    to be updateable at runtime. If this tagged value is not specified the cartridge will
+                    assume it to have value '3'.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a strictly positive integer</value></code></li><li><code class="defaultValue"><value default="true">3</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.validwhen" class="profileElementTitle">@andromda.presentation.web.view.field.validwhen</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Additional validation to be performed, specify a
+                    Struts-validator condition here, see
+                    <a href="http://struts.apache.org/struts-action/userGuide/building_view.html#validator" target="_blank">Struts-Validator</a> and go to the section labeled
+                    <code>http://struts.apache.org/struts-action/userGuide/building_view.html#validator</code>. The required
+                    parentheses will automatically be placed around your condition.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a Struts 'validwhen' condition</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.validators" class="profileElementTitle">@andromda.presentation.web.view.field.validators</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Custom validation to be performed, you can add one or more of your own validators here.
+                    Make sure you add your validator definitions in <code>validator-rules.xml</code>,
+                    there is a <a href="../andromda-cartridges/index.html#mergeMappingsUri">merge point</a>
+                    that can be used to have them automatically inserted.
+                    Validator values look like this: <code>myValidator</code>,
+                    <code>myValidator(myVar=myArg)</code>,
+                    <code>myValidator(myVar=myArg,myVar2=myArg2)</code>, etc...
+                    Specify each validator using a new value, don't specify all of them in a single value.
+                    Be careful when using multiple validators with the same 'var' name, the last one
+                    found will be used! Normally speaking this should not happen, so try to avoid it
+                    (I recommend against using names used by known validators: minlength,
+                    test, datePattern, ...)
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a call to one of your custom validators</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.calendar" class="profileElementTitle">@andromda.presentation.web.view.field.calendar</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes the parameter of type <code>datatype::Date</code> is to be rendered with a calendar
+                    popup next to it.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.tablelink" class="profileElementTitle">@andromda.presentation.web.view.field.tablelink</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    The value is of the format <code>table.column</code> where
+                    <code>table</code> denotes a parameter coming into
+                    the page of type Collection (and containing a tagged value
+                    to indicate it is to be displayed as a table); the
+                    <code>column</code> part is used to indicate which column of
+                    the corresponding table is to be used for linking.
+                    The result will be that the specified table column will contain
+                    a hyperlink reference to the action on which this parameter
+                    resides, this is useful to eg. display a list of persons and view
+                    their details by simply clicking on their names in the table
+                    (for that to work this parameter's type should be 'link', use the
+                    <code>@andromda.presentation.web.view.field.type=link</code> tagged value for that).
+                    The column name is optional, if you do not specify it the name
+                    of the parameter will be assumed.
+                    By setting the parameter type you can have any widget rendered into the table.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>
+                        any name of a table page-variable that is a datatype::Collection type followed by a dot
+                        and the name of the target column
+                    </value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.view.field.reset" class="profileElementTitle">@andromda.presentation.web.view.field.reset</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Parameter coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates whether or not the field should be reset (to its orginal value)
+                    after the execution of the action.  This is useful when you want only
+                    some of the parameters reset on the form but not all of them.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.table.columns" class="profileElementTitle">@andromda.presentation.view.table.columns</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>
+                    Parameter of type <code>datatype::Collection</code>
+                    going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype
+                </appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    The collection will be displayed in tabular format using the
+                    <a href="http://www.displaytag.org">&lt;display:*&gt;</a>
+                    tag-library. Each column in this table will be mapped to a property of the object
+                    type contained in the collection. So you will need to make sure all objects
+                    have accessor methods for the property you list in this tagged value.
+                    Properties are separated using a comma ','. More than one value maybe be assigned to
+                    this tag, all properties will correctly be resolved.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a comma-separated list of column names</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.table.maxrows" class="profileElementTitle">@andromda.presentation.view.table.maxrows</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>
+                    Parameter of type <code>datatype::Collection</code>
+                    going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype
+                </appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    This value represents the maximum number of entries shown at the same time,
+                    also known as the 'page size'. If the number of entries is a number greater
+                    than this value then a list of pages will be displayed to jump to the other values.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a strictly positive integer</value></code></li><li><code class="defaultValue"><value default="true">15</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.table.export" class="profileElementTitle">@andromda.presentation.view.table.export</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>
+                    Parameter of type <code>datatype::Collection</code>
+                    going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype
+                </appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Denotes the different formats into which it should be possible to export the list
+                    The tagged value may be assigned multiple values, use a combination of
+                    <code>csv</code>, <code>xml</code>, <code>pdf</code> and <code>excel</code>.
+                    By default it is possible to export to all known formats. You may use the
+                    <code>none</code> value to disable exporting for this table, this value will take
+                    priority over any other ones if specified.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">xml</value></code> (default)
+                                            </li><li><code class="defaultValue"><value default="true">csv</value></code> (default)
+                                            </li><li><code class="defaultValue"><value default="true">excel</value></code> (default)
+                                            </li><li><code class="defaultValue"><value default="true">pdf</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.view.table.sortable" class="profileElementTitle">@andromda.presentation.view.table.sortable</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>
+                    Parameter of type <code>datatype::Collection</code>
+                    going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype
+                </appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates whether or not it should be possible to sort the columns by clicking
+                    on the header.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">true</value></code> (default)
+                                            </li><li><code><value>false</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.struts.view.table.decorator" class="profileElementTitle">@andromda.struts.view.table.decorator</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>
+                    Parameter of type <code>datatype::Collection</code>
+                    going into an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype
+                </appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Whether or not to generate a displaytag table decorator for this table. Can be used
+                    in combination with the <code>generateTableDecorators</code> namespace property.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.exception.type" class="profileElementTitle">@andromda.presentation.exception.type</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates which exception this handler takes care of
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>the fully qualified name of a Java java.lang.Exception type</value></code></li><li><code class="defaultValue"><value default="true">java.lang.Exception</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.presentation.web.action.redirect" class="profileElementTitle">@andromda.presentation.web.action.redirect</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Transition coming out of an action state carrying the &lt;&lt;FrontEndView&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Indicates whether or not HTTP redirection should occur when forwarded on to the next action
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">false</value></code> (default)
+                                            </li><li><code><value>true</value></code></li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.manageable.table.maxlistsize" class="profileElementTitle">@andromda.manageable.table.maxlistsize</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>A class with the &lt;&lt;Manageable&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    The maximum number of rows to fetch from the database in a single operation. Tune this parameter
+                    to avoid downloading thousands of rows each time, most of the time the user will want to use
+                    the search facility to refine the result set
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a strictly positive integer</value></code></li><li><code class="defaultValue"><value default="true">250</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.manageable.table.pagesize" class="profileElementTitle">@andromda.manageable.table.pagesize</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>A class with the &lt;&lt;Manageable&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    The maximum number of records to show on the same page.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>a strictly positive integer</value></code></li><li><code class="defaultValue"><value default="true">20</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.manageable.table.displayname" class="profileElementTitle">@andromda.manageable.table.displayname</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>A class with the &lt;&lt;Manageable&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    The column representing this entity,by default the first &lt;&lt;Unique&gt;&gt; attribute found
+                    is taken but you might want to specify another column yourself. This value is used when one entity
+                    has a foreign key to another one and you want to select the value of this foreign key
+                    from a combobox and you would like to see a more meaningful label for each option, if no
+                    &lt;&lt;Unique&gt;&gt; attribute is found the identifier is used, which isn't very helpful.
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code><value>any column name present in this entity</value></code></li><li><code class="defaultValue"><value default="true">the name of the identifier column</value></code> (default)
+                                            </li></ul></td></tr></table></div>
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="@andromda.manageable.table.resolveable" class="profileElementTitle">@andromda.manageable.table.resolveable</a><a href="#Tagged Values" title="Go to Tagged Values profile element group">(Back to Tagged Values)</a></td></tr><tr><td>
+                            Applied on: <appliedOnElement>Association end to a class with the &lt;&lt;Manageable&gt;&gt; stereotype</appliedOnElement></td></tr><tr><td class="documentation"><documentation>
+                    Whether or not the assocation to another entity should be represented using a combobox. You might
+                    want to disable this feature if you are sure the target entity can have many different values
+                    (meaning a table with lots of records).
+                </documentation></td></tr><tr><td>
+                            Allowed values for this element:
+                            <ul><li><code class="defaultValue"><value default="true">true</value></code> (default)
+                                            </li><li><code><value>false</value></code></li></ul></td></tr></table></div>
+        
+        
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::char" class="profileElementTitle">datatype::char</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>   
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::byte" class="profileElementTitle">datatype::byte</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>   
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::short" class="profileElementTitle">datatype::short</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>   
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::int" class="profileElementTitle">datatype::int</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>  
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::long" class="profileElementTitle">datatype::long</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>   
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::float" class="profileElementTitle">datatype::float</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div> 
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::double" class="profileElementTitle">datatype::double</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>  
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::URL" class="profileElementTitle">datatype::URL</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>   
+            <div class="profileElement"><table><tr><td class="profileElementTitle"><a name="datatype::Time" class="profileElementTitle">datatype::Time</a><a href="#Data Types" title="Go to Data Types profile element group">(Back to Data Types)</a></td></tr><tr><td class="documentation">
+                                No documentation available
+                            </td></tr></table></div>
+        
+    </p></section>
+</body></document>
