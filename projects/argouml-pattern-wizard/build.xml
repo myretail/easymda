@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- ######################################################################### -->
+<!-- Building the latest versions of this ArgoUML module is automated using    -->
+<!-- Apache Ant which is a very handy tool that uses a build file written in   -->
+<!-- XML (this one) to describe the build process and its dependencies.        -->
+<!--                                                                           -->
+<!-- You can use this build file by running Ant from the command line with     -->
+<!--     ant [options] [target]                                                -->
+<!-- or from within an Integrated Development Environment like Eclipse.        -->
+<!--                                                                           -->
+<!-- For more information:                                                     --> 
+<!--     - about Ant refer to http://ant.apache.org/                           -->
+<!--     - about what this build file can do see the target "usage".           -->
+<!-- ######################################################################### -->
+
+<project name="argouml-pattern-wizard" default="usage" basedir=".">
+	
+  <!-- ======================================================================= -->
+  <!-- Import another build-file that provides a task for calculating the      -->
+  <!-- buildnumber <years on market> (1 digit) + <day number> (3 digits)       -->
+  <!-- ======================================================================= -->
+  <import file="buildnumber.xml"/>	
+	
+  <!-- ======================================================================= -->
+  <!-- Initialise the needed properties                                        -->
+  <!-- ======================================================================= -->
+  <target name="init">
+    <echo message="Initialising the needed properties ..."/> 	  	
+    <!-- set the root dir for ArgoUML
+         (it has to be a absolute path which is used in the *.properties) -->
+    <property name="argo.root.dir" value="${basedir}/.."/>
+    <!-- import Eclipse specific ArgoUML properties -->
+    <property file="${argo.root.dir}/argouml/eclipse-ant-build.properties"/>
+    <!-- set global properties for this build -->
+    <property file="module.properties"/>
+    <!-- set ArgoUML default properties -->
+    <property file="${argo.root.dir}/argouml/default.properties"/>
+    <!-- set the classpath -->
+    <path id="argo.classpath">
+      <!-- all jar files in the lib directory -->
+      <fileset dir="${argo.build.dir}">
+        <include name="*.jar"/>
+      </fileset>
+    </path>
+    <!-- set users ant properties (if present) -->
+    <property file="${user.home}/.argo.ant.properties"/>
+    <property file="${user.home}/.ant.properties"/>
+  </target>
+
+  <!-- ======================================================================= -->
+  <!-- Help on usage                                                           -->
+  <!-- ======================================================================= -->
+  <target name="usage" depends="init" description="Display usage informations.">
+    <echo message="'${module.name}' Build file"/>
+    <echo message="-----------------------------------------------------------"/>
+    <echo message="ant [options] [target]"/>
+    <echo message=" "/>
+    <echo message="Available targets:"/>
+    <echo message=" "/>
+    <echo message="    compile --> compiles the source code to the tree"/> 
+    <echo message="                below the ${module.build.dir} folder"/>
+    <echo message="    package --> generates the ${module.jarfile.name}"/>	
+    <echo message="    run     --> runs ArgoUML with ${module.jarfile.name}"/>
+    <echo message="    install --> moves the created ${module.jarfile.name}"/> 
+    <echo message="                into the ArgoUML ext folder."/>  	
+    <echo message="    usage   --> show this message (default target)"/>
+    <echo message=" "/>
+    <echo message="-----------------------------------------------------------"/>
+    <echo message=" See the comments inside the build.xml file for more details"/>
+  </target>
+
+  <!-- ======================================================================= -->
+  <!-- Prepares the build directories                                          -->
+  <!-- ======================================================================= -->
+  <target name="prepare" depends="init, clean, generate-buildnumber">	
+    <echo message="Preparing the build directories ..."/>  	
+    <!-- create build directorie -->    
+    <mkdir dir="${module.build.dest.dir}"/>  	
+    <!-- copy the sources into the compilation src folder -->
+    <copy todir="${module.build.src.dir}">
+      <fileset dir="${module.src.dir}"/>
+      <filterset>
+        <!-- replace tokens in the source files with the corresponding values --> 
+        <filter token="VERSION" value="${module.version}"/>
+        <filter token="BUILD" value="${build.number}"/>
+      </filterset>
+    </copy>  	
+    <!-- create i18n directorie and copy the localization files -->
+    <mkdir dir="${module.build.i18n.dir}"/>
+    <copy todir="${module.build.i18n.dir}">
+      <fileset dir="${module.src.i18n.dir}"/>
+    </copy> 
+    <!-- create image directorie and copy all image files-->
+    <mkdir dir="${module.build.image.dir}"/>
+    <copy todir="${module.build.image.dir}">
+      <fileset dir="${module.src.image.dir}"/>
+    </copy> 
+  </target>
+
+  <!-- ======================================================================= -->
+  <!-- Compiles the source directory                                           -->
+  <!-- ======================================================================= -->
+  <target name="compile" depends="prepare" description="Compile the sources."> 
+    <echo message="Compiling the sources ..."/>  	
+    <!-- Compile the source code -->
+    <javac srcdir="${module.build.src.dir}" destdir="${module.build.dest.dir}" 
+           optimize="${optimize}" verbose="${verbose}" debug="${debug}"  
+    	   deprecation="${deprecation}" excludes="${excluded.files}"
+           source="${source.level}" target="${target.level}">     
+      <classpath>
+        <path refid="argo.classpath"/> 
+      </classpath>
+    </javac>
+  </target>
+
+  <!-- ======================================================================= -->
+  <!-- Creates the jar file                                                    -->
+  <!-- ======================================================================= -->
+  <target name="jar" depends="compile" description="Create the module jar file.">  	
+    <echo message="Creating the module jar file ..."/>  	
+    <!-- put everything in ${module.build.dest} into the ${module.jarfile} -->
+    <jar jarfile="${module.jarfile}" basedir="${module.build.dest.dir}"
+         includes="${included.files}" excludes="${excluded.files}">  
+      <!-- create the manifest.mf -->
+      <manifest>
+        <attribute name="Class-Path" value="argouml.jar"/>
+        <section name="${main.class.name}">
+          <attribute name="Extension-name" value="module.${module.name}"/>
+          <attribute name="Specification-Title" value="ArgoUML Dynamic Load Module"/>
+          <attribute name="Specification-Version" value="${module.version}"/>
+          <attribute name="Specification-Vendor" value="University of California"/>
+          <attribute name="Implementation-Title" value="${module.name} - ArgoUML Module"/>
+          <attribute name="Implementation-Version" value="${module.version}"/> 
+          <attribute name="Implementation-Vendor" value="Rene Lindhorst"/>
+        </section>
+      </manifest>
+    </jar>     
+  </target>
+	
+  <!-- ======================================================================= -->
+  <!-- Move the created jar file into the ArgoUML extension directory          -->
+  <!-- ======================================================================= -->
+  <target name="install" depends="jar" 
+          description="Move the created jar into the ArgoUML ext directory.">  	 
+    <echo message="Installing the module ..."/>  	  	
+    <!-- create argo ext directorie -->
+    <mkdir dir="${argo.build.ext.dir}"/>
+    <!-- copy the module into the ext dir -->
+    <copy file="${module.jarfile}" todir="${argo.build.ext.dir}"/>
+  </target>
+
+  <!-- ======================================================================= -->
+  <!-- Run ArgoUML with the created module                                     -->
+  <!-- ======================================================================= -->
+  <target name="run" depends="install"
+          description="Run ArgoUML with the created module.">    	
+    <echo message="Executing ArgoUML with the module ..."/>
+    <!-- run ArgoUML -->
+    <java jar="${argo.jarfile}" dir="${argo.build.dir}" fork="yes"/>
+  </target>
+	
+  <!-- ======================================================================= -->
+  <!-- Run ArgoUML with the created module in debug mode                       -->
+  <!-- ======================================================================= -->
+  <target name="debug" depends="install" 
+          description="Run ArgoUML with the created module in debug mode.">  	
+    <echo message="Executing ArgoUML with the module in debug mode ..."/>  	
+    <echo message="+ ${module.name} v${module.version} (build ${build.number})"/>
+    <!-- run ArgoUML wit logging activated-->
+    <java jar="${argo.jarfile}" dir="${argo.build.dir}" fork="yes">
+      <sysproperty key="log4j.configuration" 
+  	  	           value="org/argouml/resource/full_console.lcf"/> 
+    </java>
+  </target>
+
+  <!-- ======================================================================= -->
+  <!-- Clean targets                                                           -->
+  <!-- ======================================================================= -->
+  <target name="clean" depends="init" 
+          description="Remove files generated by any of the other targets.">      
+    <echo message="Clean up ..."/>      
+    <!-- Delete the .jar file -->
+    <delete file="${argo.build.dir}/ext/${module.jarfile.name}"/>
+    <!-- Delete the ${module.build.dir} directory tree -->
+    <delete dir="${module.build.dir}"/>
+  </target>
+	
+  <!-- ======================================================================= -->
+  <!-- Generate the code documentation (API)                                   -->
+  <!-- ======================================================================= -->
+  <target name="javadoc" depends="init" 
+          description="Generate the code documentation (API).">	
+    <echo message="Generating the Javadoc ..."/>  	
+    <mkdir dir="${module.javadoc.dir}"/>
+    <javadoc doctitle="${module.name} API Documentation" use="true" 
+             private="true" windowtitle="${module.name} ${module.version}"  
+             author="true" header="" bottom="© ${copyright}" splitindex="true"
+	         group="${module.name} 'org.argouml.*'" packagenames="org.argouml.*"
+	         sourcepath="${module.src.dir}" destdir="${module.javadoc.dir}"		     
+		     classpathref="argo.classpath"/>
+  </target>
+
+</project>
+<!-- End of file -->

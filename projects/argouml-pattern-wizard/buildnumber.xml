@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- ######################################################################### -->
+<!-- Building the latest versions of this ArgoUML module is automated using    -->
+<!-- Apache Ant which is a very handy tool that uses a build file written in   -->
+<!-- XML (build.xml) to describe the build process and its dependencies.       -->
+<!-- The build.xml file includes this file!                                    -->
+<!--  																           -->
+<!-- For more information see the build.xml.                                   --> 
+<!-- ######################################################################### -->
+
+<project name="buildnumbers" default="generate-buildnumber">
+
+  <!-- ======================================================================= -->
+  <!-- Taskdefinitions for externel tools                                      -->
+  <!-- ======================================================================= -->	
+  <!-- Ant-Contrib is a collection of tasks which are used to calculate        -->
+  <!-- the "build number".                                                     -->
+  <!-- see http://ant-contrib.sourceforge.net/tasks/                           -->
+  <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="tools/ant-contrib.jar"/>
+	  
+  <!-- ======================================================================= -->
+  <!-- Generate the build number ("years on market" + "day number")            -->
+  <!-- ======================================================================= -->	
+  <target name="generate-buildnumber">
+	
+	<echo message="Generate the build number ..."/>
+		
+ 	<!-- Create the time stamps -->
+ 	<tstamp>
+	  <format property="TODAY" pattern="dd/MM/yyyy"/>
+	  <format property="DAY" pattern="dd"/>
+ 	  <format property="MONTH" pattern="MM"/>
+ 	  <format property="YEAR" pattern="yyyy"/>
+ 	</tstamp> 
+	
+  	<!-- Calculating the Day Number accordingt to this algorithm:  	
+			// determine the number of days of the past month
+			switch (MONTH) {
+				case 01: days.past.month = 0;
+				case 02: days.past.month = 31;
+				case 03: days.past.month = 59;
+				case 04: days.past.month = 90;
+				case 05: days.past.month = 120;
+				case 06: days.past.month = 151;
+				case 07: days.past.month = 181;
+				case 08: days.past.month = 212;
+				case 09: days.past.month = 243;
+				case 10: days.past.month = 273;
+				case 11: days.past.month = 304;
+				case 12: days.past.month = 334;
+			}	
+				
+			// make some calculations
+			year%4   = YEAR % 4;
+			year%100 = YEAR % 100;
+			year%400 = YEAR % 400;
+				
+			// if the month is not january, detemine if the year is a leap year 
+		  	if ( (MONTH != 01) && (((year%4 == 0) && (year%100 != 0)) || (year%400 == 0)) ) {
+		  		// than at 1 day to the number of past days
+		  		days.past.month = days.past.month + 1;
+			}
+					
+			// calculate the Day Number
+			day.number = days.past.month + DAY;
+  	--> 	
+    <switch value="${MONTH}">
+      <case value="01"> <property name="days.past.month" value="0"/> </case>
+      <case value="02"> <property name="days.past.month" value="31"/> </case>
+	  <case value="03"> <property name="days.past.month" value="59"/> </case>
+      <case value="04"> <property name="days.past.month" value="90"/> </case>
+      <case value="05"> <property name="days.past.month" value="120"/> </case>
+      <case value="06"> <property name="days.past.month" value="151"/> </case>
+      <case value="07"> <property name="days.past.month" value="181"/> </case>
+      <case value="08"> <property name="days.past.month" value="212"/> </case>
+      <case value="09"> <property name="days.past.month" value="243"/> </case>
+      <case value="10"> <property name="days.past.month" value="273"/> </case>
+      <case value="11"> <property name="days.past.month" value="304"/> </case>
+      <case value="12"> <property name="days.past.month" value="334"/> </case>
+    </switch>
+    <math result="year%4" operand1="${YEAR}" operation="%" operand2="4" datatype="int"/>
+    <math result="year%100" operand1="${YEAR}" operation="%" operand2="100" datatype="int"/>
+    <math result="year%400" operand1="${YEAR}" operation="%" operand2="400" datatype="int"/>  	
+    <if>
+    	  <and>
+    	  	<not> <equals arg1="${MONTH}" arg2="01" /> </not>
+        <or>
+          <and>
+            <equals arg1="${year%4}" arg2="0" />
+            <not> <equals arg1="${year%100}" arg2="0" /> </not>
+          </and>
+          <equals arg1="${year%400}" arg2="0" />
+        </or>
+    	  </and>
+      <then>
+        <math result="days.past.month" operand1="${days.past.month}" operation="+" operand2="1" datatype="int"/>
+      </then>
+    </if>
+  	<math result="day.number" operand1="${days.past.month}" operation="+" operand2="${DAY}" datatype="int"/>
+  	
+  	<!-- calculate the number of years this product is on the market-->
+  	<math result="years.on.market" operand1="${YEAR}" operation="-" operand2="${year.of.release}" datatype="int"/>
+  	<math result="years.on.market" operand1="${years.on.market}" operation="+" operand2="1" datatype="int"/>
+  	
+  	<!-- generate the build number consisting of "years on market" (1 digit) + "day number" (3 digits) 
+  	     accordingt to this algorithm:
+  	     	if (day.number.length == 1) version.number = years.on.market+"00"+day.number;
+  	     	elseif (day.number.length == 2) version.number = years.on.market+"0"+day.number;
+  	     	else version.number = years.on.market+""+day.number;
+  	-->
+  	<if>
+  	  <length string="${day.number}" length="1"/>
+  	  <then>
+  	    <property name="build.number" value="${years.on.market}00${day.number}"/>
+  	  </then>
+  	  <elseif>
+  	    <length string="${day.number}" length="2"/>
+  	  	<then>
+  	  	  <property name="build.number" value="${years.on.market}0${day.number}"/>
+  	  	</then>
+  	  </elseif>
+  	  <else>
+  	  	<property name="build.number" value="${years.on.market}${day.number}"/>
+  	  </else>
+  	</if>       
+    <echo message="build ${build.number}"/>      
+  </target> 	
+	
+</project>
+
+<!-- End of file -->
