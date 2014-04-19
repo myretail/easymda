@@ -1,3 +1,6 @@
+old.hg
+target
+.metadata
 .DS_Store
 .svn
 tools/eclipse/
