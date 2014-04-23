@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataContact[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataContact[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -57,7 +57,7 @@ String peopleId = request.getParameter("peopleId");
 	    dojoContact.initContact();
 	     </script>
 
-	 		<script type="text/javascript" src="CustomerSelectPane.js"></script><!--????,??????????-->
+	 		<script type="text/javascript" src="CustomerSelectPane.js"></script><!--Ò»Òª,Ò»Ô¶Â£Í²Òª-->
 	 	 				<script type="text/javascript" >
 	  var urlContact = getUrl()+ "services/ContactManageService";
 	  var deletedataContact =  new Array();
@@ -82,7 +82,7 @@ String peopleId = request.getParameter("peopleId");
 	}
 
 							                  // totleinum = 2 
-	var mainLayout =[{//��?????��???????????��??��?????colSpantoggle
+	var mainLayout =[{//è·æ¯è¦æ¯ä¾æ¶è¦è·åºcolSpantoggle
 					//onBeforeRow: onBeforeRow,
 					 cells: [
                       [
@@ -138,7 +138,7 @@ function getDetailContact(inRowIndex){
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 var childRow= ${childRow};
 var layoutInRowIndex;	  
-function buildSubgridContact(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridContact(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		//var child = inCell.getNode(inRowIndex).lastChild;
@@ -167,7 +167,7 @@ function buildSubgridContact(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -175,7 +175,7 @@ function buildSubgridContact(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id
 			}	      				
 		//}
 		
-		////////////////////////////////////////////////////////////////////////////////var detailDate=[];//??/
+		////////////////////////////////////////////////////////////////////////////////var detailDate=[];//Í¡/
 		detailDate[0]=querydataContact[inRowIndex];  
 	    modelContactDetail=new dojox.grid.data.Table(null, detailDate);
 		if (subGridMainDetail) {
@@ -205,7 +205,7 @@ function buildSubgridContact(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 */
 function querybuttonContact(){
               //var p = new SOAPClientParameters2();

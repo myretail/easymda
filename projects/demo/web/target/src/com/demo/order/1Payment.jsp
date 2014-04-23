@@ -65,10 +65,10 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 							
-/*//????��?
+/*//Úµð¾°¶
 					function setOrderRowdDetailFun(inrow,OrderRowdColNo){
 					return querydata[inrow][OrderRowdColNo];
 				}
@@ -79,16 +79,16 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.newAttr1, field: 2,width: 8}
 					       				,   {name: i18nStr.newAttr2, field: 3,width: 8}
 					 
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.payment,field: 4,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][4]!=undefined && querydata[inRowIndex][4][2]){str=querydata[inRowIndex][4][2];strid=querydata[inRowIndex][4][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoPayment.detailFloatOrderRowdData=querydata['+inRowIndex+'][4];dojoPayment.detailOrderRowd('+querydata[inRowIndex][4][1]+','+inRowIndex+',4,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -185,9 +185,9 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('PaymentId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addnewAttr1").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addnewAttr2").setValue(querydata[e.rowIndex][3]);
 						 			 
 								dijit.byId("addpayment").setValue(querydata[e.rowIndex][4][1]);
@@ -206,10 +206,10 @@ var addDivAdd = function(){
 	 //if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 //if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 	 //add
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addnewAttr1").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addnewAttr2").setValue('');
 														
@@ -225,13 +225,13 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('PaymentId').value;
 	var passAll=0;
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addnewAttr1").validate(true)){
 					vobject.newAttr1=dijit.byId("addnewAttr1").getValue();
 				}else{
 					setErrorClass(dijit.byId("addnewAttr1")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addnewAttr2").validate(true)){
 					vobject.newAttr2=dijit.byId("addnewAttr2").getValue();
 				}else{

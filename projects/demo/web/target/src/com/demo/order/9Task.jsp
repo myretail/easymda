@@ -64,22 +64,22 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 															
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
             {name: i18nStr.num,field:2, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
 		             ,  {name: i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
 		        				    ,   {name: i18nStr.remark, field: 4,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.taskForm,field: 5,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][5]!=undefined && querydata[inRowIndex][5][2]){str=querydata[inRowIndex][5][2];strid=querydata[inRowIndex][5][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoTask.selectTaskForm('+strid+','+inRowIndex+',5,0,event);"  >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -250,11 +250,11 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('TaskId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addnum").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addvolumne").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][4]);
 						 			 
 								dijit.byId("addtaskForm").setValue(querydata[e.rowIndex][5][1]);

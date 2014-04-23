@@ -1,5 +1,5 @@
 //${member.type.name}SubCrud.js==TaskSubCrud.js
-//?????�¡���?��??var mainTable=new VO();
+//»ñµÃÖ÷±íÀàÐÍvar mainTable=new VO();
 
 /*var urle2 = getUrl()+ "services/BasicManageService";   
 				*/
@@ -104,13 +104,13 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle){
 	var myLayout=[{  
 				//noscroll: true,
-				cells: [//?????��??????????????????????12????��???????
+				cells: [//ÓÅ»¯Ê±¿É¼ÓÈë£ºÈç¹ý¼ÇÂ¼Êý³¬¹ý12£¬¼´±äÎªÁ½ÐÐ
                       [
 				  				  {name: pre+i18nStr.num,field:2, width: 8,headerStyles:mystyle}
 						  						  				 ,  {name: pre+i18nStr.volumne,field:3, width: 8,headerStyles:mystyle}
 						  						  				,   {name: pre+i18nStr.remark, field: 4,width: 10,headerStyles:mystyle}
 						  				
-//?????????????????????????????????????????????????/??manageableAssociationEnds????????false??true?????????�¡���????????????????????????????????
+//?????????????????????????????????????????????????/´ÓmanageableAssociationEndsÖÐÏÈÈ¥µôfalseÎªtrue£»ÔÙÈ¥³ýÖ÷±í£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
 				     
 					]]}];	 
 					return myLayout; 
@@ -120,21 +120,21 @@ childLayoutOdd=buildChildLayout(pre,headerstyleodd);
 			
 var childAddLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
                        
                                  cells: [ [
-                                            //{name: '????', width: 3, get:getChoise},
+                                            //{name: 'Ñ¡Ôñ', width: 3, get:getChoise},
                                            { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
             {name: i18nStr.num,field:2, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
 		             ,  {name: i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
 		        					,   {name: i18nStr.remark, field: 4,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 						  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 		                                        ] ]
                            }]; 
 
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 		function selectTaskFormFun(rep){
 		querydataSub[dojoTaskForm.selectTaskFormInRow][dojoTaskForm.noTaskForm]=rep;
 		gridSub.updateRow(dojoTaskForm.selectTaskFormInRow);		

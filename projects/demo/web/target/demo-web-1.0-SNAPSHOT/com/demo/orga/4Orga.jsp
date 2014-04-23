@@ -47,7 +47,7 @@ String peopleId = request.getParameter("peopleId");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.Orga");
 
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 														dojo.require("projectDojo.OrgaPeoples");
 						
 
@@ -64,7 +64,7 @@ String peopleId = request.getParameter("peopleId");
  	<script type="text/javascript" >
 	  var dojoOrga= new  projectDojo.Orga();
 	  dojoOrga.initOrga();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							
 							 var dojoOrgaPeoples= new  projectDojo.OrgaPeoples();
 				dojoOrgaPeoples.initOrgaPeoples();
@@ -81,15 +81,15 @@ String peopleId = request.getParameter("peopleId");
 	  var modelOrga = new dojox.grid.data.Table(null, querydataOrga);
 	  var urle = getUrl()+ "services/BasicManageService";    
 
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
 
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 											 
 	var layoutSingleRowQuery=[{
-		//field????????��??��??js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³í©í¼´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -106,7 +106,7 @@ String peopleId = request.getParameter("peopleId");
 					
 					
 					
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 
 /*	dojo.connect(dijit.byId("OrgaAFTab"), "selectChild", function(e){
 			if (dijit.byId("OrgaAFTab").selectedChildWidget.id=="orga2orgaPeoples"){

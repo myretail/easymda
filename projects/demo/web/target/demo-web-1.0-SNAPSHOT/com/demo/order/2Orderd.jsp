@@ -59,13 +59,13 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
 
-	 //???��????1212??layout??layoutstructure
+	 //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 	 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  																																	
 
 	var layoutSingleRow=[{
           
-                 //field????????��???js??toArray��???querydate??
+                 //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
                        
                                  cells: [ [
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -84,8 +84,8 @@ String peopleId = request.getParameter("peopleId");
 		    		,  {name: i18nStr.completeTime,field:14, width: 10}
 		    		,  {name: i18nStr.remark,field:15, width: 10}
 		  
-//??��????
-		//??��????
+//Úµí²»Ð¶
+		//Úµí²»Ð¶
 					 ,   {name: i18nStr.customer,field: 17,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][17]!=undefined && querydata[inRowIndex][17][2]!=undefined){str=querydata[inRowIndex][17][2];strid=querydata[inRowIndex][17][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrderd.detailFloatCustomerData=querydata['+inRowIndex+'][17];dojoOrderd.detailCustomer('+querydata[inRowIndex][17][1]+','+inRowIndex+',17,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -97,10 +97,10 @@ var layoutNoscroll=[ {
 				   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} }
 		]]},{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						  // { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						  // { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.customerOrderNo, field: 2,width: 8}
@@ -118,8 +118,8 @@ var layoutNoscroll=[ {
 		    		,   {name: i18nStr.completeTime,field:14, width: 8}
 		        			    ,   {name: i18nStr.remark, field: 15,width: 10 }
 					 
-//????��?
-		//????��?
+//Úµð¾°¶
+		//Úµð¾°¶
 					 ,   {name: i18nStr.customer,field: 17,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][17]!=undefined && querydata[inRowIndex][17][2]){str=querydata[inRowIndex][17][2];strid=querydata[inRowIndex][17][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrderd.detailFloatCustomerData=querydata['+inRowIndex+'][17];dojoOrderd.detailCustomer('+querydata[inRowIndex][17][1]+','+inRowIndex+',17,0,event,0);" ';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -141,7 +141,7 @@ function getCheckOrderd(){}
 
 var layoutTwoRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [
                       [

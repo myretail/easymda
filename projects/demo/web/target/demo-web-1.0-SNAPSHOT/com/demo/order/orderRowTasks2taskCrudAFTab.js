@@ -1,16 +1,16 @@
-	  	  //��???��?????����??4.1????����??---begin---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
-	   //true??"????����/????����"?��"??����"??"????����"/"��?????����"?????��???��????����
-//---end---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
+	  	  //±¾Ä£°åµÄÔª±íÊÇ4.1µÄÔª±í£¬---begin---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+	   //true£º"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ¶à¶Ô¶à¹ØÏµ±í
+//---end---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
 																																								//set (= orderRowTasks2task)
 	//----------lastMenber = org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]   firstMenber=org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow]
 	//orderRowTasks2taskAFTab.js	
 
-	//---begin---------????"????����" ?? "????����"??????tree?��??����sno('????����'???��???��????����)
-																																																																																																															    //---end---------????"????����" ?? "????����"??????tree?��??����sno
-//begin--????"????����" ?? "????����"???????�¡���('????����'???��???��????����)
-		//begin--????"????����" ?? "????����"??????��?����('????����'???��???��????����)
-//"????����" ?? "????����"??��?����(4OrderRowd.jsp)
-//???????��?????????��???��??????4.6.js.vsl?��??????????��?4.2.js.vsl?��??(?4-n.js.vsl)
+	//---begin---------ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªtree½á¹¹±ísno('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+																																																																																																															    //---end---------ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªtree½á¹¹±ísno
+//begin--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªÖ÷±í('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+		//begin--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎª×Ó±í('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+//"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ×Ó±í(4OrderRowd.jsp)
+//Õâ¸ö·ÖÖ§²»ÔÚÕâÀïÉú³É´úÂë£¬ÓÉ4.6.js.vslÉú³É£¬Ãû³ÆÓë±¾4.2.js.vslÏàÍ¬(?4-n.js.vsl)
 		  var NUorderRowTasks2task = false;//needUpdate
 		  var urlorderRow2orderRowTasks = getUrl()+ "services/OrderRowTaskManageService";
 		  var deletedataorderRow2orderRowTasks =   ",";
@@ -173,9 +173,9 @@
 
 	          //associatedClass==manageable
 		
-        //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
-	                 //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
-	                 //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
+        //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
+	                 //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
+	                 //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                                     
               //begin from 41.4
 		var querydataorderRow2orderRowTasksOrderRowd =  new Array();
@@ -394,7 +394,7 @@ function buildSubgridOrderd(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?��?
+				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?§³
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -415,7 +415,7 @@ function buildSubgridOrderd(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)
 
 //from 20.2 begin
 //${member.type.name}SubCrudForSubGrid.js==OrderRowdSubCrudForSubGrid.js
-//?????�¡���?��??var mainTable=new VO();
+//»ñµÃÖ÷±íÀàÐÍvar mainTable=new VO();
 
 var addRowSub = function(addindex){
 	  var subGrid = dijit.byId(makeSubGridIdGeneral('',querydataorderRow2orderRowTasksOrderRowd[addindex][1],"OrderdChild"));
@@ -534,7 +534,7 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle,addRowIndex){
 	var myLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydata????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydataÖÐÈ¡Êý¾Ý
                        
  cells: [ [
 			//{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow]!=undefined ? 0:querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
@@ -551,8 +551,8 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 					            					,   {name: pre+i18nStr.goodsState, field: 10,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30,headerStyles:mystyle}
 					            				    ,   {name: pre+i18nStr.remark, field: 11,width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
 					      
-//??????����???��????????
-				//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+				//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 							 ,   {name: pre+i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow]!=undefined && querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow][inRowIndex]!=undefined && querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow][inRowIndex][13]!=undefined&& querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow][inRowIndex][13][2]!=undefined){str=querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow][inRowIndex][13][2];strid=querydataorderRow2orderRowTasksOrderRowd[addRowIndex][childRow][inRowIndex][13][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick=" dojoOrderRowTask.selectProd('+strid+','+inRowIndex+',13,0,event,'+addRowIndex+');"   >';} ,width: 10 ,headerStyles:mystyle}
 					                                        ] ]
                            }];  
@@ -575,5 +575,5 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 
  
 
-				                   //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
+				                   //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                                          	              	

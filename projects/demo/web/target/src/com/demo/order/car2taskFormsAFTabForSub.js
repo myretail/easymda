@@ -1,9 +1,9 @@
 		
-//---begin---------???????????��???��??????����
-							//---begin---------?????????��????????tree?��??����sno
-				//?????????������
+//---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+							//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+				//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= car2taskForms)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
   //name =car2taskFormsAFTab.js  manageable.name=TaskForm
   		  				    var NUcar2taskForms = false;//needUpdate
   var urlcar2taskForms = getUrl()+ "services/TaskFormManageService";
@@ -29,7 +29,7 @@ var getVOcar2taskForms=function(queryvo){
 	pu.add('pageSize',pagesizecar2taskForms) ;
 	pu.add('orderBy',orderBycar2taskForms) ;
 	SOAPClient.invoke(urlcar2taskForms,"getTaskForm", pu, false,  function GetEnu_callBack(ul, soapResponse){   
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydatacar2taskForms=dojoTaskForm.TaskFormVOtoArray_fun(ul,false);
 	totalCountcar2taskForms=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -91,7 +91,7 @@ var buildcar2taskForms=function(FKID){
 }
 							
 	var layoutcar2taskForms=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -100,9 +100,9 @@ var buildcar2taskForms=function(FKID){
 		            ,   {name: i18nStr.formState, field: 3,width: 10 }
 			            ,   {name: i18nStr.remark, field: 4,width: 10 }
 			  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 			,   {name: i18nStr.tasks,field: 5,get:function(inRowIndex){ var str='';var strid;if(querydatacar2taskForms[inRowIndex]!=undefined && querydatacar2taskForms[inRowIndex][5]!=undefined && querydatacar2taskForms[inRowIndex][5][1]!=undefined){str=querydatacar2taskForms[inRowIndex][5][2];strid=querydatacar2taskForms[inRowIndex][5][1];} return str;} ,width: 10 }
-		 	//??????����???��????????
+		 	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 			//,   {name: i18nStr.car,field: 6,get:function(inRowIndex){ var str='';var strid;if(querydatacar2taskForms[inRowIndex]!=undefined && querydatacar2taskForms[inRowIndex][6]!=undefined && querydatacar2taskForms[inRowIndex][6][1]!=undefined){str=querydatacar2taskForms[inRowIndex][6][2];strid=querydatacar2taskForms[inRowIndex][6][1];} return str;} ,width: 10 }
 	       ] ]
                            }]; 

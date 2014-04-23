@@ -65,14 +65,14 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 															
-/*//????��?
+/*//Úµð¾°¶
 					function setCustomerDetailFun(inrow,CustomerColNo){
 					return querydata[inrow][CustomerColNo];
 				}
-			//????��?
+			//Úµð¾°¶
 					function setPeoplesDetailFun(inrow,PeoplesColNo){
 					return querydata[inrow][PeoplesColNo];
 				}
@@ -83,10 +83,10 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.prodName, field: 2,width: 8}
@@ -95,9 +95,9 @@ var layoutSingleRow=[{
 		    		,   {name: i18nStr.datef,field:5, width: 8}
 		        				,   {name: i18nStr.prodType, field: 6,width: 8}
 					 
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][7]!=undefined && querydata[inRowIndex][7][2]){str=querydata[inRowIndex][7][2];strid=querydata[inRowIndex][7][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoProd.detailFloatCustomerData=querydata['+inRowIndex+'][7];dojoProd.detailCustomer('+querydata[inRowIndex][7][1]+','+inRowIndex+',7,0,event,0);"   >';} ,width: 10 }
-			//??��????
+			//Úµí²»Ð¶
 					 ,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][8]!=undefined && querydata[inRowIndex][8][2]){str=querydata[inRowIndex][8][2];strid=querydata[inRowIndex][8][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoProd.detailFloatPeoplesData=querydata['+inRowIndex+'][8];dojoProd.detailPeoples('+querydata[inRowIndex][8][1]+','+inRowIndex+',8,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -208,15 +208,15 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('ProdId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addprodName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcode").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addprice").setValue(querydata[e.rowIndex][4]);
 						 									 dijit.byId("adddatef").setValue(dojo.date.locale.parse(querydata[e.rowIndex][5],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
 				 dijit.byId("adddatefTime").setValue(dojo.date.locale.parse(querydata[e.rowIndex][5],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addprodType").setValue(querydata[e.rowIndex][6]);
 						 			 
 								dijit.byId("addprodCust").setValue(querydata[e.rowIndex][7][1]);
@@ -241,18 +241,18 @@ var addDivAdd = function(){
 	 //if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 //if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 	 //add
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addprodName").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addcode").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addprice").setValue('');
 																			dijit.byId("adddatef").setValue('');
 				dijit.byId("adddatefTime").setValue('');
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addprodType").setValue('');
 														
@@ -270,13 +270,13 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('ProdId').value;
 	var passAll=0;
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addprodName").validate(true)){
 					vobject.prodName=dijit.byId("addprodName").getValue();
 				}else{
 					setErrorClass(dijit.byId("addprodName")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addcode").validate(true)){
 					vobject.code=dijit.byId("addcode").getValue();
 				}else{
@@ -299,7 +299,7 @@ function addDivSave(){
 					}else{setErrorClass(dijit.byId("adddatefTime")); passAll=1;}
 				}}else{
 					setErrorClass(dijit.byId("adddatef")); passAll=1;}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addprodType").validate(true)){
 					vobject.prodType=dijit.byId("addprodType").getValue();
 				}else{

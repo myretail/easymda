@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataCustomer[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataCustomer[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -50,13 +50,13 @@ String peopleId = request.getParameter("peopleId");
 	 	<script type="text/javascript" >
 		var dojoCustomer= new  projectDojo.Customer();
 	    dojoCustomer.initCustomer();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoProd= new  projectDojo.Prod();
 			dojoProd.initProd();
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoContact= new  projectDojo.Contact();
 			dojoContact.initContact();
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoOrderd= new  projectDojo.Orderd();
 			dojoOrderd.initOrderd();
 			</script>
@@ -136,7 +136,7 @@ function getCheckCustomer(inRowIndex) {
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 
 	  
-function buildSubgridCustomer(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridCustomer(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		var idmainDetail = makeSubGridIdGeneral('',querydataCustomer[inRowIndex][1],"CustomerMainDetail");//makeSubgridIdMainDetail(querydataCustomer[inRowIndex][1]);//taskmakeSubgridId(taskRowSubdata[inRowIndex][1]);
@@ -162,7 +162,7 @@ function buildSubgridCustomer(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 				}else{
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -172,7 +172,7 @@ function buildSubgridCustomer(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 
 function querybuttonCustomer(){
               //var p = new SOAPClientParameters2();

@@ -159,7 +159,7 @@ function buildSubgridcustomer2orderds(inRowIndex, inCell) {  //makeSubgridIdMain
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?��?
+				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?§³
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -209,7 +209,7 @@ var getVOcustomer2orderds=function(queryvo){
 	pu.add('pageSize',pagesizecustomer2orderds) ;
 	pu.add('orderBy',orderBycustomer2orderds) ;
 	SOAPClient.invoke(urlcustomer2orderds,"getOrderd", pu, false,  function GetEnu_callBack(ul, soapResponse){     
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydatacustomer2orderds=dojoOrderd.OrderdVOtoArray_fun(ul,false);
 	totalCountcustomer2orderds=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -271,8 +271,8 @@ var buildcustomer2orderds=function(){
 
 
 	
-//??????����???��????????
-	//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 									   
 /*var addRowcustomer2orderds = function(){
 var addrow=[];
@@ -574,7 +574,7 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle,addRowIndex){
 	var myLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydata????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydataÖÐÈ¡Êý¾Ý
                        
  cells: [ [
 			//{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydatacustomer2orderds[addRowIndex][childRow]!=undefined ? 0:querydatacustomer2orderds[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
@@ -591,8 +591,8 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 					            					,   {name: pre+i18nStr.goodsState, field: 10,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30,headerStyles:mystyle}
 					            				    ,   {name: pre+i18nStr.remark, field: 11,width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
 					      
-//??????����???��????????
-				//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+				//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 							 ,   {name: pre+i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(querydatacustomer2orderds[addRowIndex][childRow][inRowIndex]!=undefined && querydatacustomer2orderds[addRowIndex][childRow][inRowIndex][13]!=undefined&& querydatacustomer2orderds[addRowIndex][childRow][inRowIndex][13][1]!=undefined){str=querydatacustomer2orderds[addRowIndex][childRow][inRowIndex][13][2];strid=querydatacustomer2orderds[addRowIndex][childRow][inRowIndex][13][1];} return str;} ,width: 10 ,headerStyles:mystyle}
 			                                        ] ]
                            }];  

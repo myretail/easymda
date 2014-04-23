@@ -1,6 +1,6 @@
-	  //---begin---------???????????��???��??????����
-			//---begin---------?????????��????????tree?��??����sno
-		//?????????������
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+			//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+		//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= contacts2customer)
   //name =contacts2customerFloatAFTab.js  manageable.name=Contact
   					  var NUcontacts2customer = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOcontacts2customer=function(queryvo,id){
 	pu.add('pageSize',contacts2customerFloatArray[id].pagesizecontacts2customer) ;
 	pu.add('orderBy',contacts2customerFloatArray[id].orderBycontacts2customer) ;
 	SOAPClient.invoke(urlcontacts2customer,"getContact", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	contacts2customerFloatArray[id].querydatacontacts2customer=dojoContact.ContactVOtoArray_fun(ul,false);
 
 	contacts2customerFloatArray[id].totalCountcontacts2customer=ul[ul.length-1]["ns:id"]; 
@@ -105,14 +105,14 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7contacts2customer"+m
 					var buildLayoutcontacts2customer = function(floatMainID){		
 
 	var layoutcontacts2customer=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 					   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
   		  {name: i18nStr.codeContact, field: 2,width: 10}
 		  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.customer,field: 3,get:function(inRowIndex){ var str='';var strid;if(contacts2customerFloatArray[floatMainID].querydatacontacts2customer[inRowIndex]!=undefined && contacts2customerFloatArray[floatMainID].querydatacontacts2customer[inRowIndex][3]!=undefined && contacts2customerFloatArray[floatMainID].querydatacontacts2customer[inRowIndex][3][2]!=undefined){str=contacts2customerFloatArray[floatMainID].querydatacontacts2customer[inRowIndex][3][2];strid=contacts2customerFloatArray[floatMainID].querydatacontacts2customer[inRowIndex][3][1];} return str;} ,width: 10 }
 						                                        ] ]
                            }]; 

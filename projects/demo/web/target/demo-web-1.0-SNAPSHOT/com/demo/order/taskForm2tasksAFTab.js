@@ -17,7 +17,7 @@
 //----------move from 30.1 begin-----------
 
 										                  // totleinum = 4 
-	var layouttaskForm2tasks =[{//???????????��??????colSpantoggle
+	var layouttaskForm2tasks =[{//Þ¸Ä¸ÒªÏ¢Ö¶Ê±ÒªÞ¸Ó¦colSpantoggle
 					onBeforeRow: onBeforeRow,
 					 cells: [
                       [
@@ -104,7 +104,7 @@ function buildSubgridtaskForm2tasks(inRowIndex, inCell) {  //makeSubgridIdMainDe
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?��?
+				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?§³
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -154,7 +154,7 @@ var getVOtaskForm2tasks=function(queryvo){
 	pu.add('pageSize',pagesizetaskForm2tasks) ;
 	pu.add('orderBy',orderBytaskForm2tasks) ;
 	SOAPClient.invoke(urltaskForm2tasks,"getTaskForm", pu, false,  function GetEnu_callBack(ul, soapResponse){     
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydatataskForm2tasks=dojoTaskForm.TaskFormVOtoArray_fun(ul,false);
 	totalCounttaskForm2tasks=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -220,8 +220,8 @@ var buildtaskForm2tasks=function(){
 
 
 	
-//??????����???��????????
-	//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 									   
 /*var addRowtaskForm2tasks = function(){
 var addrow=[];
@@ -437,7 +437,7 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle,addRowIndex){
 	var myLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydata????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydataÖÐÈ¡Êý¾Ý
                        
  cells: [ [
 			//{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydatataskForm2tasks[addRowIndex][childRow]!=undefined ? 0:querydatataskForm2tasks[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
@@ -447,7 +447,7 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 		             ,  {name: pre+i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 },headerStyles:mystyle }
 		        				    ,   {name: pre+i18nStr.remark, field: 4,width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 				                                        ] ]
                            }];  
 						   

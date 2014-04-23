@@ -64,15 +64,15 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																																																																		
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       					  {name: i18nStr.customerOrderNo, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
@@ -93,8 +93,8 @@ var layoutSingleRow=[{
 				,   {name: i18nStr.completeTimeTime,field:17, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
 		        				    ,   {name: i18nStr.remark, field: 18,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??��????
-		//??��????
+//Úµí²»Ð¶
+		//Úµí²»Ð¶
 					 ,   {name: i18nStr.customer,field: 20,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][20]!=undefined && querydata[inRowIndex][20][2]){str=querydata[inRowIndex][20][2];strid=querydata[inRowIndex][20][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoOrderd.selectCustomer('+strid+','+inRowIndex+',20,0,event);"  >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -105,7 +105,7 @@ function getCheckOrderd(){}
 
 var layoutTwoRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [
                       [
@@ -384,33 +384,33 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('OrderdId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcustomerOrderNo").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcontractNo").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addconveyanceEnum").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcarryTypeEnum").setValue(querydata[e.rowIndex][5]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addshipperRemark").setValue(querydata[e.rowIndex][6]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcarrierRemark").setValue(querydata[e.rowIndex][7]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addlevelEnum").setValue(querydata[e.rowIndex][8]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcustomerTypeEnum").setValue(querydata[e.rowIndex][9]);
 						 									 dijit.byId("addreferTime").setValue(querydata[e.rowIndex][10]);
 				 			     dijit.byId("addreferTimeTime").setValue(querydata[e.rowIndex][11]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addlinkMan").setValue(querydata[e.rowIndex][12]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addtel").setValue(querydata[e.rowIndex][13]);
 						 									 dijit.byId("addbookTime").setValue(querydata[e.rowIndex][14]);
 				 			     dijit.byId("addbookTimeTime").setValue(querydata[e.rowIndex][15]);
 						 									 dijit.byId("addcompleteTime").setValue(querydata[e.rowIndex][16]);
 				 			     dijit.byId("addcompleteTimeTime").setValue(querydata[e.rowIndex][17]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][18]);
 						 			 
 													dijit.byId("addcustomer").setValue(querydata[e.rowIndex][20][1]);

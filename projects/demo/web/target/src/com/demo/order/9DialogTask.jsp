@@ -70,12 +70,12 @@ String peopleId = request.getParameter("peopleId");
         	}*/
         }
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 															
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
 							{ name: '<img src="../image/addsmall.gif" onclick="addRow();"   height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/saveAll.jpg" onclick="call_funUpd();"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="removeRows('+inRowIndex+','+querydata[inRowIndex][1]+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdSingle('+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;'},//,headerStyles:mystyle
@@ -85,7 +85,7 @@ var layoutSingleRow=[{
 		             ,  {name: i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
 		        				    ,   {name: i18nStr.remark, field: 4,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.taskForm,field: 5,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][5]!=undefined && querydata[inRowIndex][5][2]){str=querydata[inRowIndex][5][2];strid=querydata[inRowIndex][5][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoTask.selectTaskForm('+strid+','+inRowIndex+',5,0,event);"  >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -265,11 +265,11 @@ function init(){
 	dlgm.show();
 	document.getElementById('erowIndex').value=e.rowIndex;
 	 document.getElementById('TaskId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addnum").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addvolumne").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][4]);
 						 			 
 								dijit.byId("addtaskForm").setValue(querydata[e.rowIndex][5][1]);
@@ -303,13 +303,13 @@ addRow = function(){
 
 //addDiv---------------begin-------------------------------------
 var addDivAdd = function(){
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addnum").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addvolumne").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addremark").setValue('');
 														
@@ -338,7 +338,7 @@ function addDivSave(){
 				}else{
 					setErrorClass(dijit.byId("addvolumne")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

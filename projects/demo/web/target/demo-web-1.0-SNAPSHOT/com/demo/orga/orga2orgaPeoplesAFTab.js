@@ -1,17 +1,17 @@
-	//��???��?????����??4.1????����??---begin---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
-	   //true??"????����/????����"?��"??����"??"????����"/"��?????����"?????��???��????����
-//---end---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
+	//±¾Ä£°åµÄÔª±íÊÇ4.1µÄÔª±í£¬---begin---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+	   //true£º"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ¶à¶Ô¶à¹ØÏµ±í
+//---end---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
 																																								//set (= orga2orgaPeoples)
 
 	//----------lastMenber = org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga]   firstMenber=org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]
 	//orga2orgaPeoplesAFTab.js	
 	
-	//---begin---------????"????����" ?? "????����"??????tree?��??����sno('????����'???��???��????����)
-																																																																																																																																	    //---end---------????"????����" ?? "????����"??????tree?��??����sno
-//begin--????"????����" ?? "????����"???????�¡���('????����'???��???��????����)
-//begin--????"????����" ?? "????����"??????��?����('????����'???��???��????����)
-//end--????"????����" ?? "????����"??????��?����	
-	//??????"????����"???��???������??"????����" ?? "????����"??????����???��??	('????����'???��???��????����)
+	//---begin---------ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªtree½á¹¹±ísno('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+																																																																																																																																	    //---end---------ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªtree½á¹¹±ísno
+//begin--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªÖ÷±í('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+//begin--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎª×Ó±í('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+//end--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎª×Ó±í	
+	//ÒÔÏÂÊÇ"ÒýÓÃ±í"Îª¶à¶Ô¶à±í£¬"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"Îªµ¥´¿±íµÄÇé¿ö	('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
 			  var NUorga2orgaPeoples = false;//needUpdate
 		  var urlorgaPeoples2people = getUrl()+ "services/OrgaPeoplesManageService";
 		  var deletedataorgaPeoples2people =   ",";
@@ -162,8 +162,8 @@
 
 	                    //associatedClass==manageable
 		
-        //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])??if(!${member.many})  ??��?????????Float???????��????????
-	                                          //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])??if(!${member.many})  ??��?????????Float???????��????????
+        //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
+	                                          //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                                     
               //begin from 41.4
 		var querydataorgaPeoples2peoplePeoples =  new Array();
@@ -200,7 +200,7 @@
 			}
 	}		*/
 			var layoutorga2orgaPeoples=[{
-				   //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+				   //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 		   
 					 cells: [ [
 							   //{ name: i18nStr.chose, width: 3, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//

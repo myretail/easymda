@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataTaskForm[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataTaskForm[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -54,11 +54,11 @@ String peopleId = request.getParameter("peopleId");
 	<script type="text/javascript" >
 		var dojoTaskForm= new  projectDojo.TaskForm();
 	    dojoTaskForm.initTaskForm();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 																			</script>
-	 		<script type="text/javascript" src="TaskSelectPane.js"></script><!--????-->
-	 		<script type="text/javascript" src="carSelectPane.js"></script><!--????-->
-	 	 					<script type="text/javascript" src="../order/TaskSubCrudFor30.js"></script><!--sub Table script    eg:taskRow.js    ??????��???????��childRow=0-->
+	 		<script type="text/javascript" src="TaskSelectPane.js"></script><!--Ò»Òª-->
+	 		<script type="text/javascript" src="carSelectPane.js"></script><!--Ò»Òª-->
+	 	 					<script type="text/javascript" src="../order/TaskSubCrudFor30.js"></script><!--sub Table script    eg:taskRow.js    Ð¶Ç·Îªí£¬Ò³Ê¼Ó±childRow=0-->
 							<script type="text/javascript" >
 	  var urlTaskForm = getUrl()+ "services/TaskFormManageService";
 	  var deletedataTaskForm =  new Array();
@@ -88,7 +88,7 @@ String peopleId = request.getParameter("peopleId");
 	}
 
 																		                  // totleinum = 5 
-	var mainLayout =[{//��?????��???????????��??��?????colSpantoggle
+	var mainLayout =[{//è·æ¯è¦æ¯ä¾æ¶è¦è·åºcolSpantoggle
 					onBeforeRow: onBeforeRow,
 					 cells: [
                       [
@@ -147,7 +147,7 @@ function getDetailTaskForm(inRowIndex){
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 var childRow= 6;
 var layoutInRowIndex;	  
-function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		//var child = inCell.getNode(inRowIndex).lastChild;
@@ -176,7 +176,7 @@ function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -214,7 +214,7 @@ function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 
 function querybuttonTaskForm(){
               //var p = new SOAPClientParameters2();

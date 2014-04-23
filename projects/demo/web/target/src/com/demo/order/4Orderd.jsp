@@ -47,7 +47,7 @@ String peopleId = request.getParameter("peopleId");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.Orderd");
 
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//OrderRowd==OrderRowd---false
 										//Customer==OrderRowd---false
 									
@@ -62,11 +62,11 @@ String peopleId = request.getParameter("peopleId");
 	 	  
 
  
- 			<script type="text/javascript" src="orderRow.js"></script><!--sub Table script    eg:taskRow.js    ??????��???????��childRow=0-->
+ 			<script type="text/javascript" src="orderRow.js"></script><!--sub Table script    eg:taskRow.js    Ð¶Ç·Îªí£¬Ò³Ê¼Ó±childRow=0-->
 			<script type="text/javascript" >
 	  var dojoOrderd= new  projectDojo.Orderd();
 	  dojoOrderd.initOrderd();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//OrderRowd==OrderRowd---false
 										//Customer==OrderRowd---false
 										  
@@ -82,15 +82,15 @@ String peopleId = request.getParameter("peopleId");
 	  var modelOrderd = new dojox.grid.data.Table(null, querydataOrderd);
 	  var urle = getUrl()+ "services/BasicManageService";    
 
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
 
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																																 
 	var layoutSingleRowQuery=[{
-		//field????????��??��??js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³í©í¼´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -109,8 +109,8 @@ String peopleId = request.getParameter("peopleId");
 						  						  				,   {name: i18nStr.completeTime,field:14, width: 8}
 						  						  				,   {name: i18nStr.remark, field: 15,width: 10}
 						  				
-//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])if(!true)  ????Float??��??����???
-		//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])if(!false)  ????Float??��??����???
+//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])if(!true)  Ö¶Ó¦FloatÑ¡í¦í°¿Ú´
+		//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])if(!false)  Ö¶Ó¦FloatÑ¡í¦í°¿Ú´
 				 ,   {name: i18nStr.customer,field: 17,get:function(inRowIndex){ var str='';if(querydataOrderd[inRowIndex]!=undefined && querydataOrderd[inRowIndex][17]!=undefined){str=querydataOrderd[inRowIndex][17][2];} return str;} ,width: 10 }
 									]]}];	 
 
@@ -122,7 +122,7 @@ var layoutNoscroll=[ {
 				   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} }
 		]]},{
           
- //field??????js??toArray??querydate?
+ //field??????jsÐµtoArray??querydate?
 	   
 				 cells: [ [
 							//{name: '?', width: 3, get:getChoise},
@@ -166,7 +166,7 @@ function getCheckOrderd(){}
 
 var layoutTwoRow=[{
           
- //field??????js??toArray??querydate?
+ //field??????jsÐµtoArray??querydate?
 	   
 				 cells: [
                       [
@@ -223,7 +223,7 @@ var layoutTwoRow=[{
 					
 					
 					
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 
 /*	dojo.connect(dijit.byId("OrderdAFTab"), "selectChild", function(e){
 			if (dijit.byId("OrderdAFTab").selectedChildWidget.id=="order2orderRow"){

@@ -1,6 +1,6 @@
-		  //---begin---------???????????��???��??????����
-							//---begin---------?????????��????????tree?��??����sno
-				//?????????������
+		  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+							//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+				//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= car2taskForms)
   //name =car2taskFormsFloatAFTab.js  manageable.name=TaskForm
   								  var NUcar2taskForms = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOcar2taskForms=function(queryvo,id){
 	pu.add('pageSize',car2taskFormsFloatArray[id].pagesizecar2taskForms) ;
 	pu.add('orderBy',car2taskFormsFloatArray[id].orderBycar2taskForms) ;
 	SOAPClient.invoke(urlcar2taskForms,"getTaskForm", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	car2taskFormsFloatArray[id].querydatacar2taskForms=dojoTaskForm.TaskFormVOtoArray_fun(ul,false);
 
 	car2taskFormsFloatArray[id].totalCountcar2taskForms=ul[ul.length-1]["ns:id"]; 
@@ -105,7 +105,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7car2taskForms"+mainI
 															var buildLayoutcar2taskForms = function(floatMainID){		
 
 	var layoutcar2taskForms=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -114,8 +114,8 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7car2taskForms"+mainI
 		    		,   {name: i18nStr.formState, field: 3,width: 10}
 		    		,   {name: i18nStr.remark, field: 4,width: 10}
 		  
-//??????����???��????????
-		//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+		//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.car,field: 6,get:function(inRowIndex){ var str='';var strid;if(car2taskFormsFloatArray[floatMainID].querydatacar2taskForms[inRowIndex]!=undefined && car2taskFormsFloatArray[floatMainID].querydatacar2taskForms[inRowIndex][6]!=undefined && car2taskFormsFloatArray[floatMainID].querydatacar2taskForms[inRowIndex][6][2]!=undefined){str=car2taskFormsFloatArray[floatMainID].querydatacar2taskForms[inRowIndex][6][2];strid=car2taskFormsFloatArray[floatMainID].querydatacar2taskForms[inRowIndex][6][1];} return str;} ,width: 10 }
 						                                        ] ]
                            }]; 

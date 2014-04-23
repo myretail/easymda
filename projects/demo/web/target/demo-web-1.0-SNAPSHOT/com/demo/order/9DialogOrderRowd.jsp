@@ -75,12 +75,12 @@ String peopleId = request.getParameter("peopleId");
         	}*/
         }
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																																													
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
 							{ name: '<img src="../image/addsmall.gif" onclick="addRow();"   height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/saveAll.jpg" onclick="call_funUpd();"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="removeRows('+inRowIndex+','+querydata[inRowIndex][1]+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdSingle('+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;'},//,headerStyles:mystyle
@@ -97,9 +97,9 @@ var layoutSingleRow=[{
 					            					,   {name: i18nStr.goodsState, field: 10,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
 					            				    ,   {name: i18nStr.remark, field: 11,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.order,field: 12,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][12]!=undefined && querydata[inRowIndex][12][2]){str=querydata[inRowIndex][12][2];strid=querydata[inRowIndex][12][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoOrderRowd.selectOrderd('+strid+','+inRowIndex+',12,0,event);"  >';} ,width: 10 }
-			//??????����???��????????
+			//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][13]!=undefined && querydata[inRowIndex][13][2]){str=querydata[inRowIndex][13][2];strid=querydata[inRowIndex][13][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoOrderRowd.selectProd('+strid+','+inRowIndex+',13,0,event);"  >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -325,25 +325,25 @@ function init(){
 	dlgm.show();
 	document.getElementById('erowIndex').value=e.rowIndex;
 	 document.getElementById('OrderRowdId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addproductNum").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addunitNum").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addgoodsSuttle").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addgoodsWeight").setValue(querydata[e.rowIndex][5]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addgoodsVolume").setValue(querydata[e.rowIndex][6]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addlabel").setValue(querydata[e.rowIndex][7]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcarriage").setValue(querydata[e.rowIndex][8]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addespecial").setValue(querydata[e.rowIndex][9]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addgoodsState").setValue(querydata[e.rowIndex][10]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][11]);
 						 			 
 								dijit.byId("addorder").setValue(querydata[e.rowIndex][12][1]);
@@ -383,34 +383,34 @@ addRow = function(){
 
 //addDiv---------------begin-------------------------------------
 var addDivAdd = function(){
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addproductNum").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addunitNum").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addgoodsSuttle").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addgoodsWeight").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addgoodsVolume").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addlabel").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addcarriage").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addespecial").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addgoodsState").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addremark").setValue('');
 														
@@ -462,7 +462,7 @@ function addDivSave(){
 				}else{
 					setErrorClass(dijit.byId("addgoodsVolume")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addlabel").validate(true)){
 					vobject.label=dijit.byId("addlabel").getValue();
 				}else{
@@ -475,19 +475,19 @@ function addDivSave(){
 				}else{
 					setErrorClass(dijit.byId("addcarriage")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addespecial").validate(true)){
 					vobject.especial=dijit.byId("addespecial").getValue();
 				}else{
 					setErrorClass(dijit.byId("addespecial")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addgoodsState").validate(true)){
 					vobject.goodsState=dijit.byId("addgoodsState").getValue();
 				}else{
 					setErrorClass(dijit.byId("addgoodsState")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

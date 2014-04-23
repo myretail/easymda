@@ -65,12 +65,12 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService";        
 
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																																																					
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
 							{ name: '<img src="../image/addsmall.gif" onclick="addRow();"   height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/saveAll.jpg" onclick="call_funUpd();"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="removeRows('+inRowIndex+','+querydata[inRowIndex][1]+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdSingle('+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;'},//,headerStyles:mystyle
@@ -100,7 +100,7 @@ function getCheckPeoples(){}
 
 var layoutTwoRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [
                       [
@@ -344,29 +344,29 @@ function init(){
 	dlgm.show();
 	document.getElementById('erowIndex').value=e.rowIndex;
 	 document.getElementById('PeoplesId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addpeopleName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addpeoplePassword").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addpeopleStatus").setValue(querydata[e.rowIndex][4]);
 						 									 dijit.byId("addbirthDay").setValue(querydata[e.rowIndex][5]);
 				 				 dijit.byId("addbirthDayTime").setValue(querydata[e.rowIndex][6]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addsex").setValue(querydata[e.rowIndex][7]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addbirthPlace").setValue(querydata[e.rowIndex][8]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addaddress").setValue(querydata[e.rowIndex][9]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addtel").setValue(querydata[e.rowIndex][10]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addengageMode").setValue(querydata[e.rowIndex][11]);
 						 									 dijit.byId("addengageDate").setValue(querydata[e.rowIndex][12]);
 				 				 dijit.byId("addengageDateTime").setValue(querydata[e.rowIndex][13]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addgradeEnum").setValue(querydata[e.rowIndex][14]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][15]);
 						 			 
 			
@@ -394,38 +394,38 @@ addRow = function(){
 
 //addDiv---------------begin-------------------------------------
 var addDivAdd = function(){
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addpeopleName").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addpeoplePassword").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addpeopleStatus").setValue('');
 																			dijit.byId("addbirthDay").setValue('');
 				dijit.byId("addbirthDayTime").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addsex").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addbirthPlace").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addaddress").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addtel").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addengageMode").setValue('');
 																			dijit.byId("addengageDate").setValue('');
 				dijit.byId("addengageDateTime").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									//dijit.byId("addgradeEnum").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addremark").setValue('');
 														
@@ -438,19 +438,19 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('PeoplesId').value;
 	var passAll=0;
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addpeopleName").validate(true)){
 					vobject.peopleName=dijit.byId("addpeopleName").getValue();
 				}else{
 					setErrorClass(dijit.byId("addpeopleName")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addpeoplePassword").validate(true)){
 					vobject.peoplePassword=dijit.byId("addpeoplePassword").getValue();
 				}else{
 					setErrorClass(dijit.byId("addpeoplePassword")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addpeopleStatus").validate(true)){
 					vobject.peopleStatus=dijit.byId("addpeopleStatus").getValue();
 				}else{
@@ -466,31 +466,31 @@ function addDivSave(){
 					}else{setErrorClass(dijit.byId("addbirthDayTime")); passAll=1;}
 				}}else{
 					setErrorClass(dijit.byId("addbirthDay")); passAll=1;}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addsex").validate(true)){
 					vobject.sex=dijit.byId("addsex").getValue();
 				}else{
 					setErrorClass(dijit.byId("addsex")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addbirthPlace").validate(true)){
 					vobject.birthPlace=dijit.byId("addbirthPlace").getValue();
 				}else{
 					setErrorClass(dijit.byId("addbirthPlace")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addaddress").validate(true)){
 					vobject.address=dijit.byId("addaddress").getValue();
 				}else{
 					setErrorClass(dijit.byId("addaddress")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addtel").validate(true)){
 					vobject.tel=dijit.byId("addtel").getValue();
 				}else{
 					setErrorClass(dijit.byId("addtel")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addengageMode").validate(true)){
 					vobject.engageMode=dijit.byId("addengageMode").getValue();
 				}else{
@@ -506,13 +506,13 @@ function addDivSave(){
 					}else{setErrorClass(dijit.byId("addengageDateTime")); passAll=1;}
 				}}else{
 					setErrorClass(dijit.byId("addengageDate")); passAll=1;}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addgradeEnum").validate(true)){
 					vobject.gradeEnum=dijit.byId("addgradeEnum").getValue();
 				}else{
 					setErrorClass(dijit.byId("addgradeEnum")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

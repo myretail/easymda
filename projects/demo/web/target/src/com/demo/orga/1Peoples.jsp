@@ -65,7 +65,7 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																									
 /**/
@@ -75,10 +75,10 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.peopleName, field: 2,width: 8}
@@ -104,10 +104,10 @@ var layoutNoscroll=[ {
 				   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} }
 		]]},{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						  // { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						  // { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.peopleName, field: 2,width: 8}
@@ -143,7 +143,7 @@ function getCheckPeoples(){}
 
 var layoutTwoRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [
                       [
@@ -281,29 +281,29 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('PeoplesId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addpeopleName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addpeoplePassword").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addpeopleStatus").setValue(querydata[e.rowIndex][4]);
 						 									 dijit.byId("addbirthDay").setValue(dojo.date.locale.parse(querydata[e.rowIndex][5],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
 				 dijit.byId("addbirthDayTime").setValue(dojo.date.locale.parse(querydata[e.rowIndex][5],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addsex").setValue(querydata[e.rowIndex][6]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addbirthPlace").setValue(querydata[e.rowIndex][7]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addaddress").setValue(querydata[e.rowIndex][8]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addtel").setValue(querydata[e.rowIndex][9]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addengageMode").setValue(querydata[e.rowIndex][10]);
 						 									 dijit.byId("addengageDate").setValue(dojo.date.locale.parse(querydata[e.rowIndex][11],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
 				 dijit.byId("addengageDateTime").setValue(dojo.date.locale.parse(querydata[e.rowIndex][11],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addgradeEnum").setValue(querydata[e.rowIndex][12]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][13]);
 						 			 
 			});     
@@ -316,38 +316,38 @@ var addDivAdd = function(){
 	 //if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 //if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 	 //add
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addpeopleName").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addpeoplePassword").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addpeopleStatus").setValue('');
 																			dijit.byId("addbirthDay").setValue('');
 				dijit.byId("addbirthDayTime").setValue('');
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addsex").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addbirthPlace").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addaddress").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addtel").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addengageMode").setValue('');
 																			dijit.byId("addengageDate").setValue('');
 				dijit.byId("addengageDateTime").setValue('');
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				
 									//dijit.byId("addgradeEnum").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addremark").setValue('');
 														
@@ -361,19 +361,19 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('PeoplesId').value;
 	var passAll=0;
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addpeopleName").validate(true)){
 					vobject.peopleName=dijit.byId("addpeopleName").getValue();
 				}else{
 					setErrorClass(dijit.byId("addpeopleName")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addpeoplePassword").validate(true)){
 					vobject.peoplePassword=dijit.byId("addpeoplePassword").getValue();
 				}else{
 					setErrorClass(dijit.byId("addpeoplePassword")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addpeopleStatus").validate(true)){
 					vobject.peopleStatus=dijit.byId("addpeopleStatus").getValue();
 				}else{
@@ -389,31 +389,31 @@ function addDivSave(){
 					}else{setErrorClass(dijit.byId("addbirthDayTime")); passAll=1;}
 				}}else{
 					setErrorClass(dijit.byId("addbirthDay")); passAll=1;}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addsex").validate(true)){
 					vobject.sex=dijit.byId("addsex").getValue();
 				}else{
 					setErrorClass(dijit.byId("addsex")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addbirthPlace").validate(true)){
 					vobject.birthPlace=dijit.byId("addbirthPlace").getValue();
 				}else{
 					setErrorClass(dijit.byId("addbirthPlace")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addaddress").validate(true)){
 					vobject.address=dijit.byId("addaddress").getValue();
 				}else{
 					setErrorClass(dijit.byId("addaddress")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addtel").validate(true)){
 					vobject.tel=dijit.byId("addtel").getValue();
 				}else{
 					setErrorClass(dijit.byId("addtel")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addengageMode").validate(true)){
 					vobject.engageMode=dijit.byId("addengageMode").getValue();
 				}else{
@@ -429,13 +429,13 @@ function addDivSave(){
 					}else{setErrorClass(dijit.byId("addengageDateTime")); passAll=1;}
 				}}else{
 					setErrorClass(dijit.byId("addengageDate")); passAll=1;}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addgradeEnum").validate(true)){
 					vobject.gradeEnum=dijit.byId("addgradeEnum").getValue();
 				}else{
 					setErrorClass(dijit.byId("addgradeEnum")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

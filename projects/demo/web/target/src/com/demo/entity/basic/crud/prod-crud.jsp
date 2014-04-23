@@ -398,15 +398,15 @@ String peopleId = request.getParameter("peopleId");
         }
 
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																							
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
-							//{name: '????', width: 3, get:getChoise},
+							//{name: 'Ñ¡Ôñ', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       					  {name: i18nStr.prodName, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
@@ -416,9 +416,9 @@ var layoutSingleRow=[{
 				,   {name: i18nStr.datefTime,field:6, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
 		        					,   {name: i18nStr.prodType, field: 7,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.prodCust,field: 8,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][8]!=undefined){str=querydata[inRowIndex][8][2];strid=querydata[inRowIndex][8][1];} return str+'<button dojoType="dijit.form.Button" onclick="selectCustomer('+strid+','+inRowIndex+',8,0,event);"   iconClass="CustomerIcon">sel</button>';} ,width: 10 }
-			//??????����???��????????
+			//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.principal,field: 9,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][9]!=undefined){str=querydata[inRowIndex][9][2];strid=querydata[inRowIndex][9][1];} return str+'<button dojoType="dijit.form.Button" onclick="selectPeoples('+strid+','+inRowIndex+',9,0,event);"   iconClass="PeoplesIcon">sel</button>';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -614,15 +614,15 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('ProdId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addprodName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcode").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addprice").setValue(querydata[e.rowIndex][4]);
 						 									 dijit.byId("adddatef").setValue(querydata[e.rowIndex][5].substring(0,10));
 				  				  dijit.byId("adddatefTime").setValue(querydata[e.rowIndex][6].substring(11,16));
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addprodType").setValue(querydata[e.rowIndex][7]);
 						 			 
 					dijit.byId("addprodCust").setValue(querydata[e.rowIndex][8][1]);
@@ -646,16 +646,16 @@ function init(){
 var addDivAdd = function(){
 	 if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
-	 //????add????
-										//enumeration ?????��??String?��?????��??
+	 //Çå¿Õadd½çÃæ
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addprodName").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcode").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addprice").setValue('');
 															dijit.byId("adddatef").setValue('');
 				dijit.byId("adddatefTime").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addprodType").setValue('');
 										
 			dijit.byId("addprodCust").setValue('');
@@ -672,13 +672,13 @@ function addDivSave(){
 	var vobject=new ProdVOJs();
     vobject.id=document.getElementById('ProdId').value;
 	var passAll=0;
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addprodName").isValid(true)){
 					vobject.prodName=dijit.byId("addprodName").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcode").isValid(true)){
 					vobject.code=dijit.byId("addcode").getValue();
 				}else{
@@ -699,7 +699,7 @@ function addDivSave(){
 					}else{passAll=1;}
 				}else{
 					passAll=1;}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addprodType").isValid(true)){
 					vobject.prodType=dijit.byId("addprodType").getValue();
 				}else{
@@ -778,7 +778,7 @@ if(passAll==0){
                }
 			   totalCount--;
                var totalpage=Math.ceil(new Number(totalCount)/pagesize);
-               document.getElementById("rowCount").innerHTML="??"+pagenumber+"??/??"+totalpage+"??/��???"+totalCount+"??????" ; 
+               document.getElementById("rowCount").innerHTML="µÚ"+pagenumber+"Ò³/¹²"+totalpage+"Ò³/×Ü¼Æ"+totalCount+"Ìõ¼ÇÂ¼" ; 
                if(si=ii){if(document.getElementById('addDiv').style.display=='')document.getElementById('addDiv').style.display='none';}
 	        });   
           //}             

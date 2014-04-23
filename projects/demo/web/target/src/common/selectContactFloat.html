@@ -47,13 +47,13 @@ var getChoiseIncContact = function(inRowIndex) {
 			    }	  
 
 var layoutIncContact=[{
-	//?��??field???????????????????��????js????toArray��??????��??????querydate????????
+	//¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	    cells: [ [
 			  {name: 'select', width: 3, get:getChoiseIncContact},
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
 				  				  {name: i18nStr.codeContact, field: 2,width: 10}
 						  				
-//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])??if(!false)  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])²¢if(!false)  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 			,   {name: i18nStr.customer,field: 3,get:function(inRowIndex){ var str='';if(querydataIncContact[inRowIndex]!=undefined && querydataIncContact[inRowIndex][3]!=undefined&& querydataIncContact[inRowIndex][3][2]!=undefined){str=querydataIncContact[inRowIndex][3][2];} return str;} ,width: 10 }
 								]]}];	 
 					

@@ -65,14 +65,14 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					
-/*//????��?
+/*//Úµð¾°¶
 					function setOrgaDetailFun(inrow,OrgaColNo){
 					return querydata[inrow][OrgaColNo];
 				}
-			//????��?
+			//Úµð¾°¶
 					function setPeoplesDetailFun(inrow,PeoplesColNo){
 					return querydata[inrow][PeoplesColNo];
 				}
@@ -83,16 +83,16 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
 
-//??��????
+//Úµí²»Ð¶
 					   {name: i18nStr.orga,field: 2,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][2]!=undefined && querydata[inRowIndex][2][2]){str=querydata[inRowIndex][2][2];strid=querydata[inRowIndex][2][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrgaPeoples.detailFloatOrgaData=querydata['+inRowIndex+'][2];dojoOrgaPeoples.detailOrga('+querydata[inRowIndex][2][1]+','+inRowIndex+',2,0,event,0);"   >';} ,width: 10 }
-			//??��????
+			//Úµí²»Ð¶
 					   {name: i18nStr.people,field: 3,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][3]!=undefined && querydata[inRowIndex][3][2]){str=querydata[inRowIndex][3][2];strid=querydata[inRowIndex][3][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrgaPeoples.detailFloatPeoplesData=querydata['+inRowIndex+'][3];dojoOrgaPeoples.detailPeoples('+querydata[inRowIndex][3][1]+','+inRowIndex+',3,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 

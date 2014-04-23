@@ -59,13 +59,13 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
 
-	 //???��????1212??layout??layoutstructure
+	 //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 	 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  																										
 
 	var layoutSingleRow=[{
           
-                 //field????????��???js??toArray��???querydate??
+                 //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
                        
                                  cells: [ [
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -92,10 +92,10 @@ var layoutNoscroll=[ {
 				   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} }
 		]]},{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						  // { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						  // { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.peopleName, field: 2,width: 8}
@@ -131,7 +131,7 @@ function getCheckPeoples(){}
 
 var layoutTwoRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [
                       [

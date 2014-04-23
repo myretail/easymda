@@ -1,7 +1,7 @@
 	  
-//??????"????����"?????������
+//ÒÔÏÂÊÇ"ÒýÓÃ±í"ÊÇÆÕÍ¨±í
         //set (= order2orderRow)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 														  var NUorder2orderRow = false;//needUpdate
   var urlorder2orderRow = getUrl()+ "services/OrderRowdManageService";
   var deletedataorder2orderRow =  new Array();
@@ -27,7 +27,7 @@ var getVOorder2orderRow=function(queryvo){
 	pu.add('pageSize',pagesizeorder2orderRow) ;
 	pu.add('orderBy',orderByorder2orderRow) ;
 	SOAPClient.invoke(urlorder2orderRow,"getOrderRowd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 						//Orderd-----Orderd
 			querydataorder2orderRow=dojoOrderd.OrderRowdVOtoArray_fun(ul,true);
 				totalCountorder2orderRow=ul[ul.length-1]["ns:id"]; 
@@ -90,7 +90,7 @@ var buildorder2orderRow=function(){
 
 																																									
 	var layoutorder2orderRow=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -106,8 +106,8 @@ var buildorder2orderRow=function(){
 					            					,   {name: i18nStr.goodsState, field: 10,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
 					            				    ,   {name: i18nStr.remark, field: 11,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
-																//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+																//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																	,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(querydataorder2orderRow[inRowIndex]!=undefined && querydataorder2orderRow[inRowIndex][13]!=undefined && querydataorder2orderRow[inRowIndex][13][2]!=undefined){str=querydataorder2orderRow[inRowIndex][13][2];strid=querydataorder2orderRow[inRowIndex][13][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrderRowd.selectProd('+strid+','+inRowIndex+',13,0,event);"   >';} ,width: 10 }
 										                                        ] ]
                            }]; 

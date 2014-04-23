@@ -65,7 +65,7 @@ var getChoiseIncProd = function(inRowIndex) {
 			    }	  
 
 var layoutIncProd=[{
-	//?��??field???????????????????��????js????toArray��??????��??????querydate????????
+	//¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	    cells: [ [
 			  {name: 'select', width: 3, get:getChoiseIncProd},
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -75,9 +75,9 @@ var layoutIncProd=[{
 						  						  				,   {name: i18nStr.datef,field:5, width: 8}
 						  						  				,   {name: i18nStr.prodType, field: 6,width: 10}
 						  				
-//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])??if(!false)  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])²¢if(!false)  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 			,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';if(querydataIncProd[inRowIndex]!=undefined && querydataIncProd[inRowIndex][7]!=undefined&& querydataIncProd[inRowIndex][7][2]!=undefined){str=querydataIncProd[inRowIndex][7][2];} return str;} ,width: 10 }
-			//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])??if(!false)  ??��?????????Float???????��????????
+			//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])²¢if(!false)  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 			,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';if(querydataIncProd[inRowIndex]!=undefined && querydataIncProd[inRowIndex][8]!=undefined&& querydataIncProd[inRowIndex][8][2]!=undefined){str=querydataIncProd[inRowIndex][8][2];} return str;} ,width: 10 }
 								]]}];	 
 					

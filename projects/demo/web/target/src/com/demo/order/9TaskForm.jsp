@@ -64,15 +64,15 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																		
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
   		  {name: i18nStr.setDate,field:2, width: 8,editor: dojox.grid.editors.DateTextBox,  formatter: formatDate,  constraint: { selector: "date",datePattern: "yyyy-MM-dd"}}
@@ -80,8 +80,8 @@ var layoutSingleRow=[{
 		        					,   {name: i18nStr.formState, field: 4,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
 					            				    ,   {name: i18nStr.remark, field: 5,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??��????
-		//??��????
+//Úµí²»Ð¶
+		//Úµí²»Ð¶
 					 ,   {name: i18nStr.car,field: 7,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][7]!=undefined && querydata[inRowIndex][7][2]){str=querydata[inRowIndex][7][2];strid=querydata[inRowIndex][7][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoTaskForm.selectcar('+strid+','+inRowIndex+',7,0,event);"  >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -263,9 +263,9 @@ function init(){
 		 document.getElementById('TaskFormId').value=querydata[e.rowIndex][1];
 		 	 									 dijit.byId("addsetDate").setValue(querydata[e.rowIndex][2]);
 				 			     dijit.byId("addsetDateTime").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addformState").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][5]);
 						 			 
 													dijit.byId("addcar").setValue(querydata[e.rowIndex][7][1]);

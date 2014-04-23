@@ -1,6 +1,6 @@
-		  //---begin---------???????????��???��??????����
-																													//---begin---------?????????��????????tree?��??����sno
-															//?????????������
+		  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+																													//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+															//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= customer2orderds)
 								  var NUcustomer2orderds = false;//needUpdate
   var urlcustomer2orderds = getUrl()+ "services/OrderdManageService";
@@ -26,7 +26,7 @@ var getVOcustomer2orderds=function(queryvo,id){
 	pu.add('pageSize',customer2orderdsFloatArray[id].pagesizecustomer2orderds) ;
 	pu.add('orderBy',customer2orderdsFloatArray[id].orderBycustomer2orderds) ;
 	SOAPClient.invoke(urlcustomer2orderds,"getOrderd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-	//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+	//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	customer2orderdsFloatArray[id].querydatacustomer2orderds=dojoOrderd.OrderdVOtoArray_fun(ul,true);
 	customer2orderdsFloatArray[id].totalCountcustomer2orderds=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -100,11 +100,11 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7customer2orderds"+ma
 		}}
 }
 
-																																																															//??????����???��????????
-	//??????����???��????????
+																																																															//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 						var buildLayoutcustomer2orderds = function(floatMainID){		
 	var layoutcustomer2orderds=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -127,8 +127,8 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7customer2orderds"+ma
 				,   {name: i18nStr.completeTimeTime,field:17, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
 		        				    ,   {name: i18nStr.remark, field: 18,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
-		//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+		//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.customer,field: 20,get:function(inRowIndex){ var str='';var strid;if(querydatacustomer2orderds[inRowIndex]!=undefined && querydatacustomer2orderds[inRowIndex][20]!=undefined && querydatacustomer2orderds[inRowIndex][20][2]!=undefined){str=querydatacustomer2orderds[inRowIndex][20][2];strid=querydatacustomer2orderds[inRowIndex][20][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="selectCustomer('+strid+','+inRowIndex+',20,0,event);"   >';} ,width: 10 }
 						                                        ] ]
                            }]; 

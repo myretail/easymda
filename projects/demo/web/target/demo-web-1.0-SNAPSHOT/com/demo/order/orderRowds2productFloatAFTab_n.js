@@ -1,6 +1,6 @@
-	  	  //---begin---------???????????��???��??????����
-																					//---begin---------?????????��????????tree?��??����sno
-											//?????????������
+	  	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+																					//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+											//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= orderRowds2product)
   //name =orderRowds2productFloatAFTab.js  manageable.name=OrderRowd
   														  var NUorderRowds2product = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOorderRowds2product=function(queryvo,id){
 	pu.add('pageSize',orderRowds2productFloatArray[id].pagesizeorderRowds2product) ;
 	pu.add('orderBy',orderRowds2productFloatArray[id].orderByorderRowds2product) ;
 	SOAPClient.invoke(urlorderRowds2product,"getOrderRowd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 					     //Orderd-----Prod
 			orderRowds2productFloatArray[id].querydataorderRowds2product=dojoOrderRowd.OrderRowdVOtoArray_fun(ul,false);
 			
@@ -111,7 +111,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7orderRowds2product"+
 																																									var buildLayoutorderRowds2product = function(floatMainID){		
 
 	var layoutorderRowds2product=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -127,8 +127,8 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7orderRowds2product"+
 		    		,   {name: i18nStr.goodsState, field: 10,width: 10}
 		    		,   {name: i18nStr.remark, field: 11,width: 10}
 		  
-//??????����???��????????
-																//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+																//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																	//,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(orderRowds2productFloatArray[floatMainID].querydataorderRowds2product[inRowIndex]!=undefined && orderRowds2productFloatArray[floatMainID].querydataorderRowds2product[inRowIndex][13]!=undefined && orderRowds2productFloatArray[floatMainID].querydataorderRowds2product[inRowIndex][13][2]!=undefined){str=orderRowds2productFloatArray[floatMainID].querydataorderRowds2product[inRowIndex][13][2];strid=orderRowds2productFloatArray[floatMainID].querydataorderRowds2product[inRowIndex][13][1];} return str;} ,width: 10 }
 						                                        ] ]
                            }]; 

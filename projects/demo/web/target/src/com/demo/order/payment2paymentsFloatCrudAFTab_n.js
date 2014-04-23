@@ -1,6 +1,6 @@
-	  //---begin---------???????????��???��??????����
-					//---begin---------?????????��????????tree?��??����sno
-			//?????????������
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+					//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+			//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= payment2payments)
 					  var NUpayment2payments = false;//needUpdate
   var urlpayment2payments = getUrl()+ "services/PaymentManageService";
@@ -26,7 +26,7 @@ var getVOpayment2payments=function(queryvo,id){
 	pu.add('pageSize',payment2paymentsFloatArray[id].pagesizepayment2payments) ;
 	pu.add('orderBy',payment2paymentsFloatArray[id].orderBypayment2payments) ;
 	SOAPClient.invoke(urlpayment2payments,"getPayment", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-	//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+	//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	payment2paymentsFloatArray[id].querydatapayment2payments=dojoPayment.PaymentVOtoArray_fun(ul,true);
 	payment2paymentsFloatArray[id].totalCountpayment2payments=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -102,11 +102,11 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7payment2payments"+ma
 		}}
 }
 
-									//??????����???��????????
+									//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 						
 var buildLayoutpayment2payments = function(floatMainID){		
 	var layoutpayment2payments=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -114,7 +114,7 @@ var buildLayoutpayment2payments = function(floatMainID){
       					  {name: i18nStr.newAttr1, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
 					            					,   {name: i18nStr.newAttr2, field: 3,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.payment,field: 4,get:function(inRowIndex){ var str='';var strid;if(querydatapayment2payments[inRowIndex]!=undefined && querydatapayment2payments[inRowIndex][4]!=undefined && querydatapayment2payments[inRowIndex][4][2]!=undefined){str=querydatapayment2payments[inRowIndex][4][2];strid=querydatapayment2payments[inRowIndex][4][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="selectOrderRowd('+strid+','+inRowIndex+',4,0,event);"   >';} ,width: 10 }
 						                                        ] ]
                            }]; 

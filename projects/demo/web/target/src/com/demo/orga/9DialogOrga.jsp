@@ -65,12 +65,12 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService";        
 
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																					
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
 							{ name: '<img src="../image/addsmall.gif" onclick="addRow();"   height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/saveAll.jpg" onclick="call_funUpd();"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="removeRows('+inRowIndex+','+querydata[inRowIndex][1]+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdSingle('+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;'},//,headerStyles:mystyle
@@ -252,15 +252,15 @@ function init(){
 	dlgm.show();
 	document.getElementById('erowIndex').value=e.rowIndex;
 	 document.getElementById('OrgaId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addorgaName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addorgaCode").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addsno").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][5]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addparentId").setValue(querydata[e.rowIndex][6]);
 						 			 
 			
@@ -288,19 +288,19 @@ addRow = function(){
 
 //addDiv---------------begin-------------------------------------
 var addDivAdd = function(){
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addorgaName").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addorgaCode").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addsno").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addremark").setValue('');
-																			//enumeration ?????��??String?��?????��??
+																			//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				
 									dijit.byId("addparentId").setValue('');
 														
@@ -313,25 +313,25 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('OrgaId').value;
 	var passAll=0;
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addorgaName").validate(true)){
 					vobject.orgaName=dijit.byId("addorgaName").getValue();
 				}else{
 					setErrorClass(dijit.byId("addorgaName")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addorgaCode").validate(true)){
 					vobject.orgaCode=dijit.byId("addorgaCode").getValue();
 				}else{
 					setErrorClass(dijit.byId("addorgaCode")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addsno").validate(true)){
 					vobject.sno=dijit.byId("addsno").getValue();
 				}else{
 					setErrorClass(dijit.byId("addsno")); passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

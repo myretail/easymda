@@ -47,7 +47,7 @@ String peopleId = request.getParameter("peopleId");
 			dojo.require("dijit.Dialog");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.Task");
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 												dojo.require("projectDojo.OrderRowTask");
 				     </script>
 		        
@@ -57,7 +57,7 @@ String peopleId = request.getParameter("peopleId");
 	<script type="text/javascript" >
 		var dojoTask= new  projectDojo.Task();
 	    dojoTask.initTask();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 												 var dojoOrderRowTask= new  projectDojo.OrderRowTask();
 			dojoOrderRowTask.initOrderRowTask();
 				</script>
@@ -74,22 +74,22 @@ String peopleId = request.getParameter("peopleId");
 	  var oddstyle='';
 	  var modelTask = new dojox.grid.data.Table(null, querydataTask);
 	  var urle = getUrl()+ "services/BasicManageService";    
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
-//begin-----????Enumeration store????-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
+//begin-----Ã¶Ö¶Enumeration storeÄ»Ã·-------------------------------------------------------------------------------------------
 
-//end-----????Enumeration store????------------------------------------------------------------------------------------------- 
+//end-----Ã¶Ö¶Enumeration storeÄ»Ã·------------------------------------------------------------------------------------------- 
 
-//begin-----?????�� store????  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
+//begin-----Î²ÃµÄ± storeÄ»Ã·  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
 
-//end-----?????�� store????  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
+//end-----Î²ÃµÄ± storeÄ»Ã·  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
  
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 									
 	var layoutSingleRowQuery=[{
-		//field????????��???js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -97,14 +97,14 @@ String peopleId = request.getParameter("peopleId");
 						  						  				 ,  {name: i18nStr.volumne,field:3, width: 8}
 						  						  				,   {name: i18nStr.remark, field: 4,width: 10}
 						  				
-//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm]])if(!false)  ????Float????��???
+//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm]])if(!false)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
 				 ,   {name: i18nStr.taskForm,field: 5,get:function(inRowIndex){ var str='';if(querydataTask[inRowIndex]!=undefined && querydataTask[inRowIndex][5]!=undefined){str=querydataTask[inRowIndex][5][2];} return str;} ,width: 10 }
 				
 					]]}];	 
 					
 					
 
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 
 /*	dojo.connect(dijit.byId("TaskAFTab"), "selectChild", function(e){
 			if (dijit.byId("TaskAFTab").selectedChildWidget.id=="orderRowTasks2task"){

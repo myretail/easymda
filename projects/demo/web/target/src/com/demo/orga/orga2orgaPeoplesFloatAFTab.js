@@ -1,12 +1,12 @@
-	  //---begin---------???????????��???��??????����
-	//---end---------???????????��???��??????����
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+	//---end---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
 																																								//set (= orga2orgaPeoples)
 
 	//----------lastMenber = org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga]   firstMenber=org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]
 	//orga2orgaPeoplesAFTab.js	
 	
-	//---begin---------??????????tree?��??����sno
-																																																																																																																																			//---end---------??????????tree?��??����sno
+	//---begin---------ÅÐ¶ÏÊÇ·ñÎªtree½á¹¹±ísno
+																																																																																																																																			//---end---------ÅÐ¶ÏÊÇ·ñÎªtree½á¹¹±ísno
 	
 			/*  var NUorga2orgaPeoples = false;//needUpdate
 		  var urlorgaPeoples2people = getUrl()+ "services/OrgaPeoplesManageService";
@@ -155,8 +155,8 @@
 
 	                    //associatedClass==manageable
 		
-        //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])??if(!${member.many})  ??��?????????Float???????��????????
-	                                          //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])??if(!${member.many})  ??��?????????Float???????��????????
+        //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
+	                                          //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                                     
               //begin from 41.4
 		var querydataorgaPeoples2peoplePeoples =  new Array();
@@ -193,7 +193,7 @@
 			}
 	}		*/
 			var layoutorgaPeoples2people=[{
-				   //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+				   //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 		   
 					 cells: [ [
 							   //{ name: i18nStr.chose, width: 3, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//

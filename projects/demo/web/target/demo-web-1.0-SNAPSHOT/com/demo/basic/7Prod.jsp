@@ -45,7 +45,7 @@ String peopleId = request.getParameter("peopleId");
 			dojo.require("dijit.Dialog");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.Prod");
-			//??��???????????????��?��		
+			//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 																	dojo.require("projectDojo.OrderRowd");
 			     </script>
 		        
@@ -55,7 +55,7 @@ String peopleId = request.getParameter("peopleId");
 	<script type="text/javascript" >
 		var dojoProd= new  projectDojo.Prod();
 	    dojoProd.initProd();
-			//??��???????????????��?��		
+			//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 																	 var dojoOrderRowd= new  projectDojo.OrderRowd();
 			dojoOrderRowd.initOrderRowd();
 			
@@ -89,22 +89,22 @@ String peopleId = request.getParameter("peopleId");
 	  var modelProd = new dojox.grid.data.Table(null, querydataProd);
 	  var urle = getUrl()+ "services/BasicManageService";    
 	  
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
-//begin-----????Enumeration store????-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
+//begin-----Ã¶Ö¶Enumeration storeÄ»Ã·-------------------------------------------------------------------------------------------
 
-//end-----????Enumeration store????------------------------------------------------------------------------------------------- 
+//end-----Ã¶Ö¶Enumeration storeÄ»Ã·------------------------------------------------------------------------------------------- 
 
-//begin-----?????�� store????  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
+//begin-----Î²ÃµÄ± storeÄ»Ã·  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
 
-//end-----?????�� store????  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
+//end-----Î²ÃµÄ± storeÄ»Ã·  	have set function's manageableAssociationEnds-------------------------------------------------------------------------------------------
  
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 															
  var layoutSingleRowQuery=[{
-		//field????????��???js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 								{name: 'openFloat', styles: 'text-align: center;', width: 3, get:function(inRowIndex){return '<img src="../image/EmbedLink.gif" style="cursor:pointer" onclick="openFloat('+inRowIndex+',event);"  height="16" width="16" >';}},
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -114,9 +114,9 @@ String peopleId = request.getParameter("peopleId");
 						  						  				,   {name: i18nStr.datef,field:5, width: 8}
 						  						  				,   {name: i18nStr.prodType, field: 6,width: 10}
 						  				
-//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])if(!false)  ????Float????��???
+//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])if(!false)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
 					 ,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';if(querydataProd[inRowIndex]!=undefined && querydataProd[inRowIndex][7]!=undefined){str=querydataProd[inRowIndex][7][2];} return str;} ,width: 10 }
-					//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])if(!false)  ????Float????��???
+					//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])if(!false)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
 					 ,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';if(querydataProd[inRowIndex]!=undefined && querydataProd[inRowIndex][8]!=undefined){str=querydataProd[inRowIndex][8][2];} return str;} ,width: 10 }
 										]]}];	 
 					
@@ -125,7 +125,7 @@ String peopleId = request.getParameter("peopleId");
 					
 					
 					
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 var onloadmy=function(){
 																				buildorderRowds2product(mainID);
 						}					

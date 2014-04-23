@@ -59,13 +59,13 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
 
-	 //???��????1212??layout??layoutstructure
+	 //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 	 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  				
 
 	var layoutSingleRow=[{
           
-                 //field????????��???js??toArray��???querydate??
+                 //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
                        
                                  cells: [ [
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//

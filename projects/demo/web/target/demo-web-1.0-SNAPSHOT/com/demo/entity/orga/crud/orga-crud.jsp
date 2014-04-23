@@ -276,15 +276,15 @@ String peopleId = request.getParameter("peopleId");
 //have set function's manageableAssociationEnds
 
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																					
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
-							//{name: '????', width: 3, get:getChoise},
+							//{name: 'Ñ¡Ôñ', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       					  {name: i18nStr.orgaName, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
@@ -454,15 +454,15 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('OrgaId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addorgaName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addorgaCode").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addsno").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][5]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addparentId").setValue(querydata[e.rowIndex][6]);
 						 			 
 			});     
@@ -474,16 +474,16 @@ function init(){
 var addDivAdd = function(){
 	 if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
-	 //????add????
-										//enumeration ?????��??String?��?????��??
+	 //Çå¿Õadd½çÃæ
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addorgaName").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addorgaCode").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addsno").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addparentId").setValue('');
 										
 		
@@ -496,25 +496,25 @@ function addDivSave(){
 	var vobject=new OrgaVOJs();
     vobject.id=document.getElementById('OrgaId').value;
 	var passAll=0;
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addorgaName").isValid(true)){
 					vobject.orgaName=dijit.byId("addorgaName").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addorgaCode").isValid(true)){
 					vobject.orgaCode=dijit.byId("addorgaCode").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addsno").isValid(true)){
 					vobject.sno=dijit.byId("addsno").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addremark").isValid(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{
@@ -579,7 +579,7 @@ if(passAll==0){
                }
 			   totalCount--;
                var totalpage=Math.ceil(new Number(totalCount)/pagesize);
-               document.getElementById("rowCount").innerHTML="??"+pagenumber+"??/??"+totalpage+"??/��???"+totalCount+"??????" ; 
+               document.getElementById("rowCount").innerHTML="µÚ"+pagenumber+"Ò³/¹²"+totalpage+"Ò³/×Ü¼Æ"+totalCount+"Ìõ¼ÇÂ¼" ; 
                if(si=ii){if(document.getElementById('addDiv').style.display=='')document.getElementById('addDiv').style.display='none';}
 	        });   
           //}             

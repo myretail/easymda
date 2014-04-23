@@ -1,7 +1,7 @@
 		  
-//??????"????����"?????������
+//ÒÔÏÂÊÇ"ÒýÓÃ±í"ÊÇÆÕÍ¨±í
         //set (= car2taskForms)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 								  var NUcar2taskForms = false;//needUpdate
   var urlcar2taskForms = getUrl()+ "services/TaskFormManageService";
   var deletedatacar2taskForms =  new Array();
@@ -27,7 +27,7 @@ var getVOcar2taskForms=function(queryvo){
 	pu.add('pageSize',pagesizecar2taskForms) ;
 	pu.add('orderBy',orderBycar2taskForms) ;
 	SOAPClient.invoke(urlcar2taskForms,"getTaskForm", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydatacar2taskForms=dojoTaskForm.TaskFormVOtoArray_fun(ul,true);
 	totalCountcar2taskForms=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -89,7 +89,7 @@ var buildcar2taskForms=function(){
 
 															
 	var layoutcar2taskForms=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -99,8 +99,8 @@ var buildcar2taskForms=function(){
 		        					,   {name: i18nStr.formState, field: 4,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
 					            				    ,   {name: i18nStr.remark, field: 5,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
-		//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+		//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.car,field: 7,get:function(inRowIndex){ var str='';var strid;if(querydatacar2taskForms[inRowIndex]!=undefined && querydatacar2taskForms[inRowIndex][7]!=undefined && querydatacar2taskForms[inRowIndex][7][2]!=undefined){str=querydatacar2taskForms[inRowIndex][7][2];strid=querydatacar2taskForms[inRowIndex][7][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoTaskForm.selectcar('+strid+','+inRowIndex+',7,0,event);"   >';} ,width: 10 }
 						                                        ] ]
                            }]; 

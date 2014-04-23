@@ -65,10 +65,10 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 									
-/*//????��?
+/*//Úµð¾°¶
 					function setTaskFormDetailFun(inrow,TaskFormColNo){
 					return querydata[inrow][TaskFormColNo];
 				}
@@ -79,17 +79,17 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
             {name: i18nStr.num,field:2, width: 8 }
 		             ,  {name: i18nStr.volumne,field:3, width: 8 }
 		        			    ,   {name: i18nStr.remark, field: 4,width: 10 }
 					 
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.taskForm,field: 5,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][5]!=undefined && querydata[inRowIndex][5][2]){str=querydata[inRowIndex][5][2];strid=querydata[inRowIndex][5][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoTask.detailFloatTaskFormData=querydata['+inRowIndex+'][5];dojoTask.detailTaskForm('+querydata[inRowIndex][5][1]+','+inRowIndex+',5,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -189,11 +189,11 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('TaskId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addnum").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addvolumne").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][4]);
 						 			 
 								dijit.byId("addtaskForm").setValue(querydata[e.rowIndex][5][1]);
@@ -212,13 +212,13 @@ var addDivAdd = function(){
 	 //if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 //if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 	 //add
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addnum").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addvolumne").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addremark").setValue('');
 														
@@ -248,7 +248,7 @@ function addDivSave(){
 				}else{
 					setErrorClass(dijit.byId("addvolumne")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

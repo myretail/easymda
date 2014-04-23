@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataOrderd[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataOrderd[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -54,11 +54,11 @@ String peopleId = request.getParameter("peopleId");
 	<script type="text/javascript" >
 		var dojoOrderd= new  projectDojo.Orderd();
 	    dojoOrderd.initOrderd();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 																			</script>
-	 		<script type="text/javascript" src="OrderRowdSelectPane.js"></script><!--????-->
-	 		<script type="text/javascript" src="CustomerSelectPane.js"></script><!--????-->
-	 	 					<script type="text/javascript" src="../order/OrderRowdSubCrudFor30.js"></script><!--sub Table script    eg:taskRow.js    ??????��???????��childRow=0-->
+	 		<script type="text/javascript" src="OrderRowdSelectPane.js"></script><!--Ò»Òª-->
+	 		<script type="text/javascript" src="CustomerSelectPane.js"></script><!--Ò»Òª-->
+	 	 					<script type="text/javascript" src="../order/OrderRowdSubCrudFor30.js"></script><!--sub Table script    eg:taskRow.js    Ð¶Ç·Îªí£¬Ò³Ê¼Ó±childRow=0-->
 							<script type="text/javascript" >
 	  var urlOrderd = getUrl()+ "services/OrderdManageService";
 	  var deletedataOrderd =  new Array();
@@ -213,7 +213,7 @@ function getDetailOrderd(inRowIndex){
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 var childRow= 19;
 var layoutInRowIndex;	  
-function buildSubgridOrderd(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridOrderd(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		//var child = inCell.getNode(inRowIndex).lastChild;
@@ -242,7 +242,7 @@ function buildSubgridOrderd(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -280,7 +280,7 @@ function buildSubgridOrderd(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 
 function querybuttonOrderd(){
               //var p = new SOAPClientParameters2();

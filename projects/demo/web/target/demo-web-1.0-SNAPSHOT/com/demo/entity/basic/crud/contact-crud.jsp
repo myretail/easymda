@@ -275,20 +275,20 @@ String peopleId = request.getParameter("peopleId");
         }
 
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
-							//{name: '????', width: 3, get:getChoise},
+							//{name: 'Ñ¡Ôñ', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       					  {name: i18nStr.codeContact, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.customer,field: 3,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][3]!=undefined){str=querydata[inRowIndex][3][2];strid=querydata[inRowIndex][3][1];} return str+'<button dojoType="dijit.form.Button" onclick="selectCustomer('+strid+','+inRowIndex+',3,0,event);"   iconClass="CustomerIcon">sel</button>';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -448,7 +448,7 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('ContactId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcodeContact").setValue(querydata[e.rowIndex][2]);
 						 			 
 					dijit.byId("addcustomer").setValue(querydata[e.rowIndex][3][1]);
@@ -466,8 +466,8 @@ function init(){
 var addDivAdd = function(){
 	 if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
-	 //????add????
-										//enumeration ?????��??String?��?????��??
+	 //Çå¿Õadd½çÃæ
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcodeContact").setValue('');
 										
 			dijit.byId("addcustomer").setValue('');
@@ -482,7 +482,7 @@ function addDivSave(){
 	var vobject=new ContactVOJs();
     vobject.id=document.getElementById('ContactId').value;
 	var passAll=0;
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcodeContact").isValid(true)){
 					vobject.codeContact=dijit.byId("addcodeContact").getValue();
 				}else{
@@ -542,7 +542,7 @@ if(passAll==0){
                }
 			   totalCount--;
                var totalpage=Math.ceil(new Number(totalCount)/pagesize);
-               document.getElementById("rowCount").innerHTML="??"+pagenumber+"??/??"+totalpage+"??/��???"+totalCount+"??????" ; 
+               document.getElementById("rowCount").innerHTML="µÚ"+pagenumber+"Ò³/¹²"+totalpage+"Ò³/×Ü¼Æ"+totalCount+"Ìõ¼ÇÂ¼" ; 
                if(si=ii){if(document.getElementById('addDiv').style.display=='')document.getElementById('addDiv').style.display='none';}
 	        });   
           //}             

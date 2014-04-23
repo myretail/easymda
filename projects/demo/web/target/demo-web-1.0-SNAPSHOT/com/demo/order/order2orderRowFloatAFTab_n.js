@@ -1,6 +1,6 @@
-	  //---begin---------???????????��???��??????����
-																					//---begin---------?????????��????????tree?��??����sno
-											//?????????������
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+																					//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+											//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= order2orderRow)
   //name =order2orderRowFloatAFTab.js  manageable.name=OrderRowd
   														  var NUorder2orderRow = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOorder2orderRow=function(queryvo,id){
 	pu.add('pageSize',order2orderRowFloatArray[id].pagesizeorder2orderRow) ;
 	pu.add('orderBy',order2orderRowFloatArray[id].orderByorder2orderRow) ;
 	SOAPClient.invoke(urlorder2orderRow,"getOrderRowd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 						//Orderd-----Orderd
 			order2orderRowFloatArray[id].querydataorder2orderRow=dojoOrderd.OrderRowdVOtoArray_fun(ul,false);
 			
@@ -111,7 +111,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7order2orderRow"+main
 																																									var buildLayoutorder2orderRow = function(floatMainID){		
 
 	var layoutorder2orderRow=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -127,8 +127,8 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7order2orderRow"+main
 		    		,   {name: i18nStr.goodsState, field: 10,width: 10}
 		    		,   {name: i18nStr.remark, field: 11,width: 10}
 		  
-//??????����???��????????
-																//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+																//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																	,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(order2orderRowFloatArray[floatMainID].querydataorder2orderRow[inRowIndex]!=undefined && order2orderRowFloatArray[floatMainID].querydataorder2orderRow[inRowIndex][13]!=undefined && order2orderRowFloatArray[floatMainID].querydataorder2orderRow[inRowIndex][13][2]!=undefined){str=order2orderRowFloatArray[floatMainID].querydataorder2orderRow[inRowIndex][13][2];strid=order2orderRowFloatArray[floatMainID].querydataorder2orderRow[inRowIndex][13][1];} return str;} ,width: 10 }
 										                                        ] ]
                            }]; 

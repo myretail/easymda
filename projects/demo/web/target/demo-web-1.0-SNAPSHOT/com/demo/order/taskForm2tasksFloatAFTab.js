@@ -1,6 +1,6 @@
-	  //---begin---------???????????��???��??????����
-							//---begin---------?????????��????????tree?��??����sno
-				//?????????������
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+							//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+				//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= taskForm2tasks)
   //name =taskForm2tasksFloatAFTab.js  manageable.name=Task
   								  var NUtaskForm2tasks = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOtaskForm2tasks=function(queryvo,id){
 	pu.add('pageSize',taskForm2tasksFloatArray[id].pagesizetaskForm2tasks) ;
 	pu.add('orderBy',taskForm2tasksFloatArray[id].orderBytaskForm2tasks) ;
 	SOAPClient.invoke(urltaskForm2tasks,"getTask", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 						//TaskForm-----TaskForm
 			taskForm2tasksFloatArray[id].querydatataskForm2tasks=dojoTaskForm.TaskVOtoArray_fun(ul,false);
 			
@@ -106,7 +106,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7taskForm2tasks"+main
 													var buildLayouttaskForm2tasks = function(floatMainID){		
 
 	var layouttaskForm2tasks=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -115,7 +115,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7taskForm2tasks"+main
 		             ,  {name: i18nStr.volumne,field:3, width: 8}
 		    		,   {name: i18nStr.remark, field: 4,width: 10}
 		  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																                                        ] ]
                            }]; 
 

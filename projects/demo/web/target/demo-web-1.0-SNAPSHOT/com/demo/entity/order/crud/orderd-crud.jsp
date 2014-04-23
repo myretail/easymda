@@ -588,15 +588,15 @@ String peopleId = request.getParameter("peopleId");
         }
 
  
-//??????����??��??????????��??12???????��??12???��?��??????layout??????layout????structure
+//ÏÈÅÐ¶Ï±íµÄ×Ö¶ÎÊýÊÇ·ñ´óÓÚ12£¬Èç¹û´óÓÚ12£¬ÔòÉú³Éµ¥ÐÐlayoutºÍÕÛµþlayoutÁ½¸östructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 																																																															
 var layoutSingleRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [ [
-							//{name: '????', width: 3, get:getChoise},
+							//{name: 'Ñ¡Ôñ', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       					  {name: i18nStr.customerOrderNo, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
@@ -617,8 +617,8 @@ var layoutSingleRow=[{
 				,   {name: i18nStr.completeTimeTime,field:17, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
 		        				    ,   {name: i18nStr.remark, field: 18,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
-	//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 					 ,   {name: i18nStr.customer,field: 19,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][19]!=undefined){str=querydata[inRowIndex][19][2];strid=querydata[inRowIndex][19][1];} return str+'<button dojoType="dijit.form.Button" onclick="selectCustomer('+strid+','+inRowIndex+',19,0,event);"   iconClass="CustomerIcon">sel</button>';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -626,7 +626,7 @@ var layoutSingleRow=[{
   //rowinum=10
 var layoutTwoRow=[{
           
- //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+ //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	   
 				 cells: [
                       [
@@ -658,9 +658,9 @@ var layoutTwoRow=[{
 									                     //----------------(inum:10)  (rowinum: 9)
 									                     //----------------(inum:10)  (rowinum: 9)
 								
-	//????
+	//¶ÔÓÚ
 		  //(10 > 9)
-						//????
+						//¶ÔÓÚ
 		  //(10 > 9)
 							,[
 	 //  22222222222inum= 2   inum2=10
@@ -674,8 +674,8 @@ var layoutTwoRow=[{
 										,   {name: i18nStr.completeTimeTime,field:17, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
 								  														  																		,   {name: i18nStr.remark, field: 18,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 																					  														
-	//????
-											//????
+	//¶ÔÓÚ
+											//¶ÔÓÚ
 									 ,   {name: i18nStr.customer,field: 20,get:function(inRowIndex){ var str='';var strid;if(querydataOrderd[inRowIndex]!=undefined && querydataOrderd[inRowIndex][20]!=undefined && querydataOrderd[inRowIndex][20][1]!=undefined){str=querydataOrderd[inRowIndex][20][2];strid=querydataOrderd[inRowIndex][20][1];} return str+'<button dojoType="dijit.form.Button" onclick="selectCustomer('+strid+','+inRowIndex+',20,0,event);"   iconClass="CustomerIcon">sel</button>';} ,width: 10 }
 										 	
 		]]
@@ -905,33 +905,33 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('OrderdId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?????��??String?��?????��??
+		 	 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcustomerOrderNo").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcontractNo").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addconveyanceEnum").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcarryTypeEnum").setValue(querydata[e.rowIndex][5]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addshipperRemark").setValue(querydata[e.rowIndex][6]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcarrierRemark").setValue(querydata[e.rowIndex][7]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addlevelEnum").setValue(querydata[e.rowIndex][8]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcustomerTypeEnum").setValue(querydata[e.rowIndex][9]);
 						 									 dijit.byId("addreferTime").setValue(querydata[e.rowIndex][10].substring(0,10));
 				  				  dijit.byId("addreferTimeTime").setValue(querydata[e.rowIndex][11].substring(11,16));
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addlinkMan").setValue(querydata[e.rowIndex][12]);
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addtel").setValue(querydata[e.rowIndex][13]);
 						 									 dijit.byId("addbookTime").setValue(querydata[e.rowIndex][14].substring(0,10));
 				  				  dijit.byId("addbookTimeTime").setValue(querydata[e.rowIndex][15].substring(11,16));
 						 									 dijit.byId("addcompleteTime").setValue(querydata[e.rowIndex][16].substring(0,10));
 				  				  dijit.byId("addcompleteTimeTime").setValue(querydata[e.rowIndex][17].substring(11,16));
-						 									//enumeration ?????��??String?��?????��??
+						 									//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][18]);
 						 			 
 					dijit.byId("addorderRow").setValue(querydata[e.rowIndex][19][1]);
@@ -955,34 +955,34 @@ function init(){
 var addDivAdd = function(){
 	 if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
-	 //????add????
-										//enumeration ?????��??String?��?????��??
+	 //Çå¿Õadd½çÃæ
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcustomerOrderNo").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcontractNo").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addconveyanceEnum").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcarryTypeEnum").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addshipperRemark").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcarrierRemark").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addlevelEnum").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addcustomerTypeEnum").setValue('');
 															dijit.byId("addreferTime").setValue('');
 				dijit.byId("addreferTimeTime").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addlinkMan").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addtel").setValue('');
 															dijit.byId("addbookTime").setValue('');
 				dijit.byId("addbookTimeTime").setValue('');
 															dijit.byId("addcompleteTime").setValue('');
 				dijit.byId("addcompleteTimeTime").setValue('');
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				dijit.byId("addremark").setValue('');
 										
 			dijit.byId("addorderRow").setValue('');
@@ -999,49 +999,49 @@ function addDivSave(){
 	var vobject=new OrderdVOJs();
     vobject.id=document.getElementById('OrderdId').value;
 	var passAll=0;
-										//enumeration ?????��??String?��?????��??
+										//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcustomerOrderNo").isValid(true)){
 					vobject.customerOrderNo=dijit.byId("addcustomerOrderNo").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcontractNo").isValid(true)){
 					vobject.contractNo=dijit.byId("addcontractNo").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addconveyanceEnum").isValid(true)){
 					vobject.conveyanceEnum=dijit.byId("addconveyanceEnum").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcarryTypeEnum").isValid(true)){
 					vobject.carryTypeEnum=dijit.byId("addcarryTypeEnum").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addshipperRemark").isValid(true)){
 					vobject.shipperRemark=dijit.byId("addshipperRemark").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcarrierRemark").isValid(true)){
 					vobject.carrierRemark=dijit.byId("addcarrierRemark").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addlevelEnum").isValid(true)){
 					vobject.levelEnum=dijit.byId("addlevelEnum").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addcustomerTypeEnum").isValid(true)){
 					vobject.customerTypeEnum=dijit.byId("addcustomerTypeEnum").getValue();
 				}else{
@@ -1055,13 +1055,13 @@ function addDivSave(){
 					}else{passAll=1;}
 				}else{
 					passAll=1;}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addlinkMan").isValid(true)){
 					vobject.linkMan=dijit.byId("addlinkMan").getValue();
 				}else{
 					passAll=1;
 				}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addtel").isValid(true)){
 					vobject.tel=dijit.byId("addtel").getValue();
 				}else{
@@ -1083,7 +1083,7 @@ function addDivSave(){
 					}else{passAll=1;}
 				}else{
 					passAll=1;}
-															//enumeration ?????��??String?��?????��??
+															//enumeration ÓëÆÕÍ¨µÄStringÏàÍ¬´¦Àí£¿
 				if(dijit.byId("addremark").isValid(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{
@@ -1182,7 +1182,7 @@ if(passAll==0){
                }
 			   totalCount--;
                var totalpage=Math.ceil(new Number(totalCount)/pagesize);
-               document.getElementById("rowCount").innerHTML="??"+pagenumber+"??/??"+totalpage+"??/��???"+totalCount+"??????" ; 
+               document.getElementById("rowCount").innerHTML="µÚ"+pagenumber+"Ò³/¹²"+totalpage+"Ò³/×Ü¼Æ"+totalCount+"Ìõ¼ÇÂ¼" ; 
                if(si=ii){if(document.getElementById('addDiv').style.display=='')document.getElementById('addDiv').style.display='none';}
 	        });   
           //}             

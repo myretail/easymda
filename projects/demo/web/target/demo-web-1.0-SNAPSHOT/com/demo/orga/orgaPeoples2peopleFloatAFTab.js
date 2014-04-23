@@ -1,11 +1,11 @@
-	  	  //---begin---------???????????��???��??????����
-	//---end---------???????????��???��??????����
+	  	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+	//---end---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
 																																								//set (= orgaPeoples2people)
 
 	//----------lastMenber = org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]   firstMenber=org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga]
 	//orgaPeoples2peopleAFTab.js	
 	
-	//---begin---------??????????tree?��??����sno
+	//---begin---------ÅÐ¶ÏÊÇ·ñÎªtree½á¹¹±ísno
 																																																																							//isTree	
 			  var NUorgaPeoples2people = false;//needUpdate
 		  var urlorga2orgaPeoples = getUrl()+ "services/OrgaPeoplesManageService";
@@ -129,7 +129,7 @@
 							   }}
 				});   
 			  
-				//?��????����----begin
+				//²éÑ¯ÁÐ±í----begin
 				/*alert("Execute of node " + continentStore.getLabel(item)
 				+", population=" + continentStore.getValue(item, "population"));*/
 				/* dojo.connect(_tree, "onClick", function(item,node){
@@ -203,15 +203,15 @@
 
 	
 	          //associatedClass==manageable
-        //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])??if(!${member.many})  ??��?????????Float???????��????????
+        //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orga], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[people]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                                     
               //begin from 41.4
                   	var querydataorga2orgaPeoplesOrga =  new Array();//???????????
-					function getTreeNodes(peopleId,ParentSno,chitem,layerInt,layerSum){//?��??layerInt=0
+					function getTreeNodes(peopleId,ParentSno,chitem,layerInt,layerSum){//Ê×²ãlayerInt=0
 						var pu = new SOAPClientParameters2();
 						pu.add('id',peopleId) ;
 						pu.add('pid',ParentSno) ;
-						SOAPClient.invoke(urlorga2orgaPeoples,"getOrgaByPeoplesIdAndParentId", pu, false,  function GetEnu_callBack(ul, soapResponse){      //????HandleForRoleOperateByParentId
+						SOAPClient.invoke(urlorga2orgaPeoples,"getOrgaByPeoplesIdAndParentId", pu, false,  function GetEnu_callBack(ul, soapResponse){      //Ó¦ÎªHandleForRoleOperateByParentId
 									   var pInfo = {
 													parent: chitem,		
 													attribute: "children"	
@@ -219,7 +219,7 @@
 							   if(ul!=null && ul.length>1 ){
 							   var re=dojoOrgaPeoples.OrgaVOtoArray_fun(ul,false);
 									 for(var i = 0; i < ul.length-1; i++){		
-					  //var newitem=popStore.newItem({name:ulo["ns:handleName"] ,type:ulo["ns:handleSno"] ,eId:ulo["ns:id"],haveChild:"0",selectIf:ulo["ns:selected"]}, pInfo);//haveChild=0??????1??��??��????2??��??��??
+					  //var newitem=popStore.newItem({name:ulo["ns:handleName"] ,type:ulo["ns:handleSno"] ,eId:ulo["ns:id"],haveChild:"0",selectIf:ulo["ns:selected"]}, pInfo);//haveChild=0³õÊ¼£¬1ÓÐ×Ó½áµã£¬2ÎÞ×Ó½áµã
 					  //if(layerInt<layerSum)getTreeNodes(peopleId,ulo["ns:handleSno"]+"___",newitem,layerInt+1,layerSum);
 							  var newitem=popStore.newItem({name:re[i][2] ,type:ul[i]["ns:parentId"] ,eId:re[i][1],haveChild:"0",selectIf:ul[i]["ns:selected"]}, pInfo);
 							  if(layerInt<layerSum)getTreeNodes(peopleId,re[i][1],newitem,layerInt+1,layerSum);

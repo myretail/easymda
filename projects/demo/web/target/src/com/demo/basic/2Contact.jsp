@@ -59,19 +59,19 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
 
-	 //???��????1212??layout??layoutstructure
+	 //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 	 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  						
 
 	var layoutSingleRow=[{
           
-                 //field????????��???js??toArray��???querydate??
+                 //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
                        
                                  cells: [ [
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
   		 {name: i18nStr.codeContact,field:2, width: 10}
 		  
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.customer,field: 3,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][3]!=undefined && querydata[inRowIndex][3][2]!=undefined){str=querydata[inRowIndex][3][2];strid=querydata[inRowIndex][3][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoContact.detailFloatCustomerData=querydata['+inRowIndex+'][3];dojoContact.detailCustomer('+querydata[inRowIndex][3][1]+','+inRowIndex+',3,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 

@@ -1,9 +1,9 @@
-	  //��???��?????����??4.1????����??---begin---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
-			//---begin---------?????????��????????tree?��??����sno,??"????����"???�¡���
-		//????"????����"???????�¡���begin
-	//????"????����"??????��?����begin
-//????"????����"??????��?����end
-//??????"????����"?????������
+	  //±¾Ä£°åµÄÔª±íÊÇ4.1µÄÔª±í£¬---begin---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+			//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno,¼´"ÒýÓÃ±í"ÎªÊ÷±í
+		//ÅÐ¶Ï"ÒýÓÃ±í"ÊÇ·ñÊÇÖ÷±íbegin
+	//ÅÐ¶Ï"ÒýÓÃ±í"ÊÇ·ñÊÇ×Ó±íbegin
+//ÅÐ¶Ï"ÒýÓÃ±í"ÊÇ·ñÊÇ×Ó±íend
+//ÒÔÏÂÊÇ"ÒýÓÃ±í"ÊÇÆÕÍ¨±í
 //set (= contacts2customer)
 	//name =contacts2customerCrudRightAFTab.js  manageable.name=Contact
 						  var NUcontacts2customer = false;//needUpdate
@@ -33,7 +33,7 @@ var getVOcontacts2customer=function(queryvo){
 	pu.add('pageSize',pagesizecontacts2customer) ;
 	pu.add('orderBy',orderBycontacts2customer) ;
 	SOAPClient.invoke(urlcontacts2customer,"getContact", pu, false,  function GetEnu_callBack(ul, soapResponse){     
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydatacontacts2customer=dojoContact.ContactVOtoArray_fun(ul,true);
 	totalCountcontacts2customer=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -94,7 +94,7 @@ var buildcontacts2customer=function(){
 }
 
 						var layoutcontacts2customer=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -103,12 +103,12 @@ var buildcontacts2customer=function(){
 					      
 
 
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.customer,field: 3,get:function(inRowIndex){ var str='';var strid;if(querydatacontacts2customer[inRowIndex]!=undefined && querydatacontacts2customer[inRowIndex][3]!=undefined && querydatacontacts2customer[inRowIndex][3][2]!=undefined){str=querydatacontacts2customer[inRowIndex][3][2];strid=querydatacontacts2customer[inRowIndex][3][1];} return str;} ,width: 10 }
 						                                        ] ]
                            }]; 
 
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 						
 			   
 						   

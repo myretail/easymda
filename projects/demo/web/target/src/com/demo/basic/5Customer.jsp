@@ -48,11 +48,11 @@ String peopleId = request.getParameter("peopleId");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.Customer");
 
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							dojo.require("projectDojo.Prod");
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							dojo.require("projectDojo.Contact");
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							dojo.require("projectDojo.Orderd");
 			     </script>
 		        
@@ -66,13 +66,13 @@ String peopleId = request.getParameter("peopleId");
 	  	<script type="text/javascript" >
 	  var dojoCustomer= new  projectDojo.Customer();
 	  dojoCustomer.initCustomer();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoProd= new  projectDojo.Prod();
 			dojoProd.initProd();
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoContact= new  projectDojo.Contact();
 			dojoContact.initContact();
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoOrderd= new  projectDojo.Orderd();
 			dojoOrderd.initOrderd();
 				  var urlCustomer = getUrl()+ "services/CustomerManageService";
@@ -87,15 +87,15 @@ String peopleId = request.getParameter("peopleId");
 	  var modelCustomer = new dojox.grid.data.Table(null, querydataCustomer);
 	  var urle = getUrl()+ "services/BasicManageService";    
 	  
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
 
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					 
 	var layoutSingleRowQuery=[{
-		//field????????��???js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -106,7 +106,7 @@ String peopleId = request.getParameter("peopleId");
 					
 					
 					
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 
 /*	dojo.connect(dijit.byId("CustomerAFTab"), "selectChild", function(e){
 			if (dijit.byId("CustomerAFTab").selectedChildWidget.id=="prodCust2prods"){

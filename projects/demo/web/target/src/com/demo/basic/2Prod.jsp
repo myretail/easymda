@@ -59,13 +59,13 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
 
-	 //???��????1212??layout??layoutstructure
+	 //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 	 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  																
 
 	var layoutSingleRow=[{
           
-                 //field????????��???js??toArray��???querydate??
+                 //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
                        
                                  cells: [ [
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -75,9 +75,9 @@ String peopleId = request.getParameter("peopleId");
 		    		,  {name: i18nStr.datef,field:5, width: 10}
 		    		,  {name: i18nStr.prodType,field:6, width: 10}
 		  
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][7]!=undefined && querydata[inRowIndex][7][2]!=undefined){str=querydata[inRowIndex][7][2];strid=querydata[inRowIndex][7][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoProd.detailFloatCustomerData=querydata['+inRowIndex+'][7];dojoProd.detailCustomer('+querydata[inRowIndex][7][1]+','+inRowIndex+',7,0,event,0);"   >';} ,width: 10 }
-			//??��????
+			//Úµí²»Ð¶
 					 ,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][8]!=undefined && querydata[inRowIndex][8][2]!=undefined){str=querydata[inRowIndex][8][2];strid=querydata[inRowIndex][8][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoProd.detailFloatPeoplesData=querydata['+inRowIndex+'][8];dojoProd.detailPeoples('+querydata[inRowIndex][8][1]+','+inRowIndex+',8,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 

@@ -59,20 +59,20 @@ String peopleId = request.getParameter("peopleId");
 	  var model = new dojox.grid.data.Table(null, querydata);
 	  var urle = getUrl()+ "services/BasicManageService";        
 
-	 //???��????1212??layout??layoutstructure
+	 //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 	 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  								
 
 	var layoutSingleRow=[{
           
-                 //field????????��???js??toArray��???querydate??
+                 //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
                        
                                  cells: [ [
                                            { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
   		 {name: i18nStr.newAttr1,field:2, width: 10}
 		    		,  {name: i18nStr.newAttr2,field:3, width: 10}
 		  
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.payment,field: 4,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][4]!=undefined && querydata[inRowIndex][4][2]!=undefined){str=querydata[inRowIndex][4][2];strid=querydata[inRowIndex][4][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoPayment.detailFloatOrderRowdData=querydata['+inRowIndex+'][4];dojoPayment.detailOrderRowd('+querydata[inRowIndex][4][1]+','+inRowIndex+',4,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 

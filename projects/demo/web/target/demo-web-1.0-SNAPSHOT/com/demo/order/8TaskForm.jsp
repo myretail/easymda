@@ -45,7 +45,7 @@ String peopleId = request.getParameter("peopleId");
             dojo.require("mydojo.NumberTextBox");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.TaskForm");
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//Task==Task---false
 										//car==Task---false
 									
@@ -73,11 +73,11 @@ String peopleId = request.getParameter("peopleId");
 
  					<script type="text/javascript" src="../order/taskForm2tasksFloatAFTab.js"></script>
 		
-	 	  			<script type="text/javascript" src="tasks.js"></script><!--sub Table script    eg:taskRow.js    ??????��???????��childRow=0-->
+	 	  			<script type="text/javascript" src="tasks.js"></script><!--sub Table script    eg:taskRow.js    Ð¶Ç·Îªí£¬Ò³Ê¼Ó±childRow=0-->
 			<script type="text/javascript" >
 	  var dojoTaskForm= new  projectDojo.TaskForm();
 	  dojoTaskForm.initTaskForm();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//Task==Task---false
 										//car==Task---false
 									
@@ -92,15 +92,15 @@ String peopleId = request.getParameter("peopleId");
 	  var oddstyle='';
 	  var modelTaskForm = new dojox.grid.data.Table(null, querydataTaskForm);
 	  var urle = getUrl()+ "services/BasicManageService";    
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
 
  
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  											var layoutSingleRowQuery=[{
-		//field????????��???js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 							{name: 'openFloat', styles: 'text-align: center;', width: 3, get:function(inRowIndex){return '<img src="../image/EmbedLink.gif" style="cursor:pointer"  onclick="openFloat('+inRowIndex+',event);"  height="16" width="16" >';}},
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -108,8 +108,8 @@ String peopleId = request.getParameter("peopleId");
 						  						  				,   {name: i18nStr.formState, field: 3,width: 10}
 						  						  				,   {name: i18nStr.remark, field: 4,width: 10}
 						  				
-//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])if(!true)  ????Float????��???
-				//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])if(!false)  ????Float????��???
+//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])if(!true)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
+				//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[tasks], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[car]])if(!false)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
 					 ,   {name: i18nStr.car,field: 6,get:function(inRowIndex){ var str='';if(querydataTaskForm[inRowIndex]!=undefined && querydataTaskForm[inRowIndex][6]!=undefined){str=querydataTaskForm[inRowIndex][6][2];} return str;} ,width: 10 }
 										]]}];	 
 					
@@ -117,7 +117,7 @@ String peopleId = request.getParameter("peopleId");
 					
 					
 					
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 var onloadmy=function(){
 										buildtaskForm2tasks(mainID);
 											}					
@@ -127,7 +127,7 @@ var flag=0;//0,1
 
 function openFloat(indexRow,e){
 	mainID=querydataTaskForm[indexRow][1];
-	var FloatID ="openFloat_"+mainID;//??��???float????
+	var FloatID ="openFloat_"+mainID;//É´ò¿ª¶floatÎ´Êµ
 	var openFloat = dijit.byId(FloatID);
 	if(openFloat==undefined){
 			if(floatIndex==5){

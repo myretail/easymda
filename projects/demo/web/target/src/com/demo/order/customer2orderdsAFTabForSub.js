@@ -1,9 +1,9 @@
 		
-//---begin---------???????????��???��??????����
-																													//---begin---------?????????��????????tree?��??����sno
-															//?????????������
+//---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+																													//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+															//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= customer2orderds)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[customer]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
   //name =customer2orderdsAFTab.js  manageable.name=Orderd
   		  				    var NUcustomer2orderds = false;//needUpdate
   var urlcustomer2orderds = getUrl()+ "services/OrderdManageService";
@@ -81,7 +81,7 @@ var getVOcustomer2orderds=function(queryvo){
 	pu.add('pageSize',pagesizecustomer2orderds) ;
 	pu.add('orderBy',orderBycustomer2orderds) ;
 	SOAPClient.invoke(urlcustomer2orderds,"getOrderd", pu, false,  function GetEnu_callBack(ul, soapResponse){   
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydatacustomer2orderds=dojoOrderd.OrderdVOtoArray_fun(ul,false);
 	totalCountcustomer2orderds=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -143,7 +143,7 @@ var buildcustomer2orderds=function(FKID){
 }
 																													
 	var layoutcustomer2orderds=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -163,9 +163,9 @@ var buildcustomer2orderds=function(FKID){
 		    		,   {name: i18nStr.completeTime,field:14, width: 8}
 		            ,   {name: i18nStr.remark, field: 15,width: 10 }
 			  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 			,   {name: i18nStr.orderRow,field: 16,get:function(inRowIndex){ var str='';var strid;if(querydatacustomer2orderds[inRowIndex]!=undefined && querydatacustomer2orderds[inRowIndex][16]!=undefined && querydatacustomer2orderds[inRowIndex][16][1]!=undefined){str=querydatacustomer2orderds[inRowIndex][16][2];strid=querydatacustomer2orderds[inRowIndex][16][1];} return str;} ,width: 10 }
-		 	//??????����???��????????
+		 	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 			//,   {name: i18nStr.customer,field: 17,get:function(inRowIndex){ var str='';var strid;if(querydatacustomer2orderds[inRowIndex]!=undefined && querydatacustomer2orderds[inRowIndex][17]!=undefined && querydatacustomer2orderds[inRowIndex][17][1]!=undefined){str=querydatacustomer2orderds[inRowIndex][17][2];strid=querydatacustomer2orderds[inRowIndex][17][1];} return str;} ,width: 10 }
 	       ] ]
                            }]; 

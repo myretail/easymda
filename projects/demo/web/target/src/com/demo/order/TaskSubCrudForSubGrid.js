@@ -1,6 +1,6 @@
 
 //${member.type.name}SubCrudForSubGrid.js==TaskSubCrudForSubGrid.js
-//?????�¡���?��??var mainTable=new VO();
+//»ñµÃÖ÷±íÀàÐÍvar mainTable=new VO();
 
 var addRowSub = function(addindex){
 	  var subGrid = dijit.byId(makeSubGridIdGeneral('',querydataTaskForm[addindex][1],"TaskFormChild"));
@@ -90,7 +90,7 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle,addRowIndex){
 	var myLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydata????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydataÖÐÈ¡Êý¾Ý
                        
  cells: [ [
 			{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydataTaskForm[addRowIndex][childRow]!=undefined ? 0:querydataTaskForm[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
@@ -100,7 +100,7 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 		             ,  {name: pre+i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 },headerStyles:mystyle }
 		        				    ,   {name: pre+i18nStr.remark, field: 4,width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 				                                        ] ]
                            }];  
 						   

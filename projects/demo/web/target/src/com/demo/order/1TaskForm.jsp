@@ -65,11 +65,11 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 										
-/*//????��?
-		//????��?
+/*//Úµð¾°¶
+		//Úµð¾°¶
 					function setcarDetailFun(inrow,carColNo){
 					return querydata[inrow][carColNo];
 				}
@@ -80,18 +80,18 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
   		  {name: i18nStr.setDate,field:2, width: 8}
 		        				,   {name: i18nStr.formState, field: 3,width: 8}
 					       			    ,   {name: i18nStr.remark, field: 4,width: 10 }
 					 
-//??��????
-		//??��????
+//Úµí²»Ð¶
+		//Úµí²»Ð¶
 					 ,   {name: i18nStr.car,field: 6,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][6]!=undefined && querydata[inRowIndex][6][2]){str=querydata[inRowIndex][6][2];strid=querydata[inRowIndex][6][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoTaskForm.detailFloatcarData=querydata['+inRowIndex+'][6];dojoTaskForm.detailcar('+querydata[inRowIndex][6][1]+','+inRowIndex+',6,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -201,9 +201,9 @@ function init(){
 		 document.getElementById('TaskFormId').value=querydata[e.rowIndex][1];
 		 	 									 dijit.byId("addsetDate").setValue(dojo.date.locale.parse(querydata[e.rowIndex][2],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
 				 dijit.byId("addsetDateTime").setValue(dojo.date.locale.parse(querydata[e.rowIndex][2],{datePattern: "yyyy-MM-dd",timePattern:"HH:mm" }));
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addformState").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][4]);
 						 			 
 													dijit.byId("addcar").setValue(querydata[e.rowIndex][6][1]);
@@ -228,10 +228,10 @@ var addDivAdd = function(){
 	 //add
 										dijit.byId("addsetDate").setValue('');
 				dijit.byId("addsetDateTime").setValue('');
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addformState").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addremark").setValue('');
 														
@@ -257,13 +257,13 @@ function addDivSave(){
 					}else{setErrorClass(dijit.byId("addsetDateTime")); passAll=1;}
 				}}else{
 					setErrorClass(dijit.byId("addsetDate")); passAll=1;}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addformState").validate(true)){
 					vobject.formState=dijit.byId("addformState").getValue();
 				}else{
 					setErrorClass(dijit.byId("addformState")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

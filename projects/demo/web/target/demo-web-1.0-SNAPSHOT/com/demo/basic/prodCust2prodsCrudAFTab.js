@@ -1,9 +1,9 @@
-	  //��???��?????����??4.1????����??---begin---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
-											//---begin---------?????????��????????tree?��??����sno,??"????����"???�¡���
-						//????"????����"???????�¡���begin
-		//????"????����"??????��?����begin
-//????"????����"??????��?����end
-//??????"????����"?????������
+	  //±¾Ä£°åµÄÔª±íÊÇ4.1µÄÔª±í£¬---begin---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+											//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno,¼´"ÒýÓÃ±í"ÎªÊ÷±í
+						//ÅÐ¶Ï"ÒýÓÃ±í"ÊÇ·ñÊÇÖ÷±íbegin
+		//ÅÐ¶Ï"ÒýÓÃ±í"ÊÇ·ñÊÇ×Ó±íbegin
+//ÅÐ¶Ï"ÒýÓÃ±í"ÊÇ·ñÊÇ×Ó±íend
+//ÒÔÏÂÊÇ"ÒýÓÃ±í"ÊÇÆÕÍ¨±í
 //set (= prodCust2prods)
 	//name =prodCust2prodsCrudAFTab.js  manageable.name=Prod
 												  var NUprodCust2prods = false;//needUpdate
@@ -33,7 +33,7 @@ var getVOprodCust2prods=function(queryvo){
 	pu.add('pageSize',pagesizeprodCust2prods) ;
 	pu.add('orderBy',orderByprodCust2prods) ;
 	SOAPClient.invoke(urlprodCust2prods,"getProd", pu, false,  function GetEnu_callBack(ul, soapResponse){     
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydataprodCust2prods=dojoProd.ProdVOtoArray_fun(ul,true);
 	totalCountprodCust2prods=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -94,7 +94,7 @@ var buildprodCust2prods=function(){
 }
 
 																								var layoutprodCust2prods=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -108,15 +108,15 @@ var buildprodCust2prods=function(){
 					      
 
 
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.prodCust,field: 8,get:function(inRowIndex){ var str='';var strid;if(querydataprodCust2prods[inRowIndex]!=undefined && querydataprodCust2prods[inRowIndex][8]!=undefined && querydataprodCust2prods[inRowIndex][8][2]!=undefined){str=querydataprodCust2prods[inRowIndex][8][2];strid=querydataprodCust2prods[inRowIndex][8][1];} return str;} ,width: 10 }
-						//??????����???��????????
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												,   {name: i18nStr.principal,field: 9,get:function(inRowIndex){ var str='';var strid;if(querydataprodCust2prods[inRowIndex]!=undefined && querydataprodCust2prods[inRowIndex][9]!=undefined && querydataprodCust2prods[inRowIndex][9][2]!=undefined){str=querydataprodCust2prods[inRowIndex][9][2];strid=querydataprodCust2prods[inRowIndex][9][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoProd.selectPeoples('+strid+','+inRowIndex+',9,0,event);"   >';} ,width: 10 }
 						                                        ] ]
                            }]; 
 
-//??????����???��????????
-						//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 						
 			   
 						   

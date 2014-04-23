@@ -72,7 +72,7 @@
 		 		   {name:'crudProd_49',type:''},
 		 		   {name:'crudProd_50',type:''},
 		 		   {name:'crudProd_51',type:''},
-		 	 { name:'queryProd_1', type:'basic/2Prod.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryProd_1', type:'basic/2Prod.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryProd_2', type:'basic/3Prod.jsp'},
 	 { name:'queryProd_3', type:'basic/5Prod.jsp'},
 	 { name:'queryProd_4', type:'basic/8Prod.jsp'},
@@ -277,7 +277,7 @@
 		 		   {name:'crudCustomer_43',type:''},
 		 		   {name:'crudCustomer_44',type:''},
 		 		   {name:'crudCustomer_45',type:''},
-		 	 { name:'queryCustomer_1', type:'basic/2Customer.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryCustomer_1', type:'basic/2Customer.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryCustomer_2', type:'basic/3Customer.jsp'},
 	 { name:'queryCustomer_3', type:'basic/5Customer.jsp'},
 	 { name:'queryCustomer_4', type:'basic/8Customer.jsp'},
@@ -466,7 +466,7 @@
 		 		   {name:'crudContact_46',type:''},
 		 		   {name:'crudContact_47',type:''},
 		 		   {name:'crudContact_48',type:''},
-		 	 { name:'queryContact_1', type:'basic/2Contact.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryContact_1', type:'basic/2Contact.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryContact_2', type:'basic/3Contact.jsp'},
 	 { name:'queryContact_3', type:'basic/5Contact.jsp'},
 	 { name:'queryContact_4', type:'basic/8Contact.jsp'},
@@ -669,7 +669,7 @@
 		 		   {name:'crudOrderd_49',type:''},
 		 		   {name:'crudOrderd_50',type:''},
 		 		   {name:'crudOrderd_51',type:''},
-		 	 { name:'queryOrderd_1', type:'order/2Orderd.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryOrderd_1', type:'order/2Orderd.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryOrderd_2', type:'order/3Orderd.jsp'},
 	 { name:'queryOrderd_3', type:'order/5Orderd.jsp'},
 	 { name:'queryOrderd_4', type:'order/8Orderd.jsp'},
@@ -882,7 +882,7 @@
 		 		   {name:'crudOrderRowd_49',type:''},
 		 		   {name:'crudOrderRowd_50',type:''},
 		 		   {name:'crudOrderRowd_51',type:''},
-		 	 { name:'queryOrderRowd_1', type:'order/2OrderRowd.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryOrderRowd_1', type:'order/2OrderRowd.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryOrderRowd_2', type:'order/3OrderRowd.jsp'},
 	 { name:'queryOrderRowd_3', type:'order/5OrderRowd.jsp'},
 	 { name:'queryOrderRowd_4', type:'order/8OrderRowd.jsp'},
@@ -1095,7 +1095,7 @@
 		 		   {name:'crudOrderRowTask_49',type:''},
 		 		   {name:'crudOrderRowTask_50',type:''},
 		 		   {name:'crudOrderRowTask_51',type:''},
-		 	 { name:'queryOrderRowTask_1', type:'order/2OrderRowTask.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryOrderRowTask_1', type:'order/2OrderRowTask.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryOrderRowTask_2', type:'order/3OrderRowTask.jsp'},
 	 { name:'queryOrderRowTask_3', type:'order/5OrderRowTask.jsp'},
 	 { name:'queryOrderRowTask_4', type:'order/8OrderRowTask.jsp'},
@@ -1304,7 +1304,7 @@
 		 		   {name:'crudTask_46',type:''},
 		 		   {name:'crudTask_47',type:''},
 		 		   {name:'crudTask_48',type:''},
-		 	 { name:'queryTask_1', type:'order/2Task.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryTask_1', type:'order/2Task.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryTask_2', type:'order/3Task.jsp'},
 	 { name:'queryTask_3', type:'order/5Task.jsp'},
 	 { name:'queryTask_4', type:'order/8Task.jsp'},
@@ -1507,7 +1507,7 @@
 		 		   {name:'crudTaskForm_49',type:''},
 		 		   {name:'crudTaskForm_50',type:''},
 		 		   {name:'crudTaskForm_51',type:''},
-		 	 { name:'queryTaskForm_1', type:'order/2TaskForm.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryTaskForm_1', type:'order/2TaskForm.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryTaskForm_2', type:'order/3TaskForm.jsp'},
 	 { name:'queryTaskForm_3', type:'order/5TaskForm.jsp'},
 	 { name:'queryTaskForm_4', type:'order/8TaskForm.jsp'},
@@ -1712,7 +1712,7 @@
 		 		   {name:'crudcar_43',type:''},
 		 		   {name:'crudcar_44',type:''},
 		 		   {name:'crudcar_45',type:''},
-		 	 { name:'querycar_1', type:'order/2car.jsp'},//?��??1.vsl???��??
+		 	 { name:'querycar_1', type:'order/2car.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'querycar_2', type:'order/3car.jsp'},
 	 { name:'querycar_3', type:'order/5car.jsp'},
 	 { name:'querycar_4', type:'order/8car.jsp'},
@@ -1901,7 +1901,7 @@
 		 		   {name:'crudPayment_46',type:''},
 		 		   {name:'crudPayment_47',type:''},
 		 		   {name:'crudPayment_48',type:''},
-		 	 { name:'queryPayment_1', type:'order/2Payment.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryPayment_1', type:'order/2Payment.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryPayment_2', type:'order/3Payment.jsp'},
 	 { name:'queryPayment_3', type:'order/5Payment.jsp'},
 	 { name:'queryPayment_4', type:'order/8Payment.jsp'},
@@ -2096,7 +2096,7 @@
 		 		   {name:'crudOrga_43',type:''},
 		 		   {name:'crudOrga_44',type:''},
 		 		   {name:'crudOrga_45',type:''},
-		 	 { name:'queryOrga_1', type:'orga/2Orga.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryOrga_1', type:'orga/2Orga.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryOrga_2', type:'orga/3Orga.jsp'},
 	 { name:'queryOrga_3', type:'orga/5Orga.jsp'},
 	 { name:'queryOrga_4', type:'orga/8Orga.jsp'},
@@ -2281,7 +2281,7 @@
 		 		   {name:'crudPeoples_43',type:''},
 		 		   {name:'crudPeoples_44',type:''},
 		 		   {name:'crudPeoples_45',type:''},
-		 	 { name:'queryPeoples_1', type:'orga/2Peoples.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryPeoples_1', type:'orga/2Peoples.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryPeoples_2', type:'orga/3Peoples.jsp'},
 	 { name:'queryPeoples_3', type:'orga/5Peoples.jsp'},
 	 { name:'queryPeoples_4', type:'orga/8Peoples.jsp'},
@@ -2474,7 +2474,7 @@
 		 		   {name:'crudOrgaPeoples_49',type:''},
 		 		   {name:'crudOrgaPeoples_50',type:''},
 		 		   {name:'crudOrgaPeoples_51',type:''},
-		 	 { name:'queryOrgaPeoples_1', type:'orga/2OrgaPeoples.jsp'},//?��??1.vsl???��??
+		 	 { name:'queryOrgaPeoples_1', type:'orga/2OrgaPeoples.jsp'},//ÀàËÆ1.vslµÄ²éÑ¯
 	 { name:'queryOrgaPeoples_2', type:'orga/3OrgaPeoples.jsp'},
 	 { name:'queryOrgaPeoples_3', type:'orga/5OrgaPeoples.jsp'},
 	 { name:'queryOrgaPeoples_4', type:'orga/8OrgaPeoples.jsp'},

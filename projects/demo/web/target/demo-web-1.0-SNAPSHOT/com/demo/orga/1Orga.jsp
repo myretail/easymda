@@ -65,7 +65,7 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 											
 /**/
@@ -75,10 +75,10 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.orgaName, field: 2,width: 8}
@@ -177,15 +177,15 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('OrgaId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addorgaName").setValue(querydata[e.rowIndex][2]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addorgaCode").setValue(querydata[e.rowIndex][3]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addsno").setValue(querydata[e.rowIndex][4]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addremark").setValue(querydata[e.rowIndex][5]);
-						 									//enumeration ?��String??��??
+						 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addparentId").setValue(querydata[e.rowIndex][6]);
 						 			 
 			});     
@@ -198,19 +198,19 @@ var addDivAdd = function(){
 	 //if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 //if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 	 //add
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addorgaName").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addorgaCode").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addsno").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addremark").setValue('');
-																			//enumeration ?��String??��??
+																			//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addparentId").setValue('');
 														
@@ -224,25 +224,25 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('OrgaId').value;
 	var passAll=0;
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addorgaName").validate(true)){
 					vobject.orgaName=dijit.byId("addorgaName").getValue();
 				}else{
 					setErrorClass(dijit.byId("addorgaName")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addorgaCode").validate(true)){
 					vobject.orgaCode=dijit.byId("addorgaCode").getValue();
 				}else{
 					setErrorClass(dijit.byId("addorgaCode")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addsno").validate(true)){
 					vobject.sno=dijit.byId("addsno").getValue();
 				}else{
 					setErrorClass(dijit.byId("addsno")); passAll=1;
 				}
-															//enumeration ?��String??��??
+															//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addremark").validate(true)){
 					vobject.remark=dijit.byId("addremark").getValue();
 				}else{

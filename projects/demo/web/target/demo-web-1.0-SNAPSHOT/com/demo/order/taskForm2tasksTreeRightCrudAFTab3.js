@@ -1,7 +1,7 @@
 	  
-//??????"????����"?????������
+//ÒÔÏÂÊÇ"ÒýÓÃ±í"ÊÇÆÕÍ¨±í
         //set (= taskForm2tasks)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[taskForm]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 								  var NUtaskForm2tasks = false;//needUpdate
   var urltaskForm2tasks = getUrl()+ "services/TaskManageService";
   var deletedatataskForm2tasks =  new Array();
@@ -27,7 +27,7 @@ var getVOtaskForm2tasks=function(queryvo){
 	pu.add('pageSize',pagesizetaskForm2tasks) ;
 	pu.add('orderBy',orderBytaskForm2tasks) ;
 	SOAPClient.invoke(urltaskForm2tasks,"getTask", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 						//TaskForm-----TaskForm
 			querydatataskForm2tasks=dojoTaskForm.TaskVOtoArray_fun(ul,true);
 				totalCounttaskForm2tasks=ul[ul.length-1]["ns:id"]; 
@@ -90,7 +90,7 @@ var buildtaskForm2tasks=function(){
 
 													
 	var layouttaskForm2tasks=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -99,7 +99,7 @@ var buildtaskForm2tasks=function(){
 		             ,  {name: i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 } }
 		        				    ,   {name: i18nStr.remark, field: 4,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																                                        ] ]
                            }]; 
 

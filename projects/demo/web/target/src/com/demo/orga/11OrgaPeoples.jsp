@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataOrgaPeoples[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataOrgaPeoples[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -82,7 +82,7 @@ String peopleId = request.getParameter("peopleId");
 	}
 
 					//begin buildLayout
-var mainLayout =[{//???????????��??????colSpantoggle
+var mainLayout =[{//Þ¸Ä¸ÒªÏ¢Ö¶Ê±ÒªÞ¸Ó¦colSpantoggle
 					onBeforeRow: onBeforeRow,
 					 cells: [
                       [
@@ -137,7 +137,7 @@ function getCheckOrgaPeoples(inRowIndex) {
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 
 	  
-function buildSubgridOrgaPeoples(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridOrgaPeoples(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		var idmainDetail = makeSubGridIdGeneral('',querydataOrgaPeoples[inRowIndex][1],"OrgaPeoplesMainDetail");//makeSubgridIdMainDetail(querydataOrgaPeoples[inRowIndex][1]);//taskmakeSubgridId(taskRowSubdata[inRowIndex][1]);
@@ -163,7 +163,7 @@ function buildSubgridOrgaPeoples(inRowIndex, inCell) {  //makeSubgridIdMainDetai
 				}else{
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -173,7 +173,7 @@ function buildSubgridOrgaPeoples(inRowIndex, inCell) {  //makeSubgridIdMainDetai
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 
 function querybuttonOrgaPeoples(){
               //var p = new SOAPClientParameters2();

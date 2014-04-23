@@ -1,16 +1,16 @@
-	  //��???��?????����??4.1????����??---begin---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
-	   //true??"????����/????����"?��"??����"??"????����"/"��?????����"?????��???��????����
-//---end---------????"????����/????����"?��"??����"??"????����"/"��?????����"?????????��???��??????����
+	  //±¾Ä£°åµÄÔª±íÊÇ4.1µÄÔª±í£¬---begin---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+	   //true£º"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ¶à¶Ô¶à¹ØÏµ±í
+//---end---------ÅÐ¶Ï"¼ýÎ²±í/ÒýÓÃ±í"£¨"Ôª±í"Îª"¼ýÍ·±í"/"±»ÒýÓÃ±í"£©ÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
 																																								//set (= orderRow2orderRowTasks)
 	//----------lastMenber = org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow]   firstMenber=org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]
 	//orderRow2orderRowTasksAFTab.js	
 
-	//---begin---------????"????����" ?? "????����"??????tree?��??����sno('????����'???��???��????����)
-																																																    //---end---------????"????����" ?? "????����"??????tree?��??����sno
-//begin--????"????����" ?? "????����"???????�¡���('????����'???��???��????����)
-	//begin--????"????����" ?? "????����"??????��?����('????����'???��???��????����)
-//"????����" ?? "????����"??��?����(4OrderRowd.jsp)
-//???????��?????????��???��??????4.6.js.vsl?��??????????��?4.2.js.vsl?��??(?4-n.js.vsl)
+	//---begin---------ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªtree½á¹¹±ísno('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+																																																    //---end---------ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªtree½á¹¹±ísno
+//begin--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎªÖ÷±í('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+	//begin--ÅÐ¶Ï"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ·ñÎª×Ó±í('ÒýÓÃ±í'ÊÇ¶à¶Ô¶à¹ØÏµ±í)
+//"ÒýÓÃ±í" µÄ "ÒýÓÃ±í"ÊÇ×Ó±í(4OrderRowd.jsp)
+//Õâ¸ö·ÖÖ§²»ÔÚÕâÀïÉú³É´úÂë£¬ÓÉ4.6.js.vslÉú³É£¬Ãû³ÆÓë±¾4.2.js.vslÏàÍ¬(?4-n.js.vsl)
 		  var NUorderRow2orderRowTasks = false;//needUpdate
 		  var urlorderRowTasks2task = getUrl()+ "services/OrderRowTaskManageService";
 		  var deletedataorderRowTasks2task =   ",";
@@ -173,7 +173,7 @@
 
 	                    //associatedClass==manageable
 		
-        //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
+        //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                                     
               //begin from 41.4
 		var querydataorderRowTasks2taskTask =  new Array();
@@ -325,7 +325,7 @@ function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?��?
+				subGridChild = new dojox.Grid(childProps, child);//grid?????DIV?§³
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -346,7 +346,7 @@ function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 
 //from 20.2 begin
 //${member.type.name}SubCrudForSubGrid.js==TaskSubCrudForSubGrid.js
-//?????�¡���?��??var mainTable=new VO();
+//»ñµÃÖ÷±íÀàÐÍvar mainTable=new VO();
 
 var addRowSub = function(addindex){
 	  var subGrid = dijit.byId(makeSubGridIdGeneral('',querydataorderRowTasks2taskTask[addindex][1],"TaskFormChild"));
@@ -436,7 +436,7 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle,addRowIndex){
 	var myLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydata????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydataÖÐÈ¡Êý¾Ý
                        
  cells: [ [
 			//{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydataorderRowTasks2taskTask[addRowIndex][childRow]!=undefined ? 0:querydataorderRowTasks2taskTask[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
@@ -446,7 +446,7 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 		             ,  {name: pre+i18nStr.volumne,field:3, width: 8,editor: dojox.grid.editors.Dijit, editorClass: "mydojo.NumberTextBox", constraint: {min:0,max:9999999,places:4 },headerStyles:mystyle }
 		        				    ,   {name: pre+i18nStr.remark, field: 4,width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 				                                        ] ]
                            }];  
 						   
@@ -463,6 +463,6 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 
  
 
-				                   //????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
+				                   //¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 	                 	    	
 	  

@@ -46,7 +46,7 @@ String peopleId = request.getParameter("peopleId");
             dojo.require("mydojo.NumberTextBox");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.Orga");
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							dojo.require("projectDojo.OrgaPeoples");
 			     </script>
 		        
@@ -56,7 +56,7 @@ String peopleId = request.getParameter("peopleId");
 	<script type="text/javascript" >
 		var dojoOrga= new  projectDojo.Orga();
 	    dojoOrga.initOrga();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 							 var dojoOrgaPeoples= new  projectDojo.OrgaPeoples();
 			dojoOrgaPeoples.initOrgaPeoples();
 			     </script>
@@ -96,7 +96,7 @@ String peopleId = request.getParameter("peopleId");
     
 	function delTreeNode(id){
 		var node = dijit.byId("tree")._itemNodeMap[id];
-		popStore.deleteItem(node.item);//???��??????
+		popStore.deleteItem(node.item);//Í¬Ê±É¾Ó½Úµ
 	  }  
 	  
 	function setTreeNode(id,nodeName,nodeType){
@@ -106,7 +106,7 @@ String peopleId = request.getParameter("peopleId");
 		node.setLabelNode(nodeName);
 	}  
     
-	function getTreeNodes(queryvoOrga,chitem,layerInt,layerSum){//��?layerInt=0   (0,1,null,0,2);
+	function getTreeNodes(queryvoOrga,chitem,layerInt,layerSum){//×²layerInt=0   (0,1,null,0,2);
 	
              var pl = new SOAPClientParameters2();
              pl.add('OrgaVO',queryvoOrga) ;
@@ -122,7 +122,7 @@ String peopleId = request.getParameter("peopleId");
                      var tempArr=dojoOrga.OrgaVOtoArray_fun(ul,false);
                      for(var i = 0; i < ul.length-1; i++){		
                                   var ulo=ul[i];
-								  var newitem=popStore.newItem({name: tempArr[i][2],type:ulo["ns:parentId"] ,eId:ulo["ns:id"],haveChild:"0"}, pInfo);				//haveChild=0??1?????2??
+								  var newitem=popStore.newItem({name: tempArr[i][2],type:ulo["ns:parentId"] ,eId:ulo["ns:id"],haveChild:"0"}, pInfo);				//haveChild=0Ê¼1Ó½ã£¬2Ó½
                                   queryvoOrga=new Object();
 								  queryvoOrga.parentId=ulo["ns:id"];
 								  if(layerInt<layerSum)getTreeNodes(queryvoOrga,newitem,layerInt+1,layerSum);
@@ -229,10 +229,10 @@ addRowOrga = function(){
 																						
 var layoutSingleRowOrga=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       					  {name: i18nStr.orgaName, field: 2,width: 10 , editor: mydojo.ValidationTextBox ,required:true ,maxLength:30}
@@ -322,7 +322,7 @@ function init(){
 		   }}
 	});   
 	 dojo.connect(_tree, "onClick", function(item,node){
-	 //????tab??
+	 //Ð¶Ä¸tabÊ¾
 			selectNode=node;
 			selectNodeIdentity = _tree.store.getIdentity(item);
 			mainID=item["eId"];

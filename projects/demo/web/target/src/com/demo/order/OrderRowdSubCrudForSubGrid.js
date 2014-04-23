@@ -1,6 +1,6 @@
 
 //${member.type.name}SubCrudForSubGrid.js==OrderRowdSubCrudForSubGrid.js
-//?????�¡���?��??var mainTable=new VO();
+//»ñµÃÖ÷±íÀàÐÍvar mainTable=new VO();
 
 var addRowSub = function(addindex){
 	  var subGrid = dijit.byId(makeSubGridIdGeneral('',querydataOrderd[addindex][1],"OrderdChild"));
@@ -119,7 +119,7 @@ var childLayoutOdd;
 function buildChildLayout(pre,mystyle,addRowIndex){
 	var myLayout=[{
           
-                 //?��??field???????????????????��????js????toArray��??????��??????querydata????????
+                 //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydataÖÐÈ¡Êý¾Ý
                        
  cells: [ [
 			{ name: '<img src="../image/addsmall.gif" onclick="addRowSub('+addRowIndex +');"   height="18" width="18" border="0">' ,get:function(inRowIndex) {return '<img src="../image/delsmall.gif" onclick="deleteSub('+addRowIndex +','+inRowIndex+','+(querydataOrderd[addRowIndex][childRow]!=undefined ? 0:querydataOrderd[addRowIndex][childRow][inRowIndex][1])+');"  height="18" width="18" border="0">&nbsp;&nbsp;&nbsp;<img src="../image/savesmall.gif" onclick="call_funUpdGridSub('+addRowIndex +','+inRowIndex+');"  height="18" width="18" border="0">';}, width: 6,styles: 'text-align: center;',headerStyles:mystyle},//
@@ -136,8 +136,8 @@ function buildChildLayout(pre,mystyle,addRowIndex){
 					            					,   {name: pre+i18nStr.goodsState, field: 10,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30,headerStyles:mystyle}
 					            				    ,   {name: pre+i18nStr.remark, field: 11,width: 20, editor: dojox.grid.editors.Editor, editorToolbar: true  ,headerStyles:mystyle}
 					      
-//??????����???��????????
-				//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+				//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 							 ,   {name: pre+i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(querydataOrderd[addRowIndex][childRow]!=undefined && querydataOrderd[addRowIndex][childRow][inRowIndex]!=undefined && querydataOrderd[addRowIndex][childRow][inRowIndex][13]!=undefined&& querydataOrderd[addRowIndex][childRow][inRowIndex][13][2]!=undefined){str=querydataOrderd[addRowIndex][childRow][inRowIndex][13][2];strid=querydataOrderd[addRowIndex][childRow][inRowIndex][13][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick=" dojoOrderd.selectProd('+strid+','+inRowIndex+',13,0,event,'+addRowIndex+');"   >';} ,width: 10 ,headerStyles:mystyle}
 					                                        ] ]
                            }];  

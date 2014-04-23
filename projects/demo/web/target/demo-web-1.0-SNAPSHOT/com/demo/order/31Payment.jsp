@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataPayment[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataPayment[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -57,7 +57,7 @@ String peopleId = request.getParameter("peopleId");
 	    dojoPayment.initPayment();
 	     </script>
 
-	 		<script type="text/javascript" src="OrderRowdSelectPane.js"></script><!--????,??????????-->
+	 		<script type="text/javascript" src="OrderRowdSelectPane.js"></script><!--Ò»Òª,Ò»Ô¶Â£Í²Òª-->
 	 	 				<script type="text/javascript" >
 	  var urlPayment = getUrl()+ "services/PaymentManageService";
 	  var deletedataPayment =  new Array();
@@ -82,7 +82,7 @@ String peopleId = request.getParameter("peopleId");
 	}
 
 											                  // totleinum = 3 
-	var mainLayout =[{//��?????��???????????��??��?????colSpantoggle
+	var mainLayout =[{//è·æ¯è¦æ¯ä¾æ¶è¦è·åºcolSpantoggle
 					//onBeforeRow: onBeforeRow,
 					 cells: [
                       [
@@ -139,7 +139,7 @@ function getDetailPayment(inRowIndex){
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 var childRow= ${childRow};
 var layoutInRowIndex;	  
-function buildSubgridPayment(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridPayment(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		//var child = inCell.getNode(inRowIndex).lastChild;
@@ -168,7 +168,7 @@ function buildSubgridPayment(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -176,7 +176,7 @@ function buildSubgridPayment(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id
 			}	      				
 		//}
 		
-		////////////////////////////////////////////////////////////////////////////////var detailDate=[];//??/
+		////////////////////////////////////////////////////////////////////////////////var detailDate=[];//Í¡/
 		detailDate[0]=querydataPayment[inRowIndex];  
 	    modelPaymentDetail=new dojox.grid.data.Table(null, detailDate);
 		if (subGridMainDetail) {
@@ -206,7 +206,7 @@ function buildSubgridPayment(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 */
 function querybuttonPayment(){
               //var p = new SOAPClientParameters2();

@@ -1,7 +1,7 @@
 	  
-//??????"????����"?????������
+//ÒÔÏÂÊÇ"ÒýÓÃ±í"ÊÇÆÕÍ¨±í
         //set (= orderRow2orderRowTasks)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[orderRow], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[task]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 								  var NUorderRow2orderRowTasks = false;//needUpdate
   var urlorderRow2orderRowTasks = getUrl()+ "services/OrderRowTaskManageService";
   var deletedataorderRow2orderRowTasks =  new Array();
@@ -27,7 +27,7 @@ var getVOorderRow2orderRowTasks=function(queryvo){
 	pu.add('pageSize',pagesizeorderRow2orderRowTasks) ;
 	pu.add('orderBy',orderByorderRow2orderRowTasks) ;
 	SOAPClient.invoke(urlorderRow2orderRowTasks,"getOrderRowTask", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydataorderRow2orderRowTasks=dojoOrderRowTask.OrderRowTaskVOtoArray_fun(ul,true);
 	totalCountorderRow2orderRowTasks=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -89,15 +89,15 @@ var buildorderRow2orderRowTasks=function(){
 
 	
 	var layoutorderRow2orderRowTasks=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 					   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
 
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//  {name: i18nStr.orderRow,field: 2,get:function(inRowIndex){ var str='';var strid;if(querydataorderRow2orderRowTasks[inRowIndex]!=undefined && querydataorderRow2orderRowTasks[inRowIndex][2]!=undefined && querydataorderRow2orderRowTasks[inRowIndex][2][2]!=undefined){str=querydataorderRow2orderRowTasks[inRowIndex][2][2];strid=querydataorderRow2orderRowTasks[inRowIndex][2][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrderRowTask.selectOrderRowd('+strid+','+inRowIndex+',2,0,event);"   >';} ,width: 10 }
-						//??????����???��????????
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												  {name: i18nStr.task,field: 3,get:function(inRowIndex){ var str='';var strid;if(querydataorderRow2orderRowTasks[inRowIndex]!=undefined && querydataorderRow2orderRowTasks[inRowIndex][3]!=undefined && querydataorderRow2orderRowTasks[inRowIndex][3][2]!=undefined){str=querydataorderRow2orderRowTasks[inRowIndex][3][2];strid=querydataorderRow2orderRowTasks[inRowIndex][3][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoOrderRowTask.selectTask('+strid+','+inRowIndex+',3,0,event);"   >';} ,width: 10 }
 										                                        ] ]
                            }]; 

@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataTaskForm[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataTaskForm[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -50,11 +50,11 @@ String peopleId = request.getParameter("peopleId");
 	 	<script type="text/javascript" >
 		var dojoTaskForm= new  projectDojo.TaskForm();
 	    dojoTaskForm.initTaskForm();
-	//??��???????????????��?��		
+	//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 																			</script>
 
 	 	 					<script type="text/javascript" src="../order/TaskSubCrud.js"></script>
-			<!--sub Table script    eg:taskRow.js    ??????��???????��childRow=0-->
+			<!--sub Table script    eg:taskRow.js    Ð¶Ç·Îªí£¬Ò³Ê¼Ó±childRow=0-->
 							 
 	<script type="text/javascript" >
 	  var urlTaskForm = getUrl()+ "services/TaskFormManageService";
@@ -144,7 +144,7 @@ function getCheckTaskForm(inRowIndex) {
 //function destroySubGridIdGeneral(parentRowIndex,inRowIndex,idString) {	var subGrid = dijit.byId(makeSubGridIdGeneral(parentRowIndex,inRowIndex,idString));	if (subGrid) subGrid.destroy();	}
 
 	  
-function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		var idmainDetail = makeSubGridIdGeneral('',querydataTaskForm[inRowIndex][1],"TaskFormMainDetail");//makeSubgridIdMainDetail(querydataTaskForm[inRowIndex][1]);//taskmakeSubgridId(taskRowSubdata[inRowIndex][1]);
@@ -170,7 +170,7 @@ function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 				}else{
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -180,7 +180,7 @@ function buildSubgridTaskForm(inRowIndex, inCell) {  //makeSubgridIdMainDetail(i
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 
 function querybuttonTaskForm(){
               //var p = new SOAPClientParameters2();

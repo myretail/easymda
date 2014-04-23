@@ -2,7 +2,7 @@
 String peopleId = request.getParameter("peopleId");
 %>
 <html>
-<!--????��?????????����???????????��var dataChild=querydataOrderRowTask[inRowIndex]-->
+<!--Ò»Ô¶à£¬Ö»Ò»Ò»Ó±í£¬Ã»Ð¿Ò»Ô¶Ó±var dataChild=querydataOrderRowTask[inRowIndex]-->
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
@@ -78,7 +78,7 @@ String peopleId = request.getParameter("peopleId");
 	}
 
 					                  // totleinum = 2 
-	var mainLayout =[{//???????????��??????colSpantoggle
+	var mainLayout =[{//Þ¸Ä¸ÒªÏ¢Ö¶Ê±ÒªÞ¸Ó¦colSpantoggle
 					onBeforeRow: onBeforeRow,
 					 cells: [
                       [
@@ -140,7 +140,7 @@ addrow.splice(0,0,false,0);
 
 
 
-function buildSubgridOrderRowTask(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)??idmainDetailGridid
+function buildSubgridOrderRowTask(inRowIndex, inCell) {  //makeSubgridIdMainDetail(id)Ç¸idmainDetailGridid
 	if(inCell!=undefined && inCell.getNode(inRowIndex)!=undefined){
 		var child = inCell.getNode(inRowIndex).firstChild;
 		//var child = inCell.getNode(inRowIndex).lastChild;
@@ -169,7 +169,7 @@ function buildSubgridOrderRowTask(inRowIndex, inCell) {  //makeSubgridIdMainDeta
 					childLayout=buildChildLayout(pre,headerstyle,inRowIndex);
 					childProps.structure=childLayout;
 				}
-				subGridChild = new dojox.Grid(childProps, child);//grid????����?��??DIV????
+				subGridChild = new dojox.Grid(childProps, child);//gridÎªÇ¶×±Ê±Ô¶DIVÄ´Ð¡
 			}
 			if (subGridChild) {
 				subGridChild.render();
@@ -207,7 +207,7 @@ function buildSubgridOrderRowTask(inRowIndex, inCell) {  //makeSubgridIdMainDeta
 		inCell.grid.rowHeightChanged(inRowIndex);
     }   
 }
-//var childLayout=//???????????????????????????????/ ?��??jshtml
+//var childLayout=//???????????????????????????????/ Ö±É£jshtml
 
 function querybuttonOrderRowTask(){
               //var p = new SOAPClientParameters2();

@@ -1,6 +1,6 @@
-	  //---begin---------???????????��???��??????����
-					//---begin---------?????????��????????tree?��??����sno
-			//?????????������
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+					//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+			//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= payment2payments)
   //name =payment2paymentsFloatAFTab.js  manageable.name=Payment
   					  var NUpayment2payments = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOpayment2payments=function(queryvo,id){
 	pu.add('pageSize',payment2paymentsFloatArray[id].pagesizepayment2payments) ;
 	pu.add('orderBy',payment2paymentsFloatArray[id].orderBypayment2payments) ;
 	SOAPClient.invoke(urlpayment2payments,"getPayment", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	payment2paymentsFloatArray[id].querydatapayment2payments=dojoPayment.PaymentVOtoArray_fun(ul,false);
 
 	payment2paymentsFloatArray[id].totalCountpayment2payments=ul[ul.length-1]["ns:id"]; 
@@ -105,7 +105,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7payment2payments"+ma
 									var buildLayoutpayment2payments = function(floatMainID){		
 
 	var layoutpayment2payments=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -113,7 +113,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7payment2payments"+ma
   		  {name: i18nStr.newAttr1, field: 2,width: 10}
 		    		,   {name: i18nStr.newAttr2, field: 3,width: 10}
 		  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.payment,field: 4,get:function(inRowIndex){ var str='';var strid;if(payment2paymentsFloatArray[floatMainID].querydatapayment2payments[inRowIndex]!=undefined && payment2paymentsFloatArray[floatMainID].querydatapayment2payments[inRowIndex][4]!=undefined && payment2paymentsFloatArray[floatMainID].querydatapayment2payments[inRowIndex][4][2]!=undefined){str=payment2paymentsFloatArray[floatMainID].querydatapayment2payments[inRowIndex][4][2];strid=payment2paymentsFloatArray[floatMainID].querydatapayment2payments[inRowIndex][4][1];} return str;} ,width: 10 }
 						                                        ] ]
                            }]; 

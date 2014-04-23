@@ -1,9 +1,9 @@
 	
-//---begin---------???????????��???��??????����
-											//---begin---------?????????��????????tree?��??����sno
-						//?????????������
+//---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+											//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+						//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= prodCust2prods)
-//????????????layout??($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])??if(!${member.many})  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬($member in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[prodCust], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[principal]])²¢if(!${member.many})  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
   //name =prodCust2prodsAFTab.js  manageable.name=Prod
   				  		  		    var NUprodCust2prods = false;//needUpdate
   var urlprodCust2prods = getUrl()+ "services/ProdManageService";
@@ -29,7 +29,7 @@ var getVOprodCust2prods=function(queryvo){
 	pu.add('pageSize',pagesizeprodCust2prods) ;
 	pu.add('orderBy',orderByprodCust2prods) ;
 	SOAPClient.invoke(urlprodCust2prods,"getProd", pu, false,  function GetEnu_callBack(ul, soapResponse){   
-//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	querydataprodCust2prods=dojoProd.ProdVOtoArray_fun(ul,false);
 	totalCountprodCust2prods=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -91,7 +91,7 @@ var buildprodCust2prods=function(FKID){
 }
 											
 	var layoutprodCust2prods=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -102,9 +102,9 @@ var buildprodCust2prods=function(FKID){
 		    		,   {name: i18nStr.datef,field:5, width: 8}
 		            ,   {name: i18nStr.prodType, field: 6,width: 10 }
 			  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 			//,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';var strid;if(querydataprodCust2prods[inRowIndex]!=undefined && querydataprodCust2prods[inRowIndex][7]!=undefined && querydataprodCust2prods[inRowIndex][7][1]!=undefined){str=querydataprodCust2prods[inRowIndex][7][2];strid=querydataprodCust2prods[inRowIndex][7][1];} return str;} ,width: 10 }
-	//??????����???��????????
+	//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 			,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';var strid;if(querydataprodCust2prods[inRowIndex]!=undefined && querydataprodCust2prods[inRowIndex][8]!=undefined && querydataprodCust2prods[inRowIndex][8][1]!=undefined){str=querydataprodCust2prods[inRowIndex][8][2];strid=querydataprodCust2prods[inRowIndex][8][1];} return str;} ,width: 10 }
 		 	       ] ]
                            }]; 

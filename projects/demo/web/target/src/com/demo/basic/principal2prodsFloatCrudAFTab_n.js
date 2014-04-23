@@ -1,6 +1,6 @@
-	  	  //---begin---------???????????��???��??????����
-											//---begin---------?????????��????????tree?��??����sno
-						//?????????������
+	  	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+											//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+						//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= principal2prods)
 											  var NUprincipal2prods = false;//needUpdate
   var urlprincipal2prods = getUrl()+ "services/ProdManageService";
@@ -26,7 +26,7 @@ var getVOprincipal2prods=function(queryvo,id){
 	pu.add('pageSize',principal2prodsFloatArray[id].pagesizeprincipal2prods) ;
 	pu.add('orderBy',principal2prodsFloatArray[id].orderByprincipal2prods) ;
 	SOAPClient.invoke(urlprincipal2prods,"getProd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-	//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+	//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	principal2prodsFloatArray[id].querydataprincipal2prods=dojoProd.ProdVOtoArray_fun(ul,true);
 	principal2prodsFloatArray[id].totalCountprincipal2prods=ul[ul.length-1]["ns:id"]; 
 	}); 
@@ -102,12 +102,12 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7principal2prods"+mai
 		}}
 }
 
-																							//??????����???��????????
-						//??????����???��????????
+																							//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 						
 var buildLayoutprincipal2prods = function(floatMainID){		
 	var layoutprincipal2prods=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -119,9 +119,9 @@ var buildLayoutprincipal2prods = function(floatMainID){
 				,   {name: i18nStr.datefTime,field:6, width: 8,editor: dojox.grid.editors.TimeTextBox, formatter: formatDate, constraint: {selector: "time" ,timePattern: "HH:mm"}}
 		        					,   {name: i18nStr.prodType, field: 7,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
 					      
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												,   {name: i18nStr.prodCust,field: 8,get:function(inRowIndex){ var str='';var strid;if(principal2prodsFloatArray[floatMainID].querydataprincipal2prods[inRowIndex]!=undefined && principal2prodsFloatArray[floatMainID].querydataprincipal2prods[inRowIndex][8]!=undefined && principal2prodsFloatArray[floatMainID].querydataprincipal2prods[inRowIndex][8][2]!=undefined){str=principal2prodsFloatArray[floatMainID].querydataprincipal2prods[inRowIndex][8][2];strid=principal2prodsFloatArray[floatMainID].querydataprincipal2prods[inRowIndex][8][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="dojoProd.selectCustomer('+strid+','+inRowIndex+',8,0,event,'+floatMainID+');"   >';} ,width: 10 }
-						//??????����???��????????
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.principal,field: 9,get:function(inRowIndex){ var str='';var strid;if(querydataprincipal2prods[inRowIndex]!=undefined && querydataprincipal2prods[inRowIndex][9]!=undefined && querydataprincipal2prods[inRowIndex][9][2]!=undefined){str=querydataprincipal2prods[inRowIndex][9][2];strid=querydataprincipal2prods[inRowIndex][9][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="selectPeoples('+strid+','+inRowIndex+',9,0,event);"   >';} ,width: 10 }
 						                                        ] ]
                            }]; 

@@ -1,6 +1,6 @@
-	  	  //---begin---------???????????��???��??????����
-																					//---begin---------?????????��????????tree?��??����sno
-											//?????????������
+	  	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+																					//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+											//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= orderRowds2product)
 														  var NUorderRowds2product = false;//needUpdate
   var urlorderRowds2product = getUrl()+ "services/OrderRowdManageService";
@@ -26,7 +26,7 @@ var getVOorderRowds2product=function(queryvo,id){
 	pu.add('pageSize',orderRowds2productFloatArray[id].pagesizeorderRowds2product) ;
 	pu.add('orderBy',orderRowds2productFloatArray[id].orderByorderRowds2product) ;
 	SOAPClient.invoke(urlorderRowds2product,"getOrderRowd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-	//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+	//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 					     //Orderd-----Prod
 			orderRowds2productFloatArray[id].querydataorderRowds2product=dojoOrderRowd.OrderRowdVOtoArray_fun(ul,true);
 				orderRowds2productFloatArray[id].totalCountorderRowds2product=ul[ul.length-1]["ns:id"]; 
@@ -103,13 +103,13 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7orderRowds2product"+
 		}}
 }
 
-																																									//??????����???��????????
+																																									//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																				var dojoOrderdSelect;
-						//??????����???��????????
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 											
 var buildLayoutorderRowds2product = function(floatMainID){		
 	var layoutorderRowds2product=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -125,8 +125,8 @@ var buildLayoutorderRowds2product = function(floatMainID){
 					            					,   {name: i18nStr.goodsState, field: 10,width: 10 , editor: mydojo.ValidationTextBox ,required:false ,maxLength:30}
 					            				    ,   {name: i18nStr.remark, field: 11,width: 10, editor: dojox.grid.editors.Editor,required:false, editorToolbar: true  }
 					      
-//??????����???��????????
-																//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
+																//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 																	//,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';var strid;if(querydataorderRowds2product[inRowIndex]!=undefined && querydataorderRowds2product[inRowIndex][13]!=undefined && querydataorderRowds2product[inRowIndex][13][2]!=undefined){str=querydataorderRowds2product[inRowIndex][13][2];strid=querydataorderRowds2product[inRowIndex][13][1];} return str+'<img src="../image/selectFloat.gif" height="16" width="16" class="imgSelectStyle" onclick="selectProd('+strid+','+inRowIndex+',13,0,event);"   >';} ,width: 10 }
 						                                        ] ]
                            }]; 

@@ -65,10 +65,10 @@ String peopleId = request.getParameter("peopleId");
 	  var urle = getUrl()+ "services/BasicManageService"; 
 
  
-//???��????1212??layout??layoutstructure
+//Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure
 //enumeration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					
-/*//????��?
+/*//Úµð¾°¶
 					function setCustomerDetailFun(inrow,CustomerColNo){
 					return querydata[inrow][CustomerColNo];
 				}
@@ -79,15 +79,15 @@ String peopleId = request.getParameter("peopleId");
 
 var layoutSingleRow=[{
           
- //field????????��???js??toArray��???querydate??
+ //fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	   
 				 cells: [ [
-							//{name: '??', width: 3, get:getChoise},
+							//{name: 'Ñ¡', width: 3, get:getChoise},
 						   { name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
 						   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
       				  {name: i18nStr.codeContact, field: 2,width: 8}
 					 
-//??��????
+//Úµí²»Ð¶
 					 ,   {name: i18nStr.customer,field: 3,get:function(inRowIndex){ var str='';var strid;if(querydata[inRowIndex]!=undefined && querydata[inRowIndex][3]!=undefined && querydata[inRowIndex][3][2]){str=querydata[inRowIndex][3][2];strid=querydata[inRowIndex][3][1];} return str+'<img src="../image/detailFloat.jpg" height="16" width="16" style="vertical-align:middle;margin-top:0px;margin-left:8px;" onclick="dojoContact.detailFloatCustomerData=querydata['+inRowIndex+'][3];dojoContact.detailCustomer('+querydata[inRowIndex][3][1]+','+inRowIndex+',3,0,event,0);"   >';} ,width: 10 }
 			                                        ] ]
                            }]; 
@@ -183,7 +183,7 @@ function init(){
 	   if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 		 document.getElementById('erowIndex').value=e.rowIndex;
 		 document.getElementById('ContactId').value=querydata[e.rowIndex][1];
-		 	 									//enumeration ?��String??��??
+		 	 									//enumeration Í¨StringÍ¬í£¿
 				dijit.byId("addcodeContact").setValue(querydata[e.rowIndex][2]);
 						 			 
 								dijit.byId("addcustomer").setValue(querydata[e.rowIndex][3][1]);
@@ -202,7 +202,7 @@ var addDivAdd = function(){
 	 //if(document.getElementById('queryDiv').style.display=='')document.getElementById('queryDiv').style.display='none';
 	 //if(document.getElementById('addDiv').style.display=='none')document.getElementById('addDiv').style.display='';
 	 //add
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				
 									dijit.byId("addcodeContact").setValue('');
 														
@@ -218,7 +218,7 @@ function addDivSave(){
 	var vobject=new Object();
     vobject.id=document.getElementById('ContactId').value;
 	var passAll=0;
-										//enumeration ?��String??��??
+										//enumeration Í¨StringÍ¬í£¿
 				if(dijit.byId("addcodeContact").validate(true)){
 					vobject.codeContact=dijit.byId("addcodeContact").getValue();
 				}else{

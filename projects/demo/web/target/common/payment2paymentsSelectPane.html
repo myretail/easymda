@@ -31,7 +31,7 @@ var getChoisepanepayment2payments = function(inRowIndex) {
 			    }	  
 	  
 var layoutpanepayment2payments=[{
-	//?��??field???????????????????��????js????toArray��??????��??????querydate????????
+	//¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
 	    cells: [ [
 			  {name: 'select', width: 3, get:getChoisepanepayment2payments},
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -46,9 +46,9 @@ var layoutpanepayment2payments=[{
 						  						  				,   {name: i18nStr.goodsState, field: 10,width: 10}
 						  						  				,   {name: i18nStr.remark, field: 11,width: 10}
 						  				
-//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])??if(!false)  ??��?????????Float???????��????????
+//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])²¢if(!false)  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 			,   {name: i18nStr.order,field: 12,get:function(inRowIndex){ var str='';if(querydatapanepayment2payments[inRowIndex]!=undefined && querydatapanepayment2payments[inRowIndex][12]!=undefined&& querydatapanepayment2payments[inRowIndex][12][2]!=undefined){str=querydatapanepayment2payments[inRowIndex][12][2];} return str;} ,width: 10 }
-			//????????????layout??(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])??if(!false)  ??��?????????Float???????��????????
+			//¶ÔÓÚ¿ÉÐÞ¸ÄµÄlayout£¬(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])²¢if(!false)  µÄ×Ö¶ÎÓ¦µ¯³öFloatµÄÑ¡Ôñ´°¿Ú´ý²âÊÔ
 			,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';if(querydatapanepayment2payments[inRowIndex]!=undefined && querydatapanepayment2payments[inRowIndex][13]!=undefined&& querydatapanepayment2payments[inRowIndex][13][2]!=undefined){str=querydatapanepayment2payments[inRowIndex][13][2];} return str;} ,width: 10 }
 								]]}];	 
 					

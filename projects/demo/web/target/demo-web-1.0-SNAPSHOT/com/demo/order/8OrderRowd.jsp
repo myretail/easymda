@@ -45,11 +45,11 @@ String peopleId = request.getParameter("peopleId");
             dojo.require("mydojo.NumberTextBox");
 			dojo.registerModulePath("projectDojo", "../../../dojo/projectDojo");
 			dojo.require("projectDojo.OrderRowd");
-			//??��???????????????��?��		
+			//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//Orderd==OrderRowTask---false
 							//Prod==OrderRowTask---false
 										dojo.require("projectDojo.OrderRowTask");
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//Orderd==Payment---false
 							//Prod==Payment---false
 										dojo.require("projectDojo.Payment");
@@ -98,12 +98,12 @@ String peopleId = request.getParameter("peopleId");
 	  			<script type="text/javascript" >
 	  var dojoOrderRowd= new  projectDojo.OrderRowd();
 	  dojoOrderRowd.initOrderRowd();
-			//??��???????????????��?��		
+			//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//Orderd==OrderRowTask---false
 							//Prod==OrderRowTask---false
 										 var dojoOrderRowTask= new  projectDojo.OrderRowTask();
 			dojoOrderRowTask.initOrderRowTask();
-				//??��???????????????��?��		
+				//å¤æ­æ¯å¦æ¯ä¸»è¡¨		
 				//Orderd==Payment---false
 							//Prod==Payment---false
 										 var dojoPayment= new  projectDojo.Payment();
@@ -120,15 +120,15 @@ String peopleId = request.getParameter("peopleId");
 	  var oddstyle='';
 	  var modelOrderRowd = new dojox.grid.data.Table(null, querydataOrderRowd);
 	  var urle = getUrl()+ "services/BasicManageService";    
-//begin-----?????����?��????��??-------------------------------------------------------------------------------------------	  
+//begin-----Ð¶Ç·Ó±í£¨Ç·Îªí£©-------------------------------------------------------------------------------------------	  
 
-//end-----?????����?��????)-------------------------------------------------------------------------------------------
+//end-----Ð¶Ç·Ó±í£¨Ç·Îª)-------------------------------------------------------------------------------------------
 
  
-//begin-------?????����????,??float????------------------------------------------------------------------------------------
- //???��????1212??layout??layoutstructure  (????layoutenumeration???????��??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//begin-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
+ //Ð¶Ï±Ö¶Ç·1212ÉµlayoutÛµlayoutstructure  (Ú²Ñ¯layoutenumerationÖ¶Î²â´¦í£©!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  																										var layoutSingleRowQuery=[{
-		//field????????��???js??toArray��???querydate??
+		//fieldÖµÄ¬ÏµË³ò£¬´jsÐµtoArray×ªØµquerydateÈ¡
 	    cells: [ [
 										{name: 'openFloat', styles: 'text-align: center;', width: 3, get:function(inRowIndex){return '<img src="../image/EmbedLink.gif" style="cursor:pointer"  onclick="openFloat('+inRowIndex+',event);"  height="16" width="16" >';}},
                 { name: 'NO.', width: 2, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} },//
@@ -143,9 +143,9 @@ String peopleId = request.getParameter("peopleId");
 						  						  				,   {name: i18nStr.goodsState, field: 10,width: 10}
 						  						  				,   {name: i18nStr.remark, field: 11,width: 10}
 						  				
-//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])if(!false)  ????Float????��???
+//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])if(!false)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
 					 ,   {name: i18nStr.order,field: 12,get:function(inRowIndex){ var str='';if(querydataOrderRowd[inRowIndex]!=undefined && querydataOrderRowd[inRowIndex][12]!=undefined){str=querydataOrderRowd[inRowIndex][12][2];} return str;} ,width: 10 }
-					//??????layout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])if(!false)  ????Float????��???
+					//Ú¿Þ¸Äµlayout(org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product] in [org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[order], org.andromda.cartridges.bpm4struts.metafacades.StrutsManageableEntityAssociationEndLogicImpl[product]])if(!false)  Ö¶Ó¦FloatÑ¡ñ´°¿Ú´
 					 ,   {name: i18nStr.product,field: 13,get:function(inRowIndex){ var str='';if(querydataOrderRowd[inRowIndex]!=undefined && querydataOrderRowd[inRowIndex][13]!=undefined){str=querydataOrderRowd[inRowIndex][13][2];} return str;} ,width: 10 }
 										]]}];	 
 					
@@ -157,7 +157,7 @@ var layoutNoscroll=[ {
 				   { name: i18nStr.no, width: 3, styles: 'text-align: center;', get: function(inRowIndex){ return inRowIndex+1;} }
 		]]},{
           
- //field??????js??toArray??querydate?
+ //field??????jsÐµtoArray??querydate?
 	   
 				 cells: [ [
 							//{name: '?', width: 3, get:getChoise},
@@ -198,7 +198,7 @@ function getCheckOrderRowd(){}
 
 var layoutTwoRow=[{
           
- //field??????js??toArray??querydate?
+ //field??????jsÐµtoArray??querydate?
 	   
 				 cells: [
                       [
@@ -247,7 +247,7 @@ var layoutTwoRow=[{
 					
 					
 					
-//end-------?????����????,??float????------------------------------------------------------------------------------------
+//end-------Ê¾Ñ¯Ð±í£¬Í·,Ó´floatÚµÍ¼------------------------------------------------------------------------------------
 var onloadmy=function(){
 	
 	dojo.connect(dijit.byId("OrderRowdAFFloat"), "selectChild", function(e){
@@ -266,7 +266,7 @@ var flag=0;//0,1
 
 function openFloat(indexRow,e){
 	mainID=querydataOrderRowd[indexRow][1];
-	var FloatID ="openFloat_"+mainID;//??��???float????
+	var FloatID ="openFloat_"+mainID;//É´ò¿ª¶floatÎ´Êµ
 	var openFloat = dijit.byId(FloatID);
 	if(openFloat==undefined){
 			if(floatIndex==5){

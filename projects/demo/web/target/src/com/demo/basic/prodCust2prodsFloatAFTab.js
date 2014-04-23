@@ -1,6 +1,6 @@
-	  //---begin---------???????????��???��??????����
-											//---begin---------?????????��????????tree?��??����sno
-						//?????????������
+	  //---begin---------ÅÐ¶ÏÊÇ·ñÎª¶à¶Ô¶àµÄ¹ØÏµ±í
+											//---begin---------ÅÐ¶ÏÊÇ·ñÖ±½Ó¹ØÁªÁËtree½á¹¹±ísno
+						//ÒÔÏÂÊÇÆÕÍ¨±í
 //set (= prodCust2prods)
   //name =prodCust2prodsFloatAFTab.js  manageable.name=Prod
   											  var NUprodCust2prods = false;//needUpdate
@@ -25,7 +25,7 @@ var getVOprodCust2prods=function(queryvo,id){
 	pu.add('pageSize',prodCust2prodsFloatArray[id].pagesizeprodCust2prods) ;
 	pu.add('orderBy',prodCust2prodsFloatArray[id].orderByprodCust2prods) ;
 	SOAPClient.invoke(urlprodCust2prods,"getProd", pu, false,  function GetEnu_callBack(ul, soapResponse){      
-		//????��?����??????��?����,?��????����???��??����??��?����?��?????????????��?��??	
+		//ÅÐ¶Ï±¾±íÊÇ·ñÎª×Ó±í,µ±Ò»¸ö±íÊÇ¶à¸ö±íµÄ×Ó±íÊ±£¬´Ë´¦¿ÉÄÜÓÐ´íÎó¡£	
 	prodCust2prodsFloatArray[id].querydataprodCust2prods=dojoProd.ProdVOtoArray_fun(ul,false);
 
 	prodCust2prodsFloatArray[id].totalCountprodCust2prods=ul[ul.length-1]["ns:id"]; 
@@ -105,7 +105,7 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7prodCust2prods"+main
 																							var buildLayoutprodCust2prods = function(floatMainID){		
 
 	var layoutprodCust2prods=[{
-           //?��??field???????????????????��????js????toArray��??????��??????querydate????????
+           //¸ù¾ÝfieldµÄÖµ£¬ÒÀ¾ÝÄ¬ÈÏµÄË³Ðò£¬´ÓjsÖÐµÄtoArray×ª»»·½·¨·µ»ØµÄquerydateÖÐÈ¡Êý¾Ý
    
 			 cells: [ [
 					   //{ name: i18nStr.chose, width: 3,field:0, styles: 'text-align: center;', editor: dojox.grid.editors.Bool },//
@@ -116,9 +116,9 @@ var but2= new dijit.form.myButton({label:"pagedown",id:"but7prodCust2prods"+main
 		    		,   {name: i18nStr.datef,field:5, width: 8}
 		    		,   {name: i18nStr.prodType, field: 6,width: 10}
 		  
-//??????����???��????????
+//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												//,   {name: i18nStr.prodCust,field: 7,get:function(inRowIndex){ var str='';var strid;if(prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex]!=undefined && prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][7]!=undefined && prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][7][2]!=undefined){str=prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][7][2];strid=prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][7][1];} return str;} ,width: 10 }
-						//??????����???��????????
+						//¶ÔÓÚµ¥±í²»ÐíÆäËûÅÐ¶Ï
 												,   {name: i18nStr.principal,field: 8,get:function(inRowIndex){ var str='';var strid;if(prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex]!=undefined && prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][8]!=undefined && prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][8][2]!=undefined){str=prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][8][2];strid=prodCust2prodsFloatArray[floatMainID].querydataprodCust2prods[inRowIndex][8][1];} return str;} ,width: 10 }
 										                                        ] ]
                            }]; 
